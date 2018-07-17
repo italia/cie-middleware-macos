@@ -10,6 +10,30 @@
 		E5BE7D8C20FE84D200004389 /* cie_pkcs11.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */; };
 		E5BE7D8E20FE84D200004389 /* cie_pkcs11Priv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */; };
 		E5BE7D9020FE84D200004389 /* cie_pkcs11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D8F20FE84D200004389 /* cie_pkcs11.cpp */; };
+		E5BE7DA920FE853800004389 /* CardContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D9720FE853800004389 /* CardContext.cpp */; };
+		E5BE7DAA20FE853800004389 /* CardContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D9820FE853800004389 /* CardContext.h */; };
+		E5BE7DAB20FE853800004389 /* CardTemplate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D9920FE853800004389 /* CardTemplate.cpp */; };
+		E5BE7DAC20FE853800004389 /* CardTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D9A20FE853800004389 /* CardTemplate.h */; };
+		E5BE7DAD20FE853800004389 /* CIEP11Template.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D9B20FE853800004389 /* CIEP11Template.cpp */; };
+		E5BE7DAE20FE853800004389 /* CIEP11Template.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D9C20FE853800004389 /* CIEP11Template.h */; };
+		E5BE7DAF20FE853800004389 /* initP11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D9D20FE853800004389 /* initP11.cpp */; };
+		E5BE7DB020FE853800004389 /* InitP11.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D9E20FE853800004389 /* InitP11.h */; };
+		E5BE7DB120FE853800004389 /* Mechanism.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D9F20FE853800004389 /* Mechanism.cpp */; };
+		E5BE7DB220FE853800004389 /* Mechanism.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DA020FE853800004389 /* Mechanism.h */; };
+		E5BE7DB320FE853800004389 /* P11Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7DA120FE853800004389 /* P11Object.cpp */; };
+		E5BE7DB420FE853800004389 /* P11Object.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DA220FE853800004389 /* P11Object.h */; };
+		E5BE7DB520FE853800004389 /* PKCS11Functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7DA320FE853800004389 /* PKCS11Functions.cpp */; };
+		E5BE7DB620FE853800004389 /* PKCS11Functions.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DA420FE853800004389 /* PKCS11Functions.h */; };
+		E5BE7DB720FE853800004389 /* session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7DA520FE853800004389 /* session.cpp */; };
+		E5BE7DB820FE853800004389 /* session.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DA620FE853800004389 /* session.h */; };
+		E5BE7DB920FE853800004389 /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7DA720FE853800004389 /* Slot.cpp */; };
+		E5BE7DBA20FE853800004389 /* Slot.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DA820FE853800004389 /* Slot.h */; };
+		E5BE7DBE20FE858600004389 /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DBB20FE858500004389 /* pkcs11f.h */; };
+		E5BE7DBF20FE858600004389 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DBC20FE858500004389 /* pkcs11t.h */; };
+		E5BE7DC020FE858600004389 /* pkcs11.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DBD20FE858500004389 /* pkcs11.h */; };
+		E5BE7DC320FE86DC00004389 /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DC220FE86DC00004389 /* win32.h */; };
+		E5BE7DC520FE883300004389 /* wintypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DC420FE883300004389 /* wintypes.h */; };
+		E5BE7DC820FE8A9A00004389 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7DC720FE8A9A00004389 /* PCSC.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,6 +41,34 @@
 		E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cie_pkcs11.hpp; sourceTree = "<group>"; };
 		E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cie_pkcs11Priv.hpp; sourceTree = "<group>"; };
 		E5BE7D8F20FE84D200004389 /* cie_pkcs11.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cie_pkcs11.cpp; sourceTree = "<group>"; };
+		E5BE7D9720FE853800004389 /* CardContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardContext.cpp; sourceTree = "<group>"; };
+		E5BE7D9820FE853800004389 /* CardContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardContext.h; sourceTree = "<group>"; };
+		E5BE7D9920FE853800004389 /* CardTemplate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardTemplate.cpp; sourceTree = "<group>"; };
+		E5BE7D9A20FE853800004389 /* CardTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardTemplate.h; sourceTree = "<group>"; };
+		E5BE7D9B20FE853800004389 /* CIEP11Template.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CIEP11Template.cpp; sourceTree = "<group>"; };
+		E5BE7D9C20FE853800004389 /* CIEP11Template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIEP11Template.h; sourceTree = "<group>"; };
+		E5BE7D9D20FE853800004389 /* initP11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = initP11.cpp; sourceTree = "<group>"; };
+		E5BE7D9E20FE853800004389 /* InitP11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitP11.h; sourceTree = "<group>"; };
+		E5BE7D9F20FE853800004389 /* Mechanism.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mechanism.cpp; sourceTree = "<group>"; };
+		E5BE7DA020FE853800004389 /* Mechanism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mechanism.h; sourceTree = "<group>"; };
+		E5BE7DA120FE853800004389 /* P11Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = P11Object.cpp; sourceTree = "<group>"; };
+		E5BE7DA220FE853800004389 /* P11Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = P11Object.h; sourceTree = "<group>"; };
+		E5BE7DA320FE853800004389 /* PKCS11Functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PKCS11Functions.cpp; sourceTree = "<group>"; };
+		E5BE7DA420FE853800004389 /* PKCS11Functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCS11Functions.h; sourceTree = "<group>"; };
+		E5BE7DA520FE853800004389 /* session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = session.cpp; sourceTree = "<group>"; };
+		E5BE7DA620FE853800004389 /* session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = session.h; sourceTree = "<group>"; };
+		E5BE7DA720FE853800004389 /* Slot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Slot.cpp; sourceTree = "<group>"; };
+		E5BE7DA820FE853800004389 /* Slot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Slot.h; sourceTree = "<group>"; };
+		E5BE7DBB20FE858500004389 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11f.h; sourceTree = "<group>"; };
+		E5BE7DBC20FE858500004389 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11t.h; sourceTree = "<group>"; };
+		E5BE7DBD20FE858500004389 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11.h; sourceTree = "<group>"; };
+		E5BE7DC120FE85C800004389 /* Util */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Util; sourceTree = "<group>"; };
+		E5BE7DC220FE86DC00004389 /* win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32.h; sourceTree = "<group>"; };
+		E5BE7DC420FE883300004389 /* wintypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wintypes.h; sourceTree = "<group>"; };
+		E5BE7DC720FE8A9A00004389 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
+		E5BE7DC920FE8B0A00004389 /* PCSC */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PCSC; sourceTree = "<group>"; };
+		E5BE7DCA20FE8CF100004389 /* CSP */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CSP; sourceTree = "<group>"; };
+		E5BE7DCB20FE8D0E00004389 /* Crypto */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Crypto; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5BE7DC820FE8A9A00004389 /* PCSC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -35,6 +88,7 @@
 			children = (
 				E5BE7D8A20FE84D200004389 /* cie-pkcs11 */,
 				E5BE7D8920FE84D200004389 /* Products */,
+				E5BE7DC620FE8A9A00004389 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -49,11 +103,54 @@
 		E5BE7D8A20FE84D200004389 /* cie-pkcs11 */ = {
 			isa = PBXGroup;
 			children = (
+				E5BE7DCB20FE8D0E00004389 /* Crypto */,
+				E5BE7DC920FE8B0A00004389 /* PCSC */,
+				E5BE7DC120FE85C800004389 /* Util */,
+				E5BE7DCA20FE8CF100004389 /* CSP */,
+				E5BE7D9620FE853800004389 /* PKCS11 */,
 				E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */,
 				E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */,
 				E5BE7D8F20FE84D200004389 /* cie_pkcs11.cpp */,
 			);
 			path = "cie-pkcs11";
+			sourceTree = "<group>";
+		};
+		E5BE7D9620FE853800004389 /* PKCS11 */ = {
+			isa = PBXGroup;
+			children = (
+				E5BE7DC420FE883300004389 /* wintypes.h */,
+				E5BE7DBD20FE858500004389 /* pkcs11.h */,
+				E5BE7DBB20FE858500004389 /* pkcs11f.h */,
+				E5BE7DBC20FE858500004389 /* pkcs11t.h */,
+				E5BE7DC220FE86DC00004389 /* win32.h */,
+				E5BE7D9720FE853800004389 /* CardContext.cpp */,
+				E5BE7D9820FE853800004389 /* CardContext.h */,
+				E5BE7D9920FE853800004389 /* CardTemplate.cpp */,
+				E5BE7D9A20FE853800004389 /* CardTemplate.h */,
+				E5BE7D9B20FE853800004389 /* CIEP11Template.cpp */,
+				E5BE7D9C20FE853800004389 /* CIEP11Template.h */,
+				E5BE7D9D20FE853800004389 /* initP11.cpp */,
+				E5BE7D9E20FE853800004389 /* InitP11.h */,
+				E5BE7D9F20FE853800004389 /* Mechanism.cpp */,
+				E5BE7DA020FE853800004389 /* Mechanism.h */,
+				E5BE7DA120FE853800004389 /* P11Object.cpp */,
+				E5BE7DA220FE853800004389 /* P11Object.h */,
+				E5BE7DA320FE853800004389 /* PKCS11Functions.cpp */,
+				E5BE7DA420FE853800004389 /* PKCS11Functions.h */,
+				E5BE7DA520FE853800004389 /* session.cpp */,
+				E5BE7DA620FE853800004389 /* session.h */,
+				E5BE7DA720FE853800004389 /* Slot.cpp */,
+				E5BE7DA820FE853800004389 /* Slot.h */,
+			);
+			path = PKCS11;
+			sourceTree = "<group>";
+		};
+		E5BE7DC620FE8A9A00004389 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E5BE7DC720FE8A9A00004389 /* PCSC.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -63,8 +160,22 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5BE7DC320FE86DC00004389 /* win32.h in Headers */,
+				E5BE7DBA20FE853800004389 /* Slot.h in Headers */,
 				E5BE7D8E20FE84D200004389 /* cie_pkcs11Priv.hpp in Headers */,
+				E5BE7DC520FE883300004389 /* wintypes.h in Headers */,
+				E5BE7DAA20FE853800004389 /* CardContext.h in Headers */,
+				E5BE7DB420FE853800004389 /* P11Object.h in Headers */,
+				E5BE7DB620FE853800004389 /* PKCS11Functions.h in Headers */,
+				E5BE7DAC20FE853800004389 /* CardTemplate.h in Headers */,
+				E5BE7DB220FE853800004389 /* Mechanism.h in Headers */,
+				E5BE7DC020FE858600004389 /* pkcs11.h in Headers */,
+				E5BE7DB020FE853800004389 /* InitP11.h in Headers */,
+				E5BE7DBE20FE858600004389 /* pkcs11f.h in Headers */,
+				E5BE7DBF20FE858600004389 /* pkcs11t.h in Headers */,
 				E5BE7D8C20FE84D200004389 /* cie_pkcs11.hpp in Headers */,
+				E5BE7DAE20FE853800004389 /* CIEP11Template.h in Headers */,
+				E5BE7DB820FE853800004389 /* session.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,7 +235,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5BE7DB520FE853800004389 /* PKCS11Functions.cpp in Sources */,
+				E5BE7DB320FE853800004389 /* P11Object.cpp in Sources */,
+				E5BE7DB720FE853800004389 /* session.cpp in Sources */,
 				E5BE7D9020FE84D200004389 /* cie_pkcs11.cpp in Sources */,
+				E5BE7DAF20FE853800004389 /* initP11.cpp in Sources */,
+				E5BE7DA920FE853800004389 /* CardContext.cpp in Sources */,
+				E5BE7DAD20FE853800004389 /* CIEP11Template.cpp in Sources */,
+				E5BE7DAB20FE853800004389 /* CardTemplate.cpp in Sources */,
+				E5BE7DB120FE853800004389 /* Mechanism.cpp in Sources */,
+				E5BE7DB920FE853800004389 /* Slot.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
