@@ -7,7 +7,11 @@
 #include "Mechanism.h"
 #include "Slot.h"
 #include "../PCSC/Token.h"
+#ifdef WIN32
 #include <winscard.h>
+#else
+#include <PCSC/winscard.h>
+#endif
 #include "P11Object.h"
 #include <memory>
 

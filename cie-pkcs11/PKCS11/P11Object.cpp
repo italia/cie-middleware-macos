@@ -13,7 +13,7 @@ CP11Object::CP11Object(CK_OBJECT_CLASS objClass,void *TemplateData)
 	addAttribute(CKA_CLASS,ByteArray((BYTE*)&ObjClass,sizeof(CK_OBJECT_CLASS)));
 }
 
-void CP11Object::addAttribute(CK_ATTRIBUTE_TYPE type,ByteArray &data)
+void CP11Object::addAttribute(CK_ATTRIBUTE_TYPE type,ByteArray data)
 {
 	init_func
 	attributes[type] = data;

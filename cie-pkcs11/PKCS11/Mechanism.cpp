@@ -1,6 +1,6 @@
 
 #include "Mechanism.h"
-#include "..\Crypto\RSA.h"
+#include "../Crypto/RSA.h"
 #include "P11Object.h"
 #include "../Util/util.h"
 
@@ -10,6 +10,14 @@ static BYTE SHA1_RSAcode[]={0x30,0x21,0x30,0x09,0x06,0x05,0x2b,0x0e,0x03,0x02,0x
 static BYTE MD5_RSAcode[]={0x30,0x20,0x30,0x0C,0x06,0x08,0x2A,0x86,0x48,0x86,0xF7,0x0D,0x02,0x05,0x05,0x00,0x04,0x10};
 static ByteArray baSHA1DigestInfo(SHA1_RSAcode,sizeof(SHA1_RSAcode));
 static ByteArray baMD5DigestInfo(MD5_RSAcode,sizeof(MD5_RSAcode));
+
+#ifndef SHA_DIGEST_LENGTH
+#define SHA_DIGEST_LENGTH 20
+#endif
+
+#ifndef MD5_DIGEST_LENGTH
+#define MD5_DIGEST_LENGTH 16
+#endif
 
 namespace p11 {
 
@@ -804,8 +812,9 @@ namespace p11 {
 		CK_ULONG ulDigestLen = pDigest->DigestLength();
 
 		ByteArray baDigestInfo = pDigest->DigestInfo();
-
-		pDigest->DigestFinal(baExpectedResult.right(ulDigestLen));
+        ByteArray input = baExpectedResult.right(ulDigestLen);
+        
+		pDigest->DigestFinal(input);
 		baExpectedResult.rightcopy(baDigestInfo, ulDigestLen);
 		PutPaddingBT1(baExpectedResult, ulDigestLen + baDigestInfo.size());
 

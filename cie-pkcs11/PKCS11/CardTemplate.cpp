@@ -1,7 +1,7 @@
 
 #include "CardTemplate.h"
 #include "../Util/util.h"
-#include "../Util/moduleinfo.h"
+#include "../Util/ModuleInfo.h"
 #include "CIEP11Template.h"
 
 static char *szCompiledFile=__FILE__;
@@ -20,13 +20,17 @@ TemplateVector CCardTemplate::g_mCardTemplates;
 
 CCardTemplate::CCardTemplate(void)
 {
+#ifdef WIN32
 	hLibrary=NULL;
+#endif
 }
 
 CCardTemplate::~CCardTemplate(void)
 {
+#ifdef WIN32
 	if (hLibrary)
 		FreeLibrary(hLibrary);
+#endif
 }
 
 void CCardTemplate::AddTemplate(std::shared_ptr<CCardTemplate> pTemplate) {

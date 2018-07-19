@@ -1,4 +1,4 @@
-#include "..\stdafx.h"
+
 #include ".\aes.h"
 
 static char *szCompiledFile=__FILE__;
@@ -68,6 +68,7 @@ ByteDynArray CAES::AES(const ByteArray &data,int encOp)
 
 	ByteDynArray iv2 = iv;
 
+    
 	AES_KEY aesKey;
 	if (encOp == AES_ENCRYPT)
 		AES_set_encrypt_key(key.data(), (int)key.size() * 8, &aesKey);

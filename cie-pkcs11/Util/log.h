@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "defines.h"
 #include <string>
+#include "wintypes.h"
 
 class CLog {
 public:

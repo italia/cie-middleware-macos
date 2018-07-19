@@ -1,6 +1,6 @@
 #pragma once
-#include "../PCSC/token.h"
-#include "../CSP/Cardmod.h"
+#include "../PCSC/Token.h"
+//#include "../CSP/Cardmod.h"
 #include <map>
 
 #define DirCIE				"CIE"

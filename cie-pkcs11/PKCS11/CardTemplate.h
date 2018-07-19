@@ -83,8 +83,9 @@ public:
 	static std::shared_ptr<CCardTemplate> GetTemplate(CSlot &pSlot);
 
 	void InitLibrary(const char *szPath,void *templateData);
-
+#ifdef WIN32
 	HMODULE hLibrary;
+#endif
 	TemplateFuncList FunctionList;
 
 	std::string szName;

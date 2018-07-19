@@ -3,6 +3,7 @@
 #include "wintypes.h"
 #include <string>
 #include "Array.h"
+#include "log.h"
 
 #define ERR_BAD_POINTER "Puntatore non valido"
 #define ERR_CANT_CREATE_MUTEX "Impossibile creare il mutex"

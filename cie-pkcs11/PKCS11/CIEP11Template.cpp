@@ -6,14 +6,18 @@
 #include <stdio.h>
 #include "../Crypto/AES.h"
 #include "../PCSC/PCSC.h"
+#include "../Cryptopp/cryptlib.h"
+#include "../Cryptopp/asn.h"
+
+using namespace CryptoPP;
 
 int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, DWORD *respSize) {
 	if (apduSize == 2) {
 		WORD code = *(WORD*)apdu;
 		if (code == 0xfffd) {
-			int bufLen = *respSize;
+			long bufLen = *respSize;
 			*respSize = sizeof(data->hCard)+2;
-			memcpy_s(resp, bufLen, &data->hCard, sizeof(data->hCard));
+            CryptoPP::memcpy_s(resp, bufLen, &data->hCard, sizeof(data->hCard));
 			resp[sizeof(data->hCard)] = 0;
 			resp[sizeof(data->hCard) + 1] = 0;
 
@@ -22,7 +26,9 @@ int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, D
 		else if (code == 0xfffe) {
 			DWORD protocol = 0;
 			ODS("UNPOWER CARD");
-			auto ris = SCardReconnect(data->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_UNPOWER_CARD, &protocol);
+            auto ris = SCardReconnect(data->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_UNPOWER_CARD, &protocol);
+            
+            
 			if (ris == SCARD_S_SUCCESS) {
 				SCardBeginTransaction(data->hCard);
 				*respSize = 2;
@@ -122,6 +128,7 @@ void CIEtemplateInitSession(void *pTemplateData){
 		CK_BBOOL vtrue = TRUE;
 		CK_BBOOL vfalse = FALSE;
 
+#ifdef WIN32
 		PCCERT_CONTEXT certDS = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, certRaw.data(), (DWORD)certRaw.size());
 		if (certDS != nullptr) {
 			auto _1 = scopeExit([&]() noexcept {CertFreeCertificateContext(certDS); });
@@ -185,6 +192,9 @@ void CIEtemplateInitSession(void *pTemplateData){
 
 			cie->slot.AddP11Object(cie->cert);
 		}
+#else
+        
+#endif
 		cie->init = true;
 	}
 }
@@ -228,14 +238,14 @@ ByteDynArray  CIEtemplateGetSerial(CSlot &pSlot) {
 		ias.SelectAID_IAS();
 		ias.ReadPAN();
 		std::string numSerial;
-		dumpHexData(ias.PAN.mid(5, 6), numSerial, false);
+		//dumpHexData(ias.PAN.mid(5, 6), numSerial, false);
 		return ByteArray((BYTE*)numSerial.c_str(),numSerial.length());
 	}
 }
 void CIEtemplateGetModel(CSlot &pSlot, std::string &szModel){ 
 	szModel = ""; 
 }
-void CIEtemplateGetTokenFlags(CSlot &pSlot, DWORD &dwFlags){
+void CIEtemplateGetTokenFlags(CSlot &pSlot, CK_FLAGS &dwFlags){
 	dwFlags = CKF_LOGIN_REQUIRED | CKF_USER_PIN_INITIALIZED | CKF_TOKEN_INITIALIZED | CKF_REMOVABLE_DEVICE;
 }
 
@@ -435,3 +445,60 @@ std::shared_ptr<CP11Object> CIEtemplateCreateObject(void *pTemplateData, CK_ATTR
 void CIEtemplateDestroyObject(void *pTemplateData, CP11Object &Object){ throw p11_error(CKR_FUNCTION_NOT_SUPPORTED); }
 std::shared_ptr<CP11Object> CIEtemplateGenerateKey(void *pCardTemplateData, CK_MECHANISM_PTR pMechanism, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount) { throw p11_error(CKR_FUNCTION_NOT_SUPPORTED); }
 void CIEtemplateGenerateKeyPair(void *pCardTemplateData, CK_MECHANISM_PTR pMechanism, CK_ATTRIBUTE_PTR pPublicKeyTemplate, CK_ULONG ulPublicKeyAttributeCount, CK_ATTRIBUTE_PTR pPrivateKeyTemplate, CK_ULONG ulPrivateKeyAttributeCount, std::shared_ptr<CP11Object>&pPublicKey, std::shared_ptr<CP11Object>&pPrivateKey) { throw p11_error(CKR_FUNCTION_NOT_SUPPORTED); }
+
+
+/**
+ * Reads an X.509 v3 certificate from certin, extracts the subjectPublicKeyInfo structure
+ * (which is one way PK_Verifiers can get their key material) and writes it to keyout
+ *
+ * @throws CryptoPP::BERDecodeError
+ */
+
+void GetPublicKeyFromCert(CryptoPP::BufferedTransformation & certin,
+                          CryptoPP::BufferedTransformation & keyout)
+{
+    BERSequenceDecoder x509Cert(certin);
+    BERSequenceDecoder tbsCert(x509Cert);
+    
+    // ASN.1 from RFC 3280
+    // TBSCertificate  ::=  SEQUENCE  {
+    // version         [0]  EXPLICIT Version DEFAULT v1,
+    
+    // consume the context tag on the version
+    BERGeneralDecoder context(tbsCert,0xa0);
+    word32 ver;
+    
+    // only want a v3 cert
+    BERDecodeUnsigned<word32>(context,ver,INTEGER,2,2);
+    
+    // serialNumber         CertificateSerialNumber,
+    Integer serial;
+    serial.BERDecode(tbsCert);
+    
+    // signature            AlgorithmIdentifier,
+    BERSequenceDecoder signature(tbsCert);
+    signature.SkipAll();
+    
+    // issuer               Name,
+    BERSequenceDecoder issuerName(tbsCert);
+    issuerName.SkipAll();
+    
+    // validity             Validity,
+    BERSequenceDecoder validity(tbsCert);
+    validity.SkipAll();
+    
+    // subject              Name,
+    BERSequenceDecoder subjectName(tbsCert);
+    subjectName.SkipAll();
+    
+    // subjectPublicKeyInfo SubjectPublicKeyInfo,
+    BERSequenceDecoder spki(tbsCert);
+    DERSequenceEncoder spkiEncoder(keyout);
+    
+    spki.CopyTo(spkiEncoder);
+    spkiEncoder.MessageEnd();
+    
+    spki.SkipAll();
+    tbsCert.SkipAll();
+    x509Cert.SkipAll();
+}

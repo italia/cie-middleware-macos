@@ -1,4 +1,5 @@
 #pragma once
+#include "wintypes.h"
 #include "CardTemplate.h"
 #include "Slot.h"
 
@@ -12,7 +13,7 @@ void CIEtemplateFinalSession(void *pTemplateData);
 bool CIEtemplateMatchCard(CSlot &pSlot);
 ByteDynArray  CIEtemplateGetSerial(CSlot &pSlot);
 void CIEtemplateGetModel(CSlot &pSlot, std::string &szModel);
-void CIEtemplateGetTokenFlags(CSlot &pSlot, DWORD &dwFlags);
+void CIEtemplateGetTokenFlags(CSlot &pSlot, CK_FLAGS &dwFlags);
 void CIEtemplateLogin(void *pTemplateData, CK_USER_TYPE userType, ByteArray &Pin);
 void CIEtemplateLogout(void *pTemplateData, CK_USER_TYPE userType);
 void CIEtemplateReadObjectAttributes(void *pCardTemplateData, CP11Object *pObject);

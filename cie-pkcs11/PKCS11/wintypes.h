@@ -34,12 +34,20 @@
 #define LPCTSTR const char*
 #endif
 
+#ifndef LPCSTR
+#define LPCSTR const char*
+#endif
+
 #ifndef BYTE 
 #define BYTE unsigned char
 #endif
 
 #ifndef DWORD
-#define DWORD unsigned long
+#define DWORD uint32_t
+#endif
+
+#ifndef WORD
+#define WORD unsigned int
 #endif
 
 #ifndef BOOL
@@ -51,6 +59,9 @@
 #define CHAR char
 #define VOID void
 
+#ifndef HRESULT
+#define HRESULT unsigned long
+#endif
 
 #ifndef LOWORD
 #define LOWORD(l) l & 0xFFFF
@@ -66,8 +77,11 @@
 
 #define MAKEWORD(lo, hi) lo + (hi * 256)
 
+#define S_OK  0
+
 void SetLastError(unsigned long nErr);
 unsigned long GetLastError();
 int atox(const char* szVal);
 
+#define ODS printf
 #endif //__UTILITYTYPES_H

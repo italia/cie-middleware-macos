@@ -1,5 +1,5 @@
-#include "..\StdAfx.h"
-#include ".\InitP11.h"
+
+#include "InitP11.h"
 
 namespace p11 {
 

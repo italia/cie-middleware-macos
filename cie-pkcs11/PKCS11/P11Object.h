@@ -25,7 +25,7 @@ namespace p11 {
 		CP11Object(CK_OBJECT_CLASS objClass, void *TemplateData);
 		CK_OBJECT_CLASS ObjClass;
 		AttributeMap attributes;
-		void addAttribute(CK_ATTRIBUTE_TYPE type, ByteArray &data);
+		void addAttribute(CK_ATTRIBUTE_TYPE type, ByteArray data);
 
 		/// nullptr come valore di ritorno sognifica che l'attibuto non fa parte della mappa di attributi dell'oggetto
 		virtual ByteArray* getAttribute(CK_ATTRIBUTE_TYPE type); 

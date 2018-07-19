@@ -39,12 +39,14 @@ CCardContext::operator SCARDCONTEXT() {
 
 void CCardContext::validate() {
 
+#ifdef WIN32
 	HANDLE hSCardSystemEvent=SCardAccessStartedEvent();
 	if (hSCardSystemEvent) {
 		WaitForSingleObject(hSCardSystemEvent,INFINITE);
 		SCardReleaseStartedEvent();
 	}
-
+#endif
+    
 	if (hContext)
 		if (SCardIsValidContext(hContext)!=SCARD_S_SUCCESS) 
 			hContext=NULL;

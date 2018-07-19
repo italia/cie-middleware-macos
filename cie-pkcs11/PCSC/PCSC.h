@@ -1,7 +1,16 @@
+#ifdef WIN32
 #include <winscard.h>
+#else
+#include <PCSC/winscard.h>
+#include "wintypes.h"
+#endif
 #include "../Util/Array.h"
 #include <vector>
 #include <thread>
+
+#ifndef SCARD_PROTOCOL_Tx
+#define SCARD_PROTOCOL_Tx SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1
+#endif
 
 class safeConnection {
 public:

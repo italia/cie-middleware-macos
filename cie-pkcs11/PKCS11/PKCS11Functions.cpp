@@ -1,16 +1,23 @@
 // P11Emissione.cpp : Defines the entry point for the DLL application.
 //
-
 #include "wintypes.h"
 #include "PKCS11Functions.h"
 #include "InitP11.h"
+#ifdef WIN32
 #include <winscard.h>
+#else
+#include <PCSC/winscard.h>
+#endif
 #include "session.h"
-#include "cardtemplate.h"
+#include "CardTemplate.h"
+#ifdef WIN32
 #include <malloc.h>
+#else
+#include <stdlib.h>
+#endif
 #include "../Util/ModuleInfo.h"
 #include "../Util/util.h"
-#include "../Util/syncroevent.h"
+#include "../Util/SyncroEvent.h"
 #include <mutex>
 
 static char *szCompiledFile=__FILE__;
@@ -43,6 +50,7 @@ char *getAttributeName(DWORD dwId);
 extern CModuleInfo moduleInfo; // informazioni sulla dll (o so)
 bool bModuleInit=false;
 
+#ifdef WIN32
 // funzione DllMain
 // inizilizzo moduleInfo
 BOOL APIENTRY DllMainP11( HANDLE hModule, 
@@ -84,6 +92,7 @@ BOOL APIENTRY DllMainP11( HANDLE hModule,
 
 	return TRUE;
 }
+#endif
 
 // funzione CheckMechanismParam
 bool CheckMechanismParam(CK_MECHANISM *pParam) {
@@ -442,12 +451,12 @@ CK_RV CK_ENTRY C_GetInfo(CK_INFO_PTR pInfo /* location that receives information
 
 	pInfo->cryptokiVersion.major = 2; /* Cryptoki interface ver */
 	pInfo->cryptokiVersion.minor = 10;   //12345678901234567890123456789012
-	memcpy_s((char*)pInfo->manufacturerID,32,"IPZS                            ", 32);
+    CryptoPP::memcpy_s((char*)pInfo->manufacturerID,32,"IPZS                            ", 32);
 
 	pInfo->flags = 0; /* must be zero */
 
 	/* libraryDescription and libraryVersion are new for v2.0 */
-	memcpy_s((char*)pInfo->libraryDescription,32,"CIE PKCS11                      ", 32);
+	CryptoPP::memcpy_s((char*)pInfo->libraryDescription,32,"CIE PKCS11                      ", 32);
 
 	pInfo->libraryVersion.major = 1; /* version of library */
 	pInfo->libraryVersion.minor = 0; /* version of library */
@@ -715,7 +724,8 @@ CK_RV CK_ENTRY C_Digest(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG 
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
 
 	ByteArray Digest(pDigest, *pulDigestLen);
-	pSession->Digest(ByteArray(pData, ulDataLen), Digest);
+    ByteArray input(pData, ulDataLen);
+	pSession->Digest(input, Digest);
 	*pulDigestLen = (CK_ULONG)Digest.size();
 
 	return CKR_OK;
@@ -766,8 +776,9 @@ CK_RV CK_ENTRY C_DigestUpdate (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK
 	std::shared_ptr<CSession> pSession = CSession::GetSessionFromID(hSession);
 	if (pSession==nullptr)
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
-
-	pSession->DigestUpdate(ByteArray(pPart, ulPartLen));
+    
+    ByteArray input(pPart, ulPartLen);
+	pSession->DigestUpdate(input);
 	return CKR_OK;
 		exit_p11_func
 		return CKR_GENERAL_ERROR;
@@ -906,7 +917,7 @@ CK_RV CK_ENTRY C_GetMechanismList(CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMech
 	}
 
 	if (*pulCount >= dwNumMechansms) {
-		memcpy_s(pMechanismList, dwNumMechansms * sizeof(CK_MECHANISM_TYPE), P11mechanisms, dwNumMechansms * sizeof(CK_MECHANISM_TYPE));
+        CryptoPP::memcpy_s(pMechanismList, dwNumMechansms * sizeof(CK_MECHANISM_TYPE), P11mechanisms, dwNumMechansms * sizeof(CK_MECHANISM_TYPE));
 		return CKR_OK;
 	}
 	else
@@ -1121,7 +1132,8 @@ CK_RV CK_ENTRY C_Sign(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ul
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
 
 	ByteArray Signature(pSignature,*pulSignatureLen);
-	pSession->Sign(ByteArray(pData, ulDataLen), Signature);
+    ByteArray input(pData, ulDataLen);
+	pSession->Sign(input, Signature);
 	*pulSignatureLen = (CK_ULONG)Signature.size();
 	return CKR_OK;
 	exit_p11_func
@@ -1208,7 +1220,8 @@ CK_RV CK_ENTRY C_SignUpdate(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_UL
 	if (!pSession->pSignMechanism->SignSupportMultipart())
 		throw p11_error(CKR_KEY_FUNCTION_NOT_PERMITTED);
 
-	pSession->SignUpdate(ByteArray(pPart, ulPartLen));
+    ByteArray input(pPart, ulPartLen);
+	pSession->SignUpdate(input);
 	
 	return CKR_OK;
 	exit_p11_func
@@ -1265,7 +1278,8 @@ CK_RV CK_ENTRY C_SignRecover(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_U
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
 
 	ByteArray Signature(pSignature,*pulSignatureLen);
-	pSession->SignRecover(ByteArray(pData, ulDataLen), Signature);
+    ByteArray input(pData, ulDataLen);
+	pSession->SignRecover(input, Signature);
 	*pulSignatureLen = (CK_ULONG)Signature.size();
 
 	return CKR_OK;
@@ -1324,7 +1338,8 @@ CK_RV CK_ENTRY C_VerifyRecover(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignatur
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
 
 	ByteArray Data(pData,*pulDataLen);
-	pSession->VerifyRecover(ByteArray(pSignature, ulSignatureLen), Data);
+    ByteArray input(pSignature, ulSignatureLen);
+	pSession->VerifyRecover(input, Data);
 	*pulDataLen = (CK_ULONG)Data.size();
 	
 	return CKR_OK;
@@ -1381,7 +1396,9 @@ CK_RV CK_ENTRY C_Verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG 
 	if (pSession == nullptr)
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
 
-	pSession->Verify(ByteArray(pData, ulDataLen), ByteArray(pSignature, ulSignatureLen));
+    ByteArray input(pData, ulDataLen);
+    ByteArray signature(pSignature, ulSignatureLen);
+	pSession->Verify(input, signature);
 
 	return CKR_OK;
 	exit_p11_func
@@ -1409,7 +1426,8 @@ CK_RV CK_ENTRY C_VerifyUpdate(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
 	if (!pSession->pVerifyMechanism->VerifySupportMultipart())
 		throw p11_error(CKR_KEY_FUNCTION_NOT_PERMITTED);
 
-	pSession->VerifyUpdate(ByteArray(pData, ulDataLen));
+    ByteArray input(pData, ulDataLen);
+	pSession->VerifyUpdate(input);
 
 	return CKR_OK;
 	exit_p11_func
@@ -1437,7 +1455,8 @@ CK_RV CK_ENTRY C_VerifyFinal(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature,
 	if (!pSession->pVerifyMechanism->VerifySupportMultipart())
 		throw p11_error(CKR_KEY_FUNCTION_NOT_PERMITTED);
 
-	pSession->VerifyFinal(ByteArray(pSignature, ulSignatureLen));
+    ByteArray input(pSignature, ulSignatureLen);
+	pSession->VerifyFinal(input);
 
 	return CKR_OK;
 	exit_p11_func
@@ -1465,7 +1484,8 @@ CK_RV CK_ENTRY C_Encrypt(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
 
 	ByteArray EncryptedData(pEncryptedData, *pulEncryptedDataLen);
-	pSession->Encrypt(ByteArray(pData, ulDataLen), EncryptedData);
+    ByteArray input(pData, ulDataLen);
+	pSession->Encrypt(input, EncryptedData);
 	*pulEncryptedDataLen = (CK_ULONG)EncryptedData.size();
 
 	return CKR_OK;
@@ -1556,7 +1576,8 @@ CK_RV CK_ENTRY C_EncryptUpdate(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK
 		throw p11_error(CKR_KEY_FUNCTION_NOT_PERMITTED);
 
 	ByteArray EncryptedPart(pEncryptedPart, *pulEncryptedPartLen);
-	pSession->EncryptUpdate(ByteArray(pPart, ulPartLen), EncryptedPart);
+    ByteArray input(pPart, ulPartLen);
+	pSession->EncryptUpdate(input, EncryptedPart);
 	*pulEncryptedPartLen = (CK_ULONG)EncryptedPart.size();
 
 	return CKR_OK;
@@ -1585,7 +1606,8 @@ CK_RV CK_ENTRY C_Decrypt(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData,
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
 
 	ByteArray Data(pData, *pulDataLen);
-	pSession->Decrypt(ByteArray(pEncryptedData, ulEncryptedDataLen), Data);
+    ByteArray input(pEncryptedData, ulEncryptedDataLen);
+	pSession->Decrypt(input, Data);
 	*pulDataLen = (CK_ULONG)Data.size();
 	
 	return CKR_OK;
@@ -1677,7 +1699,8 @@ CK_RV CK_ENTRY C_DecryptUpdate(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncrypte
 		throw p11_error(CKR_KEY_FUNCTION_NOT_PERMITTED);
 
 	ByteArray Part(pPart, *pulPartLen);
-	pSession->DecryptUpdate(ByteArray(pEncryptedPart, ulEncryptedPartLen), Part);
+    ByteArray input(pEncryptedPart, ulEncryptedPartLen);
+	pSession->DecryptUpdate(input, Part);
 	*pulPartLen = (CK_ULONG)Part.size();
 
 	return CKR_OK;
@@ -1771,7 +1794,8 @@ CK_RV CK_ENTRY C_GenerateRandom(CK_SESSION_HANDLE hSession, CK_BYTE_PTR RandomDa
 	if (pSession == nullptr)
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
 	
-	pSession->GenerateRandom(ByteArray(RandomData, ulRandomLen));
+    ByteArray input(RandomData, ulRandomLen);
+	pSession->GenerateRandom(input);
 
 	return CKR_OK;
 	exit_p11_func
@@ -1796,7 +1820,8 @@ CK_RV CK_ENTRY C_InitPIN(CK_SESSION_HANDLE hSession,CK_CHAR_PTR pPin,CK_ULONG ul
 	if (pSession == nullptr)
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
 	
-	pSession->InitPIN(ByteArray(pPin, ulPinLen));
+    ByteArray input(pPin, ulPinLen);
+	pSession->InitPIN(input);
 
 	return CKR_OK;
 	exit_p11_func
@@ -1823,7 +1848,9 @@ CK_RV CK_ENTRY C_SetPIN(CK_SESSION_HANDLE hSession,CK_CHAR_PTR pOldPin,CK_ULONG 
 	if (pSession == nullptr)
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
 	
-	pSession->SetPIN(ByteArray(pOldPin, ulOldLen), ByteArray(pNewPin, ulNewLen));
+    ByteArray inputOld(pOldPin, ulOldLen);
+    ByteArray inputNew(pNewPin, ulNewLen);
+	pSession->SetPIN(inputOld, inputNew);
 
 	return CKR_OK;
 	exit_p11_func
@@ -1908,7 +1935,8 @@ CK_RV CK_ENTRY C_SetOperationState(CK_SESSION_HANDLE hSession,CK_BYTE_PTR pOpera
 	if (hAuthenticationKey != CK_INVALID_HANDLE)
 		throw p11_error(CKR_KEY_NOT_NEEDED);
 
-	pSession->SetOperationState(ByteArray(pOperationState, ulOperationStateLen));
+    ByteArray input(pOperationState, ulOperationStateLen);
+	pSession->SetOperationState(input);
 	
 	return CKR_OK;
 	exit_p11_func

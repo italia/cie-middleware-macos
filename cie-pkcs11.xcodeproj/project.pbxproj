@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E54EF42F2100D91200E2EADD /* libcryptopp.a */; };
 		E5BE7D8C20FE84D200004389 /* cie_pkcs11.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */; };
 		E5BE7D8E20FE84D200004389 /* cie_pkcs11Priv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */; };
 		E5BE7D9020FE84D200004389 /* cie_pkcs11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D8F20FE84D200004389 /* cie_pkcs11.cpp */; };
@@ -37,6 +38,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E54EF42F2100D91200E2EADD /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcryptopp.a; sourceTree = "<group>"; };
+		E54EF4312100D99500E2EADD /* Cryptopp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Cryptopp; sourceTree = "<group>"; };
 		E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libcie-pkcs11.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cie_pkcs11.hpp; sourceTree = "<group>"; };
 		E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cie_pkcs11Priv.hpp; sourceTree = "<group>"; };
@@ -76,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */,
 				E5BE7DC820FE8A9A00004389 /* PCSC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,6 +107,8 @@
 		E5BE7D8A20FE84D200004389 /* cie-pkcs11 */ = {
 			isa = PBXGroup;
 			children = (
+				E54EF42F2100D91200E2EADD /* libcryptopp.a */,
+				E54EF4312100D99500E2EADD /* Cryptopp */,
 				E5BE7DCB20FE8D0E00004389 /* Crypto */,
 				E5BE7DC920FE8B0A00004389 /* PCSC */,
 				E5BE7DC120FE85C800004389 /* Util */,
@@ -371,6 +377,10 @@
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/cie-pkcs11",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -387,6 +397,10 @@
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/cie-pkcs11",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

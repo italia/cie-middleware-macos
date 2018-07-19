@@ -5,7 +5,7 @@
 
 #include "CardTemplate.h"
 #include "../Util/util.h"
-#include "../Util/syncroevent.h"
+#include "../Util/SyncroEvent.h"
 #include <mutex>
 
 static char *szCompiledFile = __FILE__;

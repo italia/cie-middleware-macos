@@ -17,5 +17,11 @@ class CThread
 	void terminateThread();
 	void exitThread(DWORD dwCode);
 	void close();
-	inline static DWORD getID() {return GetCurrentThreadId();}
+#ifdef WIN32
+    inline static DWORD getID() {return GetCurrentThreadId();}
+#else
+    inline static DWORD getID() {return 0;} // TODO implementare
+#endif
+    
+	
 };
