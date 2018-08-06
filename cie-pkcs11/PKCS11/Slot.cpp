@@ -8,12 +8,22 @@
 #include "../Util/SyncroEvent.h"
 #include <mutex>
 
+extern CLog Log;
+
 static char *szCompiledFile = __FILE__;
 //extern CSyncroMutex p11EventMutex;
 extern std::mutex p11Mutex;
 extern auto_reset_event p11slotEvent;
 extern bool bP11Terminate;
 extern bool bP11Initialized;
+
+extern uint8_t NXP_ATR[];
+extern uint8_t Gemalto_ATR[];
+extern uint8_t Gemalto2_ATR[];
+
+extern ByteArray baNXP_ATR;
+extern ByteArray baGemalto_ATR;
+extern ByteArray baGemalto2_ATR;
 
 namespace p11 {
 
@@ -40,10 +50,10 @@ namespace p11 {
 		Final();
 	}
 
-	CK_SLOT_ID CSlot::GetNewSlotID() {
-		init_func
-			return InterlockedIncrement(&dwSlotCnt);
-	}
+//    CK_SLOT_ID CSlot::GetNewSlotID() {
+//        init_func
+//            return InterlockedIncrement(&dwSlotCnt);
+//    }
 
 	static DWORD slotMonitor(SlotMap *pSlotMap)
 	{
@@ -65,7 +75,7 @@ namespace p11 {
 
 					state[i].szReader = it->second->szName.c_str();
 					slot[i] = it->second;
-					if (ris = SCardGetStatusChange(Context, 0, &state[i], 1) != S_OK) {
+					if ((ris = SCardGetStatusChange(Context, 0, &state[i], 1)) != S_OK) {
 						if (ris != SCARD_E_TIMEOUT) {
 							Log.write("Errore nella SCardGetStatusChange - %08X", ris);
 							// non uso la ExitThread!!!
@@ -156,7 +166,7 @@ namespace p11 {
 	CK_SLOT_ID CSlot::AddSlot(std::shared_ptr<CSlot> pSlot)
 	{
 		init_func
-			pSlot->hSlot = GetNewSlotID();
+        pSlot->hSlot = (CK_SLOT_ID)&pSlot;//GetNewSlotID();
 		auto id = pSlot->hSlot;
 		g_mSlots.insert(std::make_pair(pSlot->hSlot, std::move(pSlot)));
 		return id;
@@ -350,12 +360,12 @@ namespace p11 {
 
 		memset(pInfo->slotDescription, ' ', 64);
 		size_t SDLen = min(64, szName.size() - 1);
-		memcpy_s(pInfo->slotDescription, 64, szName.c_str(), SDLen);
+		CryptoPP::memcpy_s(pInfo->slotDescription, 64, szName.c_str(), SDLen);
 
 		memset(pInfo->manufacturerID, ' ', 32);
 		// non so esattamente perchè, ma nella R1 il manufacturerID sono i primi 32 dello slotDescription
 		size_t MIDLen = min(32, szName.size());
-		memcpy_s(pInfo->manufacturerID, 32, szName.c_str(), MIDLen);
+        CryptoPP::memcpy_s(pInfo->manufacturerID, 32, szName.c_str(), MIDLen);
 
 		pInfo->hardwareVersion.major = 0;
 		pInfo->hardwareVersion.minor = 0;
@@ -377,7 +387,7 @@ namespace p11 {
 			throw p11_error(CKR_TOKEN_NOT_RECOGNIZED);
 
 		memset(pInfo->label, ' ', sizeof(pInfo->label));
-		memcpy_s((char*)pInfo->label, 32, pTemplate->szName.c_str(), min(pTemplate->szName.length(), sizeof(pInfo->label)));
+		CryptoPP::memcpy_s((char*)pInfo->label, 32, pTemplate->szName.c_str(), min(pTemplate->szName.length(), sizeof(pInfo->label)));
 		memset(pInfo->manufacturerID, ' ', sizeof(pInfo->manufacturerID));
 
 		std::string manifacturer;
@@ -390,7 +400,7 @@ namespace p11 {
 		else
 			throw p11_error(CKR_TOKEN_NOT_RECOGNIZED);
 
-		memcpy_s((char*)pInfo->manufacturerID, 32, manifacturer.c_str(), manifacturer.size());
+		CryptoPP::memcpy_s((char*)pInfo->manufacturerID, 32, manifacturer.c_str(), manifacturer.size());
 
 		if (baSerial.isEmpty() || pSerialTemplate != pTemplate) {
 			pSerialTemplate = pTemplate;
@@ -402,12 +412,12 @@ namespace p11 {
 
 		memset(pInfo->serialNumber, ' ', sizeof(pInfo->serialNumber));
 		size_t UIDsize = min(sizeof(pInfo->serialNumber), baSerial.size());
-		memcpy_s(pInfo->serialNumber, 16, baSerial.data(), UIDsize);
+		CryptoPP::memcpy_s(pInfo->serialNumber, 16, baSerial.data(), UIDsize);
 
-		memcpy_s((char*)pInfo->label + pTemplate->szName.length() + 1, sizeof(pInfo->label) - pTemplate->szName.length() - 1, baSerial.data(), baSerial.size());
+		CryptoPP::memcpy_s((char*)pInfo->label + pTemplate->szName.length() + 1, sizeof(pInfo->label) - pTemplate->szName.length() - 1, baSerial.data(), baSerial.size());
 
 		memset(pInfo->model, ' ', sizeof(pInfo->model));
-		memcpy_s(pInfo->model, 16, model.c_str(), min(model.length(), sizeof(pInfo->model)));
+		CryptoPP::memcpy_s(pInfo->model, 16, model.c_str(), min(model.length(), sizeof(pInfo->model)));
 
 		CK_FLAGS dwFlags;
 		pTemplate->FunctionList.templateGetTokenFlags(*this, dwFlags);
@@ -435,7 +445,7 @@ namespace p11 {
 		pInfo->firmwareVersion.major = 0;
 		pInfo->firmwareVersion.minor = 0;
 
-		memcpy_s((char*)pInfo->utcTime, 16, "1234567890123456", 16);  // OK
+		CryptoPP::memcpy_s((char*)pInfo->utcTime, 16, "1234567890123456", 16);  // OK
 	}
 
 	void CSlot::CloseAllSessions()
@@ -587,7 +597,7 @@ namespace p11 {
 			// non ho trovato l'oggetto nella mappa degli oggetti;
 			// devo aggiungerlo
 
-			auto hObject = GetNewObjectID();
+            CK_OBJECT_HANDLE hObject = (CK_OBJECT_HANDLE)&pObject;//GetNewObjectID();
 			ObjP11Map[pObject] = hObject;
 			HandleP11Map[hObject] = pObject;
 			return hObject;
@@ -595,10 +605,10 @@ namespace p11 {
 		return pPair->second;
 	}
 
-	CK_OBJECT_HANDLE CSlot::GetNewObjectID() {
-		init_func
-			return InterlockedIncrement(&dwP11ObjCnt);
-	}
+//    CK_OBJECT_HANDLE CSlot::GetNewObjectID() {
+//        init_func
+//            return InterlockedIncrement(&dwP11ObjCnt);
+//    }
 
 	void CSlot::DelObjectHandle(const std::shared_ptr<CP11Object>& pObject)
 	{

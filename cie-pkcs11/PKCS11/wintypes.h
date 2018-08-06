@@ -83,5 +83,9 @@ void SetLastError(unsigned long nErr);
 unsigned long GetLastError();
 int atox(const char* szVal);
 
+#ifndef ERROR_INVALID_HANDLE
+#define ERROR_INVALID_HANDLE 6
+#endif
+
 #define ODS printf
 #endif //__UTILITYTYPES_H

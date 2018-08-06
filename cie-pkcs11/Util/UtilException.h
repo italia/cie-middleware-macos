@@ -12,7 +12,7 @@
 
 class logged_error : public std::runtime_error {
 public:
-	logged_error(std::string &&message) : logged_error(message.c_str()) {}
+    logged_error(std::string message);
 	logged_error(const char *message);
 };
 

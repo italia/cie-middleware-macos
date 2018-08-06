@@ -212,20 +212,20 @@ std::string &dumpHexData(ByteArray &data, std::string &dump);
 std::string &dumpHexData(ByteArray &data, std::string &dump, bool withSpace, bool uppercase = true);
 std::string &dumpHexDataLowerCase(ByteArray &data, std::string &dump);
 
-void PutPaddingBT0(ByteArray &ba, size_t dwLen);
-void PutPaddingBT1(ByteArray &ba, size_t dwLen);
-void PutPaddingBT2(ByteArray &ba, size_t dwLen);
-size_t RemovePaddingBT1(ByteArray &paddedData);
-size_t RemovePaddingBT2(ByteArray &paddedData);
-size_t RemoveISOPad(ByteArray &paddedData);
+void PutPaddingBT0(ByteArray& ba, long dwLen);
+void PutPaddingBT1(ByteArray& ba, unsigned long dwLen);
+void PutPaddingBT2(ByteArray& ba, unsigned long dwLen);
+unsigned long RemovePaddingBT1(ByteArray &paddedData);
+unsigned long RemovePaddingBT2(ByteArray &paddedData);
+unsigned long RemoveISOPad(ByteArray &paddedData);
 
-size_t RemoveSha1(ByteArray &paddedData);
-size_t RemoveSha256(ByteArray &paddedData);
+unsigned long RemoveSha1(ByteArray &paddedData);
+unsigned long RemoveSha256(ByteArray &paddedData);
 
-size_t ANSIPadLen(size_t Len);
-void ANSIPad(ByteArray &Data, size_t DataLen);
-size_t ISOPadLen(size_t Len);
-void ISOPad(const ByteArray &Data, size_t DataLen);
+unsigned long ANSIPadLen(unsigned long Len);
+void ANSIPad(ByteArray &Data, unsigned long DataLen);
+unsigned long ISOPadLen(unsigned long Len);
+void ISOPad(const ByteArray &Data, unsigned long DataLen);
 long ByteArrayToInt(ByteArray &ba);
 const ByteDynArray ISOPad(const ByteArray &data);
 const ByteDynArray ISOPad16(const ByteArray &data);

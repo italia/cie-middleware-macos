@@ -1,9 +1,10 @@
 
+#include "../Util/util.h"
+#include "../Util/TLV.h"
 #include "session.h"
 #include "CardTemplate.h"
-#include "../Util/util.h"
 #include "../Crypto/RSA.h"
-#include "../Util/TLV.h"
+
 
 static char *szCompiledFile = __FILE__;
 
@@ -76,15 +77,15 @@ namespace p11 {
 	}
 
 
-	CK_SLOT_ID CSession::GetNewSessionID() {
-		init_func
-		return InterlockedIncrement(&dwSessionCnt);
-	}
+//    CK_SLOT_ID CSession::GetNewSessionID() {
+//        init_func
+//        return //InterlockedIncrement(&dwSessionCnt);
+//    }
 
 	CK_SESSION_HANDLE CSession::AddSession(std::unique_ptr<CSession> pSession)
 	{
 		init_func
-		pSession->hSessionHandle = GetNewSessionID();
+        pSession->hSessionHandle = (CK_SESSION_HANDLE)&pSession;//GetNewSessionID();
 		auto id = pSession->hSessionHandle;
 
 		pSession->pSlot->pTemplate->FunctionList.templateInitSession(pSession->pSlot->pTemplateData);
@@ -1055,7 +1056,9 @@ namespace p11 {
 			throw p11_error(CKR_OPERATION_NOT_INITIALIZED);
 
 		auto mech = make_resetter(pDecryptMechanism);
-		bool bFound = pDecryptMechanism->checkCache(ByteArray(), Data);
+        
+        ByteArray ba;
+		bool bFound = pDecryptMechanism->checkCache(ba, Data);
 
 		if (bFound)
 			return;
@@ -1083,18 +1086,18 @@ namespace p11 {
 		ByteDynArray baUnpaddedData = pDecryptMechanism->DecryptRemovePadding(baData);
 
 		if (Data.isNull()) {
-			pDecryptMechanism->setCache(ByteArray(), baUnpaddedData);
+			pDecryptMechanism->setCache(ba, baUnpaddedData);
 			Data = Data.left(baUnpaddedData.size());
 			mech.release();
 		}
 		else if (Data.size()<baUnpaddedData.size()) {
-			pDecryptMechanism->setCache(ByteArray(), baUnpaddedData);
+			pDecryptMechanism->setCache(ba, baUnpaddedData);
 			Data = Data.left(baUnpaddedData.size());
 			mech.release();
 			throw p11_error(CKR_BUFFER_TOO_SMALL);
 		}
 		else {
-			pDecryptMechanism->setCache(ByteArray(), baUnpaddedData);
+			pDecryptMechanism->setCache(ba, baUnpaddedData);
 			Data.copy(baUnpaddedData);
 			Data = Data.left(baUnpaddedData.size());
 		}
@@ -1298,11 +1301,15 @@ namespace p11 {
 		init_func
 
 			CTLVCreate Tlv;
-		Tlv.setValue(OS_Flags, ByteArray((BYTE*)&flags, sizeof(flags)));
-		Tlv.setValue(OS_User, ByteArray((BYTE*)&pSlot->User, sizeof(pSlot->User)));
+        
+        ByteArray baFlags((BYTE*)&flags, sizeof(flags));
+		Tlv.setValue(OS_Flags, baFlags);
+        ByteArray baUser((BYTE*)&pSlot->User, sizeof(pSlot->User));
+		Tlv.setValue(OS_User, baUser);
 		if (pSignMechanism) {
 			CTLVCreate SignTlv;
-			SignTlv.setValue(OS_Algo, ByteArray((BYTE*)&pSignMechanism->mtType, sizeof(pSignMechanism->mtType)));
+            ByteArray baMechanism((BYTE*)&pSignMechanism->mtType, sizeof(pSignMechanism->mtType));
+			SignTlv.setValue(OS_Algo, baMechanism);
 			ByteDynArray SignData = pSignMechanism->SignGetOperationState();
 			if (!SignData.isEmpty())
 				SignTlv.setValue(OS_Data, SignData);
@@ -1318,7 +1325,8 @@ namespace p11 {
 		}
 		if (pVerifyMechanism) {
 			CTLVCreate VerifyTlv;
-			VerifyTlv.setValue(OS_Algo, ByteArray((BYTE*)&pVerifyMechanism->mtType, sizeof(pVerifyMechanism->mtType)));
+            ByteArray baMechanism((BYTE*)&pVerifyMechanism->mtType, sizeof(pVerifyMechanism->mtType));
+			VerifyTlv.setValue(OS_Algo, baMechanism);
 			ByteDynArray verifyData = pVerifyMechanism->VerifyGetOperationState();
 			if (!verifyData.isEmpty())
 				VerifyTlv.setValue(OS_Data, verifyData);
@@ -1335,7 +1343,8 @@ namespace p11 {
 		}
 		if (pDigestMechanism) {
 			CTLVCreate DigestTlv;
-			DigestTlv.setValue(OS_Algo, ByteArray((BYTE*)&pDigestMechanism->mtType, sizeof(pDigestMechanism->mtType)));
+            ByteArray baMechanism((BYTE*)&pDigestMechanism->mtType, sizeof(pDigestMechanism->mtType));
+			DigestTlv.setValue(OS_Algo, baMechanism);
 			ByteDynArray DigestData = pDigestMechanism->DigestGetOperationState();
 			if (!DigestData.isEmpty())
 				DigestTlv.setValue(OS_Data, DigestData);
@@ -1345,7 +1354,8 @@ namespace p11 {
 		}
 		if (pEncryptMechanism) {
 			CTLVCreate EncryptTlv;
-			EncryptTlv.setValue(OS_Algo, ByteArray((BYTE*)&pEncryptMechanism->mtType, sizeof(pEncryptMechanism->mtType)));
+            ByteArray baMechanism((BYTE*)&pEncryptMechanism->mtType, sizeof(pEncryptMechanism->mtType));
+			EncryptTlv.setValue(OS_Algo, baMechanism);
 			ByteDynArray EncryptData = pEncryptMechanism->EncryptGetOperationState();
 			if (!EncryptData.isEmpty())
 				EncryptTlv.setValue(OS_Data, EncryptData);
@@ -1362,7 +1372,8 @@ namespace p11 {
 		}
 		if (pDecryptMechanism) {
 			CTLVCreate DecryptTlv;
-			DecryptTlv.setValue(OS_Algo, ByteArray((BYTE*)&pDecryptMechanism->mtType, sizeof(pDecryptMechanism->mtType)));
+            ByteArray baMechanism((BYTE*)&pDecryptMechanism->mtType, sizeof(pDecryptMechanism->mtType));
+			DecryptTlv.setValue(OS_Algo, baMechanism);
 			ByteDynArray DecryptData = pDecryptMechanism->DecryptGetOperationState();
 			if (!DecryptData.isEmpty())
 				DecryptTlv.setValue(OS_Data, DecryptData);

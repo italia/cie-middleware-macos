@@ -7,7 +7,62 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5CA6E27FF73910B2FFB64484 /* libPods-cie-pkcs11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */; };
 		E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E54EF42F2100D91200E2EADD /* libcryptopp.a */; };
+		E565901F211864470039865C /* Array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5658FF9211864470039865C /* Array.cpp */; };
+		E5659020211864470039865C /* Array.h in Headers */ = {isa = PBXBuildFile; fileRef = E5658FFA211864470039865C /* Array.h */; };
+		E565902D211864470039865C /* defines.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659008211864470039865C /* defines.h */; };
+		E565902E211864470039865C /* funccallinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659009211864470039865C /* funccallinfo.cpp */; };
+		E565902F211864470039865C /* funccallinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = E565900A211864470039865C /* funccallinfo.h */; };
+		E5659030211864470039865C /* IniSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565900B211864470039865C /* IniSettings.cpp */; };
+		E5659031211864470039865C /* IniSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = E565900C211864470039865C /* IniSettings.h */; };
+		E5659032211864470039865C /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565900D211864470039865C /* log.cpp */; };
+		E5659033211864470039865C /* log.h in Headers */ = {isa = PBXBuildFile; fileRef = E565900E211864470039865C /* log.h */; };
+		E5659034211864470039865C /* ModuleInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565900F211864470039865C /* ModuleInfo.cpp */; };
+		E5659035211864470039865C /* ModuleInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659010211864470039865C /* ModuleInfo.h */; };
+		E5659036211864470039865C /* SyncroEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659011211864470039865C /* SyncroEvent.cpp */; };
+		E5659037211864470039865C /* SyncroEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659012211864470039865C /* SyncroEvent.h */; };
+		E5659038211864470039865C /* SyncroMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659013211864470039865C /* SyncroMutex.cpp */; };
+		E5659039211864470039865C /* SyncroMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659014211864470039865C /* SyncroMutex.h */; };
+		E565903C211864470039865C /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659017211864470039865C /* tinyxml2.cpp */; };
+		E565903D211864470039865C /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659018211864470039865C /* tinyxml2.h */; };
+		E565903E211864470039865C /* TLV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659019211864470039865C /* TLV.cpp */; };
+		E565903F211864470039865C /* TLV.h in Headers */ = {isa = PBXBuildFile; fileRef = E565901A211864470039865C /* TLV.h */; };
+		E5659040211864470039865C /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565901B211864470039865C /* util.cpp */; };
+		E5659041211864470039865C /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = E565901C211864470039865C /* util.h */; };
+		E5659042211864470039865C /* UtilException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565901D211864470039865C /* UtilException.cpp */; };
+		E5659043211864470039865C /* UtilException.h in Headers */ = {isa = PBXBuildFile; fileRef = E565901E211864470039865C /* UtilException.h */; };
+		E5659048211875760039865C /* ExtAuthKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659045211875760039865C /* ExtAuthKey.cpp */; };
+		E5659049211875760039865C /* IAS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659046211875760039865C /* IAS.cpp */; };
+		E565904A211875760039865C /* IAS.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659047211875760039865C /* IAS.h */; };
+		E5659054211875830039865C /* APDU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565904C211875830039865C /* APDU.cpp */; };
+		E5659055211875830039865C /* APDU.h in Headers */ = {isa = PBXBuildFile; fileRef = E565904D211875830039865C /* APDU.h */; };
+		E5659056211875830039865C /* CardLocker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565904E211875830039865C /* CardLocker.cpp */; };
+		E5659057211875830039865C /* CardLocker.h in Headers */ = {isa = PBXBuildFile; fileRef = E565904F211875830039865C /* CardLocker.h */; };
+		E5659058211875830039865C /* PCSC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659050211875830039865C /* PCSC.cpp */; };
+		E5659059211875830039865C /* PCSC.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659051211875830039865C /* PCSC.h */; };
+		E565905A211875830039865C /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659052211875830039865C /* Token.cpp */; };
+		E565905B211875830039865C /* Token.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659053211875830039865C /* Token.h */; };
+		E5659071211875950039865C /* AES.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565905D211875940039865C /* AES.cpp */; };
+		E5659072211875950039865C /* AES.h in Headers */ = {isa = PBXBuildFile; fileRef = E565905E211875940039865C /* AES.h */; };
+		E5659073211875950039865C /* ASNParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565905F211875940039865C /* ASNParser.cpp */; };
+		E5659074211875950039865C /* ASNParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659060211875940039865C /* ASNParser.h */; };
+		E5659075211875950039865C /* Base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659061211875940039865C /* Base64.cpp */; };
+		E5659076211875950039865C /* Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659062211875940039865C /* Base64.h */; };
+		E5659077211875950039865C /* DES3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659063211875940039865C /* DES3.cpp */; };
+		E5659078211875950039865C /* DES3.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659064211875940039865C /* DES3.h */; };
+		E5659079211875950039865C /* MAC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659065211875940039865C /* MAC.cpp */; };
+		E565907A211875950039865C /* MAC.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659066211875940039865C /* MAC.h */; };
+		E565907B211875950039865C /* MD5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659067211875940039865C /* MD5.cpp */; };
+		E565907C211875950039865C /* MD5.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659068211875940039865C /* MD5.h */; };
+		E565907D211875950039865C /* RSA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659069211875940039865C /* RSA.cpp */; };
+		E565907E211875950039865C /* RSA.h in Headers */ = {isa = PBXBuildFile; fileRef = E565906A211875940039865C /* RSA.h */; };
+		E565907F211875950039865C /* SHA1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565906B211875940039865C /* SHA1.cpp */; };
+		E5659080211875950039865C /* SHA1.h in Headers */ = {isa = PBXBuildFile; fileRef = E565906C211875940039865C /* SHA1.h */; };
+		E5659081211875950039865C /* SHA256.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565906D211875940039865C /* SHA256.cpp */; };
+		E5659082211875950039865C /* sha256.h in Headers */ = {isa = PBXBuildFile; fileRef = E565906E211875940039865C /* sha256.h */; };
+		E5659083211875950039865C /* SHA512.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565906F211875940039865C /* SHA512.cpp */; };
+		E5659084211875950039865C /* sha512.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659070211875940039865C /* sha512.h */; };
 		E5BE7D8C20FE84D200004389 /* cie_pkcs11.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */; };
 		E5BE7D8E20FE84D200004389 /* cie_pkcs11Priv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */; };
 		E5BE7D9020FE84D200004389 /* cie_pkcs11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D8F20FE84D200004389 /* cie_pkcs11.cpp */; };
@@ -38,8 +93,65 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cie-pkcs11.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.release.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.release.xcconfig"; sourceTree = "<group>"; };
+		79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.debug.xcconfig"; sourceTree = "<group>"; };
 		E54EF42F2100D91200E2EADD /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcryptopp.a; sourceTree = "<group>"; };
 		E54EF4312100D99500E2EADD /* Cryptopp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Cryptopp; sourceTree = "<group>"; };
+		E5658FF9211864470039865C /* Array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Array.cpp; sourceTree = "<group>"; };
+		E5658FFA211864470039865C /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Array.h; sourceTree = "<group>"; };
+		E5659008211864470039865C /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		E5659009211864470039865C /* funccallinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = funccallinfo.cpp; sourceTree = "<group>"; };
+		E565900A211864470039865C /* funccallinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = funccallinfo.h; sourceTree = "<group>"; };
+		E565900B211864470039865C /* IniSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IniSettings.cpp; sourceTree = "<group>"; };
+		E565900C211864470039865C /* IniSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IniSettings.h; sourceTree = "<group>"; };
+		E565900D211864470039865C /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = log.cpp; sourceTree = "<group>"; };
+		E565900E211864470039865C /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
+		E565900F211864470039865C /* ModuleInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModuleInfo.cpp; sourceTree = "<group>"; };
+		E5659010211864470039865C /* ModuleInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModuleInfo.h; sourceTree = "<group>"; };
+		E5659011211864470039865C /* SyncroEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SyncroEvent.cpp; sourceTree = "<group>"; };
+		E5659012211864470039865C /* SyncroEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncroEvent.h; sourceTree = "<group>"; };
+		E5659013211864470039865C /* SyncroMutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SyncroMutex.cpp; sourceTree = "<group>"; };
+		E5659014211864470039865C /* SyncroMutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncroMutex.h; sourceTree = "<group>"; };
+		E5659017211864470039865C /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
+		E5659018211864470039865C /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
+		E5659019211864470039865C /* TLV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TLV.cpp; sourceTree = "<group>"; };
+		E565901A211864470039865C /* TLV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLV.h; sourceTree = "<group>"; };
+		E565901B211864470039865C /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = util.cpp; sourceTree = "<group>"; };
+		E565901C211864470039865C /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
+		E565901D211864470039865C /* UtilException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UtilException.cpp; sourceTree = "<group>"; };
+		E565901E211864470039865C /* UtilException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UtilException.h; sourceTree = "<group>"; };
+		E5659045211875760039865C /* ExtAuthKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtAuthKey.cpp; sourceTree = "<group>"; };
+		E5659046211875760039865C /* IAS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IAS.cpp; sourceTree = "<group>"; };
+		E5659047211875760039865C /* IAS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAS.h; sourceTree = "<group>"; };
+		E565904C211875830039865C /* APDU.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = APDU.cpp; sourceTree = "<group>"; };
+		E565904D211875830039865C /* APDU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDU.h; sourceTree = "<group>"; };
+		E565904E211875830039865C /* CardLocker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardLocker.cpp; sourceTree = "<group>"; };
+		E565904F211875830039865C /* CardLocker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardLocker.h; sourceTree = "<group>"; };
+		E5659050211875830039865C /* PCSC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PCSC.cpp; sourceTree = "<group>"; };
+		E5659051211875830039865C /* PCSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCSC.h; sourceTree = "<group>"; };
+		E5659052211875830039865C /* Token.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Token.cpp; sourceTree = "<group>"; };
+		E5659053211875830039865C /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
+		E565905D211875940039865C /* AES.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AES.cpp; sourceTree = "<group>"; };
+		E565905E211875940039865C /* AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AES.h; sourceTree = "<group>"; };
+		E565905F211875940039865C /* ASNParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ASNParser.cpp; sourceTree = "<group>"; };
+		E5659060211875940039865C /* ASNParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASNParser.h; sourceTree = "<group>"; };
+		E5659061211875940039865C /* Base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base64.cpp; sourceTree = "<group>"; };
+		E5659062211875940039865C /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		E5659063211875940039865C /* DES3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DES3.cpp; sourceTree = "<group>"; };
+		E5659064211875940039865C /* DES3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DES3.h; sourceTree = "<group>"; };
+		E5659065211875940039865C /* MAC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MAC.cpp; sourceTree = "<group>"; };
+		E5659066211875940039865C /* MAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAC.h; sourceTree = "<group>"; };
+		E5659067211875940039865C /* MD5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MD5.cpp; sourceTree = "<group>"; };
+		E5659068211875940039865C /* MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5.h; sourceTree = "<group>"; };
+		E5659069211875940039865C /* RSA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSA.cpp; sourceTree = "<group>"; };
+		E565906A211875940039865C /* RSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSA.h; sourceTree = "<group>"; };
+		E565906B211875940039865C /* SHA1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SHA1.cpp; sourceTree = "<group>"; };
+		E565906C211875940039865C /* SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA1.h; sourceTree = "<group>"; };
+		E565906D211875940039865C /* SHA256.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SHA256.cpp; sourceTree = "<group>"; };
+		E565906E211875940039865C /* sha256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha256.h; sourceTree = "<group>"; };
+		E565906F211875940039865C /* SHA512.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SHA512.cpp; sourceTree = "<group>"; };
+		E5659070211875940039865C /* sha512.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha512.h; sourceTree = "<group>"; };
 		E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libcie-pkcs11.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cie_pkcs11.hpp; sourceTree = "<group>"; };
 		E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cie_pkcs11Priv.hpp; sourceTree = "<group>"; };
@@ -65,13 +177,9 @@
 		E5BE7DBB20FE858500004389 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11f.h; sourceTree = "<group>"; };
 		E5BE7DBC20FE858500004389 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11t.h; sourceTree = "<group>"; };
 		E5BE7DBD20FE858500004389 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11.h; sourceTree = "<group>"; };
-		E5BE7DC120FE85C800004389 /* Util */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Util; sourceTree = "<group>"; };
 		E5BE7DC220FE86DC00004389 /* win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32.h; sourceTree = "<group>"; };
 		E5BE7DC420FE883300004389 /* wintypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wintypes.h; sourceTree = "<group>"; };
 		E5BE7DC720FE8A9A00004389 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
-		E5BE7DC920FE8B0A00004389 /* PCSC */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PCSC; sourceTree = "<group>"; };
-		E5BE7DCA20FE8CF100004389 /* CSP */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CSP; sourceTree = "<group>"; };
-		E5BE7DCB20FE8D0E00004389 /* Crypto */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Crypto; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,18 +189,111 @@
 			files = (
 				E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */,
 				E5BE7DC820FE8A9A00004389 /* PCSC.framework in Frameworks */,
+				5CA6E27FF73910B2FFB64484 /* libPods-cie-pkcs11.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B7FB7DAC107919BD2BEDD28E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */,
+				438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E5658FF8211864470039865C /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				E5658FF9211864470039865C /* Array.cpp */,
+				E5658FFA211864470039865C /* Array.h */,
+				E5659008211864470039865C /* defines.h */,
+				E5659009211864470039865C /* funccallinfo.cpp */,
+				E565900A211864470039865C /* funccallinfo.h */,
+				E565900B211864470039865C /* IniSettings.cpp */,
+				E565900C211864470039865C /* IniSettings.h */,
+				E565900D211864470039865C /* log.cpp */,
+				E565900E211864470039865C /* log.h */,
+				E565900F211864470039865C /* ModuleInfo.cpp */,
+				E5659010211864470039865C /* ModuleInfo.h */,
+				E5659011211864470039865C /* SyncroEvent.cpp */,
+				E5659012211864470039865C /* SyncroEvent.h */,
+				E5659013211864470039865C /* SyncroMutex.cpp */,
+				E5659014211864470039865C /* SyncroMutex.h */,
+				E5659017211864470039865C /* tinyxml2.cpp */,
+				E5659018211864470039865C /* tinyxml2.h */,
+				E5659019211864470039865C /* TLV.cpp */,
+				E565901A211864470039865C /* TLV.h */,
+				E565901B211864470039865C /* util.cpp */,
+				E565901C211864470039865C /* util.h */,
+				E565901D211864470039865C /* UtilException.cpp */,
+				E565901E211864470039865C /* UtilException.h */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		E5659044211875760039865C /* CSP */ = {
+			isa = PBXGroup;
+			children = (
+				E5659045211875760039865C /* ExtAuthKey.cpp */,
+				E5659046211875760039865C /* IAS.cpp */,
+				E5659047211875760039865C /* IAS.h */,
+			);
+			path = CSP;
+			sourceTree = "<group>";
+		};
+		E565904B211875830039865C /* PCSC */ = {
+			isa = PBXGroup;
+			children = (
+				E565904C211875830039865C /* APDU.cpp */,
+				E565904D211875830039865C /* APDU.h */,
+				E565904E211875830039865C /* CardLocker.cpp */,
+				E565904F211875830039865C /* CardLocker.h */,
+				E5659050211875830039865C /* PCSC.cpp */,
+				E5659051211875830039865C /* PCSC.h */,
+				E5659052211875830039865C /* Token.cpp */,
+				E5659053211875830039865C /* Token.h */,
+			);
+			path = PCSC;
+			sourceTree = "<group>";
+		};
+		E565905C211875940039865C /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				E565905D211875940039865C /* AES.cpp */,
+				E565905E211875940039865C /* AES.h */,
+				E565905F211875940039865C /* ASNParser.cpp */,
+				E5659060211875940039865C /* ASNParser.h */,
+				E5659061211875940039865C /* Base64.cpp */,
+				E5659062211875940039865C /* Base64.h */,
+				E5659063211875940039865C /* DES3.cpp */,
+				E5659064211875940039865C /* DES3.h */,
+				E5659065211875940039865C /* MAC.cpp */,
+				E5659066211875940039865C /* MAC.h */,
+				E5659067211875940039865C /* MD5.cpp */,
+				E5659068211875940039865C /* MD5.h */,
+				E5659069211875940039865C /* RSA.cpp */,
+				E565906A211875940039865C /* RSA.h */,
+				E565906B211875940039865C /* SHA1.cpp */,
+				E565906C211875940039865C /* SHA1.h */,
+				E565906D211875940039865C /* SHA256.cpp */,
+				E565906E211875940039865C /* sha256.h */,
+				E565906F211875940039865C /* SHA512.cpp */,
+				E5659070211875940039865C /* sha512.h */,
+			);
+			path = Crypto;
+			sourceTree = "<group>";
+		};
 		E5BE7D7F20FE84D200004389 = {
 			isa = PBXGroup;
 			children = (
 				E5BE7D8A20FE84D200004389 /* cie-pkcs11 */,
 				E5BE7D8920FE84D200004389 /* Products */,
 				E5BE7DC620FE8A9A00004389 /* Frameworks */,
+				B7FB7DAC107919BD2BEDD28E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,10 +310,10 @@
 			children = (
 				E54EF42F2100D91200E2EADD /* libcryptopp.a */,
 				E54EF4312100D99500E2EADD /* Cryptopp */,
-				E5BE7DCB20FE8D0E00004389 /* Crypto */,
-				E5BE7DC920FE8B0A00004389 /* PCSC */,
-				E5BE7DC120FE85C800004389 /* Util */,
-				E5BE7DCA20FE8CF100004389 /* CSP */,
+				E565905C211875940039865C /* Crypto */,
+				E565904B211875830039865C /* PCSC */,
+				E5659044211875760039865C /* CSP */,
+				E5658FF8211864470039865C /* Util */,
 				E5BE7D9620FE853800004389 /* PKCS11 */,
 				E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */,
 				E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */,
@@ -155,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				E5BE7DC720FE8A9A00004389 /* PCSC.framework */,
+				228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -166,21 +368,48 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5659055211875830039865C /* APDU.h in Headers */,
+				E565907E211875950039865C /* RSA.h in Headers */,
 				E5BE7DC320FE86DC00004389 /* win32.h in Headers */,
 				E5BE7DBA20FE853800004389 /* Slot.h in Headers */,
+				E565905B211875830039865C /* Token.h in Headers */,
 				E5BE7D8E20FE84D200004389 /* cie_pkcs11Priv.hpp in Headers */,
 				E5BE7DC520FE883300004389 /* wintypes.h in Headers */,
+				E5659059211875830039865C /* PCSC.h in Headers */,
+				E5659078211875950039865C /* DES3.h in Headers */,
 				E5BE7DAA20FE853800004389 /* CardContext.h in Headers */,
+				E5659072211875950039865C /* AES.h in Headers */,
 				E5BE7DB420FE853800004389 /* P11Object.h in Headers */,
+				E5659039211864470039865C /* SyncroMutex.h in Headers */,
+				E565902D211864470039865C /* defines.h in Headers */,
+				E565902F211864470039865C /* funccallinfo.h in Headers */,
 				E5BE7DB620FE853800004389 /* PKCS11Functions.h in Headers */,
+				E5659041211864470039865C /* util.h in Headers */,
 				E5BE7DAC20FE853800004389 /* CardTemplate.h in Headers */,
+				E5659020211864470039865C /* Array.h in Headers */,
 				E5BE7DB220FE853800004389 /* Mechanism.h in Headers */,
+				E5659074211875950039865C /* ASNParser.h in Headers */,
 				E5BE7DC020FE858600004389 /* pkcs11.h in Headers */,
+				E5659043211864470039865C /* UtilException.h in Headers */,
 				E5BE7DB020FE853800004389 /* InitP11.h in Headers */,
 				E5BE7DBE20FE858600004389 /* pkcs11f.h in Headers */,
 				E5BE7DBF20FE858600004389 /* pkcs11t.h in Headers */,
 				E5BE7D8C20FE84D200004389 /* cie_pkcs11.hpp in Headers */,
+				E565903F211864470039865C /* TLV.h in Headers */,
 				E5BE7DAE20FE853800004389 /* CIEP11Template.h in Headers */,
+				E5659084211875950039865C /* sha512.h in Headers */,
+				E5659076211875950039865C /* Base64.h in Headers */,
+				E5659037211864470039865C /* SyncroEvent.h in Headers */,
+				E565907A211875950039865C /* MAC.h in Headers */,
+				E5659080211875950039865C /* SHA1.h in Headers */,
+				E5659035211864470039865C /* ModuleInfo.h in Headers */,
+				E5659033211864470039865C /* log.h in Headers */,
+				E5659082211875950039865C /* sha256.h in Headers */,
+				E5659031211864470039865C /* IniSettings.h in Headers */,
+				E5659057211875830039865C /* CardLocker.h in Headers */,
+				E565903D211864470039865C /* tinyxml2.h in Headers */,
+				E565907C211875950039865C /* MD5.h in Headers */,
+				E565904A211875760039865C /* IAS.h in Headers */,
 				E5BE7DB820FE853800004389 /* session.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,9 +421,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5BE7D9320FE84D200004389 /* Build configuration list for PBXNativeTarget "cie-pkcs11" */;
 			buildPhases = (
+				51235AD0B0EC5D7CC97C0CAE /* [CP] Check Pods Manifest.lock */,
 				E5BE7D8420FE84D200004389 /* Sources */,
 				E5BE7D8520FE84D200004389 /* Frameworks */,
 				E5BE7D8620FE84D200004389 /* Headers */,
+				8A8865E07180174E58CCB0AD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -236,21 +467,84 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		51235AD0B0EC5D7CC97C0CAE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-cie-pkcs11-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A8865E07180174E58CCB0AD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E5BE7D8420FE84D200004389 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5659049211875760039865C /* IAS.cpp in Sources */,
 				E5BE7DB520FE853800004389 /* PKCS11Functions.cpp in Sources */,
+				E5659058211875830039865C /* PCSC.cpp in Sources */,
+				E5659032211864470039865C /* log.cpp in Sources */,
+				E5659054211875830039865C /* APDU.cpp in Sources */,
+				E5659071211875950039865C /* AES.cpp in Sources */,
+				E565907D211875950039865C /* RSA.cpp in Sources */,
 				E5BE7DB320FE853800004389 /* P11Object.cpp in Sources */,
+				E5659048211875760039865C /* ExtAuthKey.cpp in Sources */,
+				E565903E211864470039865C /* TLV.cpp in Sources */,
+				E5659079211875950039865C /* MAC.cpp in Sources */,
 				E5BE7DB720FE853800004389 /* session.cpp in Sources */,
+				E5659073211875950039865C /* ASNParser.cpp in Sources */,
+				E565901F211864470039865C /* Array.cpp in Sources */,
+				E5659075211875950039865C /* Base64.cpp in Sources */,
 				E5BE7D9020FE84D200004389 /* cie_pkcs11.cpp in Sources */,
 				E5BE7DAF20FE853800004389 /* initP11.cpp in Sources */,
+				E565902E211864470039865C /* funccallinfo.cpp in Sources */,
+				E5659034211864470039865C /* ModuleInfo.cpp in Sources */,
+				E565907B211875950039865C /* MD5.cpp in Sources */,
 				E5BE7DA920FE853800004389 /* CardContext.cpp in Sources */,
+				E5659077211875950039865C /* DES3.cpp in Sources */,
+				E565903C211864470039865C /* tinyxml2.cpp in Sources */,
+				E5659036211864470039865C /* SyncroEvent.cpp in Sources */,
+				E565907F211875950039865C /* SHA1.cpp in Sources */,
+				E5659040211864470039865C /* util.cpp in Sources */,
+				E5659030211864470039865C /* IniSettings.cpp in Sources */,
 				E5BE7DAD20FE853800004389 /* CIEP11Template.cpp in Sources */,
+				E5659083211875950039865C /* SHA512.cpp in Sources */,
+				E5659056211875830039865C /* CardLocker.cpp in Sources */,
 				E5BE7DAB20FE853800004389 /* CardTemplate.cpp in Sources */,
 				E5BE7DB120FE853800004389 /* Mechanism.cpp in Sources */,
+				E5659042211864470039865C /* UtilException.cpp in Sources */,
+				E5659081211875950039865C /* SHA256.cpp in Sources */,
+				E565905A211875830039865C /* Token.cpp in Sources */,
 				E5BE7DB920FE853800004389 /* Slot.cpp in Sources */,
+				E5659038211864470039865C /* SyncroMutex.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +662,7 @@
 		};
 		E5BE7D9420FE84D200004389 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UV5M7CH7SB;
@@ -388,6 +683,7 @@
 		};
 		E5BE7D9520FE84D200004389 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UV5M7CH7SB;

@@ -1,5 +1,6 @@
-#include "../stdafx.h"
-#include "mac.h"
+
+#include "MAC.h"
+#include "../Cryptopp/hmac.h"
 
 static char *szCompiledFile=__FILE__;
 
@@ -85,7 +86,7 @@ ByteDynArray CMAC::Mac(const ByteArray &data)
 }
 #else
 
-void CMAC::Init(ByteArray &key)
+void CMAC::Init(const ByteArray &key, const ByteArray &iv)
 {
 	init_func
 	size_t KeySize = key.size();
@@ -94,7 +95,7 @@ void CMAC::Init(ByteArray &key)
 
 	ER_ASSERT(KeySize >= 8 && KeySize <= 24, "Errore nella lunghezza della chiave MAC (<8 o >24)")
 	des_cblock *keyVal1 = nullptr, *keyVal2 = nullptr, *keyVal3 = nullptr;
-	memcpy_s(initVec, sizeof(des_cblock), iv.data(), 8);
+    CryptoPP::memcpy_s(initVec, sizeof(des_cblock), iv.data(), 8);
 
 	switch (KeySize) {
 	case 8:

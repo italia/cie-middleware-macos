@@ -1,6 +1,8 @@
 
+#include "PCSC.h"
 #include "../Util/UtilException.h"
 #include <thread>
+#include <unistd.h>
 
 struct transData {
 	SCARDCONTEXT context;
@@ -19,7 +21,7 @@ safeTransaction::safeTransaction(safeConnection &conn, DWORD dwDisposition) {
 	td->started = false;
 	auto thread = std::thread([td]() {
 		for (int i = 0; i < 10; i++) {
-			Sleep(500);
+			sleep(500);
 			if (td->started) {
 				return 0;
 			}
@@ -96,16 +98,29 @@ readerMonitor::readerMonitor(void(*eventHandler)(std::string &reader, bool inser
 
 		auto loadReaderList = [&]() -> void {
 			char *readers = nullptr;
-			DWORD len = SCARD_AUTOALLOCATE;
-			if (SCardListReaders(rm->hContext, nullptr, (char*)&readers, &len) != SCARD_S_SUCCESS || readers == nullptr) {
-				throw logged_error("Nessun lettore installato");
-			}
+            DWORD len = 0;
+            
+#ifdef SCARD_AUTOALLOCATE
+            dwReaders = SCARD_AUTOALLOCATE;
+            
+            if (SCardListReaders(rm->hContext, nullptr, (char*)&readers, &len) != SCARD_S_SUCCESS || readers == nullptr) {
+                throw logged_error("Nessun lettore installato");
+            }
+#else
+            LONG rv = SCardListReaders(rm->hContext, NULL, NULL, &len);
+            
+            readers = (char*)calloc(len, sizeof(char));
+            rv = SCardListReaders(rm->hContext, NULL, readers, &len);
+#endif
+            
+            		          
 			char *curReader = readers;
 			readerList.clear();
 			for (; curReader[0] != 0; curReader += strnlen(curReader, len) + 1)
 				readerList.push_back(std::string(curReader));
-
+#ifdef SCARD_AUTOALLOCATE
 			SCardFreeMemory(rm->hContext, readers);
+#endif
 			states.resize((DWORD)readerList.size() + 1);
 			for (DWORD i = 0; i < readerList.size(); i++) {
 				states[i].szReader = readerList[i].c_str();

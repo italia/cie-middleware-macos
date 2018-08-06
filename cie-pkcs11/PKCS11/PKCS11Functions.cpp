@@ -22,6 +22,8 @@
 
 static char *szCompiledFile=__FILE__;
 
+CLog Log;
+
 // flag: P11 inizializzato
 bool bP11Initialized=false;
 bool bP11Terminate=false;

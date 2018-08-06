@@ -7,7 +7,9 @@
 #define AES_BLOCK_SIZE 16
 
 #else
-#include "../Cryptopp/aes.h"
+#import <openssl/aes.h>
+//#include <OpenSSL-Static/aes.h>
+//#include "../Cryptopp/aes.h"
 #endif
 #include "../Util/util.h"
 #include "../Util/UtilException.h"

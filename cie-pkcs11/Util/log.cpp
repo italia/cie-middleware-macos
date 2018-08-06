@@ -5,12 +5,12 @@
 #include <sstream>
 #include <iomanip>
 #include "log.h"
-#include "DbgHelp.h"
 #include "UtilException.h"
-#include "Thread.h"
+//#include "Thread.h"
 #include "IniSettings.h"
 #include <thread>
-
+#include <stdio.h>
+#include <unistd.h>
 
 static char *szCompiledFile=__FILE__;
 
@@ -26,7 +26,6 @@ const char *logGlobalVersion;
 unsigned int GlobalModuleNum=1;
 unsigned int GlobalCount;
 unsigned int GlobalDepth = 0;
-CLog Log;
 
 enum logMode {
 	LM_Single,	// un solo file
@@ -74,7 +73,7 @@ void initLog(const char *iniFile,const char *version) {
 	char SectionName[30];
 	int numMod=1;
 	while (true) {
-		sprintf_s(SectionName,30,"%s%i","LogModule",numMod);
+		sprintf(SectionName,"%s%i","LogModule",numMod);
 		std::string modName;
 
 		(IniSettingsString(SectionName, "Name", "", "Nome della sezione log di log")).GetValue((char*)iniFile, modName);
@@ -129,12 +128,13 @@ void CLog::initParam(CLog &log) {
 
 	ModuleNum=GlobalModuleNum;
 	GlobalModuleNum++;
+    
+    std::stringstream th;
+    th << std::setw(8) << std::setfill('0');
 
+#ifdef WIN32
 	SYSTEMTIME  stTime;
 	GetLocalTime(&stTime);
-
-	std::stringstream th;
-	th << std::setw(8) << std::setfill('0');
 
 	switch (LogMode) {
 		case (LM_Single): {
@@ -157,6 +157,36 @@ void CLog::initParam(CLog &log) {
 			break;
 		}
 	}
+#else
+    
+    time_t T= time(NULL);
+    struct  tm tm = *localtime(&T);
+
+    switch (LogMode) {
+        case (LM_Single): {
+            th << log.logFileName << "_" << std::setw(4) << tm.tm_year << "-" << std::setw(2) << tm.tm_mon << "-" << tm.tm_mday << ".log";
+            break;
+        }
+        case (LM_Module): {
+            th << std::setw(4) << tm.tm_year << "-" << std::setw(2) << tm.tm_mon << "-" << tm.tm_mday << "_" << logFileName << ".log";
+            // log per modulo: il nome del file è yyyy-mm-gg_name.log, senza alcun path assegnato
+            break;
+        }
+        case (LM_Thread): {
+            th << std::setw(4) << tm.tm_year << "-" << std::setw(2) << tm.tm_mon << "-" << tm.tm_mday << "_00000000.log";
+            // log per thread: il nome del file è yyyy-mm-gg_tttttttt.log, senza alcun path assegnato
+            break;
+        }
+        case (LM_Module_Thread): {
+            th << std::setw(4) << tm.tm_year << "-" << std::setw(2) << tm.tm_mon << "-" << tm.tm_mday << "_" << logFileName << "_00000000.log";
+            // log per modulo e per thread: il nome del file è yyyy-mm-gg_name_tttttttt.log, senza alcun path assegnato
+            break;
+        }
+    }
+
+    
+#endif
+    
 	logPath = th.str();
 
 	if ((LogMode==LM_Module || LogMode==LM_Module_Thread) && log.logDir.length()!=0) {
@@ -212,7 +242,7 @@ DWORD CLog::write(const char *format,...) {
 		}
 		if (!FirstLog && (LogMode==LM_Module || LogMode==LM_Module_Thread)) {
 			FirstLog=true;
-			write("%s - Inizio Sessione - versione file: %s",logName.c_str(),logVersion);
+			write("%s - Inizio Sessione - versione file: %s",logName.c_str(), logVersion.c_str());
 			writeModuleInfo();
 		}
 
@@ -223,11 +253,16 @@ DWORD CLog::write(const char *format,...) {
 			//case (LM_Thread) : thNum=dwThreadCount;dwNum=&thNum; break;
 			case (LM_Single) : Num=&GlobalCount; break;
 		}
-
+#ifdef WIN32
 		SYSTEMTIME  stTime;
 		GetLocalTime(&stTime);
 		sprintf_s(pbtDate,sizeof(pbtDate),"%05u:[%02d:%02d:%02d.%03d]", *Num, stTime.wHour, stTime.wMinute, stTime.wSecond, stTime.wMilliseconds);	
-	 
+#else
+        time_t t = time(NULL);
+        tm tm = *localtime(&t);
+        
+        sprintf(pbtDate,"%05u:[%02d:%02d:%02d]", *Num, tm.tm_hour, tm.tm_min, tm.tm_sec);
+#endif
 		// se siamo in LM_thread devo scrivere il thread nel nome del file
 		std::hash<std::thread::id> hasher;
 		auto dwThreadID = hasher(std::this_thread::get_id());
@@ -240,18 +275,34 @@ DWORD CLog::write(const char *format,...) {
 			logPath.replace(threadPos, threadPos + 14, th.str());
 		}
 		FILE *lf=nullptr;
+#ifdef WIN32
 		fopen_s(&lf,logPath.c_str(), "a+t");
-		if (lf) {
-			switch(LogMode) {
-				case (LM_Single) : fprintf(lf,"%s|%04i|%04i|%02i|", pbtDate, GetCurrentProcessId(), dwThreadID, ModuleNum); break;
-				case (LM_Module) : fprintf(lf,"%s|%04i|%04x|", pbtDate, GetCurrentProcessId(), dwThreadID); break;
-				case (LM_Thread) : fprintf(lf,"%s|%04i|%02i|", pbtDate, GetCurrentProcessId(), ModuleNum); break;
-				case (LM_Module_Thread) : fprintf(lf,"%s|", pbtDate); break;
-			}
-			vfprintf(lf, format, params);
-			fprintf(lf, "\n");
-			fclose(lf);
-		}
+        if (lf) {
+            switch(LogMode) {
+                case (LM_Single) : fprintf(lf,"%s|%04i|%04i|%02i|", pbtDate, GetCurrentProcessId(), dwThreadID, ModuleNum); break;
+                case (LM_Module) : fprintf(lf,"%s|%04i|%04x|", pbtDate, GetCurrentProcessId(), dwThreadID); break;
+                case (LM_Thread) : fprintf(lf,"%s|%04i|%02i|", pbtDate, GetCurrentProcessId(), ModuleNum); break;
+                case (LM_Module_Thread) : fprintf(lf,"%s|", pbtDate); break;
+            }
+            vfprintf(lf, format, params);
+            fprintf(lf, "\n");
+            fclose(lf);
+        }
+#else
+        lf = fopen(logPath.c_str(), "a+t");
+        if (lf) {
+            switch(LogMode) {
+                case (LM_Single) : fprintf(lf,"%s|%04i|%04i|%02i|", pbtDate, getpid(), dwThreadID, ModuleNum); break;
+                case (LM_Module) : fprintf(lf,"%s|%04i|%04x|", pbtDate, getpid(), dwThreadID); break;
+                case (LM_Thread) : fprintf(lf,"%s|%04i|%02i|", pbtDate, getpid(), ModuleNum); break;
+                case (LM_Module_Thread) : fprintf(lf,"%s|", pbtDate); break;
+            }
+            vfprintf(lf, format, params);
+            fprintf(lf, "\n");
+            fclose(lf);
+        }
+#endif
+		
 	}
 
 #ifdef _DEBUG
@@ -288,7 +339,7 @@ void CLog::writePure(const char *format,...) {
 		}
 		if (!FirstLog && (LogMode==LM_Module || LogMode==LM_Module_Thread)) {
 			FirstLog=true;
-			write("%s - Inizio Sessione - versione file: %s",logName.c_str(),logVersion);
+			write("%s - Inizio Sessione - versione file: %s",logName.c_str(), logVersion.c_str());
 			writeModuleInfo();
 		}
 
@@ -304,7 +355,11 @@ void CLog::writePure(const char *format,...) {
 			logPath.replace(threadPos, threadPos + 14, th.str());
 		}
 		FILE *lf = nullptr;
+#ifdef WIN32
 		fopen_s(&lf,logPath.c_str(), "a+t");
+#else
+        lf = fopen(logPath.c_str(), "a+t");
+#endif
 		if (lf) {
 			vfprintf(lf, format, params);
 			fprintf(lf, "\n");
@@ -334,7 +389,7 @@ void CLog::writeBinData(BYTE *data, size_t datalen) {
 	}
 	if (!FirstLog && (LogMode==LM_Module || LogMode==LM_Module_Thread)) {
 		FirstLog=true;
-		write("%s - Inizio Sessione - versione file: %s",logName.c_str(),logVersion);
+		write("%s - Inizio Sessione - versione file: %s",logName.c_str(), logVersion.c_str());
 		writeModuleInfo();
 	}
 
@@ -353,7 +408,11 @@ void CLog::writeBinData(BYTE *data, size_t datalen) {
 	}
 
 	FILE *lf = nullptr;
+#ifdef WIN32
 	fopen_s(&lf,logPath.c_str(), "a+t");
+#else
+    lf = fopen(logPath.c_str(), "a+t");
+#endif
 	if (lf) {
 		if (datalen>100) datalen=100;
 		for (size_t i=0;i<datalen;i++)
@@ -370,3 +429,4 @@ void CLog::writeModuleInfo() {
 	module.init(mainModule);
 	write("Applicazione chiamante: %s",module.szModuleName.c_str());
 }
+

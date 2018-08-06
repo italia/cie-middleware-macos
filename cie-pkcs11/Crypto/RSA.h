@@ -3,17 +3,19 @@
 #ifdef WIN32
 #include <bcrypt.h>
 #else
-#include "../Cryptopp/rsa.h"
+#include <openssl/rsa.h>
 #endif
-
+#include "../PKCS11/wintypes.h"
 #include "../Util/Array.h"
 
 class CRSA
 {
 #ifdef WIN32
 	BCRYPT_KEY_HANDLE key;
+    void GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, ByteDynArray &privexp);
 #else
 	RSA* keyPriv;
+    DWORD GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, ByteDynArray &privexp);
 #endif
 
 public:
@@ -21,6 +23,6 @@ public:
 	~CRSA(void);
 
 	ByteDynArray RSA_PURE(ByteArray &data);
-	void GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, ByteDynArray &privexp);
+	
 	size_t KeySize;
 };

@@ -381,7 +381,7 @@ namespace p11 {
 
 		ByteDynArray baExpectedResult(ulVerifyLength);
 		baExpectedResult.rightcopy(baVerifyBuffer);
-		PutPaddingBT0(baExpectedResult, baVerifyBuffer.size());
+		PutPaddingBT0(baExpectedResult, (long)baVerifyBuffer.size());
 
 		if (baPlainSignature == baExpectedResult)
 			return;

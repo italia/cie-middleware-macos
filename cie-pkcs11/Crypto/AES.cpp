@@ -1,5 +1,5 @@
 
-#include ".\aes.h"
+#include "AES.h"
 
 static char *szCompiledFile=__FILE__;
 

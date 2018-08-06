@@ -1,19 +1,18 @@
-#include "../stdafx.h"
 #include "IAS.h"
-#include "../crypto/ASNParser.h"
-#include "../crypto/RSA.h"
-#include "../crypto/AES.h"
-#include "../crypto/SHA256.h"
-#include "../crypto/SHA512.h"
-#include "../crypto/SHA1.h"
-#include "../crypto/DES3.h"
-#include "../crypto/MAC.h"
-#include <shlwapi.h>
-#include <shlobj.h>
-#include "../util/ModuleInfo.h"
-#include "../res/resource.h"
-#include "../../cacheLib/cacheLib.h"
-#include <intsafe.h>
+#include "../Crypto/ASNParser.h"
+#include "../Crypto/RSA.h"
+#include "../Crypto/AES.h"
+#include "../Crypto/sha256.h"
+#include "../Crypto/sha512.h"
+#include "../Crypto/SHA1.h"
+#include "../Crypto/DES3.h"
+#include "../Crypto/MAC.h"
+//#include <shlwapi.h>
+//#include <shlobj.h>
+#include "../Util/ModuleInfo.h"
+//#include "../res/resource.h"
+//#include "../../cacheLib/cacheLib.h"
+//#include <intsafe.h>
 
 #define CIE_KEY_DH_ID 0x81
 #define CIE_KEY_ExtAuth_ID 0x84
@@ -23,7 +22,7 @@
 
 extern CModuleInfo moduleInfo;
 extern ByteArray SkipZero(ByteArray &ba);
-extern DWORD WINAPI _abilitaCIE(LPVOID lpThreadParameter);
+extern DWORD _abilitaCIE(void* lpThreadParameter);
 
 
 IAS::IAS(CToken::TokenTransmitCallback transmit,ByteArray ATR)

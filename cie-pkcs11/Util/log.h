@@ -5,7 +5,12 @@
 #include <string>
 #include "wintypes.h"
 
+#ifndef OutputDebugString
+#define OutputDebugString printf
+#endif
+
 class CLog {
+    
 public:
 	unsigned int LogCount;
 	bool Initialized;
@@ -36,4 +41,4 @@ public:
 };
 
 void initLog(const char *iniFile,const char *version);
-extern CLog Log;
+//extern CLog Log;

@@ -47,8 +47,6 @@ catch (...) { return CKR_GENERAL_ERROR; }
         
 #else
         
-#define OutputDebugString printf
-        
 #define init_p11_func \
 try {
         

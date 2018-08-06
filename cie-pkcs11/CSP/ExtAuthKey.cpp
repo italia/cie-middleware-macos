@@ -1,4 +1,5 @@
-#include "../stdafx.h"
+#include "../PKCS11/wintypes.h"
+#include "../Util/Array.h"
 
 
 BYTE ExtAuth_PrivExp[] = { 

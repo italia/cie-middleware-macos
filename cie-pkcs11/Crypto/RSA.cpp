@@ -1,5 +1,6 @@
-#include "..\stdafx.h"
-#include ".\rsa.h"
+
+#include "RSA.h"
+#include <openssl/bn.h>
 
 static char *szCompiledFile=__FILE__;
 
@@ -68,7 +69,7 @@ DWORD CRSA::GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, 
 {
 	init_func
 	keyPriv = RSA_new();
-	auto BNpubexp = BN_secure_new();
+	auto BNpubexp = BN_new();
 	BN_set_word(BNpubexp, 65537);
 	RSA_generate_key_ex(keyPriv, size, BNpubexp, nullptr);
 	module.resize(BN_num_bytes(keyPriv->n));
@@ -78,16 +79,16 @@ DWORD CRSA::GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, 
 	pubexp.resize(BN_num_bytes(keyPriv->e));
 	BN_bn2bin(keyPriv->e, pubexp.data());
 
-	_return(OK)
+    return(S_OK);
 	exit_func
-	_return(FAIL)
+    return(-1);
 }
 CRSA::CRSA(ByteArray &mod,ByteArray &exp)
 {
 	KeySize = mod.size();
 	keyPriv = RSA_new();
 	keyPriv->n = BN_bin2bn(mod.data(), (int)mod.size(), keyPriv->n);
-	keyPriv->d = BN_secure_new(); 
+	keyPriv->d = BN_new(); 
 	keyPriv->e = BN_bin2bn(exp.data(), (int)exp.size(), keyPriv->e);
 }
 

@@ -1,4 +1,5 @@
 
+#include "util.h"
 #include <conio.h>
 #include <vector>
 #include <dbghelp.h>
@@ -24,11 +25,11 @@ bool ishexdigit(char c) {
 	return false;
 }
 
-size_t countHexData(const std::string &data)
+unsigned long countHexData(const std::string &data)
 {
-	size_t cnt = 0;
-	size_t slen= data.size();
-	for (size_t i=0;i<slen;i++) {
+	unsigned long cnt = 0;
+	unsigned long slen= data.size();
+	for (unsigned long i=0;i<slen;i++) {
 		if (isspace(data[i]) || data[i]==',') continue;
 		if (!isxdigit(data[i])) {
 			throw  logged_error("Carattere non valido");
@@ -59,11 +60,11 @@ size_t countHexData(const std::string &data)
 	return cnt;
 }
 
-size_t setHexData(const std::string &data, uint8_t *buf)
+unsigned long setHexData(const std::string &data, uint8_t *buf)
 {
-	size_t cnt = 0;
-	size_t slen=data.size();
-	for (size_t i=0;i<slen;i++) {
+	unsigned long cnt = 0;
+	unsigned long slen=data.size();
+	for (unsigned long i=0;i<slen;i++) {
 		if (isspace(data[i]) || data[i]==',') continue;
 		if (!isxdigit(data[i])) {
 			throw  logged_error("Carattere non valido");
@@ -101,8 +102,8 @@ void readHexData(const std::string &data,ByteDynArray &ba)
 	std::vector<uint8_t> dt;
 
 
-	size_t slen=data.size();
-	for (size_t i=0;i<slen;i++) {
+	unsigned long slen=data.size();
+	for (unsigned long i=0;i<slen;i++) {
 		if (isspace(data[i]) || data[i]==',') continue;
 		if (!isxdigit(data[i])) {
 			throw  logged_error("Carattere non valido");
@@ -158,7 +159,7 @@ std::string &dumpHexData(ByteArray &data, std::string &dump, bool withSpace, boo
 	dmp << std::hex << std::setfill('0');
 	if (uppercase)
 		dmp << std::uppercase;
-	for (size_t i = 0; i<data.size(); i++) {
+	for (unsigned long i = 0; i<data.size(); i++) {
 		dmp << std::setw(2) << static_cast<unsigned>(data[i]);
 		if (withSpace)
 			dmp << " ";
@@ -178,7 +179,7 @@ std::string &dumpHexDataLowerCase(ByteArray &data, std::string &dump)
 	return dumpHexData(data, dump, false, false);
 }
 
-void PutPaddingBT0(ByteArray &ba, size_t dwLen)
+void PutPaddingBT0(ByteArray& ba, long dwLen)
 {
 	init_func
 
@@ -190,7 +191,7 @@ void PutPaddingBT0(ByteArray &ba, size_t dwLen)
 }
 
 
-void PutPaddingBT1(ByteArray &ba, size_t dwLen)
+void PutPaddingBT1(ByteArray &ba, unsigned long dwLen)
 {
 	init_func
 	if (dwLen>ba.size()-3)
@@ -203,7 +204,7 @@ void PutPaddingBT1(ByteArray &ba, size_t dwLen)
 	exit_func
 }
 
-void PutPaddingBT2(ByteArray &ba, size_t dwLen)
+void PutPaddingBT2(ByteArray &ba, unsigned long dwLen)
 {
 	init_func
 	if (dwLen>ba.size()-3)
@@ -216,28 +217,28 @@ void PutPaddingBT2(ByteArray &ba, size_t dwLen)
 	exit_func
 }
 
-size_t RemoveSha1(ByteArray &paddedData) {
+unsigned long RemoveSha1(ByteArray &paddedData) {
 	static uint8_t SHA1Algo[] = { 0x30, 0x21, 0x30, 0x09, 0x06, 0x05, 0x2b, 0x0e, 0x03, 0x02, 0x1a, 0x05, 0x00, 0x04, 0x14 };
 	if (paddedData.left(sizeof(SHA1Algo)) == VarToByteArray(SHA1Algo))
 		return sizeof(SHA1Algo);
 	throw logged_error("OID Algoritmo SHA1 non presente");
 }
 
-size_t RemoveSha256(ByteArray &paddedData) {
+unsigned long RemoveSha256(ByteArray &paddedData) {
 	static uint8_t SHA256Algo[] = { 0x30, 0x31, 0x30, 0x0D, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01, 0x05, 0x00, 0x04, 0x20 };
 	if (paddedData.left(sizeof(SHA256Algo)) == VarToByteArray(SHA256Algo))
 		return sizeof(SHA256Algo);
 	throw logged_error("OID Algoritmo SHA256 non presente");
 }
 
-size_t RemovePaddingBT1(ByteArray &paddedData)
+unsigned long RemovePaddingBT1(ByteArray &paddedData)
 {
 	init_func
 	if (paddedData[0]!=0)
 		throw logged_error("Errore nel padding");
 	if (paddedData[1]!=1)
 		throw logged_error("Errore nel padding");
-	for (size_t i = 2; i<paddedData.size(); i++) {
+	for (unsigned long i = 2; i<paddedData.size(); i++) {
 		if (paddedData[i]==0) {
 			return i+1;
 		}
@@ -248,14 +249,14 @@ size_t RemovePaddingBT1(ByteArray &paddedData)
 	exit_func
 }
 
-size_t RemovePaddingBT2(ByteArray &paddedData)
+unsigned long RemovePaddingBT2(ByteArray &paddedData)
 {
 	init_func
 	if (paddedData[0]!=0)
 		throw logged_error("Errore nel padding");
 	if (paddedData[1]!=2)
 		throw logged_error("Errore nel padding");
-	for (size_t i = 2; i<paddedData.size(); i++)
+	for (unsigned long i = 2; i<paddedData.size(); i++)
 		if (paddedData[i]==0) {
 			return i+1;
 		}
@@ -263,10 +264,10 @@ size_t RemovePaddingBT2(ByteArray &paddedData)
 	exit_func
 }
 
-size_t RemoveISOPad(ByteArray &paddedData)
+unsigned long RemoveISOPad(ByteArray &paddedData)
 {
 	init_func
-		for (size_t i = paddedData.size() - 1; i >= 0; i--) {
+		for (unsigned long i = paddedData.size() - 1; i >= 0; i--) {
 		if (paddedData[i]!=0) {
 			if (paddedData[i]!=0x80) {
 				throw logged_error("Errore nel padding");
@@ -280,7 +281,7 @@ size_t RemoveISOPad(ByteArray &paddedData)
 	exit_func
 }
 
-size_t ANSIPadLen(size_t Len)
+unsigned long ANSIPadLen(unsigned long Len)
 {
 	if ((Len & 0x7) == 0)
 		return(Len);
@@ -288,7 +289,7 @@ size_t ANSIPadLen(size_t Len)
 		return(Len - (Len & 0x7) + 0x08);
 }
 
-void ANSIPad(ByteArray &Data, size_t DataLen)
+void ANSIPad(ByteArray &Data, unsigned long DataLen)
 {
 	init_func
 	Data.mid(DataLen).fill(0);
@@ -296,7 +297,7 @@ void ANSIPad(ByteArray &Data, size_t DataLen)
 
 }
 
-size_t ISOPadLen16(size_t Len)
+unsigned long ISOPadLen16(unsigned long Len)
 {
 	if ((Len & 0x10f) == 0)
 		return(Len + 16);
@@ -304,7 +305,7 @@ size_t ISOPadLen16(size_t Len)
 		return(Len - (Len & 0x0f) + 0x10);
 }
 
-size_t ISOPadLen(size_t Len)
+unsigned long ISOPadLen(unsigned long Len)
 {
 	if ((Len & 0x7) == 0)
 		return(Len+8);
@@ -312,7 +313,7 @@ size_t ISOPadLen(size_t Len)
 		return(Len - (Len & 0x7) + 0x08);
 }
 
-void ISOPad(const ByteArray &Data, size_t DataLen)
+void ISOPad(const ByteArray &Data, unsigned long DataLen)
 {
 	init_func
 	Data.mid(DataLen).fill(0);
@@ -342,7 +343,7 @@ long ByteArrayToInt(ByteArray &ba)
 {
 	init_func
 	long val=0;
-	for (size_t i = 0; i<ba.size(); i++) {
+	for (unsigned long i = 0; i<ba.size(); i++) {
 		val<<=8;
 		val|=ba[i];
 	}
@@ -446,7 +447,7 @@ ByteDynArray ASN1Tag(DWORD tag,ByteArray &content) {
 	return result;
 }
 
-size_t ASN1TLength(unsigned int tag) {
+unsigned long ASN1TLength(unsigned int tag) {
 	int tLen=0;
 	while (tag!=0) {
 		tLen++;
@@ -466,7 +467,7 @@ void putASN1Tag(unsigned int tag, ByteArray &data) {
 	}
 }
 
-size_t ASN1LLength(size_t len) {
+unsigned long ASN1LLength(unsigned long len) {
 	if (len<0x80)
 		return 1;
 	else {
@@ -483,7 +484,7 @@ size_t ASN1LLength(size_t len) {
 	throw logged_error("Lunghezza ASN1 non valida");
 }
 
-void putASN1Length(size_t len, ByteArray &data) {
+void putASN1Length(unsigned long len, ByteArray &data) {
 	if (len < 0x80) {
 		data[0] = (uint8_t)len;
 	}

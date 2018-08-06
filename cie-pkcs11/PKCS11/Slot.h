@@ -4,7 +4,7 @@
 #include "pkcs11.h"
 #pragma pack()
 #include "../Util/SyncroMutex.h"
-#include "../Util/Thread.h"
+//#include "../Util/Thread.h"
 #pragma pack()
 #include "CardContext.h"
 #include <map>
