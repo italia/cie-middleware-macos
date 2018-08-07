@@ -1,5 +1,8 @@
 #pragma once
 #include <vector>
+#include <string>
+#include "Array.h"
+#include "../PKCS11/wintypes.h"
 
 class IniSettings;
 extern std::vector<IniSettings*> _iniSettings;

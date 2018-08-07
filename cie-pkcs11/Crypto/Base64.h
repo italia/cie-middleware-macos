@@ -1,5 +1,5 @@
 #pragma once
-#include "../stdafx.h"
+#include "../Util/Array.h"
 #include <string>
 
 class  CBase64

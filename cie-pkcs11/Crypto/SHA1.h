@@ -4,18 +4,19 @@
 #include <bcrypt.h>
 #define SHA_DIGEST_LENGTH 20
 #else
-#include "../Cryptopp/sha.h"
+#include <openssl/sha.h>
 #endif
 
-#include "../Util/util.h"
-#include "../Util/UtilException.h"
+#include "../util/util.h"
+#include "../util/utilexception.h"
 
 class CSHA1
 {
 #ifdef WIN32
 	BCRYPT_HASH_HANDLE hash;
 #else
-	bool isInit;	
+	bool isInit;
+	SHA_CTX ctx;
 #endif
 public:
 	CSHA1();

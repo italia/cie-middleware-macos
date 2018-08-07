@@ -1,5 +1,9 @@
 #include "Array.h"
 #include <fstream>
+#include "../Cryptopp/cryptlib.h"
+#include "../Cryptopp/misc.h"
+#include "../Cryptopp/secblock.h"
+#include "../Cryptopp/osrng.h"
 //#include <windows.h>
 //#include <bcrypt.h>
 
@@ -86,13 +90,13 @@ bool ByteArray::operator!=(const ByteArray &src) const {
 void ByteArray::copy(const ByteArray &src, size_t start) {
 	if (src._size + start>_size)
 		throw logged_error(stdPrintf("Dimensione array da copiare %i troppo grande; dimensione massima %i", src._size + start, _size));
-	::memcpy_s(_data + start, _size - (start), src._data, src._size);
+	CryptoPP::memcpy_s(_data + start, _size - (start), src._data, src._size);
 }
 
 void ByteArray::rightcopy(const ByteArray &src, size_t end) {
 	if (src._size + end>_size)
 		throw logged_error(stdPrintf("Dimensione array da copiare %i troppo grande; dimensione massima %i", src._size + end, _size));
-	::memcpy_s(_data + _size - end - src._size, (end + src._size), src._data, src._size);
+	CryptoPP::memcpy_s(_data + _size - end - src._size, (end + src._size), src._data, src._size);
 }
 
 ByteArray &ByteArray::fill(const uint8_t value) {
@@ -121,15 +125,18 @@ ByteArray &ByteArray::random() {
 #else
 class init_rnd {
 public:
-	initRand() {
-		SYSTEMTIME tm;
-		GetSystemTime(&tm);
-		RAND_seed(&tm, sizeof(SYSTEMTIME));
+	init_rnd() {
+//        SYSTEMTIME tm;
+//        GetSystemTime(&tm);
+//        RAND_seed(&tm, sizeof(SYSTEMTIME));
 	}
 } _initRand;
 
 ByteArray &ByteArray::random() {
-	RAND_bytes(_data, (int)_size);
+    CryptoPP::SecByteBlock key(_size);
+    CryptoPP::OS_GenerateRandomBlock(true, key, key.size());
+    memcpy(_data, key.BytePtr(), _size);
+	
 	return *this;
 }
 #endif
@@ -196,7 +203,8 @@ ByteDynArray ByteArray::getASN1Tag(unsigned int tag) const {
 	size_t ll = ASN1LLength(size());
 	ByteDynArray result(tl + ll + size());
 	putASN1Tag(tag, result);
-	putASN1Length(size(), result.mid(tl));
+    ByteArray input(result.mid(tl));
+	putASN1Length(size(), input);
 	result.mid(tl + ll).copy(*this);
 	return result;
 }
@@ -250,7 +258,7 @@ void ByteDynArray::resize(size_t size, bool bKeepData) {
 		uint8_t* pbtNewData = new uint8_t[size];
 		size_t dwMinSize = min(size, _size);
 		if (dwMinSize>0)
-			memcpy_s(pbtNewData, size, _data, dwMinSize);
+            CryptoPP::memcpy_s(pbtNewData, size, _data, dwMinSize);
 		clear();
 		_data = pbtNewData;
 		_size = size;
@@ -305,12 +313,13 @@ bool ByteArray::indexOf(ByteArray &data,size_t &position) const {
 	return false;
 }
 
-ByteDynArray &ByteDynArray::setASN1Tag(unsigned int tag, ByteArray &content) {
+ByteDynArray &ByteDynArray::setASN1Tag(unsigned int tag, ByteArray content) {
 	size_t tl = ASN1TLength(tag);
 	size_t ll = ASN1LLength(content.size());
 	resize(tl + ll + content.size());
 	putASN1Tag(tag, *this);
-	putASN1Length(content.size(), mid(tl));
+    ByteArray input = mid(tl);
+	putASN1Length(content.size(), input);
 	mid(tl + ll).copy(content);
 	return *this;
 }

@@ -1,4 +1,5 @@
-#include "..\stdafx.h"
+
+#include "Array.h"
 #include "ASNParser.h"
 
 #define BitValue(a,b) ((a>>b) & 1)
@@ -74,7 +75,10 @@ void CASNTag::Reparse() {
 	//attenzione in encode! non memorizzo il numero di bit non usati, quindi non posso
 	//ricostruirl'array originale! quindi lancio un'eccezione
 	if (tag.size()==1 && tag[0]==3)
-		parser.Parse(content.mid(1));
+    {
+        ByteArray input(content.mid(1));
+		parser.Parse(input);
+    }
 	else
 		parser.Parse(content);
 	if (parser.tags.size() > 0) {
@@ -100,7 +104,8 @@ void CASNTag::Encode(ByteArray &data, size_t &len) {
 	data.copy(ByteArray(&tag[0], tlen));
 	size_t  clen = ContentLen();
 	size_t  llen = ASN1LLength(clen);
-	putASN1Length(clen, data.mid(tlen));
+    ByteArray input(data.mid(tlen));
+	putASN1Length(clen, input);
 
 	if (!isSequence()) {
 		data.mid(tlen + llen).copy(content);
@@ -110,7 +115,8 @@ void CASNTag::Encode(ByteArray &data, size_t &len) {
 		size_t  ptrPos = tlen+llen;
 		for (CASNTagArray::iterator i = tags.begin(); i != tags.end(); i++) {
 			size_t taglen;
-			(*i)->Encode(data.mid(ptrPos), taglen);
+            ByteArray input(data.mid(ptrPos));
+			(*i)->Encode(input, taglen);
 			ptrPos += taglen;
 		}
 		len = ptrPos;
@@ -156,7 +162,8 @@ void CASNParser::Encode(ByteArray &data, CASNTagArray &tags) {
 	size_t ptrPos = 0;
 	for (CASNTagArray::iterator i = tags.begin(); i != tags.end(); i++) {
 		size_t  len;
-		(*i)->Encode(data.mid(ptrPos), len);
+        ByteArray input(data.mid(ptrPos));
+		(*i)->Encode(input, len);
 		ptrPos += len;
 	}
 }
@@ -228,7 +235,8 @@ void CASNParser::Parse(ByteArray &data, CASNTagArray &tags, size_t  startseq)
 		tag->startPos = startseq + l;
 		tag->tag = tagv;
 		if (tag->isSequence()) {
-			Parse(ByteArray(&cur[llen + 1], len), tag->tags, startseq + l + llen + 1);
+            ByteArray input(&cur[llen + 1], len);
+			Parse(input, tag->tags, startseq + l + llen + 1);
 		}
 		else {
 			// è un valore singolo

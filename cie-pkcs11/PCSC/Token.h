@@ -38,5 +38,5 @@ public:
 	void setTransmitCallbackData(void *data);
 	void* getTransmitCallbackData();
 	StatusWord Transmit(APDU &apdu, ByteDynArray *resp);
-	StatusWord Transmit(ByteArray &apdu, ByteDynArray *resp);
+	StatusWord Transmit(ByteArray apdu, ByteDynArray *resp);
 };

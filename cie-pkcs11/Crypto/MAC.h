@@ -14,11 +14,10 @@ class CMAC
 	BCRYPT_KEY_HANDLE key1;
 	BCRYPT_KEY_HANDLE key2;
 	ByteDynArray iv;
-    ByteDynArray Mac(const ByteArray &data);
+
 #else
 	des_key_schedule k1,k2,k3;
 	des_cblock initVec;
-    DWORD Mac(const ByteArray &data, ByteDynArray &resp);
 #endif
 public:
 	CMAC();
@@ -26,5 +25,5 @@ public:
 	~CMAC(void);
 
 	void Init(const ByteArray &key, const ByteArray &iv);
-	
+    ByteArray Mac(const ByteArray &data);
 };

@@ -4,18 +4,19 @@
 #include <bcrypt.h>
 #define MD5_DIGEST_LENGTH 16
 #else
-#include "../Cryptopp/md5.h"
+#include <openssl/md5.h>
 #endif
 
-#include "../Util/util.h"
-#include "../Util/UtilException.h"
+#include "../util/util.h"
+#include "../util/utilexception.h"
 
 class CMD5
 {
 #ifdef WIN32
 	BCRYPT_HASH_HANDLE hash;
 #else
-	bool isInit;	
+	bool isInit;
+	MD5_CTX ctx;
 #endif
 public:
 	CMD5();

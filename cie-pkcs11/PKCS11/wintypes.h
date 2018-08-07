@@ -87,5 +87,8 @@ int atox(const char* szVal);
 #define ERROR_INVALID_HANDLE 6
 #endif
 
+#ifndef ERROR_SUCCESS
+#define ERROR_SUCCESS 0
+#endif
 #define ODS printf
 #endif //__UTILITYTYPES_H

@@ -63,7 +63,7 @@ CMAC::~CMAC(void)
 		BCryptDestroyKey(key2);
 }
 
-ByteDynArray CMAC::Mac(const ByteArray &data)
+ByteArray CMAC::Mac(const ByteArray &data)
 {
 	init_func
 
@@ -122,12 +122,15 @@ void CMAC::Init(const ByteArray &key, const ByteArray &iv)
 CMAC::~CMAC(void)
 {
 }
-DWORD CMAC::Mac(const ByteArray &data, ByteDynArray &resp)
+
+ByteArray CMAC::Mac(const ByteArray &data)
 {
 	init_func
 
+    ByteDynArray resp;
+    
 	des_cblock iv;
-	memcpy_s(iv, sizeof(des_cblock), initVec, sizeof(initVec));
+    CryptoPP::memcpy_s(iv, sizeof(des_cblock), initVec, sizeof(initVec));
 
 	size_t ANSILen = ANSIPadLen(data.size());
 	if (data.size()>8) {
@@ -138,9 +141,9 @@ DWORD CMAC::Mac(const ByteArray &data, ByteDynArray &resp)
 	des_ede3_cbc_encrypt(data.mid(ANSILen - 8).data(), dest, (long)(data.size() - ANSILen) + 8, k1, k2, k3, &iv, DES_ENCRYPT);
 	resp = ByteArray(dest, 8);
 
-	_return(OK)
-	exit_func
-	_return(FAIL)
+    return resp;
+    
+	exit_func    
 }
 
 CMAC::CMAC() {

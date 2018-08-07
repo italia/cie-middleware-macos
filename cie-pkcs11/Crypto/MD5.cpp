@@ -1,4 +1,4 @@
-#include "../stdafx.h"
+
 #include "MD5.h"
 
 static char *szCompiledFile=__FILE__;

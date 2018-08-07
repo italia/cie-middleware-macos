@@ -1,4 +1,5 @@
 #pragma once
+#include "../PKCS11/wintypes.h"
 #include <vector>
 #include <memory>
 

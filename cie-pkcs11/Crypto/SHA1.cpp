@@ -1,4 +1,4 @@
-#include "../stdafx.h"
+
 #include "SHA1.h"
 
 static char *szCompiledFile=__FILE__;

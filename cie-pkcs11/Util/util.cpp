@@ -1,8 +1,8 @@
 
 #include "util.h"
-#include <conio.h>
+//#include <conio.h>
 #include <vector>
-#include <dbghelp.h>
+//#include <dbghelp.h>
 #include <iomanip>
 #include <sstream>
 
@@ -147,13 +147,13 @@ std::string HexByte(uint8_t data, bool uppercase) {
 	return dmp.str();
 }
 
-std::string &dumpHexData(ByteArray &data, std::string &dump)
+std::string &dumpHexData(ByteArray data, std::string dump)
 {
 	dumpHexData(data,dump,true,true);
 	return dump;
 }
 
-std::string &dumpHexData(ByteArray &data, std::string &dump, bool withSpace, bool uppercase)
+std::string &dumpHexData(ByteArray data, std::string dump, bool withSpace, bool uppercase)
 {
 	std::stringstream dmp;
 	dmp << std::hex << std::setfill('0');
@@ -174,7 +174,7 @@ void Debug(ByteArray ba) {
 	OutputDebugString("\n");
 }
 
-std::string &dumpHexDataLowerCase(ByteArray &data, std::string &dump)
+std::string &dumpHexDataLowerCase(ByteArray data, std::string dump)
 {
 	return dumpHexData(data, dump, false, false);
 }
@@ -352,11 +352,11 @@ long ByteArrayToInt(ByteArray &ba)
 }
 
 
-std::string WinErr(HRESULT err) {
-	char szWinErrBuffer[300];
-	FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM, NULL, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), szWinErrBuffer, 300, NULL);
-	return std::string(szWinErrBuffer);
-}
+//std::string WinErr(HRESULT err) {
+//    char szWinErrBuffer[300];
+//    FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM, NULL, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), szWinErrBuffer, 300, NULL);
+//    return std::string(szWinErrBuffer);
+//}
 
 char *  CardErr(DWORD dwSW) {
 	char *msg;
@@ -414,35 +414,35 @@ char *  CardErr(DWORD dwSW) {
 }
 
 
-char *SystemErr(DWORD dwExcept){
-	switch (dwExcept){
-		case EXCEPTION_ACCESS_VIOLATION: return "Access Violation"; break;
- 		case EXCEPTION_DATATYPE_MISALIGNMENT: return "Datatype Misalignment"; break;
- 		case EXCEPTION_BREAKPOINT: return "Breakpoint"; break;
- 		case EXCEPTION_SINGLE_STEP: return "Single Step"; break;
- 		case EXCEPTION_ARRAY_BOUNDS_EXCEEDED: return "Array Bounds Exceeded"; break;
- 		case EXCEPTION_FLT_DENORMAL_OPERAND: return "Flt Denormal Operand"; break;
- 		case EXCEPTION_FLT_DIVIDE_BY_ZERO: return "Flt Divide By ZERO"; break;
- 		case EXCEPTION_FLT_INEXACT_RESULT: return "Flt Inexact Result"; break;
- 		case EXCEPTION_FLT_INVALID_OPERATION: return "Flt Invalid Operation"; break;
- 		case EXCEPTION_FLT_OVERFLOW: return "Flt Overflow"; break;
- 		case EXCEPTION_FLT_STACK_CHECK: return "Flt Stack Check"; break;
- 		case EXCEPTION_FLT_UNDERFLOW: return "Flt Underflow"; break;
- 		case EXCEPTION_INT_DIVIDE_BY_ZERO: return "Int Divide By Zero"; break;
- 		case EXCEPTION_INT_OVERFLOW: return "Int Overflow"; break;
- 		case EXCEPTION_PRIV_INSTRUCTION: return "Priv Instruction"; break;
- 		case EXCEPTION_IN_PAGE_ERROR: return "In Page Error"; break;
- 		case EXCEPTION_ILLEGAL_INSTRUCTION: return "Illegal Instruction"; break;
- 		case EXCEPTION_NONCONTINUABLE_EXCEPTION: return "Noncontinuable Exception"; break;
-		case EXCEPTION_STACK_OVERFLOW: return "Stack Overflow"; break;
- 		case EXCEPTION_INVALID_DISPOSITION: return "Invalid Disposition"; break;
- 		case EXCEPTION_GUARD_PAGE: return "Guard Page"; break;
- 		case EXCEPTION_INVALID_HANDLE: return "Invalid Handle"; break;
-		default: return ""; break;
-	}
-}
+//char *SystemErr(DWORD dwExcept){
+//    switch (dwExcept){
+//        case EXCEPTION_ACCESS_VIOLATION: return "Access Violation"; break;
+//         case EXCEPTION_DATATYPE_MISALIGNMENT: return "Datatype Misalignment"; break;
+//         case EXCEPTION_BREAKPOINT: return "Breakpoint"; break;
+//         case EXCEPTION_SINGLE_STEP: return "Single Step"; break;
+//         case EXCEPTION_ARRAY_BOUNDS_EXCEEDED: return "Array Bounds Exceeded"; break;
+//         case EXCEPTION_FLT_DENORMAL_OPERAND: return "Flt Denormal Operand"; break;
+//         case EXCEPTION_FLT_DIVIDE_BY_ZERO: return "Flt Divide By ZERO"; break;
+//         case EXCEPTION_FLT_INEXACT_RESULT: return "Flt Inexact Result"; break;
+//         case EXCEPTION_FLT_INVALID_OPERATION: return "Flt Invalid Operation"; break;
+//         case EXCEPTION_FLT_OVERFLOW: return "Flt Overflow"; break;
+//         case EXCEPTION_FLT_STACK_CHECK: return "Flt Stack Check"; break;
+//         case EXCEPTION_FLT_UNDERFLOW: return "Flt Underflow"; break;
+//         case EXCEPTION_INT_DIVIDE_BY_ZERO: return "Int Divide By Zero"; break;
+//         case EXCEPTION_INT_OVERFLOW: return "Int Overflow"; break;
+//         case EXCEPTION_PRIV_INSTRUCTION: return "Priv Instruction"; break;
+//         case EXCEPTION_IN_PAGE_ERROR: return "In Page Error"; break;
+//         case EXCEPTION_ILLEGAL_INSTRUCTION: return "Illegal Instruction"; break;
+//         case EXCEPTION_NONCONTINUABLE_EXCEPTION: return "Noncontinuable Exception"; break;
+//        case EXCEPTION_STACK_OVERFLOW: return "Stack Overflow"; break;
+//         case EXCEPTION_INVALID_DISPOSITION: return "Invalid Disposition"; break;
+//         case EXCEPTION_GUARD_PAGE: return "Guard Page"; break;
+//         case EXCEPTION_INVALID_HANDLE: return "Invalid Handle"; break;
+//        default: return ""; break;
+//    }
+//}
 
-ByteDynArray ASN1Tag(DWORD tag,ByteArray &content) {
+ByteDynArray ASN1Tag(DWORD tag,ByteArray content) {
 	ByteDynArray result = content.getASN1Tag(tag);
 	return result;
 }
@@ -515,12 +515,13 @@ void putASN1Length(unsigned long len, ByteArray &data) {
 }
 
 std::string stdPrintf(const char *format, ...) {
-	std::string result;
 	va_list args;
 	va_start(args, format);
-	int size = _vscprintf(format, args) + 1;
-	result.resize(size);
-	vsprintf_s(&result[0], size, format, args);
+    
+    auto size = std::snprintf(nullptr, 0, format, args);
+    std::string result(size + 1, '\0');
+    std::sprintf(&result[0], format, args);
+    	
 	va_end(args);
 	return result;
 }

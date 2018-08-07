@@ -455,7 +455,9 @@ void CIEtemplateGenerateKeyPair(void *pCardTemplateData, CK_MECHANISM_PTR pMecha
  */
 
 void GetPublicKeyFromCert(CryptoPP::BufferedTransformation & certin,
-                          CryptoPP::BufferedTransformation & keyout)
+                          CryptoPP::BufferedTransformation & keyout,
+                          CryptoPP::BufferedTransformation & issuer,
+                          Integer &serial)
 {
     BERSequenceDecoder x509Cert(certin);
     BERSequenceDecoder tbsCert(x509Cert);
@@ -472,7 +474,6 @@ void GetPublicKeyFromCert(CryptoPP::BufferedTransformation & certin,
     BERDecodeUnsigned<word32>(context,ver,INTEGER,2,2);
     
     // serialNumber         CertificateSerialNumber,
-    Integer serial;
     serial.BERDecode(tbsCert);
     
     // signature            AlgorithmIdentifier,
@@ -481,7 +482,8 @@ void GetPublicKeyFromCert(CryptoPP::BufferedTransformation & certin,
     
     // issuer               Name,
     BERSequenceDecoder issuerName(tbsCert);
-    issuerName.SkipAll();
+    issuerName.CopyTo(issuer);
+    //issuerName.SkipAll();
     
     // validity             Validity,
     BERSequenceDecoder validity(tbsCert);

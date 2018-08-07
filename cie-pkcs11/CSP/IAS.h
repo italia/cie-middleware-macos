@@ -1,5 +1,7 @@
 #pragma once
+#include "../PKCS11/wintypes.h"
 #include "../PCSC/Token.h"
+#include "../Util/util.h"
 //#include "../CSP/Cardmod.h"
 #include <map>
 
@@ -49,8 +51,8 @@ class IAS
 	ByteDynArray ATR;
 	ByteDynArray Certificate;
 	ByteDynArray CardEncKey, CardEncIv;
-	StatusWord SendAPDU(ByteArray &head, ByteArray &data, ByteDynArray &resp, uint8_t *le = NULL);
-	StatusWord SendAPDU_SM(ByteArray &head, ByteArray &data, ByteDynArray &resp, uint8_t *le = NULL);
+	StatusWord SendAPDU(ByteArray head, ByteArray data, ByteDynArray &resp, uint8_t *le = NULL);
+	StatusWord SendAPDU_SM(ByteArray head, ByteArray data, ByteDynArray &resp, uint8_t *le = NULL);
 	StatusWord getResp(ByteDynArray &Cardresp, StatusWord sw, ByteDynArray &resp);
 	StatusWord getResp_SM(ByteArray &Cardresp, StatusWord sw, ByteDynArray &resp);
 

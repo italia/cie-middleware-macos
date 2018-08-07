@@ -1,5 +1,6 @@
-#include "..\stdafx.h"
-#include ".\des3.h"
+
+#include "DES3.h"
+#include "../Cryptopp/misc.h"
 
 static char *szCompiledFile = __FILE__;
 
@@ -88,7 +89,7 @@ void CDES3::Init(const ByteArray &key, const ByteArray &iv)
 
 	ER_ASSERT(KeySize >= 8 && KeySize <= 24, "Errore nella lunghezza della chiave DES (<8 o >24)")
 	des_cblock *keyVal1 = nullptr, *keyVal2 = nullptr, *keyVal3 = nullptr;
-	memcpy_s(initVec, sizeof(des_cblock), iv.data(), 8);
+    CryptoPP::memcpy_s(initVec, sizeof(des_cblock), iv.data(), 8);
 
 	switch (KeySize) {
 	case 8:
@@ -125,7 +126,7 @@ ByteDynArray CDES3::Des3(const ByteArray &data, int encOp)
 	init_func
 
 	des_cblock iv;
-	memcpy_s(iv, sizeof(des_cblock), initVec, sizeof(initVec));
+	CryptoPP::memcpy_s(iv, sizeof(des_cblock), initVec, sizeof(initVec));
 	size_t AppSize = data.size() - 1;
 	ByteDynArray resp(AppSize - (AppSize % 8) + 8);
 	des_ede3_cbc_encrypt(data.data(), resp.data(), (long)data.size(), k1, k2, k3, &iv, encOp);

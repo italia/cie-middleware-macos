@@ -1,6 +1,7 @@
 #include "IniSettings.h"
 #include "../Crypto/Base64.h"
 #include <sstream>
+#include "../Cryptopp/misc.h"
 
 std::vector<IniSettings*> _iniSettings;
 
@@ -136,7 +137,7 @@ extern "C" {
 		}
 		std::string res = out + out2;
 		if (data!=NULL) 
-			memcpy_s(data,res.size(),res.c_str(),res.size());
+            CryptoPP::memcpy_s(data,res.size(),res.c_str(),res.size());
 		return (int)res.size();
 	}
 }

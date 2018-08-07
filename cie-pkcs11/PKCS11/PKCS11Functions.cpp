@@ -20,6 +20,8 @@
 #include "../Util/SyncroEvent.h"
 #include <mutex>
 
+#include "../Cryptopp/misc.h"
+
 static char *szCompiledFile=__FILE__;
 
 CLog Log;

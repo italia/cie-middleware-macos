@@ -147,7 +147,7 @@ public:
 		return *this;
 	}
 
-	ByteDynArray &setASN1Tag(unsigned int tag, ByteArray &content);
+	ByteDynArray &setASN1Tag(unsigned int tag, ByteArray content);
 	void load(const char *fname);
 };
 
