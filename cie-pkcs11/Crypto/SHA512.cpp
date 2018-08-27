@@ -1,5 +1,4 @@
-#include "..\stdafx.h"
-#include ".\sha512.h"
+#include "sha512.h"
 
 static char *szCompiledFile=__FILE__;
 
@@ -33,7 +32,28 @@ ByteDynArray CSHA512::Digest(ByteArray &data)
 }
 
 #else
-	
+
+void CSHA512::Init() {
+    if (isInit)
+    throw logged_error("Un'operazione di hash Ë gi‡ in corso");
+    SHA512_Init(&ctx);
+    isInit = true;
+}
+void CSHA512::Update(ByteArray data) {
+    if (!isInit)
+    throw logged_error("Hash non inizializzato");
+    SHA512_Update(&ctx, data.data(), data.size());
+}
+ByteDynArray CSHA512::Final() {
+    if (!isInit)
+    throw logged_error("Hash non inizializzato");
+    ByteDynArray resp(SHA_DIGEST_LENGTH);
+    SHA512_Final(resp.data(), &ctx);
+    isInit = false;
+    
+    return resp;
+}
+
 ByteDynArray CSHA512::Digest(ByteArray &data)
 {
 	ByteDynArray resp(SHA512_DIGEST_LENGTH);

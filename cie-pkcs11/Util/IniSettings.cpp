@@ -7,14 +7,14 @@ std::vector<IniSettings*> _iniSettings;
 
 void GetIniString(const char *fileName, const char* section, const char* name, std::string &buf) {
 	buf.resize(100);
-	while (true) {
-		DWORD size=GetPrivateProfileStringA(section,name,"",&buf[0],(DWORD)buf.size(),fileName);
-		if (size<(buf.size()-2)) {
-			buf.resize(size+1,true);
-			return;
-		}
-		buf.resize(buf.size()*2);
-	}	
+//    while (true) {
+//        DWORD size=GetPrivateProfileStringA(section,name,"",&buf[0],(DWORD)buf.size(),fileName);
+//        if (size<(buf.size()-2)) {
+//            buf.resize(size+1,true);
+//            return;
+//        }
+//        buf.resize(buf.size()*2);
+//    }
 }
 
 IniSettings::IniSettings(int typeIdconst, const char* section, const char* name, const char *description) {
@@ -34,7 +34,7 @@ IniSettingsInt::IniSettingsInt(const char* section, const char* name, int defaul
 }
 
 int IniSettingsInt::GetValue(const char* fileName) {
-	return GetPrivateProfileInt(section.c_str(),name.c_str(),defaultVal,fileName);
+    return 0;//GetPrivateProfileInt(section.c_str(),name.c_str(),defaultVal,fileName);
 }
 
 IniSettingsInt::~IniSettingsInt() {}
@@ -55,10 +55,12 @@ IniSettingsBool::IniSettingsBool(const char* section, const char* name, bool def
 	this->defaultVal=defaultValue;
 }
 bool IniSettingsBool::GetValue(const char* fileName) {
-	int val = GetPrivateProfileInt(section.c_str(), name.c_str(), -100, fileName);
-	if (val==-100)
-		return defaultVal;
-	return val!=0;
+//    int val = GetPrivateProfileInt(section.c_str(), name.c_str(), -100, fileName);
+//    if (val==-100)
+//        return defaultVal;
+//    return val!=0;
+    
+    return false;
 }
 IniSettingsBool::~IniSettingsBool() {}
 

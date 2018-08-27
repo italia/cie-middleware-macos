@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <stdexcept>
+#include "defines.h"
 
 //#define UTILEX_BASE			0
 //#define UTILEX_STRING		1

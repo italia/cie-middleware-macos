@@ -31,7 +31,7 @@ public:
 	~CToken();
 
 	void SelectMF();
-	ByteDynArray BinaryRead(uint16_t start, uint8_t size);
+	ByteDynArray BinaryRead(WORD start,BYTE size);
 	void Reset(bool unpower = false);
 
 	void setTransmitCallback(TokenTransmitCallback func,void *data);

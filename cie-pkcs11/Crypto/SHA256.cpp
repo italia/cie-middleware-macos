@@ -1,5 +1,5 @@
-#include "..\stdafx.h"
-#include ".\sha256.h"
+
+#include "sha256.h"
 
 static char *szCompiledFile=__FILE__;
 
@@ -33,7 +33,27 @@ ByteDynArray CSHA256::Digest(ByteArray &data)
 }
 
 #else
-	
+
+void CSHA256::Init() {
+    if (isInit)
+    throw logged_error("Un'operazione di hash Ë gi‡ in corso");
+    SHA256_Init(&ctx);
+    isInit = true;
+}
+void CSHA256::Update(ByteArray data) {
+    if (!isInit)
+    throw logged_error("Hash non inizializzato");
+    SHA256_Update(&ctx, data.data(), data.size());
+}
+ByteDynArray CSHA256::Final() {
+    if (!isInit)
+    throw logged_error("Hash non inizializzato");
+    ByteDynArray resp(SHA_DIGEST_LENGTH);
+    SHA256_Final(resp.data(), &ctx);
+    isInit = false;
+    
+    return resp;
+}
 ByteDynArray CSHA256::Digest(ByteArray &data)
 {
 	ByteDynArray resp(SHA256_DIGEST_LENGTH);

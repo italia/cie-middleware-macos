@@ -3,6 +3,7 @@
 #include "APDU.h"
 #include "../Util/TLV.h"
 #include <vector>
+#include "../Cryptopp/misc.h"
 
 static char *szCompiledFile=__FILE__;
 
@@ -45,7 +46,7 @@ ByteDynArray CToken::BinaryRead(WORD start,BYTE size) {
 
 	ER_ASSERT(transmitCallback,"Carta non Connessa")
 
-	APDU apdu(0x00,0xB0,BYTE(start>>8),BYTE(start & 0xff),size);
+	APDU apdu(0x00,0xB0,(BYTE)(start>>8),(BYTE)(start & 0xff),size);
 	ByteDynArray resp;
 	StatusWord sw;
 	if ((sw = Transmit(apdu, &resp)) != 0x9000)
@@ -92,13 +93,13 @@ StatusWord CToken::Transmit(APDU &apdu, ByteDynArray *resp)
 	if (apdu.bLC && apdu.bLE) {
 		iAPDUSize = apdu.btLC + 6;
 		pbtAPDU[4] = apdu.btLC;
-		memcpy_s(pbtAPDU + 5, 2995, apdu.pbtData, apdu.btLC);
+        CryptoPP::memcpy_s(pbtAPDU + 5, 2995, apdu.pbtData, apdu.btLC);
 		pbtAPDU[5 + apdu.btLC] = apdu.btLE;
 		}
 	else if (apdu.bLC && !apdu.bLE) {
 		iAPDUSize = apdu.btLC + 5;
 		pbtAPDU[4] = apdu.btLC;
-		memcpy_s(pbtAPDU + 5, 2995, apdu.pbtData, apdu.btLC);
+		CryptoPP::memcpy_s(pbtAPDU + 5, 2995, apdu.pbtData, apdu.btLC);
 		}
 	else if (!apdu.bLC && apdu.bLE) {
 			iAPDUSize = 5;
