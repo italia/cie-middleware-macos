@@ -29,7 +29,7 @@
 #define CIE_PUK_ID 0x82
 #define CIE_KEY_Sign_ID 0x81
 
-extern CModuleInfo moduleInfo;
+//extern CModuleInfo moduleInfo;
 extern ByteArray SkipZero(ByteArray &ba);
 extern DWORD _abilitaCIE(void* lpThreadParameter);
 
@@ -1083,8 +1083,9 @@ void IAS::SetCache(const char *PAN, ByteArray &certificate, ByteArray &FirstPIN)
 //    return bIsUserInteractive == TRUE;
 //}
 //
-//void IAS::IconaSbloccoPIN() {
-//    init_func
+void IAS::IconaSbloccoPIN() {
+    init_func
+    
 //        if (IsUserInteractive()) {
 //        PROCESS_INFORMATION pi;
 //        STARTUPINFO si;
@@ -1115,7 +1116,7 @@ void IAS::SetCache(const char *PAN, ByteArray &certificate, ByteArray &FirstPIN)
 //            CloseHandle(token);
 //        }
 //    }
-//}
+}
 
 void IAS::GetFirstPIN(ByteDynArray &PIN) {
 	init_func

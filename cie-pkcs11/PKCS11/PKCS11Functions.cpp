@@ -51,7 +51,7 @@ CK_MECHANISM_TYPE P11mechanisms[]= {
 };
 
 char *getAttributeName(DWORD dwId);
-extern CModuleInfo moduleInfo; // informazioni sulla dll (o so)
+//extern CModuleInfo moduleInfo; // informazioni sulla dll (o so)
 bool bModuleInit=false;
 
 #ifdef WIN32
@@ -96,6 +96,36 @@ BOOL APIENTRY DllMainP11( HANDLE hModule,
 
 	return TRUE;
 }
+
+#else
+
+__attribute__((constructor)) void DllMainAttach()
+{
+    // code
+    bModuleInit=true;
+    std::string configPath;
+    configPath = "moduleInfo.szModulePath + moduleInfo.szModuleName+.ini";
+    initLog(configPath.c_str(), __DATE__ " " __TIME__);
+    Log.initModule("PKCS11", __DATE__ " " __TIME__);
+    p11::InitP11(configPath.c_str());
+}
+
+__attribute__((destructor)) void DllMainDetach()
+{
+    if (bP11Initialized) {
+        Log.write("%s","Forzatura C_Finalize");
+        C_Finalize(NULL);
+        bP11Initialized = false;
+    }
+    //xmlCleanup();
+    bModuleInit=false;
+    bP11Terminate=true;
+    
+    CSlot::DeleteSlotList();
+    CCardTemplate::DeleteTemplateList();
+    p11slotEvent.set();
+}
+
 #endif
 
 // funzione CheckMechanismParam

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5CA6E27FF73910B2FFB64484 /* libPods-cie-pkcs11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */; };
 		E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E54EF42F2100D91200E2EADD /* libcryptopp.a */; };
+		E55BE03B2136CD0300E5F396 /* CacheLib.h in Headers */ = {isa = PBXBuildFile; fileRef = E55BE0392136CD0100E5F396 /* CacheLib.h */; };
+		E55BE03C2136CD0300E5F396 /* CacheLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55BE03A2136CD0100E5F396 /* CacheLib.cpp */; };
 		E565901F211864470039865C /* Array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5658FF9211864470039865C /* Array.cpp */; };
 		E5659020211864470039865C /* Array.h in Headers */ = {isa = PBXBuildFile; fileRef = E5658FFA211864470039865C /* Array.h */; };
 		E565902D211864470039865C /* defines.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659008211864470039865C /* defines.h */; };
@@ -98,6 +100,8 @@
 		79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.debug.xcconfig"; sourceTree = "<group>"; };
 		E54EF42F2100D91200E2EADD /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcryptopp.a; sourceTree = "<group>"; };
 		E54EF4312100D99500E2EADD /* Cryptopp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Cryptopp; sourceTree = "<group>"; };
+		E55BE0392136CD0100E5F396 /* CacheLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheLib.h; sourceTree = "<group>"; };
+		E55BE03A2136CD0100E5F396 /* CacheLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CacheLib.cpp; sourceTree = "<group>"; };
 		E5658FF9211864470039865C /* Array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Array.cpp; sourceTree = "<group>"; };
 		E5658FFA211864470039865C /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Array.h; sourceTree = "<group>"; };
 		E5659008211864470039865C /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
@@ -208,6 +212,8 @@
 		E5658FF8211864470039865C /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				E55BE03A2136CD0100E5F396 /* CacheLib.cpp */,
+				E55BE0392136CD0100E5F396 /* CacheLib.h */,
 				E5658FF9211864470039865C /* Array.cpp */,
 				E5658FFA211864470039865C /* Array.h */,
 				E5659008211864470039865C /* defines.h */,
@@ -399,6 +405,7 @@
 				E5BE7DAE20FE853800004389 /* CIEP11Template.h in Headers */,
 				E5659084211875950039865C /* sha512.h in Headers */,
 				E5659076211875950039865C /* Base64.h in Headers */,
+				E55BE03B2136CD0300E5F396 /* CacheLib.h in Headers */,
 				E5659037211864470039865C /* SyncroEvent.h in Headers */,
 				E565907A211875950039865C /* MAC.h in Headers */,
 				E5659080211875950039865C /* SHA1.h in Headers */,
@@ -530,6 +537,7 @@
 				E565907B211875950039865C /* MD5.cpp in Sources */,
 				E5BE7DA920FE853800004389 /* CardContext.cpp in Sources */,
 				E5659077211875950039865C /* DES3.cpp in Sources */,
+				E55BE03C2136CD0300E5F396 /* CacheLib.cpp in Sources */,
 				E565903C211864470039865C /* tinyxml2.cpp in Sources */,
 				E5659036211864470039865C /* SyncroEvent.cpp in Sources */,
 				E565907F211875950039865C /* SHA1.cpp in Sources */,
