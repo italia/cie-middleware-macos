@@ -3,9 +3,7 @@
 #include "session.h"
 #include <map>
 
-#pragma pack(1)
-#include "pkcs11.h"
-#pragma pack()
+#include "cryptoki.h"
 
 namespace p11 {
 

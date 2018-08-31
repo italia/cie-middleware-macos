@@ -65,6 +65,8 @@
 		E5659082211875950039865C /* sha256.h in Headers */ = {isa = PBXBuildFile; fileRef = E565906E211875940039865C /* sha256.h */; };
 		E5659083211875950039865C /* SHA512.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565906F211875940039865C /* SHA512.cpp */; };
 		E5659084211875950039865C /* sha512.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659070211875940039865C /* sha512.h */; };
+		E5707B3521383CCA0054CF16 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5707B3421383CCA0054CF16 /* main.cpp */; };
+		E5707B3B21383D1B0054CF16 /* UUCByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5707B3A21383D1B0054CF16 /* UUCByteArray.cpp */; };
 		E5BE7D8C20FE84D200004389 /* cie_pkcs11.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */; };
 		E5BE7D8E20FE84D200004389 /* cie_pkcs11Priv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */; };
 		E5BE7D9020FE84D200004389 /* cie_pkcs11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D8F20FE84D200004389 /* cie_pkcs11.cpp */; };
@@ -93,6 +95,18 @@
 		E5BE7DC520FE883300004389 /* wintypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DC420FE883300004389 /* wintypes.h */; };
 		E5BE7DC820FE8A9A00004389 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7DC720FE8A9A00004389 /* PCSC.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E5707B3021383CCA0054CF16 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cie-pkcs11.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +170,10 @@
 		E565906E211875940039865C /* sha256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha256.h; sourceTree = "<group>"; };
 		E565906F211875940039865C /* SHA512.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SHA512.cpp; sourceTree = "<group>"; };
 		E5659070211875940039865C /* sha512.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha512.h; sourceTree = "<group>"; };
+		E5707B3221383CCA0054CF16 /* TestCIE */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestCIE; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5707B3421383CCA0054CF16 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E5707B3921383D1B0054CF16 /* UUCByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCByteArray.h; sourceTree = "<group>"; };
+		E5707B3A21383D1B0054CF16 /* UUCByteArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUCByteArray.cpp; sourceTree = "<group>"; };
 		E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libcie-pkcs11.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cie_pkcs11.hpp; sourceTree = "<group>"; };
 		E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cie_pkcs11Priv.hpp; sourceTree = "<group>"; };
@@ -187,6 +205,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E5707B2F21383CCA0054CF16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5BE7D8520FE84D200004389 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -293,10 +318,21 @@
 			path = Crypto;
 			sourceTree = "<group>";
 		};
+		E5707B3321383CCA0054CF16 /* TestCIE */ = {
+			isa = PBXGroup;
+			children = (
+				E5707B3A21383D1B0054CF16 /* UUCByteArray.cpp */,
+				E5707B3921383D1B0054CF16 /* UUCByteArray.h */,
+				E5707B3421383CCA0054CF16 /* main.cpp */,
+			);
+			path = TestCIE;
+			sourceTree = "<group>";
+		};
 		E5BE7D7F20FE84D200004389 = {
 			isa = PBXGroup;
 			children = (
 				E5BE7D8A20FE84D200004389 /* cie-pkcs11 */,
+				E5707B3321383CCA0054CF16 /* TestCIE */,
 				E5BE7D8920FE84D200004389 /* Products */,
 				E5BE7DC620FE8A9A00004389 /* Frameworks */,
 				B7FB7DAC107919BD2BEDD28E /* Pods */,
@@ -307,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */,
+				E5707B3221383CCA0054CF16 /* TestCIE */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -424,6 +461,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		E5707B3121383CCA0054CF16 /* TestCIE */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5707B3821383CCA0054CF16 /* Build configuration list for PBXNativeTarget "TestCIE" */;
+			buildPhases = (
+				E5707B2E21383CCA0054CF16 /* Sources */,
+				E5707B2F21383CCA0054CF16 /* Frameworks */,
+				E5707B3021383CCA0054CF16 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestCIE;
+			productName = TestCIE;
+			productReference = E5707B3221383CCA0054CF16 /* TestCIE */;
+			productType = "com.apple.product-type.tool";
+		};
 		E5BE7D8720FE84D200004389 /* cie-pkcs11 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5BE7D9320FE84D200004389 /* Build configuration list for PBXNativeTarget "cie-pkcs11" */;
@@ -452,6 +506,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = IPZS;
 				TargetAttributes = {
+					E5707B3121383CCA0054CF16 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
 					E5BE7D8720FE84D200004389 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -470,6 +527,7 @@
 			projectRoot = "";
 			targets = (
 				E5BE7D8720FE84D200004389 /* cie-pkcs11 */,
+				E5707B3121383CCA0054CF16 /* TestCIE */,
 			);
 		};
 /* End PBXProject section */
@@ -511,6 +569,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E5707B2E21383CCA0054CF16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5707B3521383CCA0054CF16 /* main.cpp in Sources */,
+				E5707B3B21383D1B0054CF16 /* UUCByteArray.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5BE7D8420FE84D200004389 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -559,6 +626,24 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		E5707B3621383CCA0054CF16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E5707B3721383CCA0054CF16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		E5BE7D9120FE84D200004389 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -713,6 +798,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E5707B3821383CCA0054CF16 /* Build configuration list for PBXNativeTarget "TestCIE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5707B3621383CCA0054CF16 /* Debug */,
+				E5707B3721383CCA0054CF16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E5BE7D8320FE84D200004389 /* Build configuration list for PBXProject "cie-pkcs11" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

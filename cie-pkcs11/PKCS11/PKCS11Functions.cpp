@@ -33,7 +33,7 @@ bool bP11Terminate=false;
 using namespace p11;
 
 // Function list P11
-CK_FUNCTION_LIST m_FunctionList;
+static CK_FUNCTION_LIST m_FunctionList;
 std::mutex p11Mutex;
 auto_reset_event p11slotEvent/*("CardOS_P11_Event")*/;
 
@@ -49,6 +49,7 @@ CK_MECHANISM_TYPE P11mechanisms[]= {
 	CKM_SHA1_RSA_PKCS,
 	CKM_MD5_RSA_PKCS
 };
+
 
 char *getAttributeName(DWORD dwId);
 //extern CModuleInfo moduleInfo; // informazioni sulla dll (o so)
@@ -98,6 +99,17 @@ BOOL APIENTRY DllMainP11( HANDLE hModule,
 }
 
 #else
+
+/* ---- GENERATE CK_FUNCTION_LIST */
+
+#define CK_PKCS11_FUNCTION_INFO(name) \
+name,
+
+CK_FUNCTION_LIST pkcs11_function_list = {
+    { LIBRARY_VERSION_MAJOR, LIBRARY_VERSION_MINOR },
+#include "pkcs11f.h"
+};
+#undef CK_PKCS11_FUNCTION_INFO
 
 __attribute__((constructor)) void DllMainAttach()
 {
@@ -512,86 +524,156 @@ CK_RV CK_ENTRY C_GetFunctionList(CK_FUNCTION_LIST_PTR_PTR ppFunctionList)
 		if (ppFunctionList == NULL)
 			throw p11_error(CKR_ARGUMENTS_BAD);
 	
-	*ppFunctionList = &m_FunctionList;
+    static CK_FUNCTION_LIST functionList = {{ 2, 20},
+        C_Initialize,
+        C_Finalize,
+        C_GetInfo,
+        C_GetFunctionList,
+        C_GetSlotList,
+        C_GetSlotInfo,
+        C_GetTokenInfo,
+        C_GetMechanismList,
+        C_GetMechanismInfo,
+        C_InitToken,
+        C_InitPIN,
+        C_SetPIN,
+        C_OpenSession,
+        C_CloseSession,
+        C_CloseAllSessions,
+        C_GetSessionInfo,
+        C_GetOperationState,
+        C_SetOperationState,
+        C_Login,
+        C_Logout,
+        C_CreateObject,
+        C_CopyObject,
+        C_DestroyObject,
+        C_GetObjectSize,
+        C_GetAttributeValue,
+        C_SetAttributeValue,
+        C_FindObjectsInit,
+        C_FindObjects,
+        C_FindObjectsFinal,
+        C_EncryptInit,
+        C_Encrypt,
+        C_EncryptUpdate,
+        C_EncryptFinal,
+        C_DecryptInit,
+        C_Decrypt,
+        C_DecryptUpdate,
+        C_DecryptFinal,
+        C_DigestInit,
+        C_Digest,
+        C_DigestUpdate, C_DigestKey, C_DigestFinal, C_SignInit, C_Sign,
+        C_SignUpdate, C_SignFinal, C_SignRecoverInit, C_SignRecover,
+        C_VerifyInit, C_Verify, C_VerifyUpdate, C_VerifyFinal,
+        C_VerifyRecoverInit, C_VerifyRecover, C_DigestEncryptUpdate,
+        C_DecryptDigestUpdate, C_SignEncryptUpdate, C_DecryptVerifyUpdate,
+        C_GenerateKey, C_GenerateKeyPair, C_WrapKey, C_UnwrapKey,
+        C_DeriveKey, C_SeedRandom, C_GenerateRandom, C_GetFunctionStatus,
+        C_CancelFunction, C_WaitForSlotEvent };
+    
+    *ppFunctionList = &functionList;
+    
+    return CKR_OK;
+    exit_p11_func
+    return CKR_GENERAL_ERROR;
 
-	memset(&m_FunctionList,0,sizeof(m_FunctionList));
-	
-	m_FunctionList.version.major	= LIBRARY_VERSION_MAJOR;
-	m_FunctionList.version.minor	= LIBRARY_VERSION_MINOR;
-	
-	// Riempie la lista della funzioni
-	m_FunctionList.C_CloseAllSessions=&C_CloseAllSessions;
-	m_FunctionList.C_CloseSession=&C_CloseSession;
-	m_FunctionList.C_CreateObject=&C_CreateObject;
-	m_FunctionList.C_Digest=&C_Digest;
-	m_FunctionList.C_DigestFinal=&C_DigestFinal;
-	m_FunctionList.C_DigestInit=&C_DigestInit;
-	m_FunctionList.C_DigestUpdate=&C_DigestUpdate;
-	m_FunctionList.C_Finalize=&C_Finalize;
-	m_FunctionList.C_FindObjects=&C_FindObjects;
-	m_FunctionList.C_FindObjectsFinal=&C_FindObjectsFinal;
-	m_FunctionList.C_FindObjectsInit=&C_FindObjectsInit;
-	m_FunctionList.C_GetAttributeValue=&C_GetAttributeValue;
-	m_FunctionList.C_GetFunctionList=&C_GetFunctionList;
-	m_FunctionList.C_GetInfo=&C_GetInfo;
-	m_FunctionList.C_GetMechanismInfo=&C_GetMechanismInfo;
-	m_FunctionList.C_GetMechanismList=&C_GetMechanismList;
-	m_FunctionList.C_GetSessionInfo=&C_GetSessionInfo;
-	m_FunctionList.C_GetSlotInfo=&C_GetSlotInfo;
-	m_FunctionList.C_GetSlotList=&C_GetSlotList;
-	m_FunctionList.C_GetTokenInfo=&C_GetTokenInfo;
-	m_FunctionList.C_Initialize=&C_Initialize;
-	m_FunctionList.C_Login=&C_Login;
-	m_FunctionList.C_Logout=&C_Logout;
-	m_FunctionList.C_OpenSession=&C_OpenSession;
-	m_FunctionList.C_SetAttributeValue=&C_SetAttributeValue;
-	m_FunctionList.C_Sign=&C_Sign;
-	m_FunctionList.C_SignFinal=&C_SignFinal;
-	m_FunctionList.C_SignInit=&C_SignInit;
-	m_FunctionList.C_SignUpdate=&C_SignUpdate;
-	m_FunctionList.C_Decrypt=&C_Decrypt;
-	m_FunctionList.C_DecryptFinal=&C_DecryptFinal;
-	m_FunctionList.C_DecryptInit=&C_DecryptInit;
-	m_FunctionList.C_DecryptUpdate=&C_DecryptUpdate;
-	m_FunctionList.C_Encrypt=&C_Encrypt;
-	m_FunctionList.C_EncryptFinal=&C_EncryptFinal;
-	m_FunctionList.C_EncryptInit=&C_EncryptInit;
-	m_FunctionList.C_EncryptUpdate=&C_EncryptUpdate;
-	m_FunctionList.C_Verify=&C_Verify;
-	m_FunctionList.C_VerifyFinal=&C_VerifyFinal;
-	m_FunctionList.C_VerifyInit=&C_VerifyInit;
-	m_FunctionList.C_VerifyUpdate=&C_VerifyUpdate;
-	m_FunctionList.C_WaitForSlotEvent=&C_WaitForSlotEvent;
-	m_FunctionList.C_InitToken=&C_InitToken;
-	m_FunctionList.C_InitPIN=&C_InitPIN;
-	m_FunctionList.C_SetPIN=&C_SetPIN;
-	m_FunctionList.C_GetOperationState=&C_GetOperationState;
-	m_FunctionList.C_SetOperationState=&C_SetOperationState;
-	m_FunctionList.C_CopyObject=&C_CopyObject;
-	m_FunctionList.C_DestroyObject=&C_DestroyObject;
-	m_FunctionList.C_GetObjectSize=&C_GetObjectSize;
-	m_FunctionList.C_DigestKey=&C_DigestKey;
-	m_FunctionList.C_SignRecoverInit=&C_SignRecoverInit;
-	m_FunctionList.C_SignRecover=&C_SignRecover;
-	m_FunctionList.C_VerifyRecoverInit=&C_VerifyRecoverInit;
-	m_FunctionList.C_VerifyRecover=&C_VerifyRecover;
-	m_FunctionList.C_DigestEncryptUpdate=&C_DigestEncryptUpdate;
-	m_FunctionList.C_DecryptDigestUpdate=&C_DecryptDigestUpdate;
-	m_FunctionList.C_SignEncryptUpdate=&C_SignEncryptUpdate;
-	m_FunctionList.C_DecryptVerifyUpdate=&C_DecryptVerifyUpdate;
-	m_FunctionList.C_GenerateKey=&C_GenerateKey;
-	m_FunctionList.C_GenerateKeyPair=&C_GenerateKeyPair;
-	m_FunctionList.C_WrapKey=&C_WrapKey;
-	m_FunctionList.C_UnwrapKey=&C_UnwrapKey;
-	m_FunctionList.C_DeriveKey=&C_DeriveKey;
-	m_FunctionList.C_SeedRandom=&C_SeedRandom;
-	m_FunctionList.C_GenerateRandom=&C_GenerateRandom;
-	m_FunctionList.C_GetFunctionStatus=&C_GetFunctionStatus;
-	m_FunctionList.C_CancelFunction=&C_CancelFunction;
-
-	return CKR_OK;
-	exit_p11_func
-	return CKR_GENERAL_ERROR;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //*ppFunctionList = &pkcs11_function_list;
+    
+//    long n = (*ppFunctionList)->C_Initialize(0);
+//    
+//    printf("%d", n);
+    
+//    *ppFunctionList = &m_FunctionList;
+//
+//    memset(&m_FunctionList,0,sizeof(m_FunctionList));
+//
+//    m_FunctionList.version.major    = LIBRARY_VERSION_MAJOR;
+//    m_FunctionList.version.minor    = LIBRARY_VERSION_MINOR;
+//
+//    // Riempie la lista della funzioni
+//    m_FunctionList.C_CloseAllSessions=&C_CloseAllSessions;
+//    m_FunctionList.C_CloseSession=&C_CloseSession;
+//    m_FunctionList.C_CreateObject=&C_CreateObject;
+//    m_FunctionList.C_Digest=&C_Digest;
+//    m_FunctionList.C_DigestFinal=&C_DigestFinal;
+//    m_FunctionList.C_DigestInit=&C_DigestInit;
+//    m_FunctionList.C_DigestUpdate=&C_DigestUpdate;
+//    m_FunctionList.C_Finalize=&C_Finalize;
+//    m_FunctionList.C_FindObjects=&C_FindObjects;
+//    m_FunctionList.C_FindObjectsFinal=&C_FindObjectsFinal;
+//    m_FunctionList.C_FindObjectsInit=&C_FindObjectsInit;
+//    m_FunctionList.C_GetAttributeValue=&C_GetAttributeValue;
+//    m_FunctionList.C_GetFunctionList=&C_GetFunctionList;
+//    m_FunctionList.C_GetInfo=&C_GetInfo;
+//    m_FunctionList.C_GetMechanismInfo=&C_GetMechanismInfo;
+//    m_FunctionList.C_GetMechanismList=&C_GetMechanismList;
+//    m_FunctionList.C_GetSessionInfo=&C_GetSessionInfo;
+//    m_FunctionList.C_GetSlotInfo=&C_GetSlotInfo;
+//    m_FunctionList.C_GetSlotList=&C_GetSlotList;
+//    m_FunctionList.C_GetTokenInfo=&C_GetTokenInfo;
+//    m_FunctionList.C_Initialize=C_Initialize;
+//    m_FunctionList.C_Login=&C_Login;
+//    m_FunctionList.C_Logout=&C_Logout;
+//    m_FunctionList.C_OpenSession=&C_OpenSession;
+//    m_FunctionList.C_SetAttributeValue=&C_SetAttributeValue;
+//    m_FunctionList.C_Sign=&C_Sign;
+//    m_FunctionList.C_SignFinal=&C_SignFinal;
+//    m_FunctionList.C_SignInit=&C_SignInit;
+//    m_FunctionList.C_SignUpdate=&C_SignUpdate;
+//    m_FunctionList.C_Decrypt=&C_Decrypt;
+//    m_FunctionList.C_DecryptFinal=&C_DecryptFinal;
+//    m_FunctionList.C_DecryptInit=&C_DecryptInit;
+//    m_FunctionList.C_DecryptUpdate=&C_DecryptUpdate;
+//    m_FunctionList.C_Encrypt=&C_Encrypt;
+//    m_FunctionList.C_EncryptFinal=&C_EncryptFinal;
+//    m_FunctionList.C_EncryptInit=&C_EncryptInit;
+//    m_FunctionList.C_EncryptUpdate=&C_EncryptUpdate;
+//    m_FunctionList.C_Verify=&C_Verify;
+//    m_FunctionList.C_VerifyFinal=&C_VerifyFinal;
+//    m_FunctionList.C_VerifyInit=&C_VerifyInit;
+//    m_FunctionList.C_VerifyUpdate=&C_VerifyUpdate;
+//    m_FunctionList.C_WaitForSlotEvent=&C_WaitForSlotEvent;
+//    m_FunctionList.C_InitToken=&C_InitToken;
+//    m_FunctionList.C_InitPIN=&C_InitPIN;
+//    m_FunctionList.C_SetPIN=&C_SetPIN;
+//    m_FunctionList.C_GetOperationState=&C_GetOperationState;
+//    m_FunctionList.C_SetOperationState=&C_SetOperationState;
+//    m_FunctionList.C_CopyObject=&C_CopyObject;
+//    m_FunctionList.C_DestroyObject=&C_DestroyObject;
+//    m_FunctionList.C_GetObjectSize=&C_GetObjectSize;
+//    m_FunctionList.C_DigestKey=&C_DigestKey;
+//    m_FunctionList.C_SignRecoverInit=&C_SignRecoverInit;
+//    m_FunctionList.C_SignRecover=&C_SignRecover;
+//    m_FunctionList.C_VerifyRecoverInit=&C_VerifyRecoverInit;
+//    m_FunctionList.C_VerifyRecover=&C_VerifyRecover;
+//    m_FunctionList.C_DigestEncryptUpdate=&C_DigestEncryptUpdate;
+//    m_FunctionList.C_DecryptDigestUpdate=&C_DecryptDigestUpdate;
+//    m_FunctionList.C_SignEncryptUpdate=&C_SignEncryptUpdate;
+//    m_FunctionList.C_DecryptVerifyUpdate=&C_DecryptVerifyUpdate;
+//    m_FunctionList.C_GenerateKey=&C_GenerateKey;
+//    m_FunctionList.C_GenerateKeyPair=&C_GenerateKeyPair;
+//    m_FunctionList.C_WrapKey=&C_WrapKey;
+//    m_FunctionList.C_UnwrapKey=&C_UnwrapKey;
+//    m_FunctionList.C_DeriveKey=&C_DeriveKey;
+//    m_FunctionList.C_SeedRandom=&C_SeedRandom;
+//    m_FunctionList.C_GenerateRandom=&C_GenerateRandom;
+//    m_FunctionList.C_GetFunctionStatus=&C_GetFunctionStatus;
+//    m_FunctionList.C_CancelFunction=&C_CancelFunction;
+//
+//    return CKR_OK;
+//    exit_p11_func
+//    return CKR_GENERAL_ERROR;
 }
 
 CK_RV CK_ENTRY C_CreateObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR phObject)
