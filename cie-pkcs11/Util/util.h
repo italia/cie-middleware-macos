@@ -208,9 +208,9 @@ extern DWORD ERR_OBJECT_HASNT_ATTRIBUTE;
 uint8_t hex2byte(char h);
 void readHexData(const std::string &data,ByteDynArray &ba);
 std::string HexByte(uint8_t data, bool uppercase = true);
-std::string &dumpHexData(ByteArray data, std::string dump);
-std::string &dumpHexData(ByteArray data, std::string dump, bool withSpace, bool uppercase = true);
-std::string &dumpHexDataLowerCase(ByteArray data, std::string dump);
+std::string dumpHexData(ByteArray data, std::string& dump);
+std::string dumpHexData(ByteArray data, std::string& dump, bool withSpace, bool uppercase = true);
+std::string dumpHexDataLowerCase(ByteArray data, std::string& dump);
 
 void PutPaddingBT0(ByteArray& ba, long dwLen);
 void PutPaddingBT1(ByteArray& ba, unsigned long dwLen);

@@ -90,7 +90,8 @@ bool ByteArray::operator!=(const ByteArray &src) const {
 void ByteArray::copy(const ByteArray &src, size_t start) {
 	if (src._size + start>_size)
 		throw logged_error(stdPrintf("Dimensione array da copiare %i troppo grande; dimensione massima %i", src._size + start, _size));
-	CryptoPP::memcpy_s(_data + start, _size - (start), src._data, src._size);
+    if(src._size > 0)
+        CryptoPP::memcpy_s(_data + start, _size - (start), src._data, src._size);
 }
 
 void ByteArray::rightcopy(const ByteArray &src, size_t end) {

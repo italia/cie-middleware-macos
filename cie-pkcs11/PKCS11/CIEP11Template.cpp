@@ -238,7 +238,7 @@ ByteDynArray  CIEtemplateGetSerial(CSlot &pSlot) {
 		ias.SelectAID_IAS();
 		ias.ReadPAN();
 		std::string numSerial;
-		//dumpHexData(ias.PAN.mid(5, 6), numSerial, false);
+		dumpHexData(ias.PAN.mid(5, 6), numSerial, false);
 		return ByteArray((BYTE*)numSerial.c_str(),numSerial.length());
 	}
 }

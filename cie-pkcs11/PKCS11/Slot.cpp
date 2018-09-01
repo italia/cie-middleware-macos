@@ -51,10 +51,10 @@ namespace p11 {
 		Final();
 	}
 
-//    CK_SLOT_ID CSlot::GetNewSlotID() {
-//        init_func
-//            return InterlockedIncrement(&dwSlotCnt);
-//    }
+    CK_SLOT_ID CSlot::GetNewSlotID() {
+        init_func
+            return ++dwSlotCnt;
+    }
 
 	static DWORD slotMonitor(SlotMap *pSlotMap)
 	{
@@ -167,7 +167,7 @@ namespace p11 {
 	CK_SLOT_ID CSlot::AddSlot(std::shared_ptr<CSlot> pSlot)
 	{
 		init_func
-        pSlot->hSlot = (CK_SLOT_ID)&pSlot;//GetNewSlotID();
+        pSlot->hSlot = (CK_SLOT_ID)pSlot->GetNewSlotID();
 		auto id = pSlot->hSlot;
 		g_mSlots.insert(std::make_pair(pSlot->hSlot, std::move(pSlot)));
 		return id;

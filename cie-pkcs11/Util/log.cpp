@@ -301,6 +301,9 @@ DWORD CLog::write(const char *format,...) {
             fprintf(lf, "\n");
             fclose(lf);
         }
+        
+        vprintf(format, params);
+        vprintf("\n", NULL);
 #endif
 		
 	}
@@ -365,6 +368,9 @@ void CLog::writePure(const char *format,...) {
 			fprintf(lf, "\n");
 			fclose(lf);
 		}
+        
+        vprintf(format, params);
+        vprintf("\n", NULL);
 	}
 #ifdef _DEBUG
 #ifdef WIN32

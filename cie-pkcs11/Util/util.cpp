@@ -147,13 +147,13 @@ std::string HexByte(uint8_t data, bool uppercase) {
 	return dmp.str();
 }
 
-std::string &dumpHexData(ByteArray data, std::string dump)
+std::string dumpHexData(ByteArray data, std::string& dump)
 {
 	dumpHexData(data,dump,true,true);
 	return dump;
 }
 
-std::string &dumpHexData(ByteArray data, std::string dump, bool withSpace, bool uppercase)
+std::string dumpHexData(ByteArray data, std::string& dump, bool withSpace, bool uppercase)
 {
 	std::stringstream dmp;
 	dmp << std::hex << std::setfill('0');
@@ -164,7 +164,7 @@ std::string &dumpHexData(ByteArray data, std::string dump, bool withSpace, bool 
 		if (withSpace)
 			dmp << " ";
 	}
-	dump = dmp.str();
+	dump.assign(dmp.str());
 	return dump;
 }
 void Debug(ByteArray ba) {
@@ -174,7 +174,7 @@ void Debug(ByteArray ba) {
 	OutputDebugString("\n");
 }
 
-std::string &dumpHexDataLowerCase(ByteArray data, std::string dump)
+std::string dumpHexDataLowerCase(ByteArray data, std::string& dump)
 {
 	return dumpHexData(data, dump, false, false);
 }
