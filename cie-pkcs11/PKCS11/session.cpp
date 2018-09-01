@@ -77,15 +77,15 @@ namespace p11 {
 	}
 
 
-//    CK_SLOT_ID CSession::GetNewSessionID() {
-//        init_func
-//        return //InterlockedIncrement(&dwSessionCnt);
-//    }
+    CK_SLOT_ID CSession::GetNewSessionID() {
+        init_func
+        return ++dwSessionCnt;
+    }
 
 	CK_SESSION_HANDLE CSession::AddSession(std::unique_ptr<CSession> pSession)
 	{
 		init_func
-        pSession->hSessionHandle = (CK_SESSION_HANDLE)&pSession;//GetNewSessionID();
+        pSession->hSessionHandle = (CK_SESSION_HANDLE)GetNewSessionID();
 		auto id = pSession->hSessionHandle;
 
 		pSession->pSlot->pTemplate->FunctionList.templateInitSession(pSession->pSlot->pTemplateData);

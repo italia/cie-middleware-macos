@@ -208,6 +208,7 @@ void IAS::readfile(uint16_t id, ByteDynArray &content){
 		}
 		if (sw == 0x9000) {
 			content.append(chn);
+            cnt = content.size();
 //            WORD chnSize;
 //            if (FAILED(SizeTToWord(chn.size(), &chnSize)) || FAILED(WordAdd(cnt, chnSize, &cnt)))
 //                throw logged_error("File troppo grande");
@@ -247,6 +248,7 @@ void IAS::readfile_SM(uint16_t id, ByteDynArray &content) {
 		}
 		if (sw == 0x9000) {
 			content.append(chn);
+            cnt = content.size();
 //            WORD chnSize;
 //            if (FAILED(SizeTToWord(chn.size(), &chnSize)) || FAILED(WordAdd(cnt, chnSize, &cnt)))
 //                throw logged_error("File troppo grande");

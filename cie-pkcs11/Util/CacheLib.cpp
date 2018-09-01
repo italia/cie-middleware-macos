@@ -221,7 +221,7 @@ void GetCardPath(const char *PAN, char szPath[MAX_PATH]) {
 bool CacheExists(const char *PAN) {
     char szPath[MAX_PATH];
     GetCardPath(PAN, szPath);
-    return !file_exists(szPath);
+    return file_exists(szPath);
 }
 
 void CacheGetCertificate(const char *PAN, std::vector<uint8_t>&certificate)
