@@ -73,7 +73,7 @@
 #define HIBYTE(l) (l >> 8) & 0xFF
 #endif
 
-#define MAX_PATH 256
+#define MAX_PATH 2048
 
 #define MAKEWORD(lo, hi) lo + (hi * 256)
 

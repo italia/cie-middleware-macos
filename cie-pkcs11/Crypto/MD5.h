@@ -7,8 +7,8 @@
 #include <openssl/md5.h>
 #endif
 
-#include "../util/util.h"
-#include "../util/utilexception.h"
+#include "../Util/util.h"
+#include "../Util/UtilException.h"
 
 class CMD5
 {

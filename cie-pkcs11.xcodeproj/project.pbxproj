@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		5CA6E27FF73910B2FFB64484 /* libPods-cie-pkcs11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */; };
+		E50A89E8213BD80E006A000D /* AbilitaCIEViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A89E5213BD80E006A000D /* AbilitaCIEViewController.h */; };
+		E50A89E9213BD80E006A000D /* AbilitaCIEViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E50A89E6213BD80E006A000D /* AbilitaCIEViewController.mm */; };
+		E50A8A08213BE019006A000D /* AbilitaCIE.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A8A07213BE018006A000D /* AbilitaCIE.h */; };
+		E50A8A0A213BE053006A000D /* AbilitaCIE.mm in Sources */ = {isa = PBXBuildFile; fileRef = E50A8A09213BE053006A000D /* AbilitaCIE.mm */; };
+		E50A8A0D213BE121006A000D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50A8A0B213BE121006A000D /* Cocoa.framework */; };
+		E50A8A0E213BE121006A000D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50A8A0C213BE121006A000D /* AppKit.framework */; };
+		E50A8A10213BE4C6006A000D /* AbilitaCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50A8A0F213BE4C6006A000D /* AbilitaCIE.cpp */; };
 		E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E54EF42F2100D91200E2EADD /* libcryptopp.a */; };
 		E55BE03B2136CD0300E5F396 /* CacheLib.h in Headers */ = {isa = PBXBuildFile; fileRef = E55BE0392136CD0100E5F396 /* CacheLib.h */; };
 		E55BE03C2136CD0300E5F396 /* CacheLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55BE03A2136CD0100E5F396 /* CacheLib.cpp */; };
@@ -67,9 +74,12 @@
 		E5659084211875950039865C /* sha512.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659070211875940039865C /* sha512.h */; };
 		E5707B3521383CCA0054CF16 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5707B3421383CCA0054CF16 /* main.cpp */; };
 		E5707B3B21383D1B0054CF16 /* UUCByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5707B3A21383D1B0054CF16 /* UUCByteArray.cpp */; };
-		E5BE7D8C20FE84D200004389 /* cie_pkcs11.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */; };
-		E5BE7D8E20FE84D200004389 /* cie_pkcs11Priv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */; };
-		E5BE7D9020FE84D200004389 /* cie_pkcs11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D8F20FE84D200004389 /* cie_pkcs11.cpp */; };
+		E59B65C2213C06B8007348D5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C1213C06B8007348D5 /* AppDelegate.m */; };
+		E59B65C5213C06B8007348D5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C4213C06B8007348D5 /* ViewController.mm */; };
+		E59B65C7213C06B9007348D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E59B65C6213C06B9007348D5 /* Assets.xcassets */; };
+		E59B65CA213C06B9007348D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59B65C8213C06B9007348D5 /* Main.storyboard */; };
+		E59B65CD213C06B9007348D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B65CC213C06B9007348D5 /* main.m */; };
+		E59B65D2213DD84B007348D5 /* libcie-pkcs11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */; };
 		E5BE7DA920FE853800004389 /* CardContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D9720FE853800004389 /* CardContext.cpp */; };
 		E5BE7DAA20FE853800004389 /* CardContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D9820FE853800004389 /* CardContext.h */; };
 		E5BE7DAB20FE853800004389 /* CardTemplate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D9920FE853800004389 /* CardTemplate.cpp */; };
@@ -112,6 +122,14 @@
 		228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cie-pkcs11.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.release.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.release.xcconfig"; sourceTree = "<group>"; };
 		79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.debug.xcconfig"; sourceTree = "<group>"; };
+		E50A89E5213BD80E006A000D /* AbilitaCIEViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AbilitaCIEViewController.h; sourceTree = "<group>"; };
+		E50A89E6213BD80E006A000D /* AbilitaCIEViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AbilitaCIEViewController.mm; sourceTree = "<group>"; };
+		E50A89E7213BD80E006A000D /* AbilitaCIEViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AbilitaCIEViewController.xib; sourceTree = "<group>"; };
+		E50A8A07213BE018006A000D /* AbilitaCIE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbilitaCIE.h; sourceTree = "<group>"; };
+		E50A8A09213BE053006A000D /* AbilitaCIE.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AbilitaCIE.mm; sourceTree = "<group>"; };
+		E50A8A0B213BE121006A000D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		E50A8A0C213BE121006A000D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		E50A8A0F213BE4C6006A000D /* AbilitaCIE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbilitaCIE.cpp; sourceTree = "<group>"; };
 		E54EF42F2100D91200E2EADD /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcryptopp.a; sourceTree = "<group>"; };
 		E54EF4312100D99500E2EADD /* Cryptopp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Cryptopp; sourceTree = "<group>"; };
 		E55BE0392136CD0100E5F396 /* CacheLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheLib.h; sourceTree = "<group>"; };
@@ -174,10 +192,17 @@
 		E5707B3421383CCA0054CF16 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		E5707B3921383D1B0054CF16 /* UUCByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCByteArray.h; sourceTree = "<group>"; };
 		E5707B3A21383D1B0054CF16 /* UUCByteArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUCByteArray.cpp; sourceTree = "<group>"; };
+		E59B65BE213C06B8007348D5 /* AbilitaCIE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbilitaCIE.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E59B65C0213C06B8007348D5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E59B65C1213C06B8007348D5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E59B65C3213C06B8007348D5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E59B65C4213C06B8007348D5 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		E59B65C6213C06B9007348D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E59B65C9213C06B9007348D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E59B65CB213C06B9007348D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E59B65CC213C06B9007348D5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E59B65CE213C06B9007348D5 /* AbilitaCIE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AbilitaCIE.entitlements; sourceTree = "<group>"; };
 		E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libcie-pkcs11.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cie_pkcs11.hpp; sourceTree = "<group>"; };
-		E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cie_pkcs11Priv.hpp; sourceTree = "<group>"; };
-		E5BE7D8F20FE84D200004389 /* cie_pkcs11.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cie_pkcs11.cpp; sourceTree = "<group>"; };
 		E5BE7D9720FE853800004389 /* CardContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardContext.cpp; sourceTree = "<group>"; };
 		E5BE7D9820FE853800004389 /* CardContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardContext.h; sourceTree = "<group>"; };
 		E5BE7D9920FE853800004389 /* CardTemplate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardTemplate.cpp; sourceTree = "<group>"; };
@@ -212,10 +237,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E59B65BB213C06B8007348D5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E59B65D2213DD84B007348D5 /* libcie-pkcs11.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5BE7D8520FE84D200004389 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E50A8A0D213BE121006A000D /* Cocoa.framework in Frameworks */,
+				E50A8A0E213BE121006A000D /* AppKit.framework in Frameworks */,
 				E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */,
 				E5BE7DC820FE8A9A00004389 /* PCSC.framework in Frameworks */,
 				5CA6E27FF73910B2FFB64484 /* libPods-cie-pkcs11.a in Frameworks */,
@@ -232,6 +267,17 @@
 				438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E50A89E2213BD72A006A000D /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				E50A89E5213BD80E006A000D /* AbilitaCIEViewController.h */,
+				E50A89E6213BD80E006A000D /* AbilitaCIEViewController.mm */,
+				E50A89E7213BD80E006A000D /* AbilitaCIEViewController.xib */,
+				E50A8A09213BE053006A000D /* AbilitaCIE.mm */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		E5658FF8211864470039865C /* Util */ = {
@@ -269,6 +315,8 @@
 		E5659044211875760039865C /* CSP */ = {
 			isa = PBXGroup;
 			children = (
+				E50A8A07213BE018006A000D /* AbilitaCIE.h */,
+				E50A8A0F213BE4C6006A000D /* AbilitaCIE.cpp */,
 				E5659045211875760039865C /* ExtAuthKey.cpp */,
 				E5659046211875760039865C /* IAS.cpp */,
 				E5659047211875760039865C /* IAS.h */,
@@ -328,11 +376,28 @@
 			path = TestCIE;
 			sourceTree = "<group>";
 		};
+		E59B65BF213C06B8007348D5 /* AbilitaCIE */ = {
+			isa = PBXGroup;
+			children = (
+				E59B65C0213C06B8007348D5 /* AppDelegate.h */,
+				E59B65C1213C06B8007348D5 /* AppDelegate.m */,
+				E59B65C3213C06B8007348D5 /* ViewController.h */,
+				E59B65C4213C06B8007348D5 /* ViewController.mm */,
+				E59B65C6213C06B9007348D5 /* Assets.xcassets */,
+				E59B65C8213C06B9007348D5 /* Main.storyboard */,
+				E59B65CB213C06B9007348D5 /* Info.plist */,
+				E59B65CC213C06B9007348D5 /* main.m */,
+				E59B65CE213C06B9007348D5 /* AbilitaCIE.entitlements */,
+			);
+			path = AbilitaCIE;
+			sourceTree = "<group>";
+		};
 		E5BE7D7F20FE84D200004389 = {
 			isa = PBXGroup;
 			children = (
 				E5BE7D8A20FE84D200004389 /* cie-pkcs11 */,
 				E5707B3321383CCA0054CF16 /* TestCIE */,
+				E59B65BF213C06B8007348D5 /* AbilitaCIE */,
 				E5BE7D8920FE84D200004389 /* Products */,
 				E5BE7DC620FE8A9A00004389 /* Frameworks */,
 				B7FB7DAC107919BD2BEDD28E /* Pods */,
@@ -344,6 +409,7 @@
 			children = (
 				E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */,
 				E5707B3221383CCA0054CF16 /* TestCIE */,
+				E59B65BE213C06B8007348D5 /* AbilitaCIE.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -351,6 +417,7 @@
 		E5BE7D8A20FE84D200004389 /* cie-pkcs11 */ = {
 			isa = PBXGroup;
 			children = (
+				E50A89E2213BD72A006A000D /* UI */,
 				E54EF42F2100D91200E2EADD /* libcryptopp.a */,
 				E54EF4312100D99500E2EADD /* Cryptopp */,
 				E565905C211875940039865C /* Crypto */,
@@ -358,9 +425,6 @@
 				E5659044211875760039865C /* CSP */,
 				E5658FF8211864470039865C /* Util */,
 				E5BE7D9620FE853800004389 /* PKCS11 */,
-				E5BE7D8B20FE84D200004389 /* cie_pkcs11.hpp */,
-				E5BE7D8D20FE84D200004389 /* cie_pkcs11Priv.hpp */,
-				E5BE7D8F20FE84D200004389 /* cie_pkcs11.cpp */,
 			);
 			path = "cie-pkcs11";
 			sourceTree = "<group>";
@@ -398,6 +462,8 @@
 		E5BE7DC620FE8A9A00004389 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E50A8A0C213BE121006A000D /* AppKit.framework */,
+				E50A8A0B213BE121006A000D /* Cocoa.framework */,
 				E5BE7DC720FE8A9A00004389 /* PCSC.framework */,
 				228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */,
 			);
@@ -416,7 +482,6 @@
 				E5BE7DC320FE86DC00004389 /* win32.h in Headers */,
 				E5BE7DBA20FE853800004389 /* Slot.h in Headers */,
 				E565905B211875830039865C /* Token.h in Headers */,
-				E5BE7D8E20FE84D200004389 /* cie_pkcs11Priv.hpp in Headers */,
 				E5BE7DC520FE883300004389 /* wintypes.h in Headers */,
 				E5659059211875830039865C /* PCSC.h in Headers */,
 				E5659078211875950039865C /* DES3.h in Headers */,
@@ -437,14 +502,15 @@
 				E5BE7DB020FE853800004389 /* InitP11.h in Headers */,
 				E5BE7DBE20FE858600004389 /* pkcs11f.h in Headers */,
 				E5BE7DBF20FE858600004389 /* pkcs11t.h in Headers */,
-				E5BE7D8C20FE84D200004389 /* cie_pkcs11.hpp in Headers */,
 				E565903F211864470039865C /* TLV.h in Headers */,
+				E50A89E8213BD80E006A000D /* AbilitaCIEViewController.h in Headers */,
 				E5BE7DAE20FE853800004389 /* CIEP11Template.h in Headers */,
 				E5659084211875950039865C /* sha512.h in Headers */,
 				E5659076211875950039865C /* Base64.h in Headers */,
 				E55BE03B2136CD0300E5F396 /* CacheLib.h in Headers */,
 				E5659037211864470039865C /* SyncroEvent.h in Headers */,
 				E565907A211875950039865C /* MAC.h in Headers */,
+				E50A8A08213BE019006A000D /* AbilitaCIE.h in Headers */,
 				E5659080211875950039865C /* SHA1.h in Headers */,
 				E5659035211864470039865C /* ModuleInfo.h in Headers */,
 				E5659033211864470039865C /* log.h in Headers */,
@@ -478,6 +544,23 @@
 			productReference = E5707B3221383CCA0054CF16 /* TestCIE */;
 			productType = "com.apple.product-type.tool";
 		};
+		E59B65BD213C06B8007348D5 /* AbilitaCIE */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E59B65D1213C06B9007348D5 /* Build configuration list for PBXNativeTarget "AbilitaCIE" */;
+			buildPhases = (
+				E59B65BA213C06B8007348D5 /* Sources */,
+				E59B65BB213C06B8007348D5 /* Frameworks */,
+				E59B65BC213C06B8007348D5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AbilitaCIE;
+			productName = AbilitaCIE;
+			productReference = E59B65BE213C06B8007348D5 /* AbilitaCIE.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E5BE7D8720FE84D200004389 /* cie-pkcs11 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5BE7D9320FE84D200004389 /* Build configuration list for PBXNativeTarget "cie-pkcs11" */;
@@ -509,6 +592,20 @@
 					E5707B3121383CCA0054CF16 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
+					E59B65BD213C06B8007348D5 = {
+						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.Mac = {
+								enabled = 0;
+							};
+							com.apple.NetworkExtensions = {
+								enabled = 0;
+							};
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
 					E5BE7D8720FE84D200004389 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -520,6 +617,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = E5BE7D7F20FE84D200004389;
 			productRefGroup = E5BE7D8920FE84D200004389 /* Products */;
@@ -528,9 +626,22 @@
 			targets = (
 				E5BE7D8720FE84D200004389 /* cie-pkcs11 */,
 				E5707B3121383CCA0054CF16 /* TestCIE */,
+				E59B65BD213C06B8007348D5 /* AbilitaCIE */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E59B65BC213C06B8007348D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E59B65C7213C06B9007348D5 /* Assets.xcassets in Resources */,
+				E59B65CA213C06B9007348D5 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		51235AD0B0EC5D7CC97C0CAE /* [CP] Check Pods Manifest.lock */ = {
@@ -578,6 +689,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E59B65BA213C06B8007348D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E59B65C5213C06B8007348D5 /* ViewController.mm in Sources */,
+				E59B65CD213C06B9007348D5 /* main.m in Sources */,
+				E59B65C2213C06B8007348D5 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5BE7D8420FE84D200004389 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -591,13 +712,13 @@
 				E565907D211875950039865C /* RSA.cpp in Sources */,
 				E5BE7DB320FE853800004389 /* P11Object.cpp in Sources */,
 				E5659048211875760039865C /* ExtAuthKey.cpp in Sources */,
+				E50A8A10213BE4C6006A000D /* AbilitaCIE.cpp in Sources */,
 				E565903E211864470039865C /* TLV.cpp in Sources */,
 				E5659079211875950039865C /* MAC.cpp in Sources */,
 				E5BE7DB720FE853800004389 /* session.cpp in Sources */,
 				E5659073211875950039865C /* ASNParser.cpp in Sources */,
 				E565901F211864470039865C /* Array.cpp in Sources */,
 				E5659075211875950039865C /* Base64.cpp in Sources */,
-				E5BE7D9020FE84D200004389 /* cie_pkcs11.cpp in Sources */,
 				E5BE7DAF20FE853800004389 /* initP11.cpp in Sources */,
 				E565902E211864470039865C /* funccallinfo.cpp in Sources */,
 				E5659034211864470039865C /* ModuleInfo.cpp in Sources */,
@@ -610,6 +731,7 @@
 				E565907F211875950039865C /* SHA1.cpp in Sources */,
 				E5659040211864470039865C /* util.cpp in Sources */,
 				E5659030211864470039865C /* IniSettings.cpp in Sources */,
+				E50A89E9213BD80E006A000D /* AbilitaCIEViewController.mm in Sources */,
 				E5BE7DAD20FE853800004389 /* CIEP11Template.cpp in Sources */,
 				E5659083211875950039865C /* SHA512.cpp in Sources */,
 				E5659056211875830039865C /* CardLocker.cpp in Sources */,
@@ -619,11 +741,23 @@
 				E5659081211875950039865C /* SHA256.cpp in Sources */,
 				E565905A211875830039865C /* Token.cpp in Sources */,
 				E5BE7DB920FE853800004389 /* Slot.cpp in Sources */,
+				E50A8A0A213BE053006A000D /* AbilitaCIE.mm in Sources */,
 				E5659038211864470039865C /* SyncroMutex.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E59B65C8213C06B9007348D5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E59B65C9213C06B9007348D5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E5707B3621383CCA0054CF16 /* Debug */ = {
@@ -640,6 +774,42 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E59B65CF213C06B9007348D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AbilitaCIE/AbilitaCIE.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				INFOPLIST_FILE = AbilitaCIE/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ugochirico.AbilitaCIE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E59B65D0213C06B9007348D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AbilitaCIE/AbilitaCIE.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				INFOPLIST_FILE = AbilitaCIE/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ugochirico.AbilitaCIE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -803,6 +973,15 @@
 			buildConfigurations = (
 				E5707B3621383CCA0054CF16 /* Debug */,
 				E5707B3721383CCA0054CF16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E59B65D1213C06B9007348D5 /* Build configuration list for PBXNativeTarget "AbilitaCIE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E59B65CF213C06B9007348D5 /* Debug */,
+				E59B65D0213C06B9007348D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

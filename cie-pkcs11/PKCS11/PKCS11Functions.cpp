@@ -162,6 +162,11 @@ CK_RV CK_ENTRY C_UpdateSlotList()
 	return CKR_GENERAL_ERROR;
 }
 
+CK_RV CK_ENTRY C_AbilitaCIE(const char*  szPAN, const char*  szPIN)//, PROGRESS_CALLBACK progressCallBack)
+{
+    return 0;
+}
+
 CK_RV CK_ENTRY C_GetSlotList(CK_BBOOL tokenPresent, CK_SLOT_ID_PTR pSlotList, CK_ULONG_PTR pulCount)
 {
 	init_p11_func

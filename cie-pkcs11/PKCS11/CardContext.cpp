@@ -15,7 +15,7 @@ void CCardContext::getContext() {
 #endif
     
 	LONG _call_ris;
-	if ((_call_ris=(SCardEstablishContext(SCARD_SCOPE_SYSTEM,NULL,NULL,&hContext)))!=S_OK) {
+	if ((_call_ris=(SCardEstablishContext(SCARD_SCOPE_USER,NULL,NULL,&hContext)))!=S_OK) {
 		throw windows_error(_call_ris);
 	}
 }

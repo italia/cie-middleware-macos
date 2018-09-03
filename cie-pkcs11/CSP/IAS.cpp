@@ -38,6 +38,8 @@ void GetPublicKeyFromCert(CryptoPP::BufferedTransformation & certin,
                           CryptoPP::BufferedTransformation & issuer,
                           CryptoPP::Integer &serial);
 
+void showUI();
+
 IAS::IAS(CToken::TokenTransmitCallback transmit,ByteArray ATR)
 {
 	init_func
@@ -193,7 +195,7 @@ void IAS::readfile(uint16_t id, ByteDynArray &content){
 
     ByteArray emptyBa = ByteArray();
     
-	WORD cnt = 0;
+	unsigned long cnt = 0;
 	uint8_t chunk = 128;
 	while (true) {
 		ByteDynArray chn;
@@ -209,9 +211,6 @@ void IAS::readfile(uint16_t id, ByteDynArray &content){
 		if (sw == 0x9000) {
 			content.append(chn);
             cnt = content.size();
-//            WORD chnSize;
-//            if (FAILED(SizeTToWord(chn.size(), &chnSize)) || FAILED(WordAdd(cnt, chnSize, &cnt)))
-//                throw logged_error("File troppo grande");
 			chunk = 128;
 		}
 		else {
@@ -236,7 +235,7 @@ void IAS::readfile_SM(uint16_t id, ByteDynArray &content) {
 	throw scard_error(sw);
 
 
-	WORD cnt = 0;
+	unsigned long cnt = 0;
 	uint8_t chunk = 128;
 	while (true) {
 		ByteDynArray chn;
@@ -1151,6 +1150,9 @@ void IAS::GetCertificate(ByteDynArray &certificate,bool askEnable) {
 	dumpHexData(PAN.mid(5, 6), PANStr, false);
 	if (!CacheExists(PANStr.c_str())) {
         if (askEnable) {// && IsUserInteractive() && !IsLowIntegrity()) {
+                        
+            showUI();
+            
 //            PROCESS_INFORMATION pi;
 //            STARTUPINFO si;
 //            ZeroMem(si);

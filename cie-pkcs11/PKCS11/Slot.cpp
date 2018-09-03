@@ -668,7 +668,7 @@ namespace p11 {
 	{
 		init_func
 
-			SCARD_READERSTATE state;
+        SCARD_READERSTATE state;
 		state.szReader = this->szName.data();
 		SCardGetStatusChange(CSlot::Context, 0, &state, 1);
 		if (state.cbAtr > 0) {
