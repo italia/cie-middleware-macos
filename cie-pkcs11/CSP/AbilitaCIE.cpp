@@ -50,7 +50,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
 		CSHA256 sha256;
 		std::map<uint8_t, ByteDynArray> hashSet;
 		uint8_t* data;
-		DWORD len = 0;
+		DWORD len = MAX_PATH;
 		ByteDynArray CertCIE;
 		ByteDynArray SOD;
 		ByteDynArray IdServizi;
@@ -91,6 +91,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
 //            if (!Tran.isLocked())
 //                continue;
 //
+            ias.SelectAID_IAS();
             ias.SelectAID_CIE();
             ByteDynArray IdServizi;
             ias.ReadIdServizi(IdServizi);

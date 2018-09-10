@@ -60,19 +60,19 @@ CK_RV progressCallback(const int progress,
         exit(1);
     }
     
-    CK_RV rv = pfnGetFunctionList(&g_pFuncList);
-    if(rv != CKR_OK)
-    {
-        dlclose(hModule);
-        exit(1);
-    }
-    
-    CK_C_INITIALIZE_ARGS* pInitArgs = NULL_PTR;
-    rv = g_pFuncList->C_Initialize(pInitArgs);
-    if(rv != CKR_OK)
-    {        
-        return;
-    }
+//    CK_RV rv = pfnGetFunctionList(&g_pFuncList);
+//    if(rv != CKR_OK)
+//    {
+//        dlclose(hModule);
+//        exit(1);
+//    }
+//    
+//    CK_C_INITIALIZE_ARGS* pInitArgs = NULL_PTR;
+//    rv = g_pFuncList->C_Initialize(pInitArgs);
+//    if(rv != CKR_OK)
+//    {        
+//        return;
+//    }
     
     AbilitaCIEfn pfnAbilitaCIE = (AbilitaCIEfn)dlsym(hModule, "AbilitaCIE");
     if(!pfnAbilitaCIE)

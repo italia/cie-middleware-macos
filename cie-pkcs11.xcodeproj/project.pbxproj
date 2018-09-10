@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5CA6E27FF73910B2FFB64484 /* libPods-cie-pkcs11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */; };
-		E50A89E8213BD80E006A000D /* AbilitaCIEViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A89E5213BD80E006A000D /* AbilitaCIEViewController.h */; };
-		E50A89E9213BD80E006A000D /* AbilitaCIEViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E50A89E6213BD80E006A000D /* AbilitaCIEViewController.mm */; };
 		E50A8A08213BE019006A000D /* AbilitaCIE.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A8A07213BE018006A000D /* AbilitaCIE.h */; };
 		E50A8A0A213BE053006A000D /* AbilitaCIE.mm in Sources */ = {isa = PBXBuildFile; fileRef = E50A8A09213BE053006A000D /* AbilitaCIE.mm */; };
 		E50A8A0D213BE121006A000D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50A8A0B213BE121006A000D /* Cocoa.framework */; };
@@ -122,9 +120,6 @@
 		228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cie-pkcs11.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.release.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.release.xcconfig"; sourceTree = "<group>"; };
 		79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.debug.xcconfig"; sourceTree = "<group>"; };
-		E50A89E5213BD80E006A000D /* AbilitaCIEViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AbilitaCIEViewController.h; sourceTree = "<group>"; };
-		E50A89E6213BD80E006A000D /* AbilitaCIEViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AbilitaCIEViewController.mm; sourceTree = "<group>"; };
-		E50A89E7213BD80E006A000D /* AbilitaCIEViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AbilitaCIEViewController.xib; sourceTree = "<group>"; };
 		E50A8A07213BE018006A000D /* AbilitaCIE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbilitaCIE.h; sourceTree = "<group>"; };
 		E50A8A09213BE053006A000D /* AbilitaCIE.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AbilitaCIE.mm; sourceTree = "<group>"; };
 		E50A8A0B213BE121006A000D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -272,9 +267,6 @@
 		E50A89E2213BD72A006A000D /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E50A89E5213BD80E006A000D /* AbilitaCIEViewController.h */,
-				E50A89E6213BD80E006A000D /* AbilitaCIEViewController.mm */,
-				E50A89E7213BD80E006A000D /* AbilitaCIEViewController.xib */,
 				E50A8A09213BE053006A000D /* AbilitaCIE.mm */,
 			);
 			path = UI;
@@ -503,7 +495,6 @@
 				E5BE7DBE20FE858600004389 /* pkcs11f.h in Headers */,
 				E5BE7DBF20FE858600004389 /* pkcs11t.h in Headers */,
 				E565903F211864470039865C /* TLV.h in Headers */,
-				E50A89E8213BD80E006A000D /* AbilitaCIEViewController.h in Headers */,
 				E5BE7DAE20FE853800004389 /* CIEP11Template.h in Headers */,
 				E5659084211875950039865C /* sha512.h in Headers */,
 				E5659076211875950039865C /* Base64.h in Headers */,
@@ -731,7 +722,6 @@
 				E565907F211875950039865C /* SHA1.cpp in Sources */,
 				E5659040211864470039865C /* util.cpp in Sources */,
 				E5659030211864470039865C /* IniSettings.cpp in Sources */,
-				E50A89E9213BD80E006A000D /* AbilitaCIEViewController.mm in Sources */,
 				E5BE7DAD20FE853800004389 /* CIEP11Template.cpp in Sources */,
 				E5659083211875950039865C /* SHA512.cpp in Sources */,
 				E5659056211875830039865C /* CardLocker.cpp in Sources */,

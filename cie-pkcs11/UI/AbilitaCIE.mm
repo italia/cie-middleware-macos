@@ -8,9 +8,7 @@
 
 #include <stdio.h>
 #include "AbilitaCIE.h"
-#include "AbilitaCIEViewController.h"
-
-static NSWindow* window;
+#include <Foundation/Foundation.h>
 
 void showUI()
 {
