@@ -544,8 +544,15 @@ void IAS::DHKeyExchange() {
 	
 	uint8_t diffENC[] = { 0x00, 0x00, 0x00, 0x01 };
 	uint8_t diffMAC[] = { 0x00, 0x00, 0x00, 0x02 };
-	sessENC = sha256.Digest(ByteDynArray(secret).append(VarToByteArray(diffENC))).left(16);
-	sessMAC = sha256.Digest(ByteDynArray(secret).append(VarToByteArray(diffMAC))).left(16);
+    ByteDynArray secretBaENC(secret);
+    ByteDynArray secretBaMAC(secret);
+    ByteDynArray diffENCBa = VarToByteArray(diffENC);
+    ByteDynArray diffMACBa = VarToByteArray(diffMAC);
+    ByteDynArray appendEncBa = secretBaENC.append(diffENCBa);
+    ByteDynArray appendMacBa = secretBaMAC.append(diffMACBa);
+	sessENC = sha256.Digest(appendEncBa).left(16);
+	sessMAC = sha256.Digest(appendMacBa).left(16);
+    
 	sessSSC.resize(8); 
 	sessSSC.fill(0);
 	sessSSC[7] = 1;

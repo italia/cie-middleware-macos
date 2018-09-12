@@ -91,8 +91,20 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
 //            if (!Tran.isLocked())
 //                continue;
 //
+//            CCardLocker lockCard(cie->slot.hCard);
+            
+            
+            ias.SelectAID_IAS();
+            ias.ReadPAN();
+            
+            ByteDynArray resp;
+            ias.SelectAID_CIE();
+            ias.ReadDappPubKey(resp);
+            ias.InitEncKey();
+            
             ias.SelectAID_IAS();
             ias.SelectAID_CIE();
+            
             ByteDynArray IdServizi;
             ias.ReadIdServizi(IdServizi);
         
@@ -100,7 +112,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             hashSet[0xa1] = sha256.Digest(serviziData);
 
             ByteDynArray SOD;
-            ias.ReadSOD(IdServizi);
+            ias.ReadSOD(SOD);
             
             ByteDynArray IntAuth;
             ias.ReadDappPubKey(IntAuth);
@@ -116,7 +128,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             ByteDynArray DH;
             ias.ReadDH(DH);
             ByteArray dhData(DH.left(GetASN1DataLenght(DH)));
-            hashSet[0x1b] = sha256.Digest(intAuthServiziData);
+            hashSet[0x1b] = sha256.Digest(dhData);
 
 //            if (IdServizi != ByteArray((uint8_t*)szPAN, strnlen(szPAN, 20)))
 //                continue;
@@ -167,6 +179,9 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             {
                 return CKR_GENERAL_ERROR;//logged_error("Autenticazione fallita");
             }
+            
+            ias.SelectAID_IAS();
+            ias.SelectAID_CIE();
             
             ByteDynArray Serial;
             ias.ReadSerialeCIE(Serial);
@@ -252,19 +267,29 @@ DWORD CardAuthenticateEx(IAS*       ias,
     ias->SelectAID_IAS();
     ias->SelectAID_CIE();
     
+    
     // leggo i parametri di dominio DH e della chiave di extauth
     if (ias->Callback != nullptr)
         ias->Callback(0, "Init", ias->CallbackData);
+    
     ias->InitDHParam();
+    
+    ByteDynArray dappData;
+    ias->ReadDappPubKey(dappData);
+    
     ias->InitExtAuthKeyParam();
+    
     // faccio lo scambio di chiavi DH
     if (ias->Callback != nullptr)
         ias->Callback(1, "DiffieHellman", ias->CallbackData);
+    
     ias->DHKeyExchange();
     // DAPP
     if (ias->Callback != nullptr)
         ias->Callback(2, "DAPP", ias->CallbackData);
+    
     ias->DAPP();
+    
     // verifica PIN
     StatusWord sw;
     if (ias->Callback != nullptr)
