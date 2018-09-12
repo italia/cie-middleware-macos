@@ -13,7 +13,10 @@ Il modulo implementa le specifiche PKCS#11 v2.20 in sola lettura
 1. xcode 9.4.1 o successivi
 2. cocoapods
 
-Per compilare il progetto dopo il cloning del repositori eseguire:
+Per compilare il progetto dopo il cloning del repository eseguire:
 
+'''
 pod install
+'''
 
+Quindi avviare la build da xcode
