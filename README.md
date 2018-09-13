@@ -18,7 +18,7 @@ Tali librerie consentono agli applicativi integranti di utilizzare il certificat
 
 2. cocoapods
 
-Per compilare il progetto dopo il cloning del repository, da terminale entrare nella cartella dove è stato clonato il repository ed eseguire il comando:
+Per compilare il progetto, dopo il cloning del repository, da terminale, entrare nella cartella dove è stato clonato il repository ed eseguire il comando:
 
 ```
 pod install
