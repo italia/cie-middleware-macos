@@ -85,9 +85,9 @@ namespace p11 {
 			sha1.Update(Part);
 	}
 
-	void CDigestSHA::DigestFinal(ByteArray &Digest) {
+	void CDigestSHA::DigestFinal(ByteDynArray &Digest) {
 		init_func
-			Digest = sha1.Final();
+			sha1.Final(Digest);
 	}
 
 	CK_ULONG CDigestSHA::DigestLength() {
@@ -128,7 +128,7 @@ namespace p11 {
 			md5.Update(Part);
 	}
 
-	void CDigestMD5::DigestFinal(ByteArray &Digest) {
+	void CDigestMD5::DigestFinal(ByteDynArray &Digest) {
 		init_func
 			Digest = md5.Final();
 	}
@@ -824,7 +824,7 @@ namespace p11 {
 		CK_ULONG ulDigestLen = pDigest->DigestLength();
 
 		ByteArray baDigestInfo = pDigest->DigestInfo();
-        ByteArray input = baExpectedResult.right(ulDigestLen);
+        ByteDynArray input = baExpectedResult.right(ulDigestLen);
         
 		pDigest->DigestFinal(input);
 		baExpectedResult.rightcopy(baDigestInfo, ulDigestLen);

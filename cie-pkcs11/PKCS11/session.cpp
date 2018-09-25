@@ -417,7 +417,7 @@ namespace p11 {
 			}
 	}
 
-	void CSession::Digest(ByteArray &Data, ByteArray &Digest)
+	void CSession::Digest(ByteArray &Data, ByteDynArray &Digest)
 	{
 		init_func
 
@@ -444,7 +444,7 @@ namespace p11 {
 		pDigestMechanism->DigestUpdate(Data);
 	}
 
-	void CSession::DigestFinal(ByteArray &Digest)
+	void CSession::DigestFinal(ByteDynArray &Digest)
 	{
 		init_func
 			if (pDigestMechanism == nullptr)

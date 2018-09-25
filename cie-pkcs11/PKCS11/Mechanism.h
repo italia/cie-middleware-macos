@@ -25,7 +25,7 @@ namespace p11 {
 
 		virtual void DigestInit() = 0;
 		virtual void DigestUpdate(ByteArray &Part) = 0;
-		virtual void DigestFinal(ByteArray &Digest) = 0;
+		virtual void DigestFinal(ByteDynArray &Digest) = 0;
 		virtual CK_ULONG DigestLength() = 0;
 		virtual ByteArray DigestInfo() = 0;
 		virtual ByteDynArray  DigestGetOperationState() = 0;
@@ -224,7 +224,7 @@ namespace p11 {
 
 		void DigestInit();
 		void DigestUpdate(ByteArray &Part);
-		void DigestFinal(ByteArray &Digest);
+		void DigestFinal(ByteDynArray &Digest);
 		CK_ULONG DigestLength();
 		ByteArray DigestInfo();
 		ByteDynArray  DigestGetOperationState();
@@ -241,7 +241,7 @@ namespace p11 {
 
 		void DigestInit();
 		void DigestUpdate(ByteArray &Part);
-		void DigestFinal(ByteArray &Digest);
+		void DigestFinal(ByteDynArray &Digest);
 		CK_ULONG DigestLength();
 		ByteArray DigestInfo();
 		ByteDynArray  DigestGetOperationState();

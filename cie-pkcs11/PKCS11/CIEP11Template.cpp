@@ -128,52 +128,62 @@ void CIEtemplateInitSession(void *pTemplateData){
 		CK_BBOOL vtrue = TRUE;
 		CK_BBOOL vfalse = FALSE;
 
+        cie->pubKey = std::make_shared<CP11PublicKey>(cie);
+        cie->privKey = std::make_shared<CP11PrivateKey>(cie);
+        cie->cert = std::make_shared<CP11Certificate>(cie);
+        
+        cie->pubKey->addAttribute(CKA_LABEL, VarToByteArray(label));
+        cie->pubKey->addAttribute(CKA_ID, VarToByteArray(label));
+        cie->pubKey->addAttribute(CKA_PRIVATE, VarToByteArray(vfalse));
+        cie->pubKey->addAttribute(CKA_TOKEN, VarToByteArray(vtrue));
+        cie->pubKey->addAttribute(CKA_VERIFY, VarToByteArray(vtrue));
+        CK_KEY_TYPE keyrsa = CKK_RSA;
+        cie->pubKey->addAttribute(CKA_KEY_TYPE, VarToByteArray(keyrsa));
+        
+        cie->privKey->addAttribute(CKA_LABEL, VarToByteArray(label));
+        cie->privKey->addAttribute(CKA_ID, VarToByteArray(label));
+        cie->privKey->addAttribute(CKA_PRIVATE, VarToByteArray(vtrue));
+        cie->privKey->addAttribute(CKA_TOKEN, VarToByteArray(vtrue));
+        cie->privKey->addAttribute(CKA_KEY_TYPE, VarToByteArray(keyrsa));
+        
+        cie->privKey->addAttribute(CKA_SIGN, VarToByteArray(vtrue));
+        
+        cie->cert->addAttribute(CKA_LABEL, VarToByteArray(label));
+        cie->cert->addAttribute(CKA_ID, VarToByteArray(label));
+        cie->cert->addAttribute(CKA_PRIVATE, VarToByteArray(vfalse));
+        cie->cert->addAttribute(CKA_TOKEN, VarToByteArray(vtrue));
+        cie->cert->addAttribute(CKA_VALUE, certRaw);
+        
+        CK_CERTIFICATE_TYPE certx509 = CKC_X_509;
+        cie->cert->addAttribute(CKA_CERTIFICATE_TYPE, VarToByteArray(certx509));
+        
 #ifdef WIN32
 		PCCERT_CONTEXT certDS = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, certRaw.data(), (DWORD)certRaw.size());
 		if (certDS != nullptr) {
 			auto _1 = scopeExit([&]() noexcept {CertFreeCertificateContext(certDS); });
 
-			cie->pubKey = std::make_shared<CP11PublicKey>(cie);
-			cie->privKey = std::make_shared<CP11PrivateKey>(cie);
-			cie->cert = std::make_shared<CP11Certificate>(cie);
+			
 
 			CASNParser keyParser;
 			keyParser.Parse(ByteArray(certDS->pCertInfo->SubjectPublicKeyInfo.PublicKey.pbData, certDS->pCertInfo->SubjectPublicKeyInfo.PublicKey.cbData));
 			auto Module = SkipZero(keyParser.tags[0]->tags[0]->content);
 			auto Exponent = SkipZero(keyParser.tags[0]->tags[1]->content);
 			CK_LONG keySizeBits = (CK_LONG)Module.size() * 8;
-			cie->pubKey->addAttribute(CKA_LABEL, VarToByteArray(label));
-			cie->pubKey->addAttribute(CKA_ID, VarToByteArray(label));
-			cie->pubKey->addAttribute(CKA_PRIVATE, VarToByteArray(vfalse));
-			cie->pubKey->addAttribute(CKA_TOKEN, VarToByteArray(vtrue));
-			cie->pubKey->addAttribute(CKA_MODULUS, Module);
+			
+            cie->pubKey->addAttribute(CKA_MODULUS, Module);
 			cie->pubKey->addAttribute(CKA_PUBLIC_EXPONENT, Exponent);
 			cie->pubKey->addAttribute(CKA_MODULUS_BITS, VarToByteArray(keySizeBits));
-			cie->pubKey->addAttribute(CKA_VERIFY, VarToByteArray(vtrue));
-			CK_KEY_TYPE keyrsa = CKK_RSA;
-			cie->pubKey->addAttribute(CKA_KEY_TYPE, VarToByteArray(keyrsa));
-			cie->slot.AddP11Object(cie->pubKey);
+			
+			
 
-			cie->privKey->addAttribute(CKA_LABEL, VarToByteArray(label));
-			cie->privKey->addAttribute(CKA_ID, VarToByteArray(label));
-			cie->privKey->addAttribute(CKA_PRIVATE, VarToByteArray(vtrue));
-			cie->privKey->addAttribute(CKA_TOKEN, VarToByteArray(vtrue));
-			cie->privKey->addAttribute(CKA_KEY_TYPE, VarToByteArray(keyrsa));
+			
 			cie->privKey->addAttribute(CKA_MODULUS, Module);
 			cie->privKey->addAttribute(CKA_PUBLIC_EXPONENT, Exponent);
-			cie->privKey->addAttribute(CKA_SIGN, VarToByteArray(vtrue));
-			cie->slot.AddP11Object(cie->privKey);
-
-			cie->cert->addAttribute(CKA_LABEL, VarToByteArray(label));
-			cie->cert->addAttribute(CKA_ID, VarToByteArray(label));
-			cie->cert->addAttribute(CKA_PRIVATE, VarToByteArray(vfalse));
-			cie->cert->addAttribute(CKA_TOKEN, VarToByteArray(vtrue));
-			cie->cert->addAttribute(CKA_VALUE, ByteArray(certDS->pbCertEncoded, certDS->cbCertEncoded));
+			
 			cie->cert->addAttribute(CKA_ISSUER, ByteArray(certDS->pCertInfo->Issuer.pbData, certDS->pCertInfo->Issuer.cbData));
 			cie->cert->addAttribute(CKA_SERIAL_NUMBER, ByteArray(certDS->pCertInfo->SerialNumber.pbData, certDS->pCertInfo->SerialNumber.cbData));
 			cie->cert->addAttribute(CKA_SUBJECT, ByteArray(certDS->pCertInfo->Subject.pbData, certDS->pCertInfo->Subject.cbData));
-			CK_CERTIFICATE_TYPE certx509 = CKC_X_509;
-			cie->cert->addAttribute(CKA_CERTIFICATE_TYPE, VarToByteArray(certx509));
+			
 			CK_DATE start, end;
 			SYSTEMTIME sFrom, sTo;
 			char temp[10];
@@ -189,12 +199,16 @@ void CIEtemplateInitSession(void *pTemplateData){
 			sprintf_s(temp, "%02i", sTo.wDay); VarToByteArray(end.day).copy(ByteArray((BYTE*)temp, 2));
 			cie->cert->addAttribute(CKA_START_DATE, VarToByteArray(start));
 			cie->cert->addAttribute(CKA_END_DATE, VarToByteArray(end));
-
-			cie->slot.AddP11Object(cie->cert);
 		}
 #else
-        
+        // TODO decode the certificate
+        // add to the object
 #endif
+        
+        cie->slot.AddP11Object(cie->pubKey);
+        cie->slot.AddP11Object(cie->privKey);
+        cie->slot.AddP11Object(cie->cert);
+        
 		cie->init = true;
 	}
 }
@@ -486,7 +500,7 @@ void GetPublicKeyFromCert(CryptoPP::BufferedTransformation & certin,
     // issuer               Name,
     BERSequenceDecoder issuerName(tbsCert);
     issuerName.CopyTo(issuer);
-    //issuerName.SkipAll();
+    issuerName.SkipAll();
     
     // validity             Validity,
     BERSequenceDecoder validity(tbsCert);

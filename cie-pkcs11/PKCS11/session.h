@@ -87,9 +87,9 @@ public:
 	void GenerateKeyPair(CK_MECHANISM_PTR pMechanism, CK_ATTRIBUTE_PTR pPublicKeyTemplate, CK_ULONG ulPublicKeyAttributeCount, CK_ATTRIBUTE_PTR pPrivateKeyTemplate, CK_ULONG ulPrivateKeyAttributeCount, CK_OBJECT_HANDLE_PTR phPublicKey, CK_OBJECT_HANDLE_PTR phPrivateKey);
 
 	void DigestInit(CK_MECHANISM_PTR pMechanism);
-	void Digest(ByteArray &Data, ByteArray &Digest);
+	void Digest(ByteArray &Data, ByteDynArray &Digest);
 	void DigestUpdate(ByteArray &Data);
-	void DigestFinal(ByteArray &Digest);
+	void DigestFinal(ByteDynArray &Digest);
 	std::unique_ptr<CDigest> pDigestMechanism;
 
 	void VerifyInit(CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey);
