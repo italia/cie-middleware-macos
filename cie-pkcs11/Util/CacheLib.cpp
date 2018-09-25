@@ -207,7 +207,11 @@ bool file_exists (const char* name) {
 
 std::string GetCardDir()
 {
-    return "/var/CIEPKI/";
+    char* home = getenv("HOME");
+    
+    std::string path(home);
+    path.append("/.CIEPKI/");
+    return path.c_str();
 }
 
 void GetCardPath(const char *PAN, char szPath[MAX_PATH]) {
@@ -285,8 +289,16 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     char chDir[MAX_PATH];
     strcpy(chDir, szDir.c_str());
     
-    if (!file_exists(chDir)) {
+    struct stat st = {0};
         
+    if (stat(chDir, &st) == -1) {
+        int r = mkdir(chDir, 0700);
+        printf("mkdir: %d", r);
+    }
+    
+//    if (!file_exists(chDir)) {
+//
+    
 //        //creo la directory dando l'accesso a Edge (utente Packege).
 //        //Edge gira in low integrity quindi non potrà scrivere (enrollare) ma solo leggere il certificato
 //        bool done = false;
@@ -349,7 +361,7 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
 //            }
 //        
 //        }
-    }
+//    }
     char szPath[MAX_PATH];
     GetCardPath(PAN, szPath);
     
@@ -365,6 +377,7 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     len = (uint32_t)baCertificate.size();
     file.write((char*)&len, sizeof(len));
     file.write((char*)baCertificate.data(), len);
+    file.close();
 }
 
 #endif
