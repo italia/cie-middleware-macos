@@ -24,7 +24,7 @@ class CAES
 	ByteDynArray key;
 #endif
 
-	ByteDynArray AES(const ByteArray &data, int encOp);
+	ByteDynArray AES(const ByteArray &data, int encOp, ByteDynArray& output);
 	ByteDynArray iv;
 
 public:
@@ -33,8 +33,8 @@ public:
 	~CAES(void);
 
 	void Init(const ByteArray &key, const ByteArray &iv);
-	ByteDynArray Encode(const ByteArray &data);
-	ByteDynArray Decode(const ByteArray &data);
-	ByteDynArray RawEncode(const ByteArray &data);
-	ByteDynArray RawDecode(const ByteArray &data);
+	ByteDynArray Encode(const ByteArray &data, ByteDynArray& output);
+	ByteDynArray Decode(const ByteArray &data, ByteDynArray& output);
+	ByteDynArray RawEncode(const ByteArray &data, ByteDynArray& output);
+	ByteDynArray RawDecode(const ByteArray &data, ByteDynArray& output);
 };

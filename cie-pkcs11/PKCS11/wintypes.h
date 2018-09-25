@@ -47,7 +47,7 @@
 #endif
 
 #ifndef WORD
-#define WORD unsigned int
+#define WORD unsigned short
 #endif
 
 #ifndef BOOL
@@ -69,8 +69,8 @@
 #endif
 
 #ifndef LOBYTE
-#define LOBYTE(l) l & 0xFF
-#define HIBYTE(l) (l >> 8) & 0xFF
+#define LOBYTE(l) (uint8_t)(l & 0xFF)
+#define HIBYTE(l) (uint8_t)((l >> 8) & 0xFF)
 #endif
 
 #define MAX_PATH 2048

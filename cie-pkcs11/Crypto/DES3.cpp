@@ -79,7 +79,7 @@ ByteDynArray CDES3::Des3(const ByteArray &data, int encOp)
 }
 
 #else
-
+ 
 void CDES3::Init(const ByteArray &key, const ByteArray &iv)
 {
 	init_func
@@ -96,19 +96,23 @@ void CDES3::Init(const ByteArray &key, const ByteArray &iv)
 		keyVal1 = keyVal2 = keyVal3 = (des_cblock *)key.data();
 		break;
 	case 16:
-		keyVal1 = keyVal3 = (des_cblock *)key.data();
-		keyVal2 = (des_cblock *)key.mid(8).data();
+            keyVal1 = keyVal3 = (des_cblock *)key.left(8).data();//data();
+		keyVal2 = (des_cblock *)key.mid(8, 8).data();
 		break;
 	case 24:
-		keyVal1 = (des_cblock *)key.data();
-		keyVal2 = (des_cblock *)key.mid(8).data();
-		keyVal3 = (des_cblock *)key.mid(16).data();
+		keyVal1 = (des_cblock *)key.left(8).data();
+		keyVal2 = (des_cblock *)key.mid(8, 8).data();
+		keyVal3 = (des_cblock *)key.mid(16, 8).data();
 		break;
 	}
 
-	des_set_key(keyVal1, k1);
-	des_set_key(keyVal2, k2);
-	des_set_key(keyVal3, k3);
+    DES_set_key(keyVal1, &k1);
+    DES_set_key(keyVal2, &k2);
+    DES_set_key(keyVal3, &k3);
+    
+//    DES_set_key(keyVal1, k1);
+//    DES_set_key(keyVal2, k2);
+//    DES_set_key(keyVal3, k3);
 
 	exit_func
 }
@@ -121,7 +125,7 @@ CDES3::CDES3()
 {
 }
 
-ByteDynArray CDES3::Des3(const ByteArray &data, int encOp)
+ByteDynArray CDES3::Des3(const ByteArray &data, int encOp, ByteDynArray& output)
 {
 	init_func
 
@@ -129,9 +133,10 @@ ByteDynArray CDES3::Des3(const ByteArray &data, int encOp)
 	CryptoPP::memcpy_s(iv, sizeof(des_cblock), initVec, sizeof(initVec));
 	size_t AppSize = data.size() - 1;
 	ByteDynArray resp(AppSize - (AppSize % 8) + 8);
-	des_ede3_cbc_encrypt(data.data(), resp.data(), (long)data.size(), k1, k2, k3, &iv, encOp);
+	DES_ede3_cbc_encrypt(data.data(), resp.data(), (long)data.size(), &k1, &k2, &k3, &iv, encOp);
 
-	return resp;
+    output.append(resp);
+    return output;
 }
 #endif
 
@@ -139,32 +144,43 @@ CDES3::CDES3(const ByteArray &key, const ByteArray &iv) {
 	Init(key,iv);
 }
 
-ByteDynArray CDES3::Encode(const ByteArray &data)
+ByteDynArray CDES3::Encode(const ByteArray &data, ByteDynArray& output)
 {
 	init_func
-	return Des3(ISOPad(data), DES_ENCRYPT);
+    ByteDynArray pad;
+    ISOPad(data, pad);
+    Des3(pad, DES_ENCRYPT, output);
+    return output;
+//    return Des3(ISOPad(data), DES_ENCRYPT);
 }
 
-ByteDynArray CDES3::RawEncode(const ByteArray &data)
+ByteDynArray CDES3::RawEncode(const ByteArray &data, ByteDynArray& output)
 {
 	init_func
 	ByteDynArray result;
 	ER_ASSERT((data.size() % 8) == 0, "La dimensione dei dati da cifrare deve essere multipla di 8");
-	return Des3(data, DES_ENCRYPT);
+    
+    Des3(data, DES_ENCRYPT, output);
+    return output;
+//    return Des3(data, DES_ENCRYPT);
 }
 
-ByteDynArray CDES3::Decode(const ByteArray &data)
+ByteDynArray CDES3::Decode(const ByteArray &data, ByteDynArray& output)
 {
 	init_func
-	auto result=Des3(data, DES_DECRYPT);
-	result.resize(RemoveISOPad(result), true);
-	return result;
+	Des3(data, DES_DECRYPT, output);
+	output.resize(RemoveISOPad(output), true);
+    
+	return output;
 }
 
-ByteDynArray CDES3::RawDecode(const ByteArray &data)
+ByteDynArray CDES3::RawDecode(const ByteArray &data, ByteDynArray& output)
 {
 	init_func
 	ByteDynArray result;
 	ER_ASSERT((data.size() % 8) == 0, "La dimensione dei dati da cifrare deve essere multipla di 8");
-	return Des3(data, DES_DECRYPT);
+    
+    Des3(data, DES_DECRYPT, output);
+    return output;
+//    return Des3(data, DES_DECRYPT);
 }

@@ -1,6 +1,7 @@
 
 #include "RSA.h"
 #include <openssl/bn.h>
+#include "../Util/util.h"
 
 static char *szCompiledFile=__FILE__;
 
@@ -65,6 +66,10 @@ ByteDynArray CRSA::RSA_PURE(ByteArray &data)
 
 #else
 
+#include "../Cryptopp/rsa.h"
+
+CryptoPP::RSA::PublicKey publicKey;
+
 DWORD CRSA::GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, ByteDynArray &privexp) 
 {
 	init_func
@@ -83,8 +88,24 @@ DWORD CRSA::GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, 
 	exit_func
     return(-1);
 }
+
+ByteArray modulusBa;
+ByteArray exponentBa;
+
 CRSA::CRSA(ByteArray &mod,ByteArray &exp)
 {
+    modulusBa = mod;
+    exponentBa = exp;
+    
+//    ByteDynArray modBa(mod.size() + 1);
+//    modBa.fill(0);
+//    modBa.rightcopy(mod);
+//
+//    ByteDynArray expBa(exp.size() + 1);
+//    expBa.fill(0);
+//    expBa.rightcopy(exp);
+    
+    
 	KeySize = mod.size();
 	keyPriv = RSA_new();
 	keyPriv->n = BN_bin2bn(mod.data(), (int)mod.size(), keyPriv->n);
@@ -98,12 +119,35 @@ CRSA::~CRSA(void)
 		RSA_free(keyPriv);
 }
 
-ByteDynArray CRSA::RSA_PURE(ByteArray &data )
+ByteDynArray CRSA::RSA_PURE(ByteArray &data, ByteDynArray& output)
 {
-	ByteDynArray resp(RSA_size(keyPriv));	
-	int SignSize = RSA_public_encrypt((int)data.size(), data.data(), resp.data(), keyPriv, RSA_NO_PADDING);
-
-	ER_ASSERT(SignSize == KeySize, "Errore nella lunghezza dei dati per operazione RSA")
-	return resp;
+    CryptoPP::Integer modulus(modulusBa.data(), modulusBa.size());
+    CryptoPP::Integer exponent(exponentBa.data(), exponentBa.size());
+    
+    publicKey.SetModulus(modulus);
+    publicKey.SetPublicExponent(exponent);
+    
+    CryptoPP::Integer data1(data.data(), data.size());
+    
+    CryptoPP::Integer enc = publicKey.ApplyFunction(data1);
+    
+    ByteDynArray resp(enc.ByteCount());
+    enc.Encode(resp.data(), resp.size());
+    
+    printf("\nRSA resp: %s", dumpHexData(resp).c_str());
+    
+//    ByteDynArray dataBa(data.size() + 1);
+//    dataBa.fill(0);
+//    dataBa.rightcopy(data);
+    
+//    ByteDynArray resp1(RSA_size(keyPriv));
+//    int SignSize = RSA_public_encrypt((int)data.size(), data.data(), resp1.data(), keyPriv, RSA_NO_PADDING);
+//
+//    ER_ASSERT(SignSize == KeySize, "Errore nella lunghezza dei dati per operazione RSA")
+//
+//    printf("\nRSA resp1: %s\n", dumpHexData(resp1).c_str());
+//
+    output.append(resp);
+    return output;
 }
 #endif

@@ -211,6 +211,7 @@ std::string HexByte(uint8_t data, bool uppercase = true);
 std::string dumpHexData(ByteArray data, std::string& dump);
 std::string dumpHexData(ByteArray data, std::string& dump, bool withSpace, bool uppercase = true);
 std::string dumpHexDataLowerCase(ByteArray data, std::string& dump);
+std::string dumpHexData(ByteArray data);
 
 void PutPaddingBT0(ByteArray& ba, long dwLen);
 void PutPaddingBT1(ByteArray& ba, unsigned long dwLen);
@@ -225,17 +226,17 @@ unsigned long RemoveSha256(ByteArray &paddedData);
 unsigned long ANSIPadLen(unsigned long Len);
 void ANSIPad(ByteArray &Data, unsigned long DataLen);
 unsigned long ISOPadLen(unsigned long Len);
-void ISOPad(const ByteArray &Data, unsigned long DataLen);
+void ISOPad(const ByteArray& Data, unsigned long DataLen);
 long ByteArrayToInt(ByteArray &ba);
-const ByteDynArray ISOPad(const ByteArray &data);
-const ByteDynArray ISOPad16(const ByteArray &data);
+ByteDynArray ISOPad(const ByteArray& data, ByteDynArray& output);
+ByteDynArray ISOPad16(const ByteArray &data, ByteDynArray& output);
 
  std::string WinErr(HRESULT ris);
  char * CardErr(DWORD dwSW);
  char * SystemErr(DWORD dwExcept);
  
  void Debug(ByteArray ba);
- ByteDynArray ASN1Tag(DWORD tag,ByteArray content);
+ ByteDynArray ASN1Tag(DWORD tag,ByteArray& content, ByteDynArray& output);
 
  std::string stdPrintf(const char *format, ...);
 

@@ -1,8 +1,6 @@
 #pragma once
-#include "../PKCS11/wintypes.h"
 #include "../PCSC/Token.h"
-#include "../Util/util.h"
-//#include "../CSP/Cardmod.h"
+
 #include <map>
 
 #define DirCIE				"CIE"

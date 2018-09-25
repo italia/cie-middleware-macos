@@ -25,7 +25,8 @@ void CToken::Reset(bool unpower) {
 	WORD reset = unpower ? 0xfffe : 0xffff;
 	StatusWord sw;
 	if ((sw = Transmit(VarToByteArray(reset), NULL)) != 0x9000)
-		throw scard_error(sw);
+        printf("transmit error: %x", sw);
+//        throw scard_error(sw);
 }
 
 void CToken::SelectMF() {

@@ -14,6 +14,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E5BE7D8720FE84D200004389"
+               BuildableName = "libcie-pkcs11.dylib"
+               BlueprintName = "cie-pkcs11"
+               ReferencedContainer = "container:cie-pkcs11.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "E5707B3121383CCA0054CF16"
                BuildableName = "TestCIE"
                BlueprintName = "TestCIE"

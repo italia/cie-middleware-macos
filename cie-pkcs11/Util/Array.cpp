@@ -28,20 +28,28 @@ ByteDynArray::ByteDynArray(ByteDynArray &&src) {
 ByteArray::ByteArray(const ByteArray& ba, size_t start) {
 	if (start>ba.size())
 		throw logged_error("Array derivato troppo grande");
+    
 	_size = ba.size() - start;
-	_data = ba._data + start;
+    _data = ba._data + start;
+    
+//    _data = new uint8_t[_size];
+//    copy(ba, start);
 }
 
 ByteArray::ByteArray(const ByteArray& ba, size_t start, size_t size) {
 	if (start + size>ba.size())
 		throw logged_error("Array derivato troppo grande");
 	_size = size;
-	_data = ba._data + start;
+    _data = ba._data + start;
+//    _data = new uint8_t[_size];
+//    copy(ba, start);
 }
 
 ByteArray::ByteArray(const ByteArray &src) {
 	_size = src._size;
-	_data = src._data;
+    _data = src._data;
+//    _data = new uint8_t[_size];
+//    copy(src);
 };
 
 ByteDynArray &ByteDynArray::operator = (ByteDynArray &&src) {
@@ -314,7 +322,7 @@ bool ByteArray::indexOf(ByteArray &data,size_t &position) const {
 	return false;
 }
 
-ByteDynArray &ByteDynArray::setASN1Tag(unsigned int tag, ByteArray content) {
+ByteDynArray &ByteDynArray::setASN1Tag(unsigned int tag, ByteArray& content) {
 	size_t tl = ASN1TLength(tag);
 	size_t ll = ASN1LLength(content.size());
 	resize(tl + ll + content.size());

@@ -316,7 +316,8 @@ void CIEtemplateLogin(void *pTemplateData, CK_USER_TYPE userType, ByteArray &Pin
 			throw scard_error(sw);
 		}
 
-		cie->SessionPIN = cie->aesKey.Encode(Pin);
+        ByteDynArray pinBa;
+		cie->SessionPIN = cie->aesKey.Encode(Pin, pinBa);
 		cie->userType = userType;
 	}
 }
@@ -339,7 +340,8 @@ void CIEtemplateSign(void *pCardTemplateData, CP11PrivateKey *pPrivKey, ByteArra
 		{
 			safeConnection safeConn(cie->slot.hCard);
 			CCardLocker lockCard(cie->slot.hCard);
-			Pin = cie->aesKey.Decode(cie->SessionPIN);
+            ByteDynArray pinBa;
+			Pin = cie->aesKey.Decode(cie->SessionPIN, pinBa);
 			cie->ias.SelectAID_IAS();
 			cie->ias.SelectAID_CIE();
 			cie->ias.DHKeyExchange();
@@ -368,7 +370,8 @@ void CIEtemplateInitPIN(void *pCardTemplateData, ByteArray &baPin){
 		{
 			safeConnection safeConn(cie->slot.hCard);
 			CCardLocker lockCard(cie->slot.hCard);
-			Pin = cie->aesKey.Decode(cie->SessionPIN);
+            ByteDynArray pinBa;
+			Pin = cie->aesKey.Decode(cie->SessionPIN, pinBa);
 			cie->ias.SelectAID_IAS();
 			cie->ias.SelectAID_CIE();
 

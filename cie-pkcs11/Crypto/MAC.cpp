@@ -63,27 +63,7 @@ CMAC::~CMAC(void)
 		BCryptDestroyKey(key2);
 }
 
-ByteArray CMAC::Mac(const ByteArray &data)
-{
-	init_func
-
-	size_t ANSILen=ANSIPadLen(data.size());
-	ByteDynArray iv = this->iv;
-
-	if (data.size()>8) {
-		ByteDynArray OutTmp(ANSILen - 8);
-		ULONG result = (ULONG)OutTmp.size();
-		if (BCryptEncrypt(key1, data.data(), (long)ANSILen - 8, nullptr, iv.data(), (ULONG)iv.size(), OutTmp.data(), (ULONG)OutTmp.size(), &result, 0) != 0)
-			throw logged_error("Errore nel calcolo del MAC");
-	}
-
-	ByteDynArray resp(8);
-	ULONG result = (ULONG)resp.size();
-	if (BCryptEncrypt(key2, data.mid(ANSILen - 8).data(), (long)(data.size() - ANSILen) + 8, nullptr, iv.data(), (ULONG)iv.size(), resp.data(), (ULONG)resp.size(), &result, 0) != 0)
-		throw logged_error("Errore nel calcolo del MAC");
-
-	return resp;
-}
+		
 #else
 
 void CMAC::Init(const ByteArray &key, const ByteArray &iv)
@@ -123,11 +103,11 @@ CMAC::~CMAC(void)
 {
 }
 
-ByteArray CMAC::Mac(const ByteArray &data)
+ByteDynArray CMAC::Mac(const ByteArray &data, ByteDynArray& output)
 {
 	init_func
 
-    ByteDynArray resp;
+    ByteDynArray resp(8);
     
 	des_cblock iv;
     CryptoPP::memcpy_s(iv, sizeof(des_cblock), initVec, sizeof(initVec));
@@ -138,10 +118,11 @@ ByteArray CMAC::Mac(const ByteArray &data)
 		des_ncbc_encrypt(data.data(), baOutTmp.data(), (long)ANSILen - 8, k1, &iv, DES_ENCRYPT);
 	}
 	uint8_t dest[8];
-	des_ede3_cbc_encrypt(data.mid(ANSILen - 8).data(), dest, (long)(data.size() - ANSILen) + 8, k1, k2, k3, &iv, DES_ENCRYPT);
-	resp = ByteArray(dest, 8);
+	DES_ede3_cbc_encrypt(data.mid(ANSILen - 8).data(), dest, (long)(data.size() - ANSILen) + 8, &k1, &k2, &k3, &iv, DES_ENCRYPT);
+	resp.copy(ByteArray(dest, 8));
 
-    return resp;
+    output.append(resp);
+    return output;
     
 	exit_func    
 }

@@ -21,7 +21,7 @@ public:
 	size_t tagInt();
 
 	CASNTag &Child(std::size_t num, uint8_t tag);
-	void Verify(ByteArray &content);
+	void Verify(ByteArray content);
 	CASNTag &CheckTag(uint8_t tag);
 
 	size_t startPos, endPos;

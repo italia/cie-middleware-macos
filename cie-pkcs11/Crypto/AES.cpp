@@ -62,7 +62,7 @@ ByteDynArray CAES::AES(const ByteArray &data,int encOp)
 }
 #else
 
-ByteDynArray CAES::AES(const ByteArray &data,int encOp)
+ByteDynArray CAES::AES(const ByteArray &data,int encOp, ByteDynArray& output)
 {
 	init_func
 
@@ -78,7 +78,8 @@ ByteDynArray CAES::AES(const ByteArray &data,int encOp)
 	ByteDynArray resp(AppSize - (AppSize % 16) + 16);
 	AES_cbc_encrypt(data.data(), resp.data(), data.size(), &aesKey, iv2.data(), encOp);
 
-	return resp;
+    output.append(resp);
+	return output;
 }
 void CAES::Init(const ByteArray &key, const ByteArray &iv)
 {
@@ -102,30 +103,33 @@ CAES::CAES(const ByteArray &key, const ByteArray &iv) {
 }
 
 
-ByteDynArray CAES::Encode(const ByteArray &data)
+ByteDynArray CAES::Encode(const ByteArray &data, ByteDynArray& output)
 {
 	init_func
-	return AES(ISOPad16(data), AES_ENCRYPT);
+    ByteDynArray pad;
+	AES(ISOPad16(data, pad), AES_ENCRYPT, output);
+    
+    return output;
 }
 
-ByteDynArray CAES::RawEncode(const ByteArray &data)
+ByteDynArray CAES::RawEncode(const ByteArray &data, ByteDynArray& output)
 {
 	init_func
 	ER_ASSERT((data.size() % AES_BLOCK_SIZE) == 0, "La dimensione dei dati da cifrare deve essere multipla di 16");
-	return AES(data, AES_ENCRYPT);
+	return AES(data, AES_ENCRYPT, output);
 }
 
-ByteDynArray CAES::Decode(const ByteArray &data)
+ByteDynArray CAES::Decode(const ByteArray &data, ByteDynArray& output)
 {
 	init_func
-	ByteDynArray result=AES(data, AES_DECRYPT);
+	ByteDynArray result=AES(data, AES_DECRYPT,output);
 	result.resize(RemoveISOPad(result),true);
 	return result;
 }
 
-ByteDynArray CAES::RawDecode(const ByteArray &data)
+ByteDynArray CAES::RawDecode(const ByteArray &data, ByteDynArray& output)
 {
 	init_func
 	ER_ASSERT((data.size() % AES_BLOCK_SIZE) == 0, "La dimensione dei dati da cifrare deve essere multipla di 16");
-	return AES(data, AES_DECRYPT);
+	return AES(data, AES_DECRYPT, output);
 }

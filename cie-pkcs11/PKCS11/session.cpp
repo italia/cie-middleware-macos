@@ -618,7 +618,8 @@ namespace p11 {
 		auto mech = std::move(pVerifyRecoverMechanism);
 
 		CK_ULONG ulKeyLen = pVerifyRecoverMechanism->VerifyRecoverLength();
-		ByteDynArray baData = pVerifyRecoverMechanism->VerifyRecover(Signature);
+        ByteDynArray ba;
+		ByteDynArray baData = pVerifyRecoverMechanism->VerifyRecover(Signature, ba);
 
 		if (!Data.isNull() && Data.size()<baData.size()) {
 			pVerifyRecoverMechanism = std::move(mech);
@@ -745,7 +746,9 @@ namespace p11 {
 			return;
 		}
 
-		ByteDynArray baSignBuffer = pSignMechanism->SignFinal();
+        ByteDynArray baSignBuffer;
+        
+        pSignMechanism->SignFinal(baSignBuffer);
 
 		bool bSilent = false;
 		ByteDynArray baSignature;
@@ -926,8 +929,9 @@ namespace p11 {
 		init_func
 		if (pEncryptMechanism == nullptr)
 			throw p11_error(CKR_OPERATION_NOT_INITIALIZED);
-
-		ByteDynArray baEncryptedData = pEncryptMechanism->EncryptUpdate(Data);
+        ByteDynArray baEncryptedData;
+		baEncryptedData = pEncryptMechanism->EncryptUpdate(Data, baEncryptedData);
+        
 		if (!EncryptedData.isNull() && EncryptedData.size() < baEncryptedData.size())
 			throw p11_error(CKR_BUFFER_TOO_SMALL);
 		EncryptedData = EncryptedData.left(baEncryptedData.size());
@@ -956,7 +960,8 @@ namespace p11 {
 			return;
 		}
 
-		ByteDynArray baEncryptedBuffer = pEncryptMechanism->EncryptFinal();
+        ByteDynArray baEncryptedBuffer;
+		baEncryptedBuffer = pEncryptMechanism->EncryptFinal(baEncryptedBuffer);
 
 		EncryptedData.copy(baEncryptedBuffer);
 
@@ -1039,7 +1044,8 @@ namespace p11 {
 		if (pDecryptMechanism == nullptr)
 			throw p11_error(CKR_OPERATION_NOT_INITIALIZED);
 
-		ByteDynArray baData = pDecryptMechanism->DecryptUpdate(EncryptedData);
+        ByteDynArray baData;
+		baData = pDecryptMechanism->DecryptUpdate(EncryptedData, baData);
 
 		if (!Data.isNull() && Data.size() < baData.size())
 			throw p11_error(CKR_BUFFER_TOO_SMALL);
@@ -1078,7 +1084,8 @@ namespace p11 {
 
 		size_t dwKeyLenBytes = baKeyModule->size();
 
-		ByteDynArray baDecryptBuffer = pDecryptMechanism->DecryptFinal();
+        ByteDynArray baDecryptBuffer;
+		baDecryptBuffer = pDecryptMechanism->DecryptFinal(baDecryptBuffer);
 
 		ByteDynArray baData;
 		pSlot->pTemplate->FunctionList.templateDecrypt(pSlot->pTemplateData, pDecryptKey.get(), baDecryptBuffer, baData, pDecryptMechanism->mtType, false);

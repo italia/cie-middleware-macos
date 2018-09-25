@@ -45,7 +45,7 @@ namespace p11 {
 		virtual void VerifyUpdate(ByteArray &Part) = 0;
 		virtual void VerifyFinal(ByteArray &Signature) = 0;
 		virtual CK_ULONG VerifyLength() = 0;
-		virtual ByteDynArray  VerifyDecryptSignature(ByteArray &Signature) = 0;
+		virtual ByteDynArray  VerifyDecryptSignature(ByteArray &Signature, ByteDynArray& output) = 0;
 		virtual ByteDynArray VerifyGetOperationState() = 0;
 		virtual void VerifySetOperationState(ByteArray &OperationState) = 0;
 	};
@@ -57,7 +57,7 @@ namespace p11 {
 		virtual ~CVerifyRSA();
 
 		bool VerifySupportMultipart();
-		ByteDynArray  VerifyDecryptSignature(ByteArray &Signature);
+		ByteDynArray  VerifyDecryptSignature(ByteArray &Signature, ByteDynArray& output);
 		CK_ULONG VerifyLength();
 		ByteDynArray VerifyGetOperationState();
 		void VerifySetOperationState(ByteArray &OperationState);
@@ -72,9 +72,9 @@ namespace p11 {
 		virtual ~CVerifyRecover();
 
 		virtual void VerifyRecoverInit(CK_OBJECT_HANDLE PublicKey) = 0;
-		virtual ByteDynArray VerifyRecover(ByteArray &Signature) = 0;
+		virtual ByteDynArray VerifyRecover(ByteArray &Signature, ByteDynArray& output) = 0;
 		virtual CK_ULONG VerifyRecoverLength() = 0;
-		virtual ByteDynArray VerifyRecoverDecryptSignature(ByteArray &Signature) = 0;
+		virtual ByteDynArray VerifyRecoverDecryptSignature(ByteArray &Signature,ByteDynArray& output) = 0;
 		virtual ByteDynArray VerifyRecoverGetOperationState() = 0;
 		virtual void VerifyRecoverSetOperationState(ByteArray &OperationState) = 0;
 	};
@@ -85,7 +85,7 @@ namespace p11 {
 		CVerifyRecoverRSA(CK_MECHANISM_TYPE type, std::shared_ptr<CSession> Session);
 		virtual ~CVerifyRecoverRSA();
 
-		ByteDynArray VerifyRecoverDecryptSignature(ByteArray &Signature);
+		ByteDynArray VerifyRecoverDecryptSignature(ByteArray &Signature, ByteDynArray& output);
 		CK_ULONG VerifyRecoverLength();
 		virtual ByteDynArray VerifyRecoverGetOperationState();
 		virtual void VerifyRecoverSetOperationState(ByteArray &OperationState);
@@ -103,7 +103,7 @@ namespace p11 {
 		virtual void SignInit(CK_OBJECT_HANDLE PrivateKey) = 0;
 		virtual void SignReset() = 0;
 		virtual void SignUpdate(ByteArray &Part) = 0;
-		virtual ByteDynArray SignFinal() = 0;
+		virtual ByteDynArray SignFinal(ByteDynArray& output) = 0;
 		virtual CK_ULONG SignLength() = 0;
 		virtual ByteDynArray  SignGetOperationState() = 0;
 		virtual void SignSetOperationState(ByteArray &OperationState) = 0;
@@ -117,7 +117,7 @@ namespace p11 {
 
 		CK_ULONG SignLength();
 		bool SignSupportMultipart();
-		ByteDynArray SignFinal() = 0;
+		ByteDynArray SignFinal(ByteDynArray& output) = 0;
 		virtual ByteDynArray  SignGetOperationState();
 		virtual void SignSetOperationState(ByteArray &OperationState);
 	};
@@ -158,8 +158,8 @@ namespace p11 {
 
 		virtual bool EncryptSupportMultipart() = 0;
 		virtual void EncryptInit(CK_OBJECT_HANDLE PublicKey) = 0;
-		virtual ByteDynArray  EncryptUpdate(ByteArray &Data) = 0;
-		virtual ByteDynArray  EncryptFinal() = 0;
+		virtual ByteDynArray  EncryptUpdate(ByteArray &Data, ByteDynArray& output) = 0;
+		virtual ByteDynArray  EncryptFinal(ByteDynArray& output) = 0;
 		virtual CK_ULONG EncryptLength() = 0;
 		virtual ByteDynArray EncryptGetOperationState() = 0;
 		virtual void EncryptSetOperationState(ByteArray &OperationState) = 0;
@@ -173,7 +173,7 @@ namespace p11 {
 
 		bool EncryptSupportMultipart();
 		CK_ULONG EncryptLength();
-		ByteDynArray EncryptCompute(ByteArray &baPlainData);
+		ByteDynArray EncryptCompute(ByteArray &baPlainData, ByteDynArray& output);
 		ByteDynArray EncryptGetOperationState();
 		void EncryptSetOperationState(ByteArray &OperationState);
 	};
@@ -189,8 +189,8 @@ namespace p11 {
 
 		virtual bool DecryptSupportMultipart() = 0;
 		virtual void DecryptInit(CK_OBJECT_HANDLE PrivateKey) = 0;
-		virtual ByteDynArray  DecryptUpdate(ByteArray &EncryptedData) = 0;
-		virtual ByteDynArray DecryptFinal() = 0;
+		virtual ByteDynArray  DecryptUpdate(ByteArray &EncryptedData, ByteDynArray& output) = 0;
+		virtual ByteDynArray DecryptFinal(ByteDynArray& output) = 0;
 		virtual CK_ULONG DecryptLength() = 0;
 		virtual ByteDynArray DecryptRemovePadding(ByteArray &paddedData) = 0;
 		virtual ByteDynArray  DecryptGetOperationState() = 0;
@@ -264,23 +264,23 @@ namespace p11 {
 		void VerifyFinal(ByteArray &Signature);
 
 		void VerifyRecoverInit(CK_OBJECT_HANDLE PublicKey);
-		ByteDynArray VerifyRecover(ByteArray &Signature);
+		ByteDynArray VerifyRecover(ByteArray &Signature, ByteDynArray& output);
 
 		void SignInit(CK_OBJECT_HANDLE PrivateKey);
 		void SignReset();
 		void SignUpdate(ByteArray &Part);
-		ByteDynArray SignFinal();
+		ByteDynArray SignFinal(ByteDynArray& output);
 
 		void SignRecoverInit(CK_OBJECT_HANDLE PrivateKey);
 		ByteDynArray SignRecover(ByteArray &baData);
 
 		void EncryptInit(CK_OBJECT_HANDLE PublicKey);
-		ByteDynArray  EncryptUpdate(ByteArray &Data);
-		ByteDynArray  EncryptFinal();
+		ByteDynArray  EncryptUpdate(ByteArray &Data, ByteDynArray& output);
+		ByteDynArray  EncryptFinal(ByteDynArray& output);
 
 		void DecryptInit(CK_OBJECT_HANDLE PrivateKey);
-		ByteDynArray  DecryptUpdate(ByteArray &EncryptedData);
-		ByteDynArray DecryptFinal();
+		ByteDynArray  DecryptUpdate(ByteArray &EncryptedData, ByteDynArray& output);
+		ByteDynArray DecryptFinal(ByteDynArray& output);
 		ByteDynArray DecryptRemovePadding(ByteArray &paddedData);
 
 	};
@@ -301,23 +301,23 @@ namespace p11 {
 		void VerifyFinal(ByteArray &Signature);
 
 		void VerifyRecoverInit(CK_OBJECT_HANDLE PublicKey);
-		ByteDynArray VerifyRecover(ByteArray &Signature);
+		ByteDynArray VerifyRecover(ByteArray &Signature, ByteDynArray& output);
 
 		void SignInit(CK_OBJECT_HANDLE PrivateKey);
 		void SignReset();
 		void SignUpdate(ByteArray &Part);
-		ByteDynArray SignFinal();
+		ByteDynArray SignFinal(ByteDynArray& output);
 
 		void SignRecoverInit(CK_OBJECT_HANDLE PrivateKey);
 		ByteDynArray SignRecover(ByteArray &baData);
 
 		void EncryptInit(CK_OBJECT_HANDLE PublicKey);
-		ByteDynArray  EncryptUpdate(ByteArray &Data);
-		ByteDynArray  EncryptFinal();
+		ByteDynArray  EncryptUpdate(ByteArray &Data, ByteDynArray& output);
+		ByteDynArray  EncryptFinal(ByteDynArray& output);
 
 		void DecryptInit(CK_OBJECT_HANDLE PrivateKey);
-		ByteDynArray  DecryptUpdate(ByteArray &EncryptedData);
-		ByteDynArray DecryptFinal();
+		ByteDynArray  DecryptUpdate(ByteArray &EncryptedData, ByteDynArray& output);
+		ByteDynArray DecryptFinal(ByteDynArray& output);
 		ByteDynArray DecryptRemovePadding(ByteArray &paddedData);
 	};
 
@@ -332,7 +332,7 @@ namespace p11 {
 		void SignInit(CK_OBJECT_HANDLE PrivateKey);
 		void SignReset();
 		void SignUpdate(ByteArray &Part);
-		ByteDynArray SignFinal();
+		ByteDynArray SignFinal(ByteDynArray& output);
 		ByteDynArray  SignGetOperationState();
 		void SignSetOperationState(ByteArray &OperationState);
 	};

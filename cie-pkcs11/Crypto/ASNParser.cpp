@@ -136,7 +136,7 @@ CASNTag &CASNTag::CheckTag(uint8_t checkTag) {
 		throw logged_error("Errore nella verifica del tag ASN1");
 	return *this;
 }
-void CASNTag::Verify(ByteArray &checkContent) {
+void CASNTag::Verify(ByteArray checkContent) {
 	if (content!=checkContent)
 		throw logged_error("Errore nella verifica del tag ASN1");
 }

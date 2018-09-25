@@ -167,6 +167,13 @@ std::string dumpHexData(ByteArray data, std::string& dump, bool withSpace, bool 
 	dump.assign(dmp.str());
 	return dump;
 }
+
+std::string dumpHexData(ByteArray data)
+{
+    std::string str;
+    return dumpHexData(data, str, true, true);
+}
+
 void Debug(ByteArray ba) {
 	std::string out;
 	dumpHexData(ba,out);
@@ -313,29 +320,41 @@ unsigned long ISOPadLen(unsigned long Len)
 		return(Len - (Len & 0x7) + 0x08);
 }
 
-void ISOPad(const ByteArray &Data, unsigned long DataLen)
+void ISOPad(const ByteArray& Data, unsigned long DataLen)
 {
 	init_func
+    printf("\nisopad 0: %s\n", dumpHexData(Data).c_str());
+    
 	Data.mid(DataLen).fill(0);
 	Data[DataLen]=0x80;
+    
+    printf("isopad 1: %s\n", dumpHexData(Data).c_str());
+    
 	exit_func
 }
 
-const ByteDynArray ISOPad16(const ByteArray &data) {
+ByteDynArray ISOPad16(const ByteArray &data, ByteDynArray& output) {
 	init_func
 	ByteDynArray resp(ISOPadLen16(data.size()));
 	resp.copy(data);
 	ISOPad(resp, data.size());
-	return resp;
+    output.append(resp);
+	
+    return output;
 	exit_func
 }
 
-const ByteDynArray ISOPad(const ByteArray &data) {
+ByteDynArray ISOPad(const ByteArray& data, ByteDynArray& output) {
 	init_func
 	ByteDynArray resp(ISOPadLen(data.size()));
 	resp.copy(data);
 	ISOPad(resp,data.size());
-	return resp;
+    
+    printf("resp: %s\n", dumpHexData(resp).c_str());
+    
+    output.append(resp);
+//    return resp;
+    return output;
 	exit_func
 }
 
@@ -442,9 +461,10 @@ char *  CardErr(DWORD dwSW) {
 //    }
 //}
 
-ByteDynArray ASN1Tag(DWORD tag,ByteArray content) {
+ByteDynArray ASN1Tag(DWORD tag,ByteArray& content, ByteDynArray& output) {
 	ByteDynArray result = content.getASN1Tag(tag);
-	return result;
+    output.append(result);
+    return output;
 }
 
 unsigned long ASN1TLength(unsigned int tag) {

@@ -14,20 +14,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E59B65BD213C06B8007348D5"
-               BuildableName = "AbilitaCIE.app"
-               BlueprintName = "AbilitaCIE"
-               ReferencedContainer = "container:cie-pkcs11.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "E5BE7D8720FE84D200004389"
                BuildableName = "libcie-pkcs11.dylib"
                BlueprintName = "cie-pkcs11"
@@ -43,15 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E59B65BD213C06B8007348D5"
-            BuildableName = "AbilitaCIE.app"
-            BlueprintName = "AbilitaCIE"
-            ReferencedContainer = "container:cie-pkcs11.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -65,16 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E59B65BD213C06B8007348D5"
-            BuildableName = "AbilitaCIE.app"
-            BlueprintName = "AbilitaCIE"
+            BlueprintIdentifier = "E5BE7D8720FE84D200004389"
+            BuildableName = "libcie-pkcs11.dylib"
+            BlueprintName = "cie-pkcs11"
             ReferencedContainer = "container:cie-pkcs11.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -84,16 +60,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E59B65BD213C06B8007348D5"
-            BuildableName = "AbilitaCIE.app"
-            BlueprintName = "AbilitaCIE"
+            BlueprintIdentifier = "E5BE7D8720FE84D200004389"
+            BuildableName = "libcie-pkcs11.dylib"
+            BlueprintName = "cie-pkcs11"
             ReferencedContainer = "container:cie-pkcs11.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
