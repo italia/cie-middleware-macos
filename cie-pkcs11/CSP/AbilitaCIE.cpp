@@ -93,7 +93,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
 //
 //            CCardLocker lockCard(cie->slot.hCard);
             
-            
+            ias.token.Reset();
             ias.SelectAID_IAS();
             ias.ReadPAN();
             
@@ -109,7 +109,8 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             ias.ReadIdServizi(IdServizi);
         
             ByteArray serviziData(IdServizi.left(12));
-            hashSet[0xa1] = sha256.Digest(serviziData);
+            ByteDynArray ba1;
+            hashSet[0xa1] = sha256.Digest(serviziData, ba1);
 
             ByteDynArray SOD;
             ias.ReadSOD(SOD);
@@ -117,18 +118,21 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             ByteDynArray IntAuth;
             ias.ReadDappPubKey(IntAuth);
             ByteArray intAuthData(IntAuth.left(GetASN1DataLenght(IntAuth)));
-            hashSet[0xa4] = sha256.Digest(intAuthData);
+            ByteDynArray ba2;
+            hashSet[0xa4] = sha256.Digest(intAuthData, ba2);
             
 			ByteDynArray IntAuthServizi;
             ias.ReadServiziPubKey(IntAuthServizi);
             ByteArray intAuthServiziData(IntAuthServizi.left(GetASN1DataLenght(IntAuthServizi)));
-			hashSet[0xa5] = sha256.Digest(intAuthServiziData);
+            ByteDynArray ba3;
+			hashSet[0xa5] = sha256.Digest(intAuthServiziData, ba3);
 
             ias.SelectAID_IAS();
             ByteDynArray DH;
             ias.ReadDH(DH);
             ByteArray dhData(DH.left(GetASN1DataLenght(DH)));
-            hashSet[0x1b] = sha256.Digest(dhData);
+            ByteDynArray ba4;
+            hashSet[0x1b] = sha256.Digest(dhData, ba4);
 
 //            if (IdServizi != ByteArray((uint8_t*)szPAN, strnlen(szPAN, 20)))
 //                continue;
@@ -180,18 +184,20 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
                 return CKR_GENERAL_ERROR;//logged_error("Autenticazione fallita");
             }
             
-            ias.SelectAID_IAS();
-            ias.SelectAID_CIE();
+//            ias.SelectAID_IAS();
+//            ias.SelectAID_CIE();
             
             ByteDynArray Serial;
             ias.ReadSerialeCIE(Serial);
             ByteArray serialData = Serial.left(9);
-            hashSet[0xa2] = sha256.Digest(serialData);
+            ByteDynArray ba6;
+            hashSet[0xa2] = sha256.Digest(serialData, ba6);
             
             ByteDynArray CertCIE;
             ias.ReadCertCIE(CertCIE);
             ByteArray certCIEData = CertCIE.left(GetASN1DataLenght(CertCIE));
-            hashSet[0xa3] = sha256.Digest(certCIEData);
+            ByteDynArray ba7;
+            hashSet[0xa3] = sha256.Digest(certCIEData, ba7);
             
 //            if (progWin != nullptr)
 //                SendMessage(progWin, WM_COMMAND, 100 + 5, (LPARAM)"Verifica SOD");

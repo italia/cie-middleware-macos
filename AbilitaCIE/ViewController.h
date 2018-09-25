@@ -10,6 +10,6 @@
 
 @interface ViewController : NSViewController
 
-
+@property IBOutlet NSTextField* textFieldPIN;
 @end
 

@@ -81,7 +81,9 @@ CK_RV progressCallback(const int progress,
         exit(1);
     }
     
-    pfnAbilitaCIE("hjhjh", "12345678", &progressCallback);
+    NSString* pin = _textFieldPIN.stringValue;
+    
+    pfnAbilitaCIE("hjhjh", [pin cStringUsingEncoding:NSUTF8StringEncoding], &progressCallback);
     
     exit(0);
 }
