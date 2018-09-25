@@ -121,32 +121,28 @@ CRSA::~CRSA(void)
 
 ByteDynArray CRSA::RSA_PURE(ByteArray &data, ByteDynArray& output)
 {
-    CryptoPP::Integer modulus(modulusBa.data(), modulusBa.size());
-    CryptoPP::Integer exponent(exponentBa.data(), exponentBa.size());
-    
-    publicKey.SetModulus(modulus);
-    publicKey.SetPublicExponent(exponent);
-    
-    CryptoPP::Integer data1(data.data(), data.size());
-    
-    CryptoPP::Integer enc = publicKey.ApplyFunction(data1);
-    
-    ByteDynArray resp(enc.ByteCount());
-    enc.Encode(resp.data(), resp.size());
-    
-    printf("\nRSA resp: %s", dumpHexData(resp).c_str());
-    
-//    ByteDynArray dataBa(data.size() + 1);
-//    dataBa.fill(0);
-//    dataBa.rightcopy(data);
-    
-//    ByteDynArray resp1(RSA_size(keyPriv));
-//    int SignSize = RSA_public_encrypt((int)data.size(), data.data(), resp1.data(), keyPriv, RSA_NO_PADDING);
+//    CryptoPP::Integer modulus(modulusBa.data(), modulusBa.size());
+//    CryptoPP::Integer exponent(exponentBa.data(), exponentBa.size());
 //
-//    ER_ASSERT(SignSize == KeySize, "Errore nella lunghezza dei dati per operazione RSA")
+//    publicKey.SetModulus(modulus);
+//    publicKey.SetPublicExponent(exponent);
 //
-//    printf("\nRSA resp1: %s\n", dumpHexData(resp1).c_str());
+//    CryptoPP::Integer data1(data.data(), data.size());
 //
+//    CryptoPP::Integer enc = publicKey.ApplyFunction(data1);
+//
+//    ByteDynArray resp(enc.ByteCount());
+//    enc.Encode(resp.data(), resp.size());
+//
+//    printf("\nRSA resp: %s", dumpHexData(resp).c_str());
+    
+    ByteDynArray resp(RSA_size(keyPriv));
+    int SignSize = RSA_public_encrypt((int)data.size(), data.data(), resp.data(), keyPriv, RSA_NO_PADDING);
+
+    ER_ASSERT(SignSize == KeySize, "Errore nella lunghezza dei dati per operazione RSA")
+
+    printf("\nRSA resp1: %s\n", dumpHexData(resp).c_str());
+
     output.append(resp);
     return output;
 }
