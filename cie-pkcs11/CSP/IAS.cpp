@@ -506,7 +506,7 @@ void IAS::DHKeyExchange() {
     
 	dh_pubKey = rsa.RSA_PURE(dhg);
 
-    printf("\n\ndhpubKey: %s", dumpHexData(dh_pubKey).c_str());
+//    printf("\n\ndhpubKey: %s", dumpHexData(dh_pubKey).c_str());
     
 	uint8_t algo = 0x9b;
 	uint8_t keyId = CIE_KEY_DH_ID;
@@ -527,11 +527,11 @@ void IAS::DHKeyExchange() {
 	asn1.Parse(resp);
 	dh_ICCpubKey = asn1.tags[0]->tags[0]->content;
 
-    printf("\ndhICCpubKey: %s", dumpHexData(dh_ICCpubKey).c_str());
+//    printf("\ndhICCpubKey: %s", dumpHexData(dh_ICCpubKey).c_str());
     
 	secret = rsa.RSA_PURE(dh_ICCpubKey);
 
-    printf("\nsecret: %s", dumpHexData(secret).c_str());
+//    printf("\nsecret: %s", dumpHexData(secret).c_str());
     
 	CSHA256 sha256;
 	
@@ -541,8 +541,8 @@ void IAS::DHKeyExchange() {
 	sessENC = sha256.Digest(ByteDynArray(secret).append(VarToByteArray(diffENC))).left(16);
 	sessMAC = sha256.Digest(ByteDynArray(secret).append(VarToByteArray(diffMAC))).left(16);
     
-    printf("\nsessENC: %s", dumpHexData(sessENC).c_str());
-    printf("\nsessMAC: %s\n", dumpHexData(sessMAC).c_str());
+//    printf("\nsessENC: %s", dumpHexData(sessENC).c_str());
+//    printf("\nsessMAC: %s\n", dumpHexData(sessMAC).c_str());
     
 	sessSSC.resize(8); 
 	sessSSC.fill(0);

@@ -323,12 +323,12 @@ unsigned long ISOPadLen(unsigned long Len)
 void ISOPad(const ByteArray& Data, unsigned long DataLen)
 {
 	init_func
-    printf("\nisopad 0: %s\n", dumpHexData(Data).c_str());
+//    printf("\nisopad 0: %s\n", dumpHexData(Data).c_str());
     
 	Data.mid(DataLen).fill(0);
 	Data[DataLen]=0x80;
     
-    printf("isopad 1: %s\n", dumpHexData(Data).c_str());
+//    printf("isopad 1: %s\n", dumpHexData(Data).c_str());
     
 	exit_func
 }
