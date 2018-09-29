@@ -577,33 +577,33 @@ ByteDynArray IAS::SM(ByteArray &keyEnc, ByteArray &keySig, ByteArray &apdu, Byte
 	ByteDynArray smHead;
 	smHead = apdu.left(4);
 	smHead[0] |= 0x0C;
-    printf("apdu: %s\n", dumpHexData(smHead).c_str());
+//    printf("apdu: %s\n", dumpHexData(smHead).c_str());
     
 	auto calcMac = ISOPad(ByteDynArray(seq).append(smHead));
     
-    printf("calcMac: %s\n", dumpHexData(calcMac).c_str());
+//    printf("calcMac: %s\n", dumpHexData(calcMac).c_str());
     
 	ByteDynArray iv(8);
 	iv.fill(0); // IV for APDU encryption and signature should be 0. Please refer to IAS specification §7.1.9 Secure messaging – Command APDU protection
     
-    printf("iv: %s\n", dumpHexData(iv).c_str());
+//    printf("iv: %s\n", dumpHexData(iv).c_str());
     
-    printf("keyEnc: %s\n", dumpHexData(keyEnc).c_str());
+//    printf("keyEnc: %s\n", dumpHexData(keyEnc).c_str());
 	CDES3 encDes(keyEnc, iv);
 	
-    printf("keySig: %s\n", dumpHexData(keySig).c_str());
+//    printf("keySig: %s\n", dumpHexData(keySig).c_str());
     
     CMAC sigMac(keySig, iv);
     
 	uint8_t Val01 = 1;
-	uint8_t Val00 = 0;
+//    uint8_t Val00 = 0;
 
 	ByteDynArray datafield, doob;
 	if (apdu[4] != 0 && apdu.size() > 5) {
 		
         ByteDynArray enc = encDes.RawEncode(ISOPad(apdu.mid(5, apdu[4])));
         
-        printf("enc 1: %s\n", dumpHexData(enc).c_str());
+//        printf("enc 1: %s\n", dumpHexData(enc).c_str());
         
 		if ((apdu[1] & 1) == 0)
 			doob.setASN1Tag(0x87, VarToByteDynArray(Val01).append(enc));
@@ -613,8 +613,8 @@ ByteDynArray IAS::SM(ByteArray &keyEnc, ByteArray &keySig, ByteArray &apdu, Byte
 		calcMac.append(doob);
 		datafield.append(doob);
         
-        printf("calcMac 1: %s\n", dumpHexData(calcMac).c_str());
-        printf("datafield 1: %s\n", dumpHexData(datafield).c_str());
+//        printf("calcMac 1: %s\n", dumpHexData(calcMac).c_str());
+//        printf("datafield 1: %s\n", dumpHexData(datafield).c_str());
 	}
 	if (apdu[4] == 0 && apdu.size() > 7) {
         
@@ -627,8 +627,8 @@ ByteDynArray IAS::SM(ByteArray &keyEnc, ByteArray &keySig, ByteArray &apdu, Byte
 		calcMac.append(doob);
 		datafield.append(doob);
         
-        printf("calcMac 2: %s\n", dumpHexData(calcMac).c_str());
-        printf("datafield 2: %s\n", dumpHexData(datafield).c_str());
+//        printf("calcMac 2: %s\n", dumpHexData(calcMac).c_str());
+//        printf("datafield 2: %s\n", dumpHexData(datafield).c_str());
 	}
 	if (apdu.size() == 5 || apdu.size() == (apdu[4] + 6)) {
 		uint8_t le = apdu[apdu.size() - 1];
@@ -637,18 +637,18 @@ ByteDynArray IAS::SM(ByteArray &keyEnc, ByteArray &keySig, ByteArray &apdu, Byte
 		calcMac.append(doob);
 		datafield.append(doob);
          
-        printf("calcMac 3: %s\n", dumpHexData(calcMac).c_str());
-        printf("datafield 3: %s\n", dumpHexData(datafield).c_str());
+//        printf("calcMac 3: %s\n", dumpHexData(calcMac).c_str());
+//        printf("datafield 3: %s\n", dumpHexData(datafield).c_str());
 	}
     
     ByteDynArray macBa = sigMac.Mac(ISOPad(calcMac));
-    printf("macBa: %s\n", dumpHexData(macBa).c_str());
+//    printf("macBa: %s\n", dumpHexData(macBa).c_str());
     
     ByteDynArray tagMacBa = ASN1Tag(0x8e, macBa);
-    printf("tagMacBa: %s\n", dumpHexData(tagMacBa).c_str());
+//    printf("tagMacBa: %s\n", dumpHexData(tagMacBa).c_str());
 	datafield.append(tagMacBa);
 	
-    printf("datafield 4: %s\n", dumpHexData(datafield).c_str());
+//    printf("datafield 4: %s\n", dumpHexData(datafield).c_str());
     
 	ByteDynArray elabResp;
 	if (datafield.size()<0x100)
@@ -661,7 +661,7 @@ ByteDynArray IAS::SM(ByteArray &keyEnc, ByteArray &keySig, ByteArray &apdu, Byte
 		elabResp.set(&smHead, &lenBa, &datafield, (uint8_t)0x00, (uint8_t)0x00);
 	}
     
-    printf("elabResp: %s\n", dumpHexData(elabResp).c_str());
+//    printf("elabResp: %s\n", dumpHexData(elabResp).c_str());
 	return elabResp;
 }
 
@@ -837,11 +837,11 @@ StatusWord IAS::SendAPDU_SM(ByteArray head, ByteArray data, ByteDynArray &resp, 
 		ODS(std::string().append("\nClear APDU:").append(dumpHexData(smApdu, str)).append("\n").c_str());
 		smApdu = SM(sessENC, sessMAC, smApdu, sessSSC);
         
-        ODS(std::string().append("\nAPDU:").append(dumpHexData(smApdu)).append("\n").c_str());
+//        ODS(std::string().append("\nAPDU:").append(dumpHexData(smApdu)).append("\n").c_str());
         
 		sw = token.Transmit(smApdu, &curresp);
         
-        ODS(std::string().append("RESP:").append(dumpHexData(curresp)).append("\n").c_str());
+//        ODS(std::string().append("RESP:").append(dumpHexData(curresp)).append("\n").c_str());
         
 		sw = getResp_SM(curresp, sw, resp);
 
@@ -874,11 +874,11 @@ StatusWord IAS::SendAPDU_SM(ByteArray head, ByteArray data, ByteDynArray &resp, 
 			ODS(std::string("Clear APDU:").append(dumpHexData(smApdu, str)).append("\n").c_str());
 			smApdu = SM(sessENC, sessMAC, smApdu, sessSSC);
             
-            ODS(std::string().append("\nAPDU:").append(dumpHexData(smApdu)).append("\n").c_str());
+//            ODS(std::string().append("\nAPDU:").append(dumpHexData(smApdu)).append("\n").c_str());
             
 			sw = token.Transmit(smApdu, &curresp);
             
-            ODS(std::string().append("\nRESP:").append(dumpHexData(curresp)).append("\n").c_str());
+//            ODS(std::string().append("\nRESP:").append(dumpHexData(curresp)).append("\n").c_str());
             
 			sw = getResp_SM(curresp, sw, resp);
 
@@ -929,11 +929,11 @@ StatusWord IAS::SendAPDU(ByteArray head, ByteArray data, ByteDynArray &resp, uin
 		else
 			apdu.set(&head, le == nullptr ? &emptyBa : &leBa);
 
-        ODS(std::string().append("\nAPDU:").append(dumpHexData(apdu)).append("\n").c_str());
+//        ODS(std::string().append("\nAPDU:").append(dumpHexData(apdu)).append("\n").c_str());
         
 		StatusWord sw = token.Transmit(apdu, &curresp);
         
-        ODS(std::string().append("RESP:").append(dumpHexData(curresp)).append("\n").c_str());
+//        ODS(std::string().append("RESP:").append(dumpHexData(curresp)).append("\n").c_str());
         
 		sw=getResp(curresp, sw, resp);
 

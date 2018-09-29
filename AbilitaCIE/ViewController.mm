@@ -55,7 +55,7 @@ CK_RV progressCallback(const int progress,
 
 - (IBAction)onAbilita:(id)sender
 {
-    //NSString* dir = [[NSBundle mainBundle] bundleURL].absoluteString;
+    NSString* pin = self.textFieldPIN.stringValue;
     
     [((NSControl*)sender) setEnabled:NO];
     
@@ -83,7 +83,7 @@ CK_RV progressCallback(const int progress,
             exit(1);
         }
         
-        NSString* pin = self.textFieldPIN.stringValue;
+        
         int attempts = -1;
         
         long ret = pfnAbilitaCIE("hjhjh", [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback);
