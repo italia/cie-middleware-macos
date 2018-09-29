@@ -1341,11 +1341,14 @@ void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
     
     GetPublicKeyFromCert(certin, pbKey, issuer, serial);
     
-    long size = pbKey.CurrentSize();
-    BYTE* pbtPubKey = new BYTE[size];
-    pbKey.Get(pbtPubKey, size);
+//    long size = pbKey.CurrentSize();
+//    BYTE* pbtPubKey = new BYTE[size];
+//    pbKey.Get(pbtPubKey, size);
+//
+//    ByteArray pubKeyData(pbtPubKey, pbKey.CurrentSize());
     
-    ByteArray pubKeyData(pbtPubKey, size);
+    ByteDynArray pubKeyData(pbKey.CurrentSize());
+    pbKey.Get(pubKeyData.data(), pubKeyData.size());
     
     CASNParser pubKeyParser;
 	pubKeyParser.Parse(pubKeyData);
@@ -1396,10 +1399,9 @@ void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
 
     issuerName.Reparse();
     CASNParser issuerParser;
-    size = issuer.CurrentSize();
-    BYTE* pbtIssuer = new BYTE[size];
-    issuer.Get(pbtIssuer, size);
-    ByteArray issuerBa(pbtIssuer, size);
+    
+    ByteDynArray issuerBa(issuer.CurrentSize());
+    issuer.Get(issuerBa.data(), issuerBa.size());
     
     issuerParser.Parse(issuerBa);
     

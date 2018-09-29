@@ -205,6 +205,19 @@ extern DWORD ERR_OBJECT_HASNT_ATTRIBUTE;
 
 #define ZeroMem(var) memset(&var,0,sizeof(var))
 
+typedef struct _SYSTEMTIME {
+    WORD wYear;
+    WORD wMonth;
+    WORD wDayOfWeek;
+    WORD wDay;
+    WORD wHour;
+    WORD wMinute;
+    WORD wSecond;
+    WORD wMilliseconds;
+} SYSTEMTIME;
+
+SYSTEMTIME convertStringToSystemTime(const char *dateTimeString);
+
 uint8_t hex2byte(char h);
 void readHexData(const std::string &data,ByteDynArray &ba);
 std::string HexByte(uint8_t data, bool uppercase = true);
@@ -260,3 +273,5 @@ ByteDynArray ISOPad16(const ByteArray &data);
 
  template< typename t >
  scopeExitClass< t > scopeExit(t o) { return { std::move(o) }; }
+
+

@@ -13,6 +13,8 @@
 		E50A8A0D213BE121006A000D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50A8A0B213BE121006A000D /* Cocoa.framework */; };
 		E50A8A0E213BE121006A000D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50A8A0C213BE121006A000D /* AppKit.framework */; };
 		E50A8A10213BE4C6006A000D /* AbilitaCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50A8A0F213BE4C6006A000D /* AbilitaCIE.cpp */; };
+		E543F955215F6B1D0088CBC5 /* CryptoppUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */; };
+		E543F957215F6B250088CBC5 /* CryptoppUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E543F956215F6B250088CBC5 /* CryptoppUtils.h */; };
 		E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E54EF42F2100D91200E2EADD /* libcryptopp.a */; };
 		E55BE03B2136CD0300E5F396 /* CacheLib.h in Headers */ = {isa = PBXBuildFile; fileRef = E55BE0392136CD0100E5F396 /* CacheLib.h */; };
 		E55BE03C2136CD0300E5F396 /* CacheLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55BE03A2136CD0100E5F396 /* CacheLib.cpp */; };
@@ -125,6 +127,8 @@
 		E50A8A0B213BE121006A000D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E50A8A0C213BE121006A000D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		E50A8A0F213BE4C6006A000D /* AbilitaCIE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbilitaCIE.cpp; sourceTree = "<group>"; };
+		E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CryptoppUtils.cpp; sourceTree = "<group>"; };
+		E543F956215F6B250088CBC5 /* CryptoppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptoppUtils.h; sourceTree = "<group>"; };
 		E54EF42F2100D91200E2EADD /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcryptopp.a; sourceTree = "<group>"; };
 		E54EF4312100D99500E2EADD /* Cryptopp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Cryptopp; sourceTree = "<group>"; };
 		E55BE0392136CD0100E5F396 /* CacheLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheLib.h; sourceTree = "<group>"; };
@@ -275,6 +279,8 @@
 		E5658FF8211864470039865C /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */,
+				E543F956215F6B250088CBC5 /* CryptoppUtils.h */,
 				E55BE03A2136CD0100E5F396 /* CacheLib.cpp */,
 				E55BE0392136CD0100E5F396 /* CacheLib.h */,
 				E5658FF9211864470039865C /* Array.cpp */,
@@ -492,6 +498,7 @@
 				E5BE7DC020FE858600004389 /* pkcs11.h in Headers */,
 				E5659043211864470039865C /* UtilException.h in Headers */,
 				E5BE7DB020FE853800004389 /* InitP11.h in Headers */,
+				E543F957215F6B250088CBC5 /* CryptoppUtils.h in Headers */,
 				E5BE7DBE20FE858600004389 /* pkcs11f.h in Headers */,
 				E5BE7DBF20FE858600004389 /* pkcs11t.h in Headers */,
 				E565903F211864470039865C /* TLV.h in Headers */,
@@ -714,6 +721,7 @@
 				E565902E211864470039865C /* funccallinfo.cpp in Sources */,
 				E5659034211864470039865C /* ModuleInfo.cpp in Sources */,
 				E565907B211875950039865C /* MD5.cpp in Sources */,
+				E543F955215F6B1D0088CBC5 /* CryptoppUtils.cpp in Sources */,
 				E5BE7DA920FE853800004389 /* CardContext.cpp in Sources */,
 				E5659077211875950039865C /* DES3.cpp in Sources */,
 				E55BE03C2136CD0300E5F396 /* CacheLib.cpp in Sources */,

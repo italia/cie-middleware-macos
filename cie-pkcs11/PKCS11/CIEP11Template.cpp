@@ -8,8 +8,19 @@
 #include "../PCSC/PCSC.h"
 #include "../Cryptopp/cryptlib.h"
 #include "../Cryptopp/asn.h"
+#include "../Util/CryptoppUtils.h"
 
 using namespace CryptoPP;
+using namespace lcp;
+
+void GetCertInfo(CryptoPP::BufferedTransformation & certin,
+               std::string & serial,
+               CryptoPP::BufferedTransformation & issuer,
+               CryptoPP::BufferedTransformation & subject,
+               std::string & notBefore,
+               std::string & notAfter,
+               CryptoPP::Integer& mod,
+               CryptoPP::Integer& pubExp);
 
 int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, DWORD *respSize) {
 	if (apduSize == 2) {
@@ -202,6 +213,62 @@ void CIEtemplateInitSession(void *pTemplateData){
 		}
 #else
         // TODO decode the certificate
+
+        // not before
+        // not after
+        // modulus
+        // public exponent
+        // issuer
+        // serialnumber
+        // subject
+        
+        CryptoPP::ByteQueue certin;
+        certin.Put(certRaw.data(),certRaw.size());
+        
+        std::string serial;
+        CryptoPP::ByteQueue issuer;
+        CryptoPP::ByteQueue subject;
+        std::string notBefore;
+        std::string notAfter;
+        CryptoPP::Integer mod;
+        CryptoPP::Integer pubExp;
+        
+        GetCertInfo(certin, serial, issuer, subject, notBefore, notAfter, mod, pubExp);
+        
+        ByteDynArray modulus(mod.ByteCount());
+        mod.Encode(modulus.data(), modulus.size());
+        
+        ByteDynArray publicExponent(pubExp.ByteCount());
+        pubExp.Encode(publicExponent.data(), publicExponent.size());
+        
+        CK_LONG keySizeBits = (CK_LONG)modulus.size() * 8;
+        
+        cie->pubKey->addAttribute(CKA_MODULUS, modulus);
+        cie->pubKey->addAttribute(CKA_PUBLIC_EXPONENT, publicExponent);
+        cie->pubKey->addAttribute(CKA_MODULUS_BITS, VarToByteArray(keySizeBits));
+        
+        cie->privKey->addAttribute(CKA_MODULUS, modulus);
+        cie->privKey->addAttribute(CKA_PUBLIC_EXPONENT, publicExponent);
+        
+        ByteDynArray issuerBa(issuer.CurrentSize());
+        issuer.Get(issuerBa.data(), issuerBa.size());
+        
+        ByteDynArray subjectBa(subject.CurrentSize());
+        subject.Get(subjectBa.data(), subjectBa.size());
+        
+        cie->cert->addAttribute(CKA_ISSUER, issuerBa);
+        cie->cert->addAttribute(CKA_SERIAL_NUMBER, ByteArray((BYTE*)serial.c_str(), serial.size()));
+        cie->cert->addAttribute(CKA_SUBJECT, subjectBa);
+    
+        CK_DATE start, end;
+        
+        SYSTEMTIME sFrom, sTo;
+        sFrom = convertStringToSystemTime(notBefore.c_str());
+        sTo = convertStringToSystemTime(notAfter.c_str());
+        
+        cie->cert->addAttribute(CKA_START_DATE, VarToByteArray(start));
+        cie->cert->addAttribute(CKA_END_DATE, VarToByteArray(end));
+        
         // add to the object
 #endif
         
@@ -473,6 +540,7 @@ void CIEtemplateGenerateKeyPair(void *pCardTemplateData, CK_MECHANISM_PTR pMecha
 void GetPublicKeyFromCert(CryptoPP::BufferedTransformation & certin,
                           CryptoPP::BufferedTransformation & keyout,
                           CryptoPP::BufferedTransformation & issuer,
+                          
                           Integer &serial)
 {
     BERSequenceDecoder x509Cert(certin);
@@ -520,3 +588,120 @@ void GetPublicKeyFromCert(CryptoPP::BufferedTransformation & certin,
     tbsCert.SkipAll();
     x509Cert.SkipAll();
 }
+
+
+
+void GetCertInfo(CryptoPP::BufferedTransformation & certin,
+                 std::string & serial,
+                 CryptoPP::BufferedTransformation & issuer,
+                 CryptoPP::BufferedTransformation & subject,
+                 std::string & notBefore,
+                 std::string & notAfter,
+                 CryptoPP::Integer& mod,
+                 CryptoPP::Integer& pubExp)
+{
+
+    BERSequenceDecoder cert(certin);
+    
+    BERSequenceDecoder toBeSignedCert(cert);
+    
+    // consume the context tag on the version
+    BERGeneralDecoder context(toBeSignedCert,0xa0);
+    word32 ver;
+    
+    // only want a v3 cert
+    BERDecodeUnsigned<word32>(context,ver,INTEGER,2,2);
+    
+    serial = CryptoppUtils::Cert::ReadIntegerAsString(toBeSignedCert);
+
+    // algorithmId
+    CryptoppUtils::Cert::SkipNextSequence(toBeSignedCert);
+    
+    
+    // issuer               Name,
+    BERSequenceDecoder issuerName(toBeSignedCert);
+    issuerName.CopyTo(issuer);
+    issuerName.SkipAll();
+    
+//    CryptoPP::BERSequenceDecoder issuer(toBeSignedCert); {
+//        CryptoPP::BERSetDecoder c(issuer);
+//        c.SkipAll();
+//        CryptoPP::BERSetDecoder st(issuer);
+//        st.SkipAll();
+//        CryptoPP::BERSetDecoder l(issuer);
+//        l.SkipAll();
+//        CryptoPP::BERSetDecoder o(issuer);
+//        o.SkipAll();
+//        CryptoPP::BERSetDecoder ou(issuer);
+//        ou.SkipAll();
+//        CryptoPP::BERSetDecoder cn(issuer); {
+//            CryptoPP::BERSequenceDecoder attributes(cn); {
+//                CryptoPP::BERGeneralDecoder ident(
+//                                                attributes,
+//                                                CryptoPP::OBJECT_IDENTIFIER);
+//                ident.SkipAll();
+//                CryptoPP::BERDecodeTextString(
+//                                              attributes,
+//                                              issuerCN,
+//                                              CryptoPP::UTF8_STRING);
+//            }
+//        }
+//    }
+//
+//    issuer.SkipAll();
+    
+    // validity
+    CryptoppUtils::Cert::ReadDateTimeSequence(toBeSignedCert, notBefore, notAfter);
+
+    // subject
+    BERSequenceDecoder subjectName(toBeSignedCert);
+    subjectName.CopyTo(subject);
+    subjectName.SkipAll();
+    
+//    CryptoPP::BERSequenceDecoder subject(toBeSignedCert); {
+//        CryptoPP::BERSetDecoder c(subject);
+//        c.SkipAll();
+//        CryptoPP::BERSetDecoder st(subject);
+//        st.SkipAll();
+//        CryptoPP::BERSetDecoder l(subject);
+//        l.SkipAll();
+//        CryptoPP::BERSetDecoder o(subject);
+//        o.SkipAll();
+//        CryptoPP::BERSetDecoder ou(subject);
+//        ou.SkipAll();
+//        CryptoPP::BERSetDecoder cn(subject); {
+//            CryptoPP::BERSequenceDecoder attributes(cn); {
+//                CryptoPP::BERGeneralDecoder ident(
+//                                                  attributes,
+//                                                  CryptoPP::OBJECT_IDENTIFIER);
+//                ident.SkipAll();
+//                CryptoPP::BERDecodeTextString(
+//                                              attributes,
+//                                              subjectCN,
+//                                              CryptoPP::UTF8_STRING);
+//            }
+//
+//            subject.SkipAll();
+//        }
+//    }
+    
+    // Public key
+    CryptoPP::BERSequenceDecoder publicKey(toBeSignedCert); {
+        CryptoPP::BERSequenceDecoder ident(publicKey);
+        ident.SkipAll();
+        CryptoPP::BERGeneralDecoder key(publicKey, CryptoPP::BIT_STRING);
+        key.Skip(1);  // Must skip (possibly a bug in Crypto++)
+        CryptoPP::BERSequenceDecoder keyPair(key);
+        
+        mod.BERDecode(keyPair);
+        pubExp.BERDecode(keyPair);
+        
+        
+    }
+    
+    publicKey.SkipAll();
+    toBeSignedCert.SkipAll();
+    cert.SkipAll();
+}
+
+        

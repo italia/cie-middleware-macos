@@ -540,3 +540,20 @@ std::string stdPrintf(const char *format, ...) {
 	va_end(args);
 	return result;
 }
+
+SYSTEMTIME convertStringToSystemTime(const char *dateTimeString)
+{
+    SYSTEMTIME systime;
+    
+    memset(&systime,0,sizeof(systime));
+    // Date string should be "yyyyMMddhhmm"
+    sscanf(dateTimeString, "%04i%02i%02iT%02i%02i%02iZ",
+             &systime.wYear,
+             &systime.wMonth,
+             &systime.wDay,
+             &systime.wHour,
+             &systime.wMinute,
+             &systime.wSecond
+           );
+    return systime;
+}
