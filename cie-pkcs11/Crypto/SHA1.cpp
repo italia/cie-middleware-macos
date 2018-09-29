@@ -58,8 +58,8 @@ CSHA1::~CSHA1() {
 }
 
 void CSHA1::Init() {
-	if (isInit)
-		throw logged_error("Un'operazione di hash è già in corso");
+//    if (isInit)
+//        throw logged_error("Un'operazione di hash è già in corso");
 	SHA1_Init(&ctx);
 	isInit = true;
 }
