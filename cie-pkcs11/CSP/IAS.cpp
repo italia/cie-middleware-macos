@@ -1212,6 +1212,9 @@ void IAS::GetCertificate(ByteDynArray &certificate,bool askEnable) {
         
         
 		if (askEnable && IsUserInteractive() && !IsLowIntegrity()) {
+            
+            showUI();
+            return;
 //            PROCESS_INFORMATION pi;
 //            STARTUPINFO si;
 //            ZeroMem(si);

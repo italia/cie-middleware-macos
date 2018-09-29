@@ -13,8 +13,9 @@ typedef CK_CALLBACK_FUNCTION(CK_RV, PROGRESS_CALLBACK)(
                                                const char* szMessage);
 
 typedef CK_RV (*AbilitaCIEfn)(const char*  szPAN,
-                               const char*  szPIN,
-                               PROGRESS_CALLBACK progressCallBack);
+                              const char*  szPIN,
+                              int* attempts,
+                              PROGRESS_CALLBACK progressCallBack);
 
 
 //typedef CK_RV abilitaCIE(const char*  szPAN, const char*  szPIN, PROGRESS_CALLBACK progressCallBack)

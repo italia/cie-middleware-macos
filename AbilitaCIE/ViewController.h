@@ -11,5 +11,6 @@
 @interface ViewController : NSViewController
 
 @property IBOutlet NSTextField* textFieldPIN;
+@property IBOutlet NSTextField* labelProgress;
 @end
 

@@ -21,10 +21,16 @@ CK_FUNCTION_LIST_PTR g_pFuncList;
 
 @implementation ViewController
 
+NSTextField* labelProgressPointer;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     // Do any additional setup after loading the view.
+    
+    _labelProgress.stringValue = @"";
+    
+    labelProgressPointer = _labelProgress;
 }
 
 
@@ -34,10 +40,16 @@ CK_FUNCTION_LIST_PTR g_pFuncList;
     // Update the view, if already loaded.
 }
 
+
 CK_RV progressCallback(const int progress,
                       const char* szMessage)
 {
     NSLog(@"%d %s", progress, szMessage);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        labelProgressPointer.stringValue = [NSString stringWithUTF8String:szMessage];
+    });
+    
     return 0;
 }
 
@@ -45,47 +57,105 @@ CK_RV progressCallback(const int progress,
 {
     //NSString* dir = [[NSBundle mainBundle] bundleURL].absoluteString;
     
+    [((NSControl*)sender) setEnabled:NO];
+    
     const char* szCryptoki = "libcie-pkcs11.dylib";
     
-    void* hModule = dlopen(szCryptoki, RTLD_LAZY);
-    if(!hModule)
-    {
-        exit(1);
-    }
-    
-    C_GETFUNCTIONLIST pfnGetFunctionList=(C_GETFUNCTIONLIST)dlsym(hModule, "C_GetFunctionList");
-    if(!pfnGetFunctionList)
-    {
-        dlclose(hModule);
-        exit(1);
-    }
-    
-//    CK_RV rv = pfnGetFunctionList(&g_pFuncList);
-//    if(rv != CKR_OK)
-//    {
-//        dlclose(hModule);
-//        exit(1);
-//    }
-//    
-//    CK_C_INITIALIZE_ARGS* pInitArgs = NULL_PTR;
-//    rv = g_pFuncList->C_Initialize(pInitArgs);
-//    if(rv != CKR_OK)
-//    {        
-//        return;
-//    }
-    
-    AbilitaCIEfn pfnAbilitaCIE = (AbilitaCIEfn)dlsym(hModule, "AbilitaCIE");
-    if(!pfnAbilitaCIE)
-    {
-        dlclose(hModule);
-        exit(1);
-    }
-    
-    NSString* pin = _textFieldPIN.stringValue;
-    
-    pfnAbilitaCIE("hjhjh", [pin cStringUsingEncoding:NSUTF8StringEncoding], &progressCallback);
-    
-    exit(0);
+    dispatch_async(dispatch_get_global_queue(0,0), ^{
+        
+        void* hModule = dlopen(szCryptoki, RTLD_LAZY);
+        if(!hModule)
+        {
+            exit(1);
+        }
+        
+        C_GETFUNCTIONLIST pfnGetFunctionList=(C_GETFUNCTIONLIST)dlsym(hModule, "C_GetFunctionList");
+        if(!pfnGetFunctionList)
+        {
+            dlclose(hModule);
+            exit(1);
+        }
+        
+        AbilitaCIEfn pfnAbilitaCIE = (AbilitaCIEfn)dlsym(hModule, "AbilitaCIE");
+        if(!pfnAbilitaCIE)
+        {
+            dlclose(hModule);
+            exit(1);
+        }
+        
+        NSString* pin = self.textFieldPIN.stringValue;
+        int attempts = -1;
+        
+        long ret = pfnAbilitaCIE("hjhjh", [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback);
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [((NSControl*)sender) setEnabled:YES];
+            
+            switch(ret)
+            {
+                case CKR_TOKEN_NOT_RECOGNIZED:
+                    [self showMessage:@"Impossibile trovare la CIE con Numero Identificativo" withTitle:@"Abilitazione CIE" exitAfter:false];
+                    break;
+                    
+                case CKR_TOKEN_NOT_PRESENT:
+                    [self showMessage:@"Impossibile trovare la CIE con Numero Identificativo" withTitle:@"Abilitazione CIE" exitAfter:false];
+                    break;
+                    
+                case CKR_PIN_INCORRECT:
+                    [self showMessage:[NSString stringWithFormat:@"Il PIN digitato è errato. rimangono %d tentativi", attempts] withTitle:@"PIN non corretto" exitAfter:false];
+                    
+                    break;
+                    
+                case CKR_PIN_LOCKED:
+                    [self showMessage:@"Il PIN è bloccato" withTitle:@"PIN bloccato" exitAfter:false];
+                    break;
+                
+                case CKR_GENERAL_ERROR:
+                    [self showMessage:@"Errore inaspettato durante la comunicazione con la smart card" withTitle:@"Errore inaspettato" exitAfter:false];
+                    break;
+                    
+                case CKR_OK:
+                    [self showMessage:@"L'abilitazione della CIE è avvennuta con successo" withTitle:@"CIE Abilitata" exitAfter:true];
+                    break;
+            }
+        });
+    });
 }
 
+- (void) showMessage: (NSString*) message withTitle: (NSString*) title exitAfter: (bool) exitAfter
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"Ok"];
+    [alert setMessageText:title];
+    [alert setInformativeText:message];
+    [alert setAlertStyle:NSWarningAlertStyle];
+    
+//    alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+//        if (returnCode == NSAlertSecondButtonReturn) {
+//            NSLog(@"Delete was cancelled!");
+//            return;
+//        }
+//
+//        NSLog(@"This project was deleted!");
+//    }];
+    
+    [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:&exitAfter];
+}
+
+- (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+    /*
+     The following options are deprecated in 10.9. Use NSAlertFirstButtonReturn instead
+     NSAlertDefaultReturn = 1,
+     NSAlertAlternateReturn = 0,
+     NSAlertOtherReturn = -1,
+     NSAlertErrorReturn = -2
+     NSOKButton = 1, // NSModalResponseOK should be used
+     NSCancelButton = 0 // NSModalResponseCancel should be used
+     */
+    
+    if(contextInfo)
+        exit(0);
+}
 @end

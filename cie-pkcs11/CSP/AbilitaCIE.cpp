@@ -32,24 +32,19 @@ DWORD CardAuthenticateEx(IAS*       ias,
                         DWORD       cbPinData,
                         BYTE*       *ppbSessionPin,
                         DWORD*      pcbSessionPin,
-                        DWORD*      pcAttemptsRemaining);
+                        int*        pcAttemptsRemaining);
 
 extern "C" {
-    CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, PROGRESS_CALLBACK progressCallBack);
+    CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack);
 }
 
-CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CALLBACK progressCallBack)
+CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack)
 {
-//    init_p11_func
-	
-//    std::string container ("CIE-");
-//    container += szPAN;
-
 	try
     {
 		CSHA256 sha256;
 		std::map<uint8_t, ByteDynArray> hashSet;
-		uint8_t* data;
+		
 		DWORD len = MAX_PATH;
 		ByteDynArray CertCIE;
 		ByteDynArray SOD;
@@ -57,13 +52,20 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
 		
 		SCARDCONTEXT hSC;
 
+        progressCallBack(1, "Connessione alla CIE");
+        
 		long nRet = SCardEstablishContext(SCARD_SCOPE_USER, nullptr, nullptr, &hSC);
+        if(nRet != SCARD_S_SUCCESS)
+            return CKR_DEVICE_ERROR;
+        
 		char readers[MAX_PATH];
         
 		if (SCardListReaders(hSC, nullptr, (char*)&readers, &len) != SCARD_S_SUCCESS) {
             return CKR_TOKEN_NOT_PRESENT;
 		}
 
+        progressCallBack(5, "Connessione all CIE eseguita");
+        
 		char *curreader = readers;
 		bool foundCIE = false;
 		for (; curreader[0] != 0; curreader += strnlen(curreader, len) + 1)
@@ -72,10 +74,6 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             if (conn.hCard == NULL)
                 continue;
 
-//            safeTransaction checkTran(conn, SCARD_LEAVE_CARD);
-//            if (!checkTran.isLocked())
-//                continue;
-            
             uint32_t atrLen = 40;
             char ATR[40];
             SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen);
@@ -87,15 +85,11 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             
             foundCIE = true;
             
-//            safeTransaction Tran(conn, SCARD_LEAVE_CARD);
-//            if (!Tran.isLocked())
-//                continue;
-//
-//            CCardLocker lockCard(cie->slot.hCard);
-            
             ias.token.Reset();
             ias.SelectAID_IAS();
             ias.ReadPAN();
+        
+            progressCallBack(10, "Lettura dati dalla CIE");
             
             ByteDynArray resp;
             ias.SelectAID_CIE();
@@ -134,31 +128,12 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             
             hashSet[0x1b] = sha256.Digest(dhData);
 
-//            if (IdServizi != ByteArray((uint8_t*)szPAN, strnlen(szPAN, 20)))
-//                continue;
+            if (IdServizi != ByteArray((uint8_t*)szPAN, strnlen(szPAN, 20)))
+                continue;
 
-//                            //DWORD id;
-//                            HWND progWin = nullptr;
-//                            struct threadData th;
-//                            th.progWin = &progWin;
-//                            th.hDesk = (HDESK)(*desk);
-//                            std::thread([&th]() -> DWORD {
-//                                SetThreadDesktop(th.hDesk);
-//                                CVerifica ver(th.progWin);
-//                                ver.DoModal();
-//                                return 0;
-//                            }).detach();
-//
-//                            ias->Callback = [](int prog, char *desc, void *data) {
-//                                HWND progWin = *(HWND*)data;
-//                                if (progWin != nullptr)
-//                                    SendMessage(progWin, WM_COMMAND, 100 + prog, (LPARAM)desc);
-//                            };
-//                            ias->CallbackData = &progWin;
-
-            DWORD attempts = -1;
-
-            DWORD rs = CardAuthenticateEx(&ias, ROLE_USER, FULL_PIN, (BYTE*)szPIN, (DWORD)strnlen(szPIN, sizeof(szPIN)), nullptr, 0, &attempts);
+            progressCallBack(20, "Authenticazione...");
+            
+            DWORD rs = CardAuthenticateEx(&ias, ROLE_USER, FULL_PIN, (BYTE*)szPIN, (DWORD)strnlen(szPIN, sizeof(szPIN)), nullptr, 0, attempts);
             if (rs == SCARD_W_WRONG_CHV)
             {
                 return CKR_PIN_INCORRECT;
@@ -184,8 +159,8 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
                 return CKR_GENERAL_ERROR;//logged_error("Autenticazione fallita");
             }
             
-//            ias.SelectAID_IAS();
-//            ias.SelectAID_CIE();
+            
+            progressCallBack(45, "Lettura seriale");
             
             ByteDynArray Serial;
             ias.ReadSerialeCIE(Serial);
@@ -193,70 +168,36 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             
             hashSet[0xa2] = sha256.Digest(serialData);
             
+            progressCallBack(55, "Lettura certificato");
+            
             ByteDynArray CertCIE;
             ias.ReadCertCIE(CertCIE);
             ByteArray certCIEData = CertCIE.left(GetASN1DataLenght(CertCIE));
             
             hashSet[0xa3] = sha256.Digest(certCIEData);
             
-//            if (progWin != nullptr)
-//                SendMessage(progWin, WM_COMMAND, 100 + 5, (LPARAM)"Verifica SOD");
-            
             ias.VerificaSOD(SOD, hashSet);
 
-//            if (progWin != nullptr)
-//                SendMessage(progWin, WM_COMMAND, 100 + 6, (LPARAM)"Cifratura dati");
             ByteArray pinBa((uint8_t*)szPIN, 4);
-//            ias.SetCache(szPAN, CertCIE, pinBa);
+            
+            progressCallBack(5, "Nenorizzazione in cache");
+            
             ias.SetCache((char*)IdServizi.data(), CertCIE, pinBa);
-//            if (progWin != nullptr)
-//                SendMessage(progWin, WM_COMMAND, 100 + 7, (LPARAM)"");
-
-//                Tran.unlock();
-//
-//                CMessage msg(MB_OK,
-//                    "Abilitazione CIE",
-//                    "La CIE è abilitata all'uso");
-//                msg.DoModal();
-//                        }
-//                        catch (std::exception &ex) {
-//                            std::string dump;
-//                            OutputDebugString(ex.what());
-//                            CMessage msg(MB_OK,
-//                                "Abilitazione CIE",
-//                                "Si è verificato un errore nella verifica di",
-//                                "autenticità del documento");
-//
-//                            msg.DoModal();
-//                            break;
-//                        }
-//                    }
-//                    break;
-//                }
-//            }
 		}
         
 		if (!foundCIE) {
-//            if (!desk)
-//                desk.reset(new safeDesktop("AbilitaCIE"));
-//            std::string num(PAN);
-//            num+=" nei lettori di smart card";
-//            CMessage msg(MB_OK,
-//                "Abilitazione CIE",
-//                "Impossibile trovare la CIE con Numero Identificativo",
-//                num.c_str());
-//            msg.DoModal();
+            return CKR_TOKEN_NOT_RECOGNIZED;
+            
 		}
-//        SCardFreeMemory(hSC, readers);
+
 	}
 	catch (std::exception &ex) {
 		OutputDebugString(ex.what());
-//        MessageBox(nullptr, "Si è verificato un errore nella verifica di autenticità del documento", "CIE", MB_OK);
+        
+        return CKR_GENERAL_ERROR;
 	}
 
     return SCARD_S_SUCCESS;
-//    exit_p11_func
-//    return SCARD_E_UNEXPECTED;
 }
 
 
@@ -268,7 +209,7 @@ DWORD CardAuthenticateEx(IAS*       ias,
                          DWORD       cbPinData,
                          BYTE*       *ppbSessionPin,
                          DWORD*      pcbSessionPin,
-                         DWORD*      pcAttemptsRemaining) {
+                         int*      pcAttemptsRemaining) {
     
     ias->SelectAID_IAS();
     ias->SelectAID_CIE();

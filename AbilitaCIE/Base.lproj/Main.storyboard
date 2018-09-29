@@ -759,9 +759,19 @@
                                     <action selector="onAbilita:" target="XfG-lQ-9wD" id="Ipe-nb-WVs"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gqD-NG-F06">
+                                <rect key="frame" x="6" y="26" width="468" height="17"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="gfdgsdfgfsdgsd fsd gsfd gdf gdfg sdfg sdfg dfg df dfg fd gsdf gdfs z sdf gsdf gsdf gsdf gsdf gdf " id="32D-B1-zwE">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="labelProgress" destination="gqD-NG-F06" id="3P2-IU-X8T"/>
                         <outlet property="textFieldPIN" destination="wH1-gx-sWm" id="E7j-7f-4Zd"/>
                     </connections>
                 </viewController>
