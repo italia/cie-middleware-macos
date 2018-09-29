@@ -109,8 +109,8 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             ias.ReadIdServizi(IdServizi);
         
             ByteArray serviziData(IdServizi.left(12));
-            ByteDynArray ba1;
-            hashSet[0xa1] = sha256.Digest(serviziData, ba1);
+            
+            hashSet[0xa1] = sha256.Digest(serviziData);
 
             ByteDynArray SOD;
             ias.ReadSOD(SOD);
@@ -118,21 +118,21 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             ByteDynArray IntAuth;
             ias.ReadDappPubKey(IntAuth);
             ByteArray intAuthData(IntAuth.left(GetASN1DataLenght(IntAuth)));
-            ByteDynArray ba2;
-            hashSet[0xa4] = sha256.Digest(intAuthData, ba2);
+            
+            hashSet[0xa4] = sha256.Digest(intAuthData);
             
 			ByteDynArray IntAuthServizi;
             ias.ReadServiziPubKey(IntAuthServizi);
             ByteArray intAuthServiziData(IntAuthServizi.left(GetASN1DataLenght(IntAuthServizi)));
-            ByteDynArray ba3;
-			hashSet[0xa5] = sha256.Digest(intAuthServiziData, ba3);
+            
+			hashSet[0xa5] = sha256.Digest(intAuthServiziData);
 
             ias.SelectAID_IAS();
             ByteDynArray DH;
             ias.ReadDH(DH);
             ByteArray dhData(DH.left(GetASN1DataLenght(DH)));
-            ByteDynArray ba4;
-            hashSet[0x1b] = sha256.Digest(dhData, ba4);
+            
+            hashSet[0x1b] = sha256.Digest(dhData);
 
 //            if (IdServizi != ByteArray((uint8_t*)szPAN, strnlen(szPAN, 20)))
 //                continue;
@@ -190,14 +190,14 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN1e, const char*  szPIN, PROGRESS_CAL
             ByteDynArray Serial;
             ias.ReadSerialeCIE(Serial);
             ByteArray serialData = Serial.left(9);
-            ByteDynArray ba6;
-            hashSet[0xa2] = sha256.Digest(serialData, ba6);
+            
+            hashSet[0xa2] = sha256.Digest(serialData);
             
             ByteDynArray CertCIE;
             ias.ReadCertCIE(CertCIE);
             ByteArray certCIEData = CertCIE.left(GetASN1DataLenght(CertCIE));
-            ByteDynArray ba7;
-            hashSet[0xa3] = sha256.Digest(certCIEData, ba7);
+            
+            hashSet[0xa3] = sha256.Digest(certCIEData);
             
 //            if (progWin != nullptr)
 //                SendMessage(progWin, WM_COMMAND, 100 + 5, (LPARAM)"Verifica SOD");

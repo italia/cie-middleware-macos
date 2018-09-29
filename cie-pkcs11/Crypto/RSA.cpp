@@ -119,31 +119,15 @@ CRSA::~CRSA(void)
 		RSA_free(keyPriv);
 }
 
-ByteDynArray CRSA::RSA_PURE(ByteArray &data, ByteDynArray& output)
+ByteDynArray CRSA::RSA_PURE(ByteArray &data)
 {
-//    CryptoPP::Integer modulus(modulusBa.data(), modulusBa.size());
-//    CryptoPP::Integer exponent(exponentBa.data(), exponentBa.size());
-//
-//    publicKey.SetModulus(modulus);
-//    publicKey.SetPublicExponent(exponent);
-//
-//    CryptoPP::Integer data1(data.data(), data.size());
-//
-//    CryptoPP::Integer enc = publicKey.ApplyFunction(data1);
-//
-//    ByteDynArray resp(enc.ByteCount());
-//    enc.Encode(resp.data(), resp.size());
-//
-//    printf("\nRSA resp: %s", dumpHexData(resp).c_str());
-    
     ByteDynArray resp(RSA_size(keyPriv));
     int SignSize = RSA_public_encrypt((int)data.size(), data.data(), resp.data(), keyPriv, RSA_NO_PADDING);
 
     ER_ASSERT(SignSize == KeySize, "Errore nella lunghezza dei dati per operazione RSA")
 
-    printf("\nRSA resp1: %s\n", dumpHexData(resp).c_str());
-
-    output.append(resp);
-    return output;
+//    printf("\nRSA resp1: %s\n", dumpHexData(resp).c_str());  // DEBUG
+    
+    return resp;
 }
 #endif

@@ -125,7 +125,7 @@ CDES3::CDES3()
 {
 }
 
-ByteDynArray CDES3::Des3(const ByteArray &data, int encOp, ByteDynArray& output)
+ByteDynArray CDES3::Des3(const ByteArray &data, int encOp)
 {
 	init_func
 
@@ -135,8 +135,7 @@ ByteDynArray CDES3::Des3(const ByteArray &data, int encOp, ByteDynArray& output)
 	ByteDynArray resp(AppSize - (AppSize % 8) + 8);
 	DES_ede3_cbc_encrypt(data.data(), resp.data(), (long)data.size(), &k1, &k2, &k3, &iv, encOp);
 
-    output.append(resp);
-    return output;
+    return resp;
 }
 #endif
 
@@ -144,43 +143,35 @@ CDES3::CDES3(const ByteArray &key, const ByteArray &iv) {
 	Init(key,iv);
 }
 
-ByteDynArray CDES3::Encode(const ByteArray &data, ByteDynArray& output)
+ByteDynArray CDES3::Encode(const ByteArray &data)
 {
 	init_func
-    ByteDynArray pad;
-    ISOPad(data, pad);
-    Des3(pad, DES_ENCRYPT, output);
-    return output;
-//    return Des3(ISOPad(data), DES_ENCRYPT);
+    return Des3(ISOPad(data), DES_ENCRYPT);
 }
 
-ByteDynArray CDES3::RawEncode(const ByteArray &data, ByteDynArray& output)
+ByteDynArray CDES3::RawEncode(const ByteArray &data)
 {
 	init_func
 	ByteDynArray result;
 	ER_ASSERT((data.size() % 8) == 0, "La dimensione dei dati da cifrare deve essere multipla di 8");
     
-    Des3(data, DES_ENCRYPT, output);
-    return output;
-//    return Des3(data, DES_ENCRYPT);
+    return Des3(data, DES_ENCRYPT);
 }
 
-ByteDynArray CDES3::Decode(const ByteArray &data, ByteDynArray& output)
+ByteDynArray CDES3::Decode(const ByteArray &data)
 {
 	init_func
-	Des3(data, DES_DECRYPT, output);
-	output.resize(RemoveISOPad(output), true);
+    auto result=Des3(data, DES_DECRYPT);
+    result.resize(RemoveISOPad(result), true);
+    return result;
     
-	return output;
 }
 
-ByteDynArray CDES3::RawDecode(const ByteArray &data, ByteDynArray& output)
+ByteDynArray CDES3::RawDecode(const ByteArray &data)
 {
 	init_func
 	ByteDynArray result;
 	ER_ASSERT((data.size() % 8) == 0, "La dimensione dei dati da cifrare deve essere multipla di 8");
     
-    Des3(data, DES_DECRYPT, output);
-    return output;
-//    return Des3(data, DES_DECRYPT);
+    return Des3(data, DES_DECRYPT);
 }

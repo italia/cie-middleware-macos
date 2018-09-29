@@ -228,15 +228,15 @@ void ANSIPad(ByteArray &Data, unsigned long DataLen);
 unsigned long ISOPadLen(unsigned long Len);
 void ISOPad(const ByteArray& Data, unsigned long DataLen);
 long ByteArrayToInt(ByteArray &ba);
-ByteDynArray ISOPad(const ByteArray& data, ByteDynArray& output);
-ByteDynArray ISOPad16(const ByteArray &data, ByteDynArray& output);
+ByteDynArray ISOPad(const ByteArray& data);
+ByteDynArray ISOPad16(const ByteArray &data);
 
  std::string WinErr(HRESULT ris);
  char * CardErr(DWORD dwSW);
  char * SystemErr(DWORD dwExcept);
  
  void Debug(ByteArray ba);
- ByteDynArray ASN1Tag(DWORD tag,ByteArray& content, ByteDynArray& output);
+ ByteDynArray ASN1Tag(DWORD tag,ByteArray& content);
 
  std::string stdPrintf(const char *format, ...);
 

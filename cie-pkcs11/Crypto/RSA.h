@@ -22,7 +22,7 @@ public:
 	CRSA(ByteArray &mod, ByteArray &exp);
 	~CRSA(void);
 
-	ByteDynArray RSA_PURE(ByteArray &data, ByteDynArray& output);
+	ByteDynArray RSA_PURE(ByteArray &data);
 	
 	size_t KeySize;
 };

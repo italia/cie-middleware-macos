@@ -15,13 +15,13 @@ class CSHA256
 {
     
 public:
-	ByteDynArray Digest(ByteArray &data, ByteDynArray& output);
+	ByteDynArray Digest(ByteArray &data);
     
 #ifndef WIN32
     
     void Init();
     void Update(ByteArray data);
-    ByteDynArray Final(ByteDynArray& output);
+    ByteDynArray Final();
 
     bool isInit;
     SHA256_CTX ctx;

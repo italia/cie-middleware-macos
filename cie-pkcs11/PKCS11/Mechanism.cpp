@@ -87,7 +87,7 @@ namespace p11 {
 
 	void CDigestSHA::DigestFinal(ByteDynArray &Digest) {
 		init_func
-			sha1.Final(Digest);
+        Digest = sha1.Final();
 	}
 
 	CK_ULONG CDigestSHA::DigestLength() {
@@ -180,7 +180,7 @@ namespace p11 {
 			return (CK_ULONG)baKeyModule->size();
 	}
 
-	ByteDynArray CVerifyRSA::VerifyDecryptSignature(ByteArray &Signature, ByteDynArray& output)
+	ByteDynArray CVerifyRSA::VerifyDecryptSignature(ByteArray &Signature )
 	{
 		init_func
 			ByteArray *baKeyExponent = nullptr, *baKeyModule = nullptr;
@@ -201,7 +201,7 @@ namespace p11 {
 
 		CRSA rsa(*baKeyModule, *baKeyExponent);
         
-		return rsa.RSA_PURE(Signature, output);
+		return rsa.RSA_PURE(Signature);
 	}
 
 	ByteDynArray CVerifyRSA::VerifyGetOperationState()
@@ -237,7 +237,7 @@ namespace p11 {
 			return (CK_ULONG )baKeyModule->size();
 	}
 
-	ByteDynArray CVerifyRecoverRSA::VerifyRecoverDecryptSignature(ByteArray &Signature, ByteDynArray& output)
+	ByteDynArray CVerifyRecoverRSA::VerifyRecoverDecryptSignature(ByteArray &Signature )
 	{
 		init_func
 			ByteArray *baKeyExponent = nullptr, *baKeyModule = nullptr;
@@ -257,7 +257,7 @@ namespace p11 {
 			throw p11_error(CKR_SIGNATURE_LEN_RANGE);
 
 		CRSA rsa(*baKeyModule, *baKeyExponent);
-		return rsa.RSA_PURE(Signature, output);
+		return rsa.RSA_PURE(Signature);
 	}
 
 	ByteDynArray  CVerifyRecoverRSA::VerifyRecoverGetOperationState()
@@ -378,8 +378,7 @@ namespace p11 {
 		if (baVerifyBuffer.size() > ulVerifyLength)
 			throw p11_error(CKR_DATA_LEN_RANGE);
 
-        ByteDynArray ba;
-		baPlainSignature = VerifyDecryptSignature(Signature, ba);
+		baPlainSignature = VerifyDecryptSignature(Signature);
 
 		ByteDynArray baExpectedResult(ulVerifyLength);
 		baExpectedResult.rightcopy(baVerifyBuffer);
@@ -396,7 +395,7 @@ namespace p11 {
 			hVerifyRecoverKey = PublicKey;
 	}
 
-	ByteDynArray CRSA_X509::VerifyRecover(ByteArray &Signature, ByteDynArray& output)
+	ByteDynArray CRSA_X509::VerifyRecover(ByteArray &Signature )
 	{
 		init_func
 			CK_ULONG ulVerifyRecoverLength = VerifyRecoverLength();
@@ -404,7 +403,7 @@ namespace p11 {
 		if (Signature.size() != ulVerifyRecoverLength)
 			throw p11_error(CKR_SIGNATURE_LEN_RANGE);
 
-		return VerifyRecoverDecryptSignature(Signature, output);
+		return VerifyRecoverDecryptSignature(Signature);
 	}
 
 	void CRSA_X509::SignInit(CK_OBJECT_HANDLE PrivateKey)
@@ -426,7 +425,7 @@ namespace p11 {
 		baSignBuffer.mid(dwSize, Part.size()).copy(Part);
 	}
 
-	ByteDynArray CRSA_X509::SignFinal(ByteDynArray& output)
+	ByteDynArray CRSA_X509::SignFinal( )
 	{
 		init_func
 			CK_ULONG ulSignatureLength = SignLength();
@@ -434,8 +433,7 @@ namespace p11 {
 		if (baSignBuffer.size() > ulSignatureLength)
 			throw p11_error(CKR_DATA_LEN_RANGE);
 
-        output.append(baSignBuffer);
-		return output;
+        return baSignBuffer;
 	}
 
 	void CRSA_X509::SignRecoverInit(CK_OBJECT_HANDLE PrivateKey) {
@@ -460,7 +458,7 @@ namespace p11 {
 			hEncryptKey = PublicKey;
 	}
 
-	ByteDynArray CRSA_X509::EncryptUpdate(ByteArray &Part, ByteDynArray& output) {
+	ByteDynArray CRSA_X509::EncryptUpdate(ByteArray &Part ) {
 		init_func
 		auto dwSize = baEncryptBuffer.size();
 		baEncryptBuffer.resize(dwSize + Part.size(), true);
@@ -468,7 +466,7 @@ namespace p11 {
 		return ByteDynArray();
 	}
 
-	ByteDynArray CRSA_X509::EncryptFinal(ByteDynArray& output)
+	ByteDynArray CRSA_X509::EncryptFinal( )
 	{
 		init_func
 			CK_ULONG ulEncryptLength = EncryptLength();
@@ -480,7 +478,7 @@ namespace p11 {
 		baPlainData.rightcopy(baEncryptBuffer);
 		PutPaddingBT0(baPlainData, baEncryptBuffer.size());
 
-		return EncryptCompute(baPlainData, output);
+		return EncryptCompute(baPlainData);
 	}
 
 	void CRSA_X509::DecryptInit(CK_OBJECT_HANDLE PrivateKey)
@@ -489,7 +487,7 @@ namespace p11 {
 			hDecryptKey = PrivateKey;
 	}
 
-	ByteDynArray CRSA_X509::DecryptUpdate(ByteArray &Part, ByteDynArray& output) {
+	ByteDynArray CRSA_X509::DecryptUpdate(ByteArray &Part ) {
 		init_func
 		auto dwSize = baDecryptBuffer.size();
 		baDecryptBuffer.resize(dwSize + Part.size(), true);
@@ -497,7 +495,7 @@ namespace p11 {
 		return ByteDynArray();
 	}
 
-	ByteDynArray CRSA_X509::DecryptFinal(ByteDynArray& output)
+	ByteDynArray CRSA_X509::DecryptFinal( )
 	{
 		init_func
 			CK_ULONG ulDecryptLength = DecryptLength();
@@ -507,8 +505,7 @@ namespace p11 {
 		if (baDecryptBuffer.size() != ulDecryptLength)
 			throw p11_error(CKR_ENCRYPTED_DATA_LEN_RANGE);
 
-        output.append(baDecryptBuffer);
-		return output;
+        return baDecryptBuffer;
 	}
 
 	ByteDynArray CRSA_X509::DecryptRemovePadding(ByteArray &paddedData)
@@ -553,8 +550,7 @@ namespace p11 {
 		if (baVerifyBuffer.size() > ulVerifyLength - 11)
 			throw p11_error(CKR_DATA_LEN_RANGE);
 
-        ByteDynArray ba;
-		baPlainSignature = VerifyDecryptSignature(Signature, ba);
+		baPlainSignature = VerifyDecryptSignature(Signature);
 
 		ByteDynArray baExpectedResult(ulVerifyLength);
 		baExpectedResult.rightcopy(baVerifyBuffer);
@@ -571,7 +567,7 @@ namespace p11 {
 			hVerifyRecoverKey = PublicKey;
 	}
 
-	ByteDynArray CRSA_PKCS1::VerifyRecover(ByteArray &Signature, ByteDynArray& output)
+	ByteDynArray CRSA_PKCS1::VerifyRecover(ByteArray &Signature )
 	{
 		init_func
 			CK_ULONG ulVerifyRecoverLength = VerifyRecoverLength();
@@ -579,8 +575,7 @@ namespace p11 {
 		if (Signature.size() != ulVerifyRecoverLength)
 			throw p11_error(CKR_SIGNATURE_LEN_RANGE);
 
-        ByteDynArray ba;
-		ByteDynArray baPlainSignature = VerifyRecoverDecryptSignature(Signature, ba);
+		ByteDynArray baPlainSignature = VerifyRecoverDecryptSignature(Signature);
 
 		// se non posso levare il padding, la firma ha
 		// qualcosa di sbagliato
@@ -598,8 +593,7 @@ namespace p11 {
 		if (Data.size() > ulVerifyRecoverLength - 11)
 			throw p11_error(CKR_DATA_LEN_RANGE);
         
-        output.append(Data);
-		return output;
+        return Data;
 	}
 
 	void CRSA_PKCS1::SignInit(CK_OBJECT_HANDLE PrivateKey)
@@ -621,7 +615,7 @@ namespace p11 {
 		baSignBuffer.mid(dwSize, Part.size()).copy(Part);
 	}
 
-	ByteDynArray CRSA_PKCS1::SignFinal(ByteDynArray& output)
+	ByteDynArray CRSA_PKCS1::SignFinal( )
 	{
 		init_func
 			CK_ULONG ulSignatureLength = SignLength();
@@ -630,8 +624,7 @@ namespace p11 {
 		if (baSignBuffer.size() > ulSignatureLength - 11)
 			throw p11_error(CKR_DATA_LEN_RANGE);
 
-        output.append(baSignBuffer);
-		return output;
+        return baSignBuffer;
 	}
 
 	void CRSA_PKCS1::SignRecoverInit(CK_OBJECT_HANDLE PrivateKey)
@@ -657,7 +650,7 @@ namespace p11 {
 			hEncryptKey = PublicKey;
 	}
 
-	ByteDynArray CRSA_PKCS1::EncryptUpdate(ByteArray &Part, ByteDynArray& output) {
+	ByteDynArray CRSA_PKCS1::EncryptUpdate(ByteArray &Part ) {
 		init_func
 		auto dwSize = baEncryptBuffer.size();
 		baEncryptBuffer.resize(dwSize + Part.size(), true);
@@ -665,7 +658,7 @@ namespace p11 {
 		return ByteDynArray();
 	}
 
-	ByteDynArray CRSA_PKCS1::EncryptFinal(ByteDynArray& output)
+	ByteDynArray CRSA_PKCS1::EncryptFinal( )
 	{
 		init_func
 			CK_ULONG ulEncryptLength = EncryptLength();
@@ -678,7 +671,7 @@ namespace p11 {
 		baPlainData.rightcopy(baEncryptBuffer);
 		PutPaddingBT2(baPlainData, baEncryptBuffer.size());
 
-		return EncryptCompute(baPlainData, output);
+		return EncryptCompute(baPlainData);
 
 	}
 
@@ -688,7 +681,7 @@ namespace p11 {
 			hDecryptKey = PrivateKey;
 	}
 
-	ByteDynArray CRSA_PKCS1::DecryptUpdate(ByteArray &Part, ByteDynArray& output) {
+	ByteDynArray CRSA_PKCS1::DecryptUpdate(ByteArray &Part ) {
 		init_func
 		auto dwSize = baDecryptBuffer.size();
 		baDecryptBuffer.resize(dwSize + Part.size(), true);
@@ -696,7 +689,7 @@ namespace p11 {
 		return ByteDynArray();
 	}
 
-	ByteDynArray CRSA_PKCS1::DecryptFinal(ByteDynArray& output)
+	ByteDynArray CRSA_PKCS1::DecryptFinal( )
 	{
 		init_func
 			CK_ULONG ulDecryptLength = DecryptLength();
@@ -705,8 +698,7 @@ namespace p11 {
 		if (baDecryptBuffer.size() != ulDecryptLength)
 			throw p11_error(CKR_ENCRYPTED_DATA_LEN_RANGE);
 
-        output.append(baDecryptBuffer);
-		return output;
+        return baDecryptBuffer;
 	}
 
 	ByteDynArray CRSA_PKCS1::DecryptRemovePadding(ByteArray &paddedData)
@@ -762,15 +754,14 @@ namespace p11 {
 			pDigest->DigestUpdate(Part);
 	}
 
-	ByteDynArray CSignRSAwithDigest::SignFinal(ByteDynArray& output) {
+	ByteDynArray CSignRSAwithDigest::SignFinal( ) {
 		init_func
 			CK_ULONG ulDigestLength = pDigest->DigestLength();
 
 		ByteDynArray SignBuffer(ulDigestLength);
 		pDigest->DigestFinal(SignBuffer);
         
-        output.append(SignBuffer);
-		return output;
+        return SignBuffer;
 	}
 
 	ByteDynArray CSignRSAwithDigest::SignGetOperationState()
@@ -818,7 +809,7 @@ namespace p11 {
 			throw p11_error(CKR_SIGNATURE_LEN_RANGE);
 
         
-		baPlainSignature = VerifyDecryptSignature(Signature, baPlainSignature);
+		baPlainSignature = VerifyDecryptSignature(Signature);
 
 		ByteDynArray baExpectedResult(ulVerifyLength);
 		CK_ULONG ulDigestLen = pDigest->DigestLength();
@@ -882,7 +873,7 @@ namespace p11 {
 			return (CK_ULONG)baKeyModule->size();
 	}
 
-	ByteDynArray CEncryptRSA::EncryptCompute(ByteArray &baPlainData, ByteDynArray& output)
+	ByteDynArray CEncryptRSA::EncryptCompute(ByteArray &baPlainData )
 	{
 		init_func
 			ByteArray *baKeyExponent = nullptr, *baKeyModule = nullptr;
@@ -907,7 +898,7 @@ namespace p11 {
 			throw p11_error(CKR_DATA_LEN_RANGE);
 
 		CRSA rsa(*baKeyModule, *baKeyExponent);
-		return rsa.RSA_PURE(baPlainData, output);
+		return rsa.RSA_PURE(baPlainData);
 	}
 
 	ByteDynArray CEncryptRSA::EncryptGetOperationState()

@@ -16,7 +16,7 @@
 
 class CDES3
 {
-	ByteDynArray Des3(const ByteArray &data, int encOp, ByteDynArray& output);
+	ByteDynArray Des3(const ByteArray &data, int encOp);
 #ifdef WIN32
 	BCRYPT_KEY_HANDLE key;
 	ByteDynArray iv;
@@ -31,8 +31,8 @@ public:
 	~CDES3(void);
 
 	void Init(const ByteArray &key, const ByteArray &iv);
-	ByteDynArray Encode(const ByteArray &data, ByteDynArray& output);
-	ByteDynArray Decode(const ByteArray &data, ByteDynArray& output);
-	ByteDynArray RawEncode(const ByteArray &data, ByteDynArray& output);
-	ByteDynArray RawDecode(const ByteArray &data, ByteDynArray& output);
+	ByteDynArray Encode(const ByteArray &data);
+	ByteDynArray Decode(const ByteArray &data);
+	ByteDynArray RawEncode(const ByteArray &data);
+	ByteDynArray RawDecode(const ByteArray &data);
 };

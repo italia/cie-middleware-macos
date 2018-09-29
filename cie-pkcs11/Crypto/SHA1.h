@@ -22,9 +22,9 @@ public:
 	CSHA1();
 	~CSHA1(void);
 
-	ByteDynArray Digest(ByteArray data, ByteDynArray& output);
+	ByteDynArray Digest(ByteArray data);
 
 	void Init();
 	void Update(ByteArray data);
-	ByteDynArray Final(ByteDynArray& output);
+	ByteDynArray Final();
 };

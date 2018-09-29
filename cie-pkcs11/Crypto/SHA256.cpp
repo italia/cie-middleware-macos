@@ -45,22 +45,20 @@ void CSHA256::Update(ByteArray data) {
     throw logged_error("Hash non inizializzato");
     SHA256_Update(&ctx, data.data(), data.size());
 }
-ByteDynArray CSHA256::Final(ByteDynArray& output) {
+ByteDynArray CSHA256::Final() {
     if (!isInit)
     throw logged_error("Hash non inizializzato");
     ByteDynArray resp(SHA_DIGEST_LENGTH);
     SHA256_Final(resp.data(), &ctx);
     isInit = false;
     
-    output.append(resp);
-    return output;
+    return resp;
 }
-ByteDynArray CSHA256::Digest(ByteArray &data, ByteDynArray& output)
+ByteDynArray CSHA256::Digest(ByteArray &data)
 {
 	ByteDynArray resp(SHA256_DIGEST_LENGTH);
 	ER_ASSERT(SHA256(data.data(), data.size(), resp.data()) != NULL, "Errore nel calcolo dello SHA256")
 
-    output.append(resp);
-    return output;
+    return resp;
 }
 #endif

@@ -103,7 +103,7 @@ CMAC::~CMAC(void)
 {
 }
 
-ByteDynArray CMAC::Mac(const ByteArray &data, ByteDynArray& output)
+ByteDynArray CMAC::Mac(const ByteArray &data)
 {
 	init_func
 
@@ -121,8 +121,7 @@ ByteDynArray CMAC::Mac(const ByteArray &data, ByteDynArray& output)
 	DES_ede3_cbc_encrypt(data.mid(ANSILen - 8).data(), dest, (long)(data.size() - ANSILen) + 8, &k1, &k2, &k3, &iv, DES_ENCRYPT);
 	resp.copy(ByteArray(dest, 8));
 
-    output.append(resp);
-    return output;
+    return resp;
     
 	exit_func    
 }

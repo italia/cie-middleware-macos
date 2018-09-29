@@ -68,21 +68,20 @@ void CSHA1::Update(ByteArray data) {
 		throw logged_error("Hash non inizializzato");
 	SHA1_Update(&ctx, data.data(), data.size());
 }
-ByteDynArray CSHA1::Final(ByteDynArray& output) {
+ByteDynArray CSHA1::Final() {
 	if (!isInit)
 		throw logged_error("Hash non inizializzato");
 	ByteDynArray resp(SHA_DIGEST_LENGTH);
 	SHA1_Final(resp.data(), &ctx);
 	isInit = false;
 
-    output.append(resp);
-	return output;
+	return resp;
 }
 #endif
 
-ByteDynArray CSHA1::Digest(ByteArray data, ByteDynArray& output)
+ByteDynArray CSHA1::Digest(ByteArray data)
 {
 	Init();
 	Update(data);
-	return Final(output);
+	return Final();
 }

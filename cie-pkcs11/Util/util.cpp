@@ -333,28 +333,24 @@ void ISOPad(const ByteArray& Data, unsigned long DataLen)
 	exit_func
 }
 
-ByteDynArray ISOPad16(const ByteArray &data, ByteDynArray& output) {
+ByteDynArray ISOPad16(const ByteArray &data) {
 	init_func
 	ByteDynArray resp(ISOPadLen16(data.size()));
 	resp.copy(data);
 	ISOPad(resp, data.size());
-    output.append(resp);
-	
-    return output;
+    return resp;
 	exit_func
 }
 
-ByteDynArray ISOPad(const ByteArray& data, ByteDynArray& output) {
+ByteDynArray ISOPad(const ByteArray& data) {
 	init_func
 	ByteDynArray resp(ISOPadLen(data.size()));
 	resp.copy(data);
 	ISOPad(resp,data.size());
     
-    printf("resp: %s\n", dumpHexData(resp).c_str());
-    
-    output.append(resp);
-//    return resp;
-    return output;
+    //printf("resp: %s\n", dumpHexData(resp).c_str()); // DEBUG
+
+    return resp;
 	exit_func
 }
 
@@ -461,10 +457,9 @@ char *  CardErr(DWORD dwSW) {
 //    }
 //}
 
-ByteDynArray ASN1Tag(DWORD tag,ByteArray& content, ByteDynArray& output) {
+ByteDynArray ASN1Tag(DWORD tag,ByteArray& content) {
 	ByteDynArray result = content.getASN1Tag(tag);
-    output.append(result);
-    return output;
+    return result;
 }
 
 unsigned long ASN1TLength(unsigned int tag) {
