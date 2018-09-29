@@ -137,18 +137,6 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             if (rs == SCARD_W_WRONG_CHV)
             {
                 return CKR_PIN_INCORRECT;
-//                                if (progWin != nullptr)
-//                                    SendMessage(progWin, WM_COMMAND, 100 + 7, (LPARAM)"");
-//                                std::string num;
-//                                if (attempts > 0)
-//                                    num = "Sono rimasti " + std::to_string(attempts ) + " tentativi prima del blocco";
-//                                else
-//                                    num = "";
-//                                CMessage msg(MB_OK,
-//                                    "Abilitazione CIE",
-//                                    "PIN Errato",
-//                                    num.c_str());
-//                                msg.DoModal();
             }
             else if (rs == SCARD_W_CHV_BLOCKED)
             {
@@ -156,7 +144,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             }
             else if (rs != SCARD_S_SUCCESS)
             {
-                return CKR_GENERAL_ERROR;//logged_error("Autenticazione fallita");
+                return CKR_GENERAL_ERROR;
             }
             
             
