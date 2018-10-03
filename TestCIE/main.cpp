@@ -638,7 +638,7 @@ int main(int argc, char* argv[])
             std::cout << "5 Find objects" << std::endl;
             std::cout << "6 WaitForSlotEvent" << std::endl;
             std::cout << "7 Sign + Verify" << std::endl;
-            std::cout << "8 Encrypt + Decrypt" << std::endl;
+//            std::cout << "8 Encrypt + Decrypt" << std::endl;
             std::cout << "20 Exit" << std::endl;
             std::cout << "Insert the test number:" << std::endl;
             std::cin >> szCmd;
@@ -888,62 +888,62 @@ int main(int argc, char* argv[])
             close();
             std::cout << "-> Test concluso" << std::endl;
         }
-        else if(strcmp(szCmd, "8") == 0)
-        {
-            CK_ULONG ulCount = 0;
-            std::cout << "-> Test 8 Encrypt + Decrypt By CIE Key Pair" << std::endl;
-            init();
-            
-            CK_SLOT_ID_PTR pSlotList = getSlotList(true, &ulCount);
-            if(pSlotList == NULL_PTR)
-            {
-                close();
-                std::cout << "-> Test non completato" << std::endl;
-                continue;
-            }
-            
-            CK_SESSION_HANDLE hSession = openSession(pSlotList[0]);
-            if(hSession == NULL_PTR)
-            {
-                free(pSlotList);
-                close();
-                std::cout << "-> Test non completato" << std::endl;
-                continue;
-            }
-            
-            if(!login(hSession))
-            {
-                free(pSlotList);
-                closeSession(hSession);
-                close();
-                std::cout << "-> Test non completato" << std::endl;
-                continue;
-            }
-            
-            if(!encryptDecrypt(hSession))
-            {
-                free(pSlotList);
-                closeSession(hSession);
-                close();
-                std::cout << "-> Test non completato" << std::endl;
-                continue;
-            }
-            
-            if(!logout(hSession))
-            {
-                free(pSlotList);
-                closeSession(hSession);
-                close();
-                std::cout << "-> Test non completato" << std::endl;
-                continue;
-            }
-            
-            free(pSlotList);
-            closeSession(hSession);
-            
-            close();
-            std::cout << "-> Test concluso" << std::endl;
-        }
+//        else if(strcmp(szCmd, "8") == 0)
+//        {
+//            CK_ULONG ulCount = 0;
+//            std::cout << "-> Test 8 Encrypt + Decrypt By CIE Key Pair" << std::endl;
+//            init();
+//
+//            CK_SLOT_ID_PTR pSlotList = getSlotList(true, &ulCount);
+//            if(pSlotList == NULL_PTR)
+//            {
+//                close();
+//                std::cout << "-> Test non completato" << std::endl;
+//                continue;
+//            }
+//
+//            CK_SESSION_HANDLE hSession = openSession(pSlotList[0]);
+//            if(hSession == NULL_PTR)
+//            {
+//                free(pSlotList);
+//                close();
+//                std::cout << "-> Test non completato" << std::endl;
+//                continue;
+//            }
+//
+//            if(!login(hSession))
+//            {
+//                free(pSlotList);
+//                closeSession(hSession);
+//                close();
+//                std::cout << "-> Test non completato" << std::endl;
+//                continue;
+//            }
+//
+//            if(!encryptDecrypt(hSession))
+//            {
+//                free(pSlotList);
+//                closeSession(hSession);
+//                close();
+//                std::cout << "-> Test non completato" << std::endl;
+//                continue;
+//            }
+//
+//            if(!logout(hSession))
+//            {
+//                free(pSlotList);
+//                closeSession(hSession);
+//                close();
+//                std::cout << "-> Test non completato" << std::endl;
+//                continue;
+//            }
+//
+//            free(pSlotList);
+//            closeSession(hSession);
+//
+//            close();
+//            std::cout << "-> Test concluso" << std::endl;
+//        }
         else if(strcmp(szCmd, "20") == 0)
         {
             bEnd = true;

@@ -10,9 +10,26 @@
 #include "AbilitaCIE.h"
 #include <Foundation/Foundation.h>
 
-void showUI()
+#include <AppKit/AppKit.h>
+
+void showUI(const char* szPAN)
 {
+//    NSWorkspace *ws = [NSWorkspace sharedWorkspace];
+//    NSURL* url = [NSURL fileURLWithPath:@"/usr/bin/AbilitaCIE.app" isDirectory:NO];
+//    [ws launchApplicationAtURL:url
+//                       options:NSWorkspaceLaunchWithoutActivation
+//                 configuration:@{}
+//                         error:nil];
+//
+//
     NSTask *task = [[NSTask alloc] init];
-    [task setLaunchPath:@"AbilitaCIE"];
+    task.launchPath = @"/usr/bin/open";
+    task.arguments = @[@"-a", @"/usr/local/bin/AbilitaCIE.app"];//, [NSString stringWithUTF8String:szPAN]];
+
     [task launch];
+    
+    
+//    NSTask *task = [[NSTask alloc] init];
+//    [task setLaunchPath:@"open -a AbilitaCIE.app"];
+//    [task launch];
 }

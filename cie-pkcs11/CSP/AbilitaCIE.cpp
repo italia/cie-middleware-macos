@@ -83,7 +83,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             IAS ias((CToken::TokenTransmitCallback)TokenTransmitCallback, atrBa);
             ias.SetCardContext(&conn);
             
-            foundCIE = true;
+            foundCIE = false;
             
             ias.token.Reset();
             ias.SelectAID_IAS();
@@ -128,9 +128,11 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             
             hashSet[0x1b] = sha256.Digest(dhData);
 
-            if (IdServizi != ByteArray((uint8_t*)szPAN, strnlen(szPAN, 20)))
+            if (szPAN && IdServizi != ByteArray((uint8_t*)szPAN, strnlen(szPAN, 20)))
                 continue;
 
+            foundCIE = true;
+            
             progressCallBack(20, "Authenticazione...");
             
             DWORD rs = CardAuthenticateEx(&ias, ROLE_USER, FULL_PIN, (BYTE*)szPIN, (DWORD)strnlen(szPIN, sizeof(szPIN)), nullptr, 0, attempts);

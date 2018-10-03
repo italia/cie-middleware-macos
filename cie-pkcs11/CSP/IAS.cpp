@@ -23,6 +23,9 @@
 #define CIE_PUK_ID 0x82
 #define CIE_KEY_Sign_ID 0x81
 
+#include <stdlib.h>
+#include <unistd.h>
+
 extern CModuleInfo moduleInfo;
 extern ByteArray SkipZero(ByteArray &ba);
 //extern DWORD WINAPI _abilitaCIE(LPVOID lpThreadParameter);
@@ -32,7 +35,7 @@ void GetPublicKeyFromCert(CryptoPP::BufferedTransformation & certin,
                           CryptoPP::BufferedTransformation & issuer,
                           CryptoPP::Integer &serial);
 
-void showUI();
+void showUI(const char* szPAN);
 
 IAS::IAS(CToken::TokenTransmitCallback transmit,ByteArray ATR)
 {
@@ -1213,7 +1216,8 @@ void IAS::GetCertificate(ByteDynArray &certificate,bool askEnable) {
         
 		if (askEnable && IsUserInteractive() && !IsLowIntegrity()) {
             
-            showUI();
+            showUI(PANStr.c_str());
+            
             return;
 //            PROCESS_INFORMATION pi;
 //            STARTUPINFO si;

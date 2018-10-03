@@ -83,10 +83,17 @@ CK_RV progressCallback(const int progress,
             exit(1);
         }
         
+        char* szPIN = NULL;
+        
+        NSArray *args = [[NSProcessInfo processInfo] arguments];
+        
+        if(args.count > 1)
+            szPIN = (char*)[((NSString*)[args objectAtIndex:1]) cStringUsingEncoding:NSUTF8StringEncoding];
         
         int attempts = -1;
         
-        long ret = pfnAbilitaCIE("hjhjh", [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback);
+        
+        long ret = pfnAbilitaCIE(szPIN, [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback);
 
         dispatch_async(dispatch_get_main_queue(), ^{
             

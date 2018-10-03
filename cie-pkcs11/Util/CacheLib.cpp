@@ -211,6 +211,9 @@ std::string GetCardDir()
     
     std::string path(home);
     path.append("/.CIEPKI/");
+    
+    printf("Card Dir: %s\n", path.c_str());
+    
     return path.c_str();
 }
 
@@ -293,7 +296,7 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
         
     if (stat(chDir, &st) == -1) {
         int r = mkdir(chDir, 0700);
-        printf("mkdir: %d", r);
+//        printf("mkdir: %d", r);
     }
     
 //    if (!file_exists(chDir)) {
