@@ -1,6 +1,8 @@
 
 #include "TLV.h"
 
+extern CLog Log;
+
 static char *szCompiledFile=__FILE__;
 
 CTLV::CTLV(ByteArray &data)

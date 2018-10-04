@@ -4,6 +4,8 @@
 #include "../Cryptopp/cryptlib.h"
 #include "../Cryptopp/base64.h"
 
+extern CLog Log;
+
 //#include <Wincrypt.h>
 
 static char *szCompiledFile=__FILE__;

@@ -2,6 +2,8 @@
 #include "../Util/util.h"
 #include "CardContext.h"
 
+extern CLog Log;
+
 static char *szCompiledFile=__FILE__;
 
 void CCardContext::getContext() {

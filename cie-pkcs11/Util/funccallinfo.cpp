@@ -11,7 +11,7 @@ extern unsigned int GlobalDepth;
 extern bool GlobalParam;
 char szEmpty[]={NULL};
 
-CFuncCallInfo::CFuncCallInfo(char *name, CLog &logInfo) : log(logInfo) {
+CFuncCallInfo::CFuncCallInfo(const char *name, CLog &logInfo) : log(logInfo) {
 	fName = name;
 	//OutputDebugString(fName);
 	if (FunctionLog) {

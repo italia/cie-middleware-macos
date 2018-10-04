@@ -4,11 +4,11 @@
 #include <memory>
 
 class  CFuncCallInfo {
-	char *fName;
+	const char *fName;
 	unsigned int LogNum;
 	CLog &log;
 public:
-	CFuncCallInfo(char *name,CLog &logInfo);
+	CFuncCallInfo(const char *name,CLog &logInfo);
 	~CFuncCallInfo();
 
 	const char *FunctionName();

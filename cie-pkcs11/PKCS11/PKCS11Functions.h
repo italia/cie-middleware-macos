@@ -46,22 +46,25 @@ catch (...) { return CKR_GENERAL_ERROR; }
 #else
         
 #define init_p11_func \
-try {
+    CFuncCallInfo info(__FUNCTION__, Log); \
+    try {
         
 #define exit_p11_func } \
 catch (p11_error &p11Err) { \
+Log.write(p11Err.what()); \
 OutputDebugString("EXCLOG->"); \
 OutputDebugString(p11Err.what()); \
 OutputDebugString("<-EXCLOG");\
 return p11Err.getP11ErrorCode(); \
 } \
 catch (std::exception &err) { \
+Log.write(err.what()); \
 OutputDebugString("EXCLOG->"); \
 OutputDebugString(err.what()); \
 OutputDebugString("<-EXCLOG");\
 return CKR_GENERAL_ERROR; \
 } \
-catch (...) { return CKR_GENERAL_ERROR; }
+catch (...) { Log.write("CKR_GENERAL_ERROR"); return CKR_GENERAL_ERROR; }
 
 #endif
         

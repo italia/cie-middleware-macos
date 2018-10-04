@@ -34,7 +34,8 @@ IniSettingsInt::IniSettingsInt(const char* section, const char* name, int defaul
 }
 
 int IniSettingsInt::GetValue(const char* fileName) {
-    return 0;//GetPrivateProfileInt(section.c_str(),name.c_str(),defaultVal,fileName);
+    return this->defaultVal;
+//    return 0;//GetPrivateProfileInt(section.c_str(),name.c_str(),defaultVal,fileName);
 }
 
 IniSettingsInt::~IniSettingsInt() {}
@@ -45,7 +46,7 @@ IniSettingsString::IniSettingsString(const char* section, const char* name, cons
 
 void IniSettingsString::GetValue(const char* fileName, std::string &value) {
 	GetIniString(fileName,section.c_str(),name.c_str(),value);
-	if (value.size()==1)
+	if (value.size()==1 || value.c_str()[0] == 0)
 		value = defaultVal;
 }
 
@@ -57,10 +58,10 @@ IniSettingsBool::IniSettingsBool(const char* section, const char* name, bool def
 bool IniSettingsBool::GetValue(const char* fileName) {
 //    int val = GetPrivateProfileInt(section.c_str(), name.c_str(), -100, fileName);
 //    if (val==-100)
-//        return defaultVal;
+        return defaultVal;
 //    return val!=0;
     
-    return false;
+//    return false;
 }
 IniSettingsBool::~IniSettingsBool() {}
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "funccallinfo.h"
+
 #define StatusWord uint16_t
 
 #define ERR_CARD_FILE_DEACTIVATED		0x6283
@@ -53,7 +55,7 @@
 #define logParamBufHide(p,l)
 
 #define init_func \
-  	//CFuncCallInfo info(__FUNCTION__,Log);
+  	CFuncCallInfo info(__FUNCTION__ ,Log);
 
 #define exit_func
 

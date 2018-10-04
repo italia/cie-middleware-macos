@@ -4,6 +4,8 @@
 #include "../Util/ModuleInfo.h"
 #include "CIEP11Template.h"
 
+extern CLog Log;
+
 static char *szCompiledFile=__FILE__;
 
 const char szTemplatesQry[]="./TEMPLATES";

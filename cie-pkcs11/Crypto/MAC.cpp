@@ -2,6 +2,8 @@
 #include "MAC.h"
 #include "../Cryptopp/hmac.h"
 
+extern CLog Log;
+
 static char *szCompiledFile=__FILE__;
 
 #ifdef WIN32

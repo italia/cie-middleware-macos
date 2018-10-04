@@ -11,21 +11,20 @@
 #include <thread>
 #include <stdio.h>
 #include <unistd.h>
+#include "UUCProperties.h"
+#include <sys/stat.h>
 
 static char *szCompiledFile=__FILE__;
-
-std::vector<CLog> logInit;
-std::vector<CLog*> logToInit;
-
-std::string logDirGlobal;
-bool InitLog=false;
-bool FirstGlobal=false;
+std::string globalLogDir;
+std::string globalLogName;
 bool FunctionLog=false;
-bool GlobalParam=false;
+bool globalLogParam=false;
+bool firstGlobal=false;
 const char *logGlobalVersion;
-unsigned int GlobalModuleNum=1;
-unsigned int GlobalCount;
 unsigned int GlobalDepth = 0;
+bool mainInit=false;
+bool mainEnable=false;
+unsigned int GlobalCount;
 
 enum logMode {
 	LM_Single,	// un solo file
@@ -34,15 +33,14 @@ enum logMode {
 	LM_Module_Thread	// un file per modulo e per thread
 } LogMode = LM_Module;
 
-bool MainInit=false;
-bool MainEnable=false;
 
-void initLog(const char *iniFile,const char *version) {
+void initLog(const char *moduleName, const char *iniFile,const char *version)
+{
 
-	if (MainInit)
+	if (mainInit)
 		return;
-	MainInit=true;
-	InitLog=true;
+	
+    mainInit=true;
 
 	logGlobalVersion=version;
 	
@@ -50,70 +48,82 @@ void initLog(const char *iniFile,const char *version) {
 	OutputDebugString(iniFile);
 	OutputDebugString("\n");
 
-	LogMode = (logMode)(IniSettingsInt("Log", "LogMode", (int)LM_Single, "Modalità di Log. Valori possibili:\n"
-		"0 ;LM_Single,	// un solo file\n"
-		"1 ;LM_Module,	// un file per modulo\n"
-		"2 ;LM_Thread,	// un file per thread\n"
-		"3 ;LM_Module_Thread	// un file per modulo e per thread\n")).GetValue((char*)iniFile);
+    UUCProperties settings;
+    settings.load(iniFile);
+    
+    LogMode = (logMode)(settings.getIntProperty("LogMode", (int)LM_Single));//, "Modalità di Log. Valori possibili:\n"
+//        "0 ;LM_Single,    // un solo file\n"
+//        "1 ;LM_Module,    // un file per modulo\n"
+//        "2 ;LM_Thread,    // un file per thread\n"
+//        "3 ;LM_Module_Thread    // un file per modulo e per thread\n")).GetValue((char*)iniFile);
 
 	if (LogMode==-1) {
 		LogMode=LM_Single;
 	}
 
-	MainEnable=(IniSettingsBool("Log","LogEnable",false,"Abilitazione log globale")).GetValue((char*)iniFile);
+    mainEnable = settings.getIntProperty("LogEnable",1);//,"Abilitazione log globale")).GetValue((char*)iniFile);
 
-	FunctionLog = (IniSettingsBool("Log", "FunctionLog", false, "Abilitazione log delle chiamate a funzione")).GetValue((char*)iniFile);
+    FunctionLog = settings.getIntProperty("FunctionLog", 1);//, "Abilitazione log delle chiamate a funzione")).GetValue((char*)iniFile);
 
-	GlobalDepth = (IniSettingsInt("Log", "FunctionDepth", 10, "Definisce la profondità massima di log delle funzioni\n")).GetValue((char*)iniFile);
+    GlobalDepth = settings.getIntProperty("FunctionDepth", 10);//, "Definisce la profondità massima di log delle funzioni\n")).GetValue((char*)iniFile);
 
-	GlobalParam = (IniSettingsBool("Log", "ParamLog", false, "Abilitazione log dei parametri di input delle funzioni")).GetValue((char*)iniFile);
-
-	(IniSettingsString("Log", "LogDir", "c:\\", "Definisce il path in cui salvare il file di log (con \\ finale)")).GetValue((char*)iniFile, logDirGlobal);
-
-	char SectionName[30];
-	int numMod=1;
-	while (true) {
-		sprintf(SectionName,"%s%i","LogModule",numMod);
-		std::string modName;
-
-		(IniSettingsString(SectionName, "Name", "", "Nome della sezione log di log")).GetValue((char*)iniFile, modName);
-
-		if (modName[0]==0)
-			break;
-
-		CLog emptyLog;
-		logInit.push_back(emptyLog);
-		CLog &log=logInit[logInit.size()-1];
-		log.logName=modName;
-
-		log.Enabled = (IniSettingsBool(SectionName, "LogEnable", MainEnable, "Abilitazione log della sezione")).GetValue((char*)iniFile);
-
-		(IniSettingsString(SectionName, "LogDir", logDirGlobal.c_str(), "Definisce il path in cui salvare il file di log di questa sezione (con \\ finale). Default: directory di log globale")).GetValue((char*)iniFile, log.logDir);
-
-		(IniSettingsString(SectionName, "LogFile", log.logName.c_str(), "Definisce il nome del file in cui salvare il file di log di questa sezione (con \\ finale). Default: il nome della sezione di log")).GetValue((char*)iniFile, log.logFileName);
-
-		log.FunctionLog = (IniSettingsBool(SectionName, "FunctionLog", FunctionLog, "Abilitazione log delle chiamate a funzione per questa sezione")).GetValue((char*)iniFile);
-
-		log.LogParam = (IniSettingsBool(SectionName, "ParamLog", GlobalParam, "Abilitazione log dei parametri di input delle funzioni per questa sezione")).GetValue((char*)iniFile);
-
-		log.Initialized=true;
-		numMod++;
-	}
-	if (logInit.size()==0) {
-		OutputDebugString("Nessun LogModule definito. Impostare le sezioni [LogModule1]...[LogModuleN] con i valori:\n");
-		OutputDebugString("Name,LogEnable,LogDir,LogFile,FunctionLog,ParamLog\n");
-	}
+    globalLogParam = settings.getIntProperty("ParamLog", 1);//, "Abilitazione log dei parametri di input delle funzioni")).GetValue((char*)iniFile);
+    
+    globalLogName = moduleName;
+    
+    char* home = getenv("HOME");
+    std::string path(home);
+    path.append("/.CIEPKI/");
+    
+    struct stat st = {0};
+    
+    if (stat(path.c_str(), &st) == -1) {
+        int r = mkdir(path.c_str(), 0700);
+        //        printf("mkdir: %d", r);
+    }
+    
+    globalLogDir = settings.getProperty("LogDir", path.c_str()); //"Definisce il path in cui salvare il file di log (con / finale)"))
+    
+    
+//    char SectionName[30];
+//    int numMod=1;
+//    while (true) {
+//        sprintf(SectionName,"%s%i","LogModule",numMod);
+//        std::string modName;
+//
+//        (IniSettingsString(SectionName, "Name", "", "Nome della sezione log di log")).GetValue((char*)iniFile, modName);
+//
+//        if (modName[0]==0)
+//            break;
+//
+//        CLog emptyLog;
+//        logInit.push_back(emptyLog);
+//        CLog &log=logInit[logInit.size()-1];
+//        log.logName=modName;
+//
+//        log.Enabled = (IniSettingsBool(SectionName, "LogEnable", MainEnable, "Abilitazione log della sezione")).GetValue((char*)iniFile);
+//
+//        (IniSettingsString(SectionName, "LogDir", logDirGlobal.c_str(), "Definisce il path in cui salvare il file di log di questa sezione (con \\ finale). Default: directory di log globale")).GetValue((char*)iniFile, log.logDir);
+//
+//        (IniSettingsString(SectionName, "LogFile", log.logName.c_str(), "Definisce il nome del file in cui salvare il file di log di questa sezione (con \\ finale). Default: il nome della sezione di log")).GetValue((char*)iniFile, log.logFileName);
+//
+//        log.FunctionLog = (IniSettingsBool(SectionName, "FunctionLog", FunctionLog, "Abilitazione log delle chiamate a funzione per questa sezione")).GetValue((char*)iniFile);
+//
+//        log.LogParam = (IniSettingsBool(SectionName, "ParamLog", GlobalParam, "Abilitazione log dei parametri di input delle funzioni per questa sezione")).GetValue((char*)iniFile);
+//
+//        log.Initialized=true;
+//        numMod++;
+//    }
+//    if (logInit.size()==0) {
+//        OutputDebugString("Nessun LogModule definito. Impostare le sezioni [LogModule1]...[LogModuleN] con i valori:\n");
+//        OutputDebugString("Name,LogEnable,LogDir,LogFile,FunctionLog,ParamLog\n");
+//    }
 	
 }
 
 CLog::CLog() {
 	
-	FirstLog=false;
-	Initialized=false;
-	Enabled=false;
-	LogParam=false;
-	LogCount=0;
-	
+    init();
 }
 
 CLog::~CLog() {
@@ -121,50 +131,23 @@ CLog::~CLog() {
 	FirstLog=false;
 }
 
-void CLog::initParam(CLog &log) {
+void CLog::init() {
 	
-	Enabled=log.Enabled;
-	LogParam=log.LogParam;
-
-	ModuleNum=GlobalModuleNum;
-	GlobalModuleNum++;
+	Enabled=mainEnable;
+	LogParam=globalLogParam;
+    LogCount=0;
+    logName = globalLogName;
+    logFileName = globalLogName;
     
     std::stringstream th;
     th << std::setw(8) << std::setfill('0');
-
-#ifdef WIN32
-	SYSTEMTIME  stTime;
-	GetLocalTime(&stTime);
-
-	switch (LogMode) {
-		case (LM_Single): {
-			th << log.logFileName << "_" << std::setw(4) << stTime.wYear << "-" << std::setw(2) << stTime.wMonth << "-" << stTime.wDay << ".log";
-			break;
-		}
-		case (LM_Module): {
-			th << std::setw(4) << stTime.wYear << "-" << std::setw(2) << stTime.wMonth << "-" << stTime.wDay << "_" << logFileName << ".log";
-			// log per modulo: il nome del file è yyyy-mm-gg_name.log, senza alcun path assegnato
-			break;
-		}
-		case (LM_Thread): {
-			th << std::setw(4) << stTime.wYear << "-" << std::setw(2) << stTime.wMonth << "-" << stTime.wDay << "_00000000.log";
-			// log per thread: il nome del file è yyyy-mm-gg_tttttttt.log, senza alcun path assegnato
-			break;
-		}
-		case (LM_Module_Thread): {
-			th << std::setw(4) << stTime.wYear << "-" << std::setw(2) << stTime.wMonth << "-" << stTime.wDay << "_" << logFileName << "_00000000.log";
-			// log per modulo e per thread: il nome del file è yyyy-mm-gg_name_tttttttt.log, senza alcun path assegnato
-			break;
-		}
-	}
-#else
     
     time_t T= time(NULL);
     struct  tm tm = *localtime(&T);
 
     switch (LogMode) {
         case (LM_Single): {
-            th << log.logFileName << "_" << std::setw(4) << tm.tm_year << "-" << std::setw(2) << tm.tm_mon << "-" << tm.tm_mday << ".log";
+            th << logFileName << "_" << std::setw(4) << tm.tm_year << "-" << std::setw(2) << tm.tm_mon << "-" << tm.tm_mday << ".log";
             break;
         }
         case (LM_Module): {
@@ -183,46 +166,23 @@ void CLog::initParam(CLog &log) {
             break;
         }
     }
-
-    
-#endif
     
 	logPath = th.str();
 
-	if ((LogMode==LM_Module || LogMode==LM_Module_Thread) && log.logDir.length()!=0) {
+	if ((LogMode==LM_Module || LogMode==LM_Module_Thread) && logDir.length()!=0) {
 		// se c'è un path specifico lo metto lì
 		std::string path = logPath;
-		logPath=log.logDir.append("\\").append(path);
+		logPath=logDir.append(path);
 	}
-	else if (!logDirGlobal.empty()) {
+	else if (!globalLogDir.empty()) {
 		// se c'è un path globale lo metto lì
 		std::string path=logPath;
-		logPath = logDirGlobal.append("\\").append(path);
+		logPath = globalLogDir.append(path);
 	}
 	threadPos = logPath.begin()+logPath.length() - 12;
 	Initialized=true;
 
 	if (LogMode!=LM_Module && LogMode!=LM_Module_Thread && Enabled) writePure("Module %02i: %s",ModuleNum,logName.c_str());
-	
-}
-
-void CLog::initModule(const char *name, const char *version) {
-	
-	
-	logName=name;
-	logVersion=version;
-
-	if (!InitLog)
-	// verrà inizializzato dopo, quando chiamo logInit
-		logToInit.push_back(this);
-	else {
-		// vediamo se ce l'ho...
-		for (DWORD i=0;i<logInit.size();i++) {
-			if (logInit[i].logName==logName) {
-				initParam(logInit[i]);
-			}
-		}
-	}
 	
 }
 
@@ -233,10 +193,10 @@ DWORD CLog::write(const char *format,...) {
 	unsigned int dummy = 0;
 	unsigned int *Num = &dummy;
 
-	if (Enabled && Initialized && MainEnable) {
+	if (Enabled && Initialized && mainEnable) {
 
-		if (!FirstGlobal && LogMode==LM_Single) {
-			FirstGlobal =true;
+		if (!firstGlobal && LogMode==LM_Single) {
+			firstGlobal =true;
 			write("Inizio Sessione - versione: %s",logGlobalVersion);
 			writeModuleInfo();
 		}
@@ -302,8 +262,8 @@ DWORD CLog::write(const char *format,...) {
             fclose(lf);
         }
         
-        vprintf(format, params);
-        vprintf("\n", NULL);
+//        printf(format, params);
+//        printf("\n", NULL);
 #endif
 		
 	}
@@ -334,9 +294,9 @@ void CLog::writePure(const char *format,...) {
  	va_list params;
 	va_start (params, format);
 	char pbtDate[0x800]={NULL};
-	if (Enabled && Initialized && MainEnable) {
-		if (!FirstGlobal && LogMode==LM_Single) {
-			FirstGlobal =true;
+	if (Enabled && Initialized && mainEnable) {
+		if (!firstGlobal && LogMode==LM_Single) {
+			firstGlobal =true;
 			write("Inizio Sessione - versione: %s",logGlobalVersion);
 			writeModuleInfo();
 		}
@@ -369,8 +329,8 @@ void CLog::writePure(const char *format,...) {
 			fclose(lf);
 		}
         
-        vprintf(format, params);
-        vprintf("\n", NULL);
+//        printf(format, params);
+//        printf("\n", NULL);
 	}
 #ifdef _DEBUG
 #ifdef WIN32
@@ -387,9 +347,9 @@ void CLog::writePure(const char *format,...) {
 }
 
 void CLog::writeBinData(BYTE *data, size_t datalen) {
-	if (!Enabled || !Initialized || !MainEnable) return;
-	if (!FirstGlobal && LogMode==LM_Single) {
-		FirstGlobal =true;
+	if (!Enabled || !Initialized || !mainEnable) return;
+	if (!firstGlobal && LogMode==LM_Single) {
+		firstGlobal =true;
 		write("Inizio Sessione - versione: %s",logGlobalVersion);
 		writeModuleInfo();
 	}

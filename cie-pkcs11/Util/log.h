@@ -33,12 +33,11 @@ public:
 	DWORD write(const char *format,...);
 	void writePure(const char *format,...);
 	void writeBinData(uint8_t *data, size_t datalen);
-	void initModule(const char *name,const char *version);
-	void initParam(CLog &log);
+//    void initModule(const char *name,const char *version);
+	void init();
 	void writeModuleInfo();
 	void dumpErr();
 
 };
 
-void initLog(const char *iniFile,const char *version);
-//extern CLog Log;
+void initLog(const char *moduleName, const char *iniFile,const char *version);

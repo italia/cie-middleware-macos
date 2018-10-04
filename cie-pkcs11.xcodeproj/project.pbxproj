@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		5CA6E27FF73910B2FFB64484 /* libPods-cie-pkcs11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */; };
+		E5087AB7216610D4007063E6 /* UUCStringTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5087AAB216610D2007063E6 /* UUCStringTable.cpp */; };
+		E5087AB8216610D4007063E6 /* UUCTextFileReader.h in Headers */ = {isa = PBXBuildFile; fileRef = E5087AAC216610D2007063E6 /* UUCTextFileReader.h */; };
+		E5087AB9216610D4007063E6 /* UUCByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5087AAD216610D2007063E6 /* UUCByteArray.cpp */; };
+		E5087ABA216610D4007063E6 /* UUCHashtable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = E5087AAE216610D2007063E6 /* UUCHashtable.hpp */; };
+		E5087ABD216610D4007063E6 /* UUCProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = E5087AB1216610D3007063E6 /* UUCProperties.h */; };
+		E5087ABE216610D4007063E6 /* UUCStringTable.h in Headers */ = {isa = PBXBuildFile; fileRef = E5087AB2216610D3007063E6 /* UUCStringTable.h */; };
+		E5087ABF216610D4007063E6 /* UUCProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5087AB3216610D3007063E6 /* UUCProperties.cpp */; };
+		E5087AC0216610D4007063E6 /* UUCTextFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5087AB4216610D3007063E6 /* UUCTextFileReader.cpp */; };
+		E5087AC1216610D4007063E6 /* UUCTextFileWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5087AB5216610D3007063E6 /* UUCTextFileWriter.cpp */; };
+		E5087AC2216610D4007063E6 /* UUCTextFileWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = E5087AB6216610D4007063E6 /* UUCTextFileWriter.h */; };
+		E5087AC621661B74007063E6 /* UUCByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5087AAD216610D2007063E6 /* UUCByteArray.cpp */; };
 		E50A8A08213BE019006A000D /* AbilitaCIE.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A8A07213BE018006A000D /* AbilitaCIE.h */; };
 		E50A8A0A213BE053006A000D /* AbilitaCIE.mm in Sources */ = {isa = PBXBuildFile; fileRef = E50A8A09213BE053006A000D /* AbilitaCIE.mm */; };
 		E50A8A0D213BE121006A000D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50A8A0B213BE121006A000D /* Cocoa.framework */; };
@@ -73,7 +84,6 @@
 		E5659083211875950039865C /* SHA512.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565906F211875940039865C /* SHA512.cpp */; };
 		E5659084211875950039865C /* sha512.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659070211875940039865C /* sha512.h */; };
 		E5707B3521383CCA0054CF16 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5707B3421383CCA0054CF16 /* main.cpp */; };
-		E5707B3B21383D1B0054CF16 /* UUCByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5707B3A21383D1B0054CF16 /* UUCByteArray.cpp */; };
 		E59B65C2213C06B8007348D5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C1213C06B8007348D5 /* AppDelegate.m */; };
 		E59B65C5213C06B8007348D5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C4213C06B8007348D5 /* ViewController.mm */; };
 		E59B65C7213C06B9007348D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E59B65C6213C06B9007348D5 /* Assets.xcassets */; };
@@ -122,6 +132,16 @@
 		228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cie-pkcs11.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.release.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.release.xcconfig"; sourceTree = "<group>"; };
 		79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.debug.xcconfig"; sourceTree = "<group>"; };
+		E5087AAB216610D2007063E6 /* UUCStringTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUCStringTable.cpp; sourceTree = "<group>"; };
+		E5087AAC216610D2007063E6 /* UUCTextFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCTextFileReader.h; sourceTree = "<group>"; };
+		E5087AAD216610D2007063E6 /* UUCByteArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUCByteArray.cpp; sourceTree = "<group>"; };
+		E5087AAE216610D2007063E6 /* UUCHashtable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UUCHashtable.hpp; sourceTree = "<group>"; };
+		E5087AB1216610D3007063E6 /* UUCProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCProperties.h; sourceTree = "<group>"; };
+		E5087AB2216610D3007063E6 /* UUCStringTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCStringTable.h; sourceTree = "<group>"; };
+		E5087AB3216610D3007063E6 /* UUCProperties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUCProperties.cpp; sourceTree = "<group>"; };
+		E5087AB4216610D3007063E6 /* UUCTextFileReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUCTextFileReader.cpp; sourceTree = "<group>"; };
+		E5087AB5216610D3007063E6 /* UUCTextFileWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUCTextFileWriter.cpp; sourceTree = "<group>"; };
+		E5087AB6216610D4007063E6 /* UUCTextFileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCTextFileWriter.h; sourceTree = "<group>"; };
 		E50A8A07213BE018006A000D /* AbilitaCIE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbilitaCIE.h; sourceTree = "<group>"; };
 		E50A8A09213BE053006A000D /* AbilitaCIE.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AbilitaCIE.mm; sourceTree = "<group>"; };
 		E50A8A0B213BE121006A000D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -190,7 +210,6 @@
 		E5707B3221383CCA0054CF16 /* TestCIE */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestCIE; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5707B3421383CCA0054CF16 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		E5707B3921383D1B0054CF16 /* UUCByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCByteArray.h; sourceTree = "<group>"; };
-		E5707B3A21383D1B0054CF16 /* UUCByteArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUCByteArray.cpp; sourceTree = "<group>"; };
 		E59B65BE213C06B8007348D5 /* AbilitaCIE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbilitaCIE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E59B65C0213C06B8007348D5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E59B65C1213C06B8007348D5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -279,6 +298,17 @@
 		E5658FF8211864470039865C /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				E5087AAD216610D2007063E6 /* UUCByteArray.cpp */,
+				E5707B3921383D1B0054CF16 /* UUCByteArray.h */,
+				E5087AAE216610D2007063E6 /* UUCHashtable.hpp */,
+				E5087AB3216610D3007063E6 /* UUCProperties.cpp */,
+				E5087AB1216610D3007063E6 /* UUCProperties.h */,
+				E5087AAB216610D2007063E6 /* UUCStringTable.cpp */,
+				E5087AB2216610D3007063E6 /* UUCStringTable.h */,
+				E5087AB4216610D3007063E6 /* UUCTextFileReader.cpp */,
+				E5087AAC216610D2007063E6 /* UUCTextFileReader.h */,
+				E5087AB5216610D3007063E6 /* UUCTextFileWriter.cpp */,
+				E5087AB6216610D4007063E6 /* UUCTextFileWriter.h */,
 				E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */,
 				E543F956215F6B250088CBC5 /* CryptoppUtils.h */,
 				E55BE03A2136CD0100E5F396 /* CacheLib.cpp */,
@@ -367,8 +397,6 @@
 		E5707B3321383CCA0054CF16 /* TestCIE */ = {
 			isa = PBXGroup;
 			children = (
-				E5707B3A21383D1B0054CF16 /* UUCByteArray.cpp */,
-				E5707B3921383D1B0054CF16 /* UUCByteArray.h */,
 				E5707B3421383CCA0054CF16 /* main.cpp */,
 			);
 			path = TestCIE;
@@ -475,10 +503,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5087AB8216610D4007063E6 /* UUCTextFileReader.h in Headers */,
 				E5659055211875830039865C /* APDU.h in Headers */,
+				E5087AC2216610D4007063E6 /* UUCTextFileWriter.h in Headers */,
 				E565907E211875950039865C /* RSA.h in Headers */,
 				E5BE7DC320FE86DC00004389 /* win32.h in Headers */,
 				E5BE7DBA20FE853800004389 /* Slot.h in Headers */,
+				E5087ABA216610D4007063E6 /* UUCHashtable.hpp in Headers */,
 				E565905B211875830039865C /* Token.h in Headers */,
 				E5BE7DC520FE883300004389 /* wintypes.h in Headers */,
 				E5659059211875830039865C /* PCSC.h in Headers */,
@@ -488,6 +519,8 @@
 				E5BE7DB420FE853800004389 /* P11Object.h in Headers */,
 				E5659039211864470039865C /* SyncroMutex.h in Headers */,
 				E565902D211864470039865C /* defines.h in Headers */,
+				E5087ABE216610D4007063E6 /* UUCStringTable.h in Headers */,
+				E5087ABD216610D4007063E6 /* UUCProperties.h in Headers */,
 				E565902F211864470039865C /* funccallinfo.h in Headers */,
 				E5BE7DB620FE853800004389 /* PKCS11Functions.h in Headers */,
 				E5659041211864470039865C /* util.h in Headers */,
@@ -683,7 +716,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5707B3521383CCA0054CF16 /* main.cpp in Sources */,
-				E5707B3B21383D1B0054CF16 /* UUCByteArray.cpp in Sources */,
+				E5087AC621661B74007063E6 /* UUCByteArray.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,6 +734,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5087ABF216610D4007063E6 /* UUCProperties.cpp in Sources */,
 				E5659049211875760039865C /* IAS.cpp in Sources */,
 				E5BE7DB520FE853800004389 /* PKCS11Functions.cpp in Sources */,
 				E5659058211875830039865C /* PCSC.cpp in Sources */,
@@ -716,6 +750,7 @@
 				E5BE7DB720FE853800004389 /* session.cpp in Sources */,
 				E5659073211875950039865C /* ASNParser.cpp in Sources */,
 				E565901F211864470039865C /* Array.cpp in Sources */,
+				E5087AC1216610D4007063E6 /* UUCTextFileWriter.cpp in Sources */,
 				E5659075211875950039865C /* Base64.cpp in Sources */,
 				E5BE7DAF20FE853800004389 /* initP11.cpp in Sources */,
 				E565902E211864470039865C /* funccallinfo.cpp in Sources */,
@@ -729,10 +764,13 @@
 				E5659036211864470039865C /* SyncroEvent.cpp in Sources */,
 				E565907F211875950039865C /* SHA1.cpp in Sources */,
 				E5659040211864470039865C /* util.cpp in Sources */,
+				E5087AC0216610D4007063E6 /* UUCTextFileReader.cpp in Sources */,
 				E5659030211864470039865C /* IniSettings.cpp in Sources */,
 				E5BE7DAD20FE853800004389 /* CIEP11Template.cpp in Sources */,
 				E5659083211875950039865C /* SHA512.cpp in Sources */,
+				E5087AB7216610D4007063E6 /* UUCStringTable.cpp in Sources */,
 				E5659056211875830039865C /* CardLocker.cpp in Sources */,
+				E5087AB9216610D4007063E6 /* UUCByteArray.cpp in Sources */,
 				E5BE7DAB20FE853800004389 /* CardTemplate.cpp in Sources */,
 				E5BE7DB120FE853800004389 /* Mechanism.cpp in Sources */,
 				E5659042211864470039865C /* UtilException.cpp in Sources */,

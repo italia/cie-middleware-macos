@@ -10,6 +10,8 @@
 #include "../Cryptopp/asn.h"
 #include "../Util/CryptoppUtils.h"
 
+extern CLog Log;
+
 using namespace CryptoPP;
 using namespace lcp;
 

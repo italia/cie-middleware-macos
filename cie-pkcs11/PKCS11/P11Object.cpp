@@ -2,6 +2,8 @@
 #include "P11Object.h"
 #include "CardTemplate.h"
 
+extern CLog Log;
+
 static char *szCompiledFile=__FILE__;
 
 namespace p11 {

@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+extern CLog Log;
+
 extern CModuleInfo moduleInfo;
 extern ByteArray SkipZero(ByteArray &ba);
 //extern DWORD WINAPI _abilitaCIE(LPVOID lpThreadParameter);

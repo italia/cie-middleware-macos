@@ -6,6 +6,8 @@
 #include <iomanip>
 #include <sstream>
 
+extern CLog Log;
+
 static char *szCompiledFile=__FILE__;
 
 DWORD ERR_ATTRIBUTE_IS_SENSITIVE = 0x40000008;

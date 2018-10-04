@@ -3,6 +3,8 @@
 #include <openssl/bn.h>
 #include "../Util/util.h"
 
+extern CLog Log;
+
 static char *szCompiledFile=__FILE__;
 
 #ifdef WIN32

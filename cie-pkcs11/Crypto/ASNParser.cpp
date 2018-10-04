@@ -2,6 +2,8 @@
 #include "Array.h"
 #include "ASNParser.h"
 
+extern CLog Log;
+
 #define BitValue(a,b) ((a>>b) & 1)
 
 size_t GetASN1DataLenght(ByteArray &data) {

@@ -5,6 +5,7 @@
 #include "CardTemplate.h"
 #include "../Crypto/RSA.h"
 
+extern CLog Log;
 
 static char *szCompiledFile = __FILE__;
 

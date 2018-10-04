@@ -1,6 +1,8 @@
 
 #include "CardLocker.h"
 
+extern CLog Log;
+
 static char *szCompiledFile=__FILE__;
 
 CCardLocker::CCardLocker(SCARDHANDLE card)

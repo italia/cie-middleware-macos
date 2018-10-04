@@ -6,6 +6,7 @@
 #include "../Crypto/mac.h"
 #include "Token.h"
 
+extern CLog Log;
 
 static char *szCompiledFile=__FILE__;
 

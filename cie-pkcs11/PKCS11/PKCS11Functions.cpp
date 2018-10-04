@@ -115,10 +115,8 @@ __attribute__((constructor)) void DllMainAttach()
 {
     // code
     bModuleInit=true;
-    std::string configPath;
-    configPath = "moduleInfo.szModulePath + moduleInfo.szModuleName+.ini";
-    initLog(configPath.c_str(), __DATE__ " " __TIME__);
-    Log.initModule("PKCS11", __DATE__ " " __TIME__);
+    std::string configPath = "/usr/local/lib/ciepki.ini";
+    initLog("CIEPKC11", configPath.c_str(), __DATE__ " " __TIME__);
     p11::InitP11(configPath.c_str());
 }
 
@@ -139,6 +137,41 @@ __attribute__((destructor)) void DllMainDetach()
 }
 
 #endif
+
+void WriteAttributes(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
+{
+    Log.write("Attributes: %x", ulCount);
+    for(unsigned int i = 0; i < ulCount; i++)
+    {
+        switch(pTemplate[i].type)
+        {
+            case CKA_CLASS:
+                Log.write("%d) type=%x, value=%x, len=%x", i + 1, pTemplate[i].type, *(CK_OBJECT_CLASS_PTR)(pTemplate[i].pValue), pTemplate[i].ulValueLen);
+                break;
+                
+            case CKA_TOKEN:
+            case CKA_PRIVATE:
+            case CKA_MODIFIABLE:
+                Log.write("%d) type=%x, value=%x, len=%x", i + 1, pTemplate[i].type, *(CK_BBOOL*)(pTemplate[i].pValue), pTemplate[i].ulValueLen);
+                break;
+                
+            case CKA_LABEL:
+            case CKA_OBJECT_ID:
+                Log.write("%d) type=%x, value=%s, len=%x", i + 1, pTemplate[i].type, (char*)(pTemplate[i].pValue), pTemplate[i].ulValueLen);
+                break;
+                
+            default:
+                Log.write("%d) type=%x, value=%p, len=%x", i + 1, pTemplate[i].type, pTemplate[i].pValue, pTemplate[i].ulValueLen);
+        }
+    }
+}
+
+void WriteMechanism(CK_MECHANISM_PTR pMechanism)
+{
+    Log.write("Mechanism : %x", pMechanism->mechanism);
+    Log.write("Parameter: %x", pMechanism->pParameter);
+    Log.write("Parameter len: %x", pMechanism->ulParameterLen);
+}
 
 // funzione CheckMechanismParam
 bool CheckMechanismParam(CK_MECHANISM *pParam) {
@@ -694,6 +727,7 @@ CK_RV CK_ENTRY C_CreateObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemp
 	logParam(ulCount)
 	logParam(phObject)
 
+    WriteAttributes(pTemplate, ulCount);
 
 	if (!bP11Initialized)
 		throw p11_error(CKR_CRYPTOKI_NOT_INITIALIZED);
@@ -724,7 +758,8 @@ CK_RV CK_ENTRY C_GenerateKey(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMecha
 		logParam(ulCount)
 		logParam(phKey)
 
-
+        WriteAttributes(pTemplate, ulCount);
+    
 		if (!bP11Initialized)
 			throw p11_error(CKR_CRYPTOKI_NOT_INITIALIZED);
 
@@ -963,6 +998,8 @@ CK_RV CK_ENTRY C_FindObjectsInit(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pT
 	logParam(pTemplate)
 	logParam(ulCount)
 
+    WriteAttributes(pTemplate, ulCount);
+    
 	if (Log.LogParam) {
 		for (DWORD i=0;i<ulCount;i++) {
 			Log.writePure("Template %i:",i+1);
@@ -2153,3 +2190,6 @@ char *getAttributeName(DWORD dwId) {
 	}
 	return("UNKNOWN");
 }
+
+
+

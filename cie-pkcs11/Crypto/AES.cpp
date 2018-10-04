@@ -3,6 +3,8 @@
 
 static char *szCompiledFile=__FILE__;
 
+extern CLog Log;
+
 #ifdef WIN32
 
 class init_aes {
