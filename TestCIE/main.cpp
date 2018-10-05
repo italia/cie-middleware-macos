@@ -333,6 +333,59 @@ void showAttributes(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
     
 }
 
+void showCertAttributes(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
+{
+    if(g_nLogLevel > 3)
+        std::cout << "  -> Legge gli attributi di un oggetto \n    - C_GetAttributeValue" << std::endl;
+    
+    CK_BBOOL        bPrivate       = 0;
+    CK_BBOOL        bToken        = 0;
+    
+    CK_ATTRIBUTE    attr[]      = {
+        {CKA_PRIVATE, &bPrivate, sizeof(bPrivate)},
+        {CKA_TOKEN, &bToken, sizeof(bToken)},
+        {CKA_LABEL, NULL, 256},
+        {CKA_ISSUER, NULL, 256},
+        {CKA_SERIAL_NUMBER, NULL, 256},
+        {CKA_ID, NULL, 256},
+        {CKA_SUBJECT, NULL, 256},
+        {CKA_VALUE, NULL, 0},
+        //{CKA_VALUE, szValue, 256}
+    };
+    
+    CK_RV rv = g_pFuncList->C_GetAttributeValue(hSession, hObject, attr, 8);
+    if (rv != CKR_OK)
+    {
+        error(rv);
+    }
+    
+    for(int i = 0; i < 8; i++)
+    {
+        attr[i].pValue = malloc(attr[i].ulValueLen + 1);
+    }
+    
+    rv = g_pFuncList->C_GetAttributeValue(hSession, hObject, attr, 8);
+    if (rv != CKR_OK)
+    {
+        error(rv);
+    }
+    
+    for(int i = 0; i < 8; i++)
+    {
+        ((char*)attr[i].pValue)[attr[i].ulValueLen] = 0;
+    }
+    
+    if(g_nLogLevel > 3)
+    {
+        std::cout << "      - Label: " << (char*)attr[2].pValue << std::endl;
+        std::cout << "      - Issuer: " << UUCByteArray((BYTE*)attr[3].pValue, attr[3].ulValueLen).toHexString() << std::endl;
+        std::cout << "      - Subject: " << UUCByteArray((BYTE*)attr[6].pValue, attr[6].ulValueLen).toHexString() << std::endl;
+        std::cout << "      - Value: " << UUCByteArray((BYTE*)attr[7].pValue, attr[7].ulValueLen).toHexString() << std::endl;
+        std::cout << "      - Serial: " << (char*)attr[4].pValue << std::endl;
+        std::cout << "      - ID: " << (char*)attr[5].pValue << std::endl;
+    }
+    
+}
 
 
 bool signVerify(CK_SESSION_HANDLE hSession)
@@ -781,7 +834,7 @@ int main(int argc, char* argv[])
             {
                 for(int i = 0; i < ulObjCount; i++)
                 {
-                    showAttributes(hSession, phObject[i]);
+                    showCertAttributes(hSession, phObject[i]);
                 }
             }
             
