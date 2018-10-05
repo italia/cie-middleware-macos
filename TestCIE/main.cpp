@@ -385,6 +385,10 @@ void showCertAttributes(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
         std::cout << "      - ID: " << (char*)attr[5].pValue << std::endl;
     }
     
+    for(int i = 0; i < 8; i++)
+    {
+        free(attr[i].pValue);
+    }
 }
 
 
