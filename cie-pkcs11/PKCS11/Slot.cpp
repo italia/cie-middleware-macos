@@ -183,7 +183,12 @@ namespace p11 {
 
 		pSlot->CloseAllSessions();
 
-		g_mSlots.erase(hSlotId);
+//        try {
+//            g_mSlots.erase(hSlotId);
+//        } catch (...) {
+//            printf("erase error");
+//        }
+		
 		pSlot->Final();
 	}
 
@@ -234,7 +239,7 @@ namespace p11 {
 		SlotMap::iterator it = CSlot::g_mSlots.begin();
 		while (it != CSlot::g_mSlots.end()) {
 			DeleteSlot(it->second->hSlot);
-			it = CSlot::g_mSlots.begin();
+            it++;// = CSlot::g_mSlots.begin();
 		}
 	}
 

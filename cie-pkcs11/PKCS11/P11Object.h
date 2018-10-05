@@ -28,7 +28,7 @@ namespace p11 {
 		/// nullptr come valore di ritorno sognifica che l'attibuto non fa parte della mappa di attributi dell'oggetto
 		virtual ByteArray* getAttribute(CK_ATTRIBUTE_TYPE type); 
 
-		virtual void GetAttributeValue(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount);
+		virtual CK_ULONG GetAttributeValue(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount);
 		virtual void SetAttributes(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount);
 		virtual CK_ULONG GetObjectSize();
 

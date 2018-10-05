@@ -32,29 +32,40 @@ ByteArray* CP11Object::getAttribute(CK_ATTRIBUTE_TYPE type)
 	return (ByteArray*)&pPair->second;
 }
 
-void CP11Object::GetAttributeValue(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
+CK_ULONG CP11Object::GetAttributeValue(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
 {
 	init_func
 
-		for (unsigned int i=0;i<ulCount;i++) {
-
+    bool attribInvalid = false;
+    
+    for (unsigned int i=0;i<ulCount;i++)
+    {
 		CK_ULONG ulValLen=pTemplate[i].ulValueLen;
-		pTemplate[i].ulValueLen=-1;
-
-		ByteArray *attr=getAttribute(pTemplate[i].type);
-		if (attr != nullptr) {
+		
+		ByteArray *attr = getAttribute(pTemplate[i].type);
+		if (attr != nullptr)
+        {
 			if (pTemplate[i].pValue == NULL)
+            {
 				pTemplate[i].ulValueLen = (CK_ULONG)attr->size();
-			else {
+            }
+			else
+            {
 				if (attr->size() > ulValLen)
 					throw p11_error(CKR_BUFFER_TOO_SMALL);
-				ByteArray((uint8_t*)pTemplate[i].pValue, attr->size()).copy(*attr);
+			
+                ByteArray((uint8_t*)pTemplate[i].pValue, attr->size()).copy(*attr);
 				pTemplate[i].ulValueLen = (CK_ULONG)attr->size();
 			}
 		}
 		else
-			throw p11_error(CKR_ATTRIBUTE_TYPE_INVALID);
+        {
+            pTemplate[i].ulValueLen = -1;
+            attribInvalid = true;
+        }
 	}
+    
+    return attribInvalid ? CKR_ATTRIBUTE_TYPE_INVALID : CKR_OK;
 }
 
 CK_ULONG CP11Object::GetObjectSize()

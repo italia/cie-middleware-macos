@@ -138,6 +138,7 @@ void CIEtemplateInitSession(void *pTemplateData){
 			cie->ias.GetCertificate(certRaw, true);
 		}
 
+        
 		CK_BBOOL vtrue = TRUE;
 		CK_BBOOL vfalse = FALSE;
 
@@ -165,11 +166,12 @@ void CIEtemplateInitSession(void *pTemplateData){
         cie->cert->addAttribute(CKA_ID, VarToByteArray(label));
         cie->cert->addAttribute(CKA_PRIVATE, VarToByteArray(vfalse));
         cie->cert->addAttribute(CKA_TOKEN, VarToByteArray(vtrue));
-        cie->cert->addAttribute(CKA_VALUE, certRaw);
         
         CK_CERTIFICATE_TYPE certx509 = CKC_X_509;
         cie->cert->addAttribute(CKA_CERTIFICATE_TYPE, VarToByteArray(certx509));
         
+        Log.write(dumpHexData(certRaw).c_str());
+
 #ifdef WIN32
 		PCCERT_CONTEXT certDS = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, certRaw.data(), (DWORD)certRaw.size());
 		if (certDS != nullptr) {
@@ -227,6 +229,8 @@ void CIEtemplateInitSession(void *pTemplateData){
         CryptoPP::ByteQueue certin;
         certin.Put(certRaw.data(),certRaw.size());
         
+        
+        
         std::string serial;
         CryptoPP::ByteQueue issuer;
         CryptoPP::ByteQueue subject;
@@ -262,6 +266,7 @@ void CIEtemplateInitSession(void *pTemplateData){
         cie->cert->addAttribute(CKA_SERIAL_NUMBER, ByteArray((BYTE*)serial.c_str(), serial.size()));
         cie->cert->addAttribute(CKA_SUBJECT, subjectBa);
     
+        
         CK_DATE start, end;
         
         SYSTEMTIME sFrom, sTo;
@@ -273,6 +278,9 @@ void CIEtemplateInitSession(void *pTemplateData){
         
         // add to the object
 #endif
+        
+        size_t len = GetASN1DataLenght(certRaw);
+        cie->cert->addAttribute(CKA_VALUE, certRaw.left(len));
         
         cie->slot.AddP11Object(cie->pubKey);
         cie->slot.AddP11Object(cie->privKey);
@@ -622,7 +630,11 @@ void GetCertInfo(CryptoPP::BufferedTransformation & certin,
     
     // issuer               Name,
     BERSequenceDecoder issuerName(toBeSignedCert);
-    issuerName.CopyTo(issuer);
+    DERSequenceEncoder issuerEncoder(issuer);
+    issuerName.CopyTo(issuerEncoder);
+    issuerEncoder.MessageEnd();
+    
+//    issuerName.CopyTo(issuer);
     issuerName.SkipAll();
     
 //    CryptoPP::BERSequenceDecoder issuer(toBeSignedCert); {
@@ -657,9 +669,13 @@ void GetCertInfo(CryptoPP::BufferedTransformation & certin,
 
     // subject
     BERSequenceDecoder subjectName(toBeSignedCert);
-    subjectName.CopyTo(subject);
-    subjectName.SkipAll();
+    DERSequenceEncoder subjectEncoder(subject);
+    subjectName.CopyTo(subjectEncoder);
+    subjectEncoder.MessageEnd();
     
+//    subjectName.CopyTo(subject);
+    subjectName.SkipAll();
+//
 //    CryptoPP::BERSequenceDecoder subject(toBeSignedCert); {
 //        CryptoPP::BERSetDecoder c(subject);
 //        c.SkipAll();

@@ -78,7 +78,7 @@ public:
 	void SetPIN(ByteArray &OldPin,ByteArray &NewPin);
 
 	void SetAttributeValue(CK_OBJECT_HANDLE hObject,CK_ATTRIBUTE_PTR pTemplate,CK_ULONG ulCount);
-	void GetAttributeValue(CK_OBJECT_HANDLE hObject,CK_ATTRIBUTE_PTR pTemplate,CK_ULONG ulCount);
+	CK_ULONG GetAttributeValue(CK_OBJECT_HANDLE hObject,CK_ATTRIBUTE_PTR pTemplate,CK_ULONG ulCount);
 	CK_ULONG GetObjectSize(CK_OBJECT_HANDLE hObject);
 	CK_OBJECT_HANDLE CreateObject(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount);
 	void DestroyObject(CK_OBJECT_HANDLE hObject);

@@ -53,14 +53,15 @@ catch (...) { return CKR_GENERAL_ERROR; }
 catch (p11_error &p11Err) { \
 Log.write(p11Err.what()); \
 OutputDebugString("EXCLOG->"); \
-OutputDebugString(p11Err.what()); \
+OutputDebugString("EXC: %s", p11Err.what()); \
 OutputDebugString("<-EXCLOG");\
+Log.writePure("P11Error: %x", p11Err.getP11ErrorCode()); \
 return p11Err.getP11ErrorCode(); \
 } \
 catch (std::exception &err) { \
 Log.write(err.what()); \
 OutputDebugString("EXCLOG->"); \
-OutputDebugString(err.what()); \
+OutputDebugString("EXC: %s", err.what()); \
 OutputDebugString("<-EXCLOG");\
 return CKR_GENERAL_ERROR; \
 } \

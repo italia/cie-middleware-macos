@@ -29,6 +29,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E5707B3121383CCA0054CF16"
+            BuildableName = "TestCIE"
+            BlueprintName = "TestCIE"
+            ReferencedContainer = "container:cie-pkcs11.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -42,15 +51,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E5BE7D8720FE84D200004389"
-            BuildableName = "libcie-pkcs11.dylib"
-            BlueprintName = "cie-pkcs11"
+            BlueprintIdentifier = "E5707B3121383CCA0054CF16"
+            BuildableName = "TestCIE"
+            BlueprintName = "TestCIE"
             ReferencedContainer = "container:cie-pkcs11.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

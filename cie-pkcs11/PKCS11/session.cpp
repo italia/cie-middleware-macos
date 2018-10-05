@@ -257,15 +257,15 @@ namespace p11 {
 		bFindInit = false;
 	}
 
-	void CSession::GetAttributeValue(CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
+	CK_ULONG CSession::GetAttributeValue(CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
 	{
 		init_func
 
 		std::shared_ptr<CP11Object> pObject = pSlot->GetObjectFromID(hObject);
 		if (pObject == nullptr)
-			throw p11_error(CKR_OBJECT_HANDLE_INVALID);
+			return CKR_OBJECT_HANDLE_INVALID;
 
-		pObject->GetAttributeValue(pTemplate, ulCount);
+		return pObject->GetAttributeValue(pTemplate, ulCount);
 	}
 
 	ByteDynArray GetTemplateValue(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_TYPE type)
