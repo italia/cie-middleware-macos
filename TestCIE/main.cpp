@@ -26,10 +26,6 @@
 #include <dlfcn.h>
 #include "UUCByteArray.h"
 
-#define CKA_CONTAINER_NAME        CKA_VENDOR_DEFINED + 1
-#define CKA_CONTAINER_INDEX        CKA_VENDOR_DEFINED + 2
-#define CKA_CONTAINER_DEFAULT    CKA_VENDOR_DEFINED + 3
-
 typedef CK_RV (*C_GETFUNCTIONLIST)(CK_FUNCTION_LIST_PTR_PTR ppFunctionList);
 CK_FUNCTION_LIST_PTR g_pFuncList;
 int g_nLogLevel = 5;
