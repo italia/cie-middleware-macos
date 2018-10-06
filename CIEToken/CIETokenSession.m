@@ -6,9 +6,9 @@
 //  Copyright © 2018 IPZS. All rights reserved.
 //
 
-#import "Token.h"
+#import "CIEToken.h"
 
-@implementation TokenSession
+@implementation CIETokenSession
 
 - (TKTokenAuthOperation *)tokenSession:(TKTokenSession *)session beginAuthForOperation:(TKTokenOperation)operation constraint:(TKTokenOperationConstraint)constraint error:(NSError **)error {
     // Insert code here to create an instance of TKTokenAuthOperation based on the specified operation and constraint.

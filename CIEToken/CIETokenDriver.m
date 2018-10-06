@@ -6,12 +6,12 @@
 //  Copyright © 2018 IPZS. All rights reserved.
 //
 
-#import "Token.h"
+#import "CIEToken.h"
 
-@implementation TokenDriver
+@implementation CIETokenDriver
 
 - (TKSmartCardToken *)tokenDriver:(TKSmartCardTokenDriver *)driver createTokenForSmartCard:(TKSmartCard *)smartCard AID:(NSData *)AID error:(NSError **)error {
-    return [[Token alloc] initWithSmartCard:smartCard AID:AID tokenDriver:self error:error];
+    return [[CIEToken alloc] initWithSmartCard:smartCard AID:AID tokenDriver:self error:error];
 }
 
 @end
