@@ -97,6 +97,8 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
             // DAPP
             ias.DAPP();
             
+            progressCallBack(70, "Cambio PIN...");
+            
             ByteArray oldPINBa((BYTE*)szCurrentPIN, strlen(szCurrentPIN));
             
             StatusWord sw = ias.VerifyPIN(oldPINBa);
@@ -217,12 +219,14 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
             
             ias.InitExtAuthKeyParam();
             
-            progressCallBack(20, "Authenticazione...");
+            progressCallBack(40, "Authenticazione...");
             
             ias.DHKeyExchange();
             
             // DAPP
             ias.DAPP();
+            
+            progressCallBack(70, "Sblocco PIN...");
             
             ByteArray pukBa((BYTE*)szPUK, strlen(szPUK));
             

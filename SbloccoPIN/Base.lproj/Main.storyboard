@@ -820,7 +820,7 @@
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="sourceItemView" destination="XfV-VG-RRt" id="VyI-Te-JCr"/>
+                        <outlet property="labelProgress" destination="XfV-VG-RRt" id="dow-Jg-NZi"/>
                         <outlet property="textFieldConfirmPIN" destination="bU5-Iq-VtN" id="EPH-pM-Qmb"/>
                         <outlet property="textFieldNewPIN" destination="0qK-iD-2h6" id="Zae-I1-md7"/>
                         <outlet property="textFieldPUK" destination="gXr-om-eoW" id="8hE-SY-80v"/>
