@@ -16,6 +16,11 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
+		<key>SbloccoPIN.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 		<key>TestCIE.xcscheme</key>
 		<dict>
 			<key>isShown</key>

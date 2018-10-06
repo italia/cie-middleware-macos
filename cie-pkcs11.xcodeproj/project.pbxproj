@@ -92,6 +92,12 @@
 		E570A7782168986B00658AAF /* PINManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E570A7762168986B00658AAF /* PINManager.cpp */; };
 		E570A7792168986B00658AAF /* PINManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E570A7772168986B00658AAF /* PINManager.h */; };
 		E570A77A2168AB9300658AAF /* libcie-pkcs11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */; };
+		E570A7832168B72600658AAF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E570A7822168B72600658AAF /* AppDelegate.m */; };
+		E570A7862168B72600658AAF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E570A7852168B72600658AAF /* ViewController.m */; };
+		E570A7882168B72700658AAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E570A7872168B72700658AAF /* Assets.xcassets */; };
+		E570A78B2168B72700658AAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E570A7892168B72700658AAF /* Main.storyboard */; };
+		E570A78E2168B72700658AAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E570A78D2168B72700658AAF /* main.m */; };
+		E570A7932168B91500658AAF /* libcie-pkcs11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */; };
 		E59B65C2213C06B8007348D5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C1213C06B8007348D5 /* AppDelegate.m */; };
 		E59B65C5213C06B8007348D5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C4213C06B8007348D5 /* ViewController.mm */; };
 		E59B65C7213C06B9007348D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E59B65C6213C06B9007348D5 /* Assets.xcassets */; };
@@ -230,6 +236,16 @@
 		E5707B3921383D1B0054CF16 /* UUCByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCByteArray.h; sourceTree = "<group>"; };
 		E570A7762168986B00658AAF /* PINManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PINManager.cpp; sourceTree = "<group>"; };
 		E570A7772168986B00658AAF /* PINManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PINManager.h; sourceTree = "<group>"; };
+		E570A77F2168B72600658AAF /* SbloccoPIN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SbloccoPIN.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E570A7812168B72600658AAF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E570A7822168B72600658AAF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E570A7842168B72600658AAF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E570A7852168B72600658AAF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E570A7872168B72700658AAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E570A78A2168B72700658AAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E570A78C2168B72700658AAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E570A78D2168B72700658AAF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E570A78F2168B72700658AAF /* SbloccoPIN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SbloccoPIN.entitlements; sourceTree = "<group>"; };
 		E59B65BE213C06B8007348D5 /* AbilitaCIE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbilitaCIE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E59B65C0213C06B8007348D5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E59B65C1213C06B8007348D5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -280,6 +296,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E570A77C2168B72600658AAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E570A7932168B91500658AAF /* libcie-pkcs11.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +472,22 @@
 			path = TestCIE;
 			sourceTree = "<group>";
 		};
+		E570A7802168B72600658AAF /* SbloccoPIN */ = {
+			isa = PBXGroup;
+			children = (
+				E570A7812168B72600658AAF /* AppDelegate.h */,
+				E570A7822168B72600658AAF /* AppDelegate.m */,
+				E570A7842168B72600658AAF /* ViewController.h */,
+				E570A7852168B72600658AAF /* ViewController.m */,
+				E570A7872168B72700658AAF /* Assets.xcassets */,
+				E570A7892168B72700658AAF /* Main.storyboard */,
+				E570A78C2168B72700658AAF /* Info.plist */,
+				E570A78D2168B72700658AAF /* main.m */,
+				E570A78F2168B72700658AAF /* SbloccoPIN.entitlements */,
+			);
+			path = SbloccoPIN;
+			sourceTree = "<group>";
+		};
 		E59B65BF213C06B8007348D5 /* AbilitaCIE */ = {
 			isa = PBXGroup;
 			children = (
@@ -471,6 +511,7 @@
 				E5707B3321383CCA0054CF16 /* TestCIE */,
 				E59B65BF213C06B8007348D5 /* AbilitaCIE */,
 				E54F7D642167A2720026B16D /* CambioPIN */,
+				E570A7802168B72600658AAF /* SbloccoPIN */,
 				E5BE7D8920FE84D200004389 /* Products */,
 				E5BE7DC620FE8A9A00004389 /* Frameworks */,
 				B7FB7DAC107919BD2BEDD28E /* Pods */,
@@ -484,6 +525,7 @@
 				E5707B3221383CCA0054CF16 /* TestCIE */,
 				E59B65BE213C06B8007348D5 /* AbilitaCIE.app */,
 				E54F7D632167A2720026B16D /* CambioPIN.app */,
+				E570A77F2168B72600658AAF /* SbloccoPIN.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -641,6 +683,23 @@
 			productReference = E5707B3221383CCA0054CF16 /* TestCIE */;
 			productType = "com.apple.product-type.tool";
 		};
+		E570A77E2168B72600658AAF /* SbloccoPIN */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E570A7902168B72700658AAF /* Build configuration list for PBXNativeTarget "SbloccoPIN" */;
+			buildPhases = (
+				E570A77B2168B72600658AAF /* Sources */,
+				E570A77C2168B72600658AAF /* Frameworks */,
+				E570A77D2168B72600658AAF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SbloccoPIN;
+			productName = SbloccoPIN;
+			productReference = E570A77F2168B72600658AAF /* SbloccoPIN.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E59B65BD213C06B8007348D5 /* AbilitaCIE */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E59B65D1213C06B9007348D5 /* Build configuration list for PBXNativeTarget "AbilitaCIE" */;
@@ -692,6 +751,9 @@
 					E5707B3121383CCA0054CF16 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
+					E570A77E2168B72600658AAF = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
 					E59B65BD213C06B8007348D5 = {
 						CreatedOnToolsVersion = 9.4.1;
 						SystemCapabilities = {
@@ -728,6 +790,7 @@
 				E5707B3121383CCA0054CF16 /* TestCIE */,
 				E59B65BD213C06B8007348D5 /* AbilitaCIE */,
 				E54F7D622167A2720026B16D /* CambioPIN */,
+				E570A77E2168B72600658AAF /* SbloccoPIN */,
 			);
 		};
 /* End PBXProject section */
@@ -739,6 +802,15 @@
 			files = (
 				E54F7D6C2167A2730026B16D /* Assets.xcassets in Resources */,
 				E54F7D6F2167A2730026B16D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E570A77D2168B72600658AAF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E570A7882168B72700658AAF /* Assets.xcassets in Resources */,
+				E570A78B2168B72700658AAF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,6 +878,16 @@
 			files = (
 				E5707B3521383CCA0054CF16 /* main.cpp in Sources */,
 				E5087AC621661B74007063E6 /* UUCByteArray.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E570A77B2168B72600658AAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E570A7862168B72600658AAF /* ViewController.m in Sources */,
+				E570A78E2168B72700658AAF /* main.m in Sources */,
+				E570A7832168B72600658AAF /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -883,6 +965,14 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
+		E570A7892168B72700658AAF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E570A78A2168B72700658AAF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		E59B65C8213C06B9007348D5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -944,6 +1034,42 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E570A7912168B72700658AAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SbloccoPIN/SbloccoPIN.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				INFOPLIST_FILE = SbloccoPIN/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SbloccoPIN;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E570A7922168B72700658AAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SbloccoPIN/SbloccoPIN.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				INFOPLIST_FILE = SbloccoPIN/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SbloccoPIN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1152,6 +1278,15 @@
 			buildConfigurations = (
 				E5707B3621383CCA0054CF16 /* Debug */,
 				E5707B3721383CCA0054CF16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E570A7902168B72700658AAF /* Build configuration list for PBXNativeTarget "SbloccoPIN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E570A7912168B72700658AAF /* Debug */,
+				E570A7922168B72700658AAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
