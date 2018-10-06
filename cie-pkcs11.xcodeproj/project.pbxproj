@@ -27,6 +27,11 @@
 		E543F955215F6B1D0088CBC5 /* CryptoppUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */; };
 		E543F957215F6B250088CBC5 /* CryptoppUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E543F956215F6B250088CBC5 /* CryptoppUtils.h */; };
 		E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E54EF42F2100D91200E2EADD /* libcryptopp.a */; };
+		E54F7D672167A2720026B16D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E54F7D662167A2720026B16D /* AppDelegate.m */; };
+		E54F7D6A2167A2720026B16D /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E54F7D692167A2720026B16D /* ViewController.mm */; };
+		E54F7D6C2167A2730026B16D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E54F7D6B2167A2730026B16D /* Assets.xcassets */; };
+		E54F7D6F2167A2730026B16D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E54F7D6D2167A2730026B16D /* Main.storyboard */; };
+		E54F7D722167A2730026B16D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E54F7D712167A2730026B16D /* main.m */; };
 		E55BE03B2136CD0300E5F396 /* CacheLib.h in Headers */ = {isa = PBXBuildFile; fileRef = E55BE0392136CD0100E5F396 /* CacheLib.h */; };
 		E55BE03C2136CD0300E5F396 /* CacheLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E55BE03A2136CD0100E5F396 /* CacheLib.cpp */; };
 		E565901F211864470039865C /* Array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5658FF9211864470039865C /* Array.cpp */; };
@@ -84,6 +89,9 @@
 		E5659083211875950039865C /* SHA512.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565906F211875940039865C /* SHA512.cpp */; };
 		E5659084211875950039865C /* sha512.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659070211875940039865C /* sha512.h */; };
 		E5707B3521383CCA0054CF16 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5707B3421383CCA0054CF16 /* main.cpp */; };
+		E570A7782168986B00658AAF /* PINManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E570A7762168986B00658AAF /* PINManager.cpp */; };
+		E570A7792168986B00658AAF /* PINManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E570A7772168986B00658AAF /* PINManager.h */; };
+		E570A77A2168AB9300658AAF /* libcie-pkcs11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */; };
 		E59B65C2213C06B8007348D5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C1213C06B8007348D5 /* AppDelegate.m */; };
 		E59B65C5213C06B8007348D5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C4213C06B8007348D5 /* ViewController.mm */; };
 		E59B65C7213C06B9007348D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E59B65C6213C06B9007348D5 /* Assets.xcassets */; };
@@ -151,6 +159,16 @@
 		E543F956215F6B250088CBC5 /* CryptoppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptoppUtils.h; sourceTree = "<group>"; };
 		E54EF42F2100D91200E2EADD /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcryptopp.a; sourceTree = "<group>"; };
 		E54EF4312100D99500E2EADD /* Cryptopp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Cryptopp; sourceTree = "<group>"; };
+		E54F7D632167A2720026B16D /* CambioPIN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CambioPIN.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E54F7D652167A2720026B16D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E54F7D662167A2720026B16D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E54F7D682167A2720026B16D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E54F7D692167A2720026B16D /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		E54F7D6B2167A2730026B16D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E54F7D6E2167A2730026B16D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E54F7D702167A2730026B16D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E54F7D712167A2730026B16D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E54F7D732167A2730026B16D /* CambioPIN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CambioPIN.entitlements; sourceTree = "<group>"; };
 		E55BE0392136CD0100E5F396 /* CacheLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheLib.h; sourceTree = "<group>"; };
 		E55BE03A2136CD0100E5F396 /* CacheLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CacheLib.cpp; sourceTree = "<group>"; };
 		E5658FF9211864470039865C /* Array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Array.cpp; sourceTree = "<group>"; };
@@ -210,6 +228,8 @@
 		E5707B3221383CCA0054CF16 /* TestCIE */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestCIE; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5707B3421383CCA0054CF16 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		E5707B3921383D1B0054CF16 /* UUCByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCByteArray.h; sourceTree = "<group>"; };
+		E570A7762168986B00658AAF /* PINManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PINManager.cpp; sourceTree = "<group>"; };
+		E570A7772168986B00658AAF /* PINManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PINManager.h; sourceTree = "<group>"; };
 		E59B65BE213C06B8007348D5 /* AbilitaCIE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbilitaCIE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E59B65C0213C06B8007348D5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E59B65C1213C06B8007348D5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -248,6 +268,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E54F7D602167A2720026B16D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E570A77A2168AB9300658AAF /* libcie-pkcs11.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5707B2F21383CCA0054CF16 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -293,6 +321,22 @@
 				E50A8A09213BE053006A000D /* AbilitaCIE.mm */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		E54F7D642167A2720026B16D /* CambioPIN */ = {
+			isa = PBXGroup;
+			children = (
+				E54F7D652167A2720026B16D /* AppDelegate.h */,
+				E54F7D662167A2720026B16D /* AppDelegate.m */,
+				E54F7D682167A2720026B16D /* ViewController.h */,
+				E54F7D692167A2720026B16D /* ViewController.mm */,
+				E54F7D6B2167A2730026B16D /* Assets.xcassets */,
+				E54F7D6D2167A2730026B16D /* Main.storyboard */,
+				E54F7D702167A2730026B16D /* Info.plist */,
+				E54F7D712167A2730026B16D /* main.m */,
+				E54F7D732167A2730026B16D /* CambioPIN.entitlements */,
+			);
+			path = CambioPIN;
 			sourceTree = "<group>";
 		};
 		E5658FF8211864470039865C /* Util */ = {
@@ -348,6 +392,8 @@
 				E5659045211875760039865C /* ExtAuthKey.cpp */,
 				E5659046211875760039865C /* IAS.cpp */,
 				E5659047211875760039865C /* IAS.h */,
+				E570A7762168986B00658AAF /* PINManager.cpp */,
+				E570A7772168986B00658AAF /* PINManager.h */,
 			);
 			path = CSP;
 			sourceTree = "<group>";
@@ -424,6 +470,7 @@
 				E5BE7D8A20FE84D200004389 /* cie-pkcs11 */,
 				E5707B3321383CCA0054CF16 /* TestCIE */,
 				E59B65BF213C06B8007348D5 /* AbilitaCIE */,
+				E54F7D642167A2720026B16D /* CambioPIN */,
 				E5BE7D8920FE84D200004389 /* Products */,
 				E5BE7DC620FE8A9A00004389 /* Frameworks */,
 				B7FB7DAC107919BD2BEDD28E /* Pods */,
@@ -436,6 +483,7 @@
 				E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */,
 				E5707B3221383CCA0054CF16 /* TestCIE */,
 				E59B65BE213C06B8007348D5 /* AbilitaCIE.app */,
+				E54F7D632167A2720026B16D /* CambioPIN.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -525,6 +573,7 @@
 				E5BE7DB620FE853800004389 /* PKCS11Functions.h in Headers */,
 				E5659041211864470039865C /* util.h in Headers */,
 				E5BE7DAC20FE853800004389 /* CardTemplate.h in Headers */,
+				E570A7792168986B00658AAF /* PINManager.h in Headers */,
 				E5659020211864470039865C /* Array.h in Headers */,
 				E5BE7DB220FE853800004389 /* Mechanism.h in Headers */,
 				E5659074211875950039865C /* ASNParser.h in Headers */,
@@ -558,6 +607,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		E54F7D622167A2720026B16D /* CambioPIN */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E54F7D742167A2730026B16D /* Build configuration list for PBXNativeTarget "CambioPIN" */;
+			buildPhases = (
+				E54F7D5F2167A2720026B16D /* Sources */,
+				E54F7D602167A2720026B16D /* Frameworks */,
+				E54F7D612167A2720026B16D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CambioPIN;
+			productName = CambioPIN;
+			productReference = E54F7D632167A2720026B16D /* CambioPIN.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E5707B3121383CCA0054CF16 /* TestCIE */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5707B3821383CCA0054CF16 /* Build configuration list for PBXNativeTarget "TestCIE" */;
@@ -620,6 +686,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = IPZS;
 				TargetAttributes = {
+					E54F7D622167A2720026B16D = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
 					E5707B3121383CCA0054CF16 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -658,11 +727,21 @@
 				E5BE7D8720FE84D200004389 /* cie-pkcs11 */,
 				E5707B3121383CCA0054CF16 /* TestCIE */,
 				E59B65BD213C06B8007348D5 /* AbilitaCIE */,
+				E54F7D622167A2720026B16D /* CambioPIN */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E54F7D612167A2720026B16D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E54F7D6C2167A2730026B16D /* Assets.xcassets in Resources */,
+				E54F7D6F2167A2730026B16D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E59B65BC213C06B8007348D5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -711,6 +790,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E54F7D5F2167A2720026B16D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E54F7D6A2167A2720026B16D /* ViewController.mm in Sources */,
+				E54F7D722167A2730026B16D /* main.m in Sources */,
+				E54F7D672167A2720026B16D /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5707B2E21383CCA0054CF16 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -741,6 +830,7 @@
 				E5659032211864470039865C /* log.cpp in Sources */,
 				E5659054211875830039865C /* APDU.cpp in Sources */,
 				E5659071211875950039865C /* AES.cpp in Sources */,
+				E570A7782168986B00658AAF /* PINManager.cpp in Sources */,
 				E565907D211875950039865C /* RSA.cpp in Sources */,
 				E5BE7DB320FE853800004389 /* P11Object.cpp in Sources */,
 				E5659048211875760039865C /* ExtAuthKey.cpp in Sources */,
@@ -785,6 +875,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		E54F7D6D2167A2730026B16D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E54F7D6E2167A2730026B16D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		E59B65C8213C06B9007348D5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -796,6 +894,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E54F7D752167A2730026B16D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CambioPIN/CambioPIN.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				INFOPLIST_FILE = CambioPIN/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CambioPIN;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E54F7D762167A2730026B16D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CambioPIN/CambioPIN.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				INFOPLIST_FILE = CambioPIN/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CambioPIN;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		E5707B3621383CCA0054CF16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1004,6 +1138,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E54F7D742167A2730026B16D /* Build configuration list for PBXNativeTarget "CambioPIN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E54F7D752167A2730026B16D /* Debug */,
+				E54F7D762167A2730026B16D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E5707B3821383CCA0054CF16 /* Build configuration list for PBXNativeTarget "TestCIE" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

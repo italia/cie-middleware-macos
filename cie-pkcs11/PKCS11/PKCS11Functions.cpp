@@ -127,21 +127,22 @@ __attribute__((destructor)) void DllMainDetach()
         Log.write("%s","Forzatura C_Finalize");
         C_Finalize(NULL);
         bP11Initialized = false;
+        
+        CSlot::DeleteSlotList();
+        CCardTemplate::DeleteTemplateList();
+        try
+        {
+            p11slotEvent.set();
+        }
+        catch(...)
+        {
+            printf("event set error");
+        }
     }
+    
     //xmlCleanup();
     bModuleInit=false;
     bP11Terminate=true;
-    
-//    CSlot::DeleteSlotList();
-    CCardTemplate::DeleteTemplateList();
-    try
-    {
-        p11slotEvent.set();
-    }
-    catch(...)
-    {
-        printf("event set error");
-    }
 }
 
 #endif

@@ -669,22 +669,46 @@ namespace p11 {
 		}
 	}
 
+#define SCARD_ATTR_VALUE(Class, Tag) ((((uint32_t)(Class)) << 16) | ((uint32_t)(Tag)))
+#define SCARD_CLASS_ICC_STATE       9   /**< ICC State specific definitions */
+#define SCARD_ATTR_ATR_STRING SCARD_ATTR_VALUE(SCARD_CLASS_ICC_STATE, 0x0303) /**< Answer to reset (ATR) string. */
+
+    
 	ByteDynArray CSlot::GetATR()
 	{
 		init_func
 
+//        uint32_t atrLen = 40;
+//        char ATR[40];
+//        if(SCardGetAttrib(CSlot::Context, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) == SCARD_S_SUCCESS)
+//        {
+//            Log.writeBinData((BYTE*)ATR, atrLen);
+//            return ByteArray((BYTE*)ATR, atrLen);
+//        }
+//        else
+//        {
+//            Log.write("ATR Letto: -nessuna carta inserita-");
+//            return ByteArray();
+//        }
+//
         SCARD_READERSTATE state;
-		state.szReader = this->szName.data();
-		SCardGetStatusChange(CSlot::Context, 0, &state, 1);
-		if (state.cbAtr > 0) {
-			Log.write("ATR Letto:");
-			Log.writeBinData(state.rgbAtr, state.cbAtr);
-			return ByteArray(state.rgbAtr, state.cbAtr);
-		}
-		else {			
-			Log.write("ATR Letto: -nessuna carta inserita-");
-			return ByteArray();
-		}
+        state.szReader = this->szName.data();
+        long ret = SCardGetStatusChange(CSlot::Context, 0, &state, 1);
+        
+        printf("\nSCardGetStatusChange: %x\n", ret);
+        
+        if (state.cbAtr > 0) {
+            Log.write("ATR Letto:");
+            if(state.cbAtr > 32)
+                state.cbAtr = 32;
+            
+            Log.writeBinData(state.rgbAtr, state.cbAtr);
+            return ByteArray(state.rgbAtr, state.cbAtr);
+        }
+        else {            
+            Log.write("ATR Letto: -nessuna carta inserita-");
+            return ByteArray();
+        }
 	}
 
 	void CSlot::GetATR(ByteArray &ATR) {
