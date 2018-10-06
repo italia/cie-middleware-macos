@@ -7,6 +7,10 @@
 //
 #include "../PKCS11/cryptoki.h"
 
+#define SCARD_ATTR_VALUE(Class, Tag) ((((uint32_t)(Class)) << 16) | ((uint32_t)(Tag)))
+#define SCARD_CLASS_ICC_STATE       9   /**< ICC State specific definitions */
+#define SCARD_ATTR_ATR_STRING SCARD_ATTR_VALUE(SCARD_CLASS_ICC_STATE, 0x0303) /**< Answer to reset (ATR) string. */
+
 /* CK_NOTIFY is an application callback that processes events */
 typedef CK_CALLBACK_FUNCTION(CK_RV, PROGRESS_CALLBACK)(
                                                const int progress,

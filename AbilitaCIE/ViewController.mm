@@ -66,34 +66,37 @@ CK_RV progressCallback(const int progress,
         void* hModule = dlopen(szCryptoki, RTLD_LAZY);
         if(!hModule)
         {
-            exit(1);
+            [self showMessage: @"Middleware non trovato" withTitle:@"Errore inaspettato" exitAfter:true];
+            return;
         }
         
         C_GETFUNCTIONLIST pfnGetFunctionList=(C_GETFUNCTIONLIST)dlsym(hModule, "C_GetFunctionList");
         if(!pfnGetFunctionList)
         {
             dlclose(hModule);
-            exit(1);
+            [self showMessage: @"Il middleware non è valido" withTitle:@"Errore inaspettato" exitAfter:true];
+            return;
         }
         
         AbilitaCIEfn pfnAbilitaCIE = (AbilitaCIEfn)dlsym(hModule, "AbilitaCIE");
         if(!pfnAbilitaCIE)
         {
             dlclose(hModule);
-            exit(1);
+            [self showMessage: @"Funzione AbilitaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:true];
+            return;
         }
         
-        char* szPIN = NULL;
+        char* szPAN = NULL;
         
         NSArray *args = [[NSProcessInfo processInfo] arguments];
         
         if(args.count > 1)
-            szPIN = (char*)[((NSString*)[args objectAtIndex:1]) cStringUsingEncoding:NSUTF8StringEncoding];
+            szPAN = (char*)[((NSString*)[args objectAtIndex:1]) cStringUsingEncoding:NSUTF8StringEncoding];
         
         int attempts = -1;
         
         
-        long ret = pfnAbilitaCIE(szPIN, [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback);
+        long ret = pfnAbilitaCIE(szPAN, [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback);
 
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -130,38 +133,28 @@ CK_RV progressCallback(const int progress,
     });
 }
 
+- (IBAction)onCancel:(id)sender
+{
+    exit(0);
+}
+
 - (void) showMessage: (NSString*) message withTitle: (NSString*) title exitAfter: (bool) exitAfter
 {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"Ok"];
-    [alert setMessageText:title];
-    [alert setInformativeText:message];
-    [alert setAlertStyle:NSWarningAlertStyle];
+    __block bool exit = exitAfter;
     
-//    alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
-//        if (returnCode == NSAlertSecondButtonReturn) {
-//            NSLog(@"Delete was cancelled!");
-//            return;
-//        }
-//
-//        NSLog(@"This project was deleted!");
-//    }];
-    
-    [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:&exitAfter];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"Ok"];
+        [alert setMessageText:title];
+        [alert setInformativeText:message];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        
+        [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:&exit];
+    });
 }
 
 - (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-    /*
-     The following options are deprecated in 10.9. Use NSAlertFirstButtonReturn instead
-     NSAlertDefaultReturn = 1,
-     NSAlertAlternateReturn = 0,
-     NSAlertOtherReturn = -1,
-     NSAlertErrorReturn = -2
-     NSOKButton = 1, // NSModalResponseOK should be used
-     NSCancelButton = 0 // NSModalResponseCancel should be used
-     */
-    
     if(contextInfo)
         exit(0);
 }

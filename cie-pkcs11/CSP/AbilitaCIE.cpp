@@ -19,9 +19,7 @@
 extern CModuleInfo moduleInfo;
 
 
-#define SCARD_ATTR_VALUE(Class, Tag) ((((uint32_t)(Class)) << 16) | ((uint32_t)(Tag)))
-#define SCARD_CLASS_ICC_STATE       9   /**< ICC State specific definitions */
-#define SCARD_ATTR_ATR_STRING SCARD_ATTR_VALUE(SCARD_CLASS_ICC_STATE, 0x0303) /**< Answer to reset (ATR) string. */
+
 
 int TokenTransmitCallback(safeConnection *data, uint8_t *apdu, DWORD apduSize, uint8_t *resp, DWORD *respSize);
 
@@ -71,7 +69,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
 		for (; curreader[0] != 0; curreader += strnlen(curreader, len) + 1)
         {
             safeConnection conn(hSC, curreader, SCARD_SHARE_SHARED);
-            if (conn.hCard == NULL)
+            if (!conn.hCard)
                 continue;
 
             uint32_t atrLen = 40;
@@ -206,9 +204,6 @@ DWORD CardAuthenticateEx(IAS*       ias,
     
     
     // leggo i parametri di dominio DH e della chiave di extauth
-    if (ias->Callback != nullptr)
-        ias->Callback(0, "Init", ias->CallbackData);
-    
     ias->InitDHParam();
     
     ByteDynArray dappData;
@@ -216,21 +211,14 @@ DWORD CardAuthenticateEx(IAS*       ias,
     
     ias->InitExtAuthKeyParam();
     
-    // faccio lo scambio di chiavi DH
-    if (ias->Callback != nullptr)
-        ias->Callback(1, "DiffieHellman", ias->CallbackData);
     
     ias->DHKeyExchange();
-    // DAPP
-    if (ias->Callback != nullptr)
-        ias->Callback(2, "DAPP", ias->CallbackData);
     
+    // DAPP
     ias->DAPP();
     
     // verifica PIN
     StatusWord sw;
-    if (ias->Callback != nullptr)
-        ias->Callback(3, "Verify PIN", ias->CallbackData);
     if (PinId == ROLE_USER) {
         
         ByteDynArray PIN;
