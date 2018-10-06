@@ -24,7 +24,7 @@
 
 extern "C" {
     CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNuovoPIN, int* pAttempts, PROGRESS_CALLBACK progressCallBack);
-    CK_RV CK_ENTRY SbloccaPIN(const char*  szPUK, const char*  szNuovoPIN, int* pAttempts, PROGRESS_CALLBACK progressCallBack);
+    CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNuovoPIN, int* pAttempts, PROGRESS_CALLBACK progressCallBack);
 }
 
 int TokenTransmitCallback(safeConnection *data, uint8_t *apdu, DWORD apduSize, uint8_t *resp, DWORD *respSize);
@@ -102,20 +102,20 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
             StatusWord sw = ias.VerifyPIN(oldPINBa);
             
             if (sw == 0x6983) {
-                return SCARD_W_CHV_BLOCKED;
+                return CKR_PIN_LOCKED;
             }
             if (sw >= 0x63C0 && sw <= 0x63CF) {
                 if (pAttempts!=nullptr)
                     *pAttempts = sw - 0x63C0;
                 
-                return SCARD_W_WRONG_CHV;
+                return CKR_PIN_INCORRECT;
             }
             
             if (sw == 0x6700) {
-                return SCARD_W_WRONG_CHV;
+                return CKR_PIN_INCORRECT;
             }
             if (sw == 0x6300)
-                return SCARD_W_WRONG_CHV;
+                return CKR_PIN_INCORRECT;
             if (sw != 0x9000) {
                 throw scard_error(sw);
             }
@@ -157,7 +157,7 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
 }
 
 
-CK_RV CK_ENTRY SbloccaPIN(const char*  szPUK, const char*  szNewPIN, int* pAttempts, PROGRESS_CALLBACK progressCallBack)
+CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttempts, PROGRESS_CALLBACK progressCallBack)
 {
     try
     {
@@ -212,14 +212,8 @@ CK_RV CK_ENTRY SbloccaPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
             
             foundCIE = true;
     
-            ias.SelectAID_IAS();
-            ias.SelectAID_CIE();
-            
             // leggo i parametri di dominio DH e della chiave di extauth
             ias.InitDHParam();
-            
-            ByteDynArray dappData;
-            ias.ReadDappPubKey(dappData);
             
             ias.InitExtAuthKeyParam();
             
@@ -235,20 +229,20 @@ CK_RV CK_ENTRY SbloccaPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
             StatusWord sw = ias.VerifyPUK(pukBa);
             
             if (sw == 0x6983) {
-                return SCARD_W_CHV_BLOCKED;
+                return CKR_PIN_LOCKED;
             }
             if (sw >= 0x63C0 && sw <= 0x63CF) {
                 if (pAttempts!=nullptr)
                     *pAttempts = sw - 0x63C0;
                 
-                return SCARD_W_WRONG_CHV;
+                return CKR_PIN_INCORRECT;
             }
             
             if (sw == 0x6700) {
-                return SCARD_W_WRONG_CHV;
+                return CKR_PIN_INCORRECT;
             }
             if (sw == 0x6300)
-                return SCARD_W_WRONG_CHV;
+                return CKR_PIN_INCORRECT;
             if (sw != 0x9000) {
                 throw scard_error(sw);
             }
