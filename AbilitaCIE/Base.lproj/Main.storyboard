@@ -747,6 +747,9 @@
                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                     </allowedInputSourceLocales>
                                 </secureTextFieldCell>
+                                <connections>
+                                    <action selector="performClick:" target="uD1-9P-kez" id="4yD-hI-80B"/>
+                                </connections>
                             </secureTextField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uD1-9P-kez">
                                 <rect key="frame" x="137" y="52" width="78" height="32"/>

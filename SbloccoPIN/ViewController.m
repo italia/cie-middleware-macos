@@ -150,9 +150,9 @@ CK_RV progressCallback(const int progress,
     });
 }
 
-- (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(bool *)contextInfo
 {
-    if(contextInfo)
+    if(*contextInfo)
         exit(0);
 }
 
