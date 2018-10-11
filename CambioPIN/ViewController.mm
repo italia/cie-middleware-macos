@@ -62,6 +62,43 @@ CK_RV progressCallback(const int progress,
         return;
     }
     
+    if([newpin isEqualToString:pin])
+    {
+        [self showMessage: @"Il vecchio e nuovo PIN non possoo essere uguali" withTitle:@"PIN identici" exitAfter:false];
+        return;
+    }
+    
+    unichar c = [newpin characterAtIndex:0];
+    unichar lastchar = c;
+    
+    int i = 1;
+    for(i = 1; i < newpin.length && c == lastchar; i++)
+    {
+        lastchar = c;
+        c = [newpin characterAtIndex:i];
+    }
+    
+    if(c == lastchar)
+    {
+        [self showMessage: @"Il nuovo PIN non deve essere composto da cifre uguali" withTitle:@"PIN non valido" exitAfter:false];
+        return;
+    }
+    
+    c = [newpin characterAtIndex:0];
+    lastchar = c - 1;
+    
+    for(i = 1; i < newpin.length && c == lastchar + 1; i++)
+    {
+        lastchar = c;
+        c = [newpin characterAtIndex:i];
+    }
+    
+    if(c == lastchar + 1)
+    {
+        [self showMessage: @"Il nuovo PIN non deve essere composto da cifre consecutive" withTitle:@"PIN non valido" exitAfter:false];
+        return;
+    }
+    
     [((NSControl*)sender) setEnabled:NO];
     
     const char* szCryptoki = "libcie-pkcs11.dylib";
@@ -87,7 +124,7 @@ CK_RV progressCallback(const int progress,
         if(!pfnCambioPIN)
         {
             dlclose(hModule);
-            [self showMessage: @"Funzione CambioPIN non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:true];
+            [self showMessage: @"Funzione CambioPIN non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:false];
             return;
         }
         
@@ -123,7 +160,7 @@ CK_RV progressCallback(const int progress,
                     break;
                     
                 case CKR_OK:
-                    [self showMessage:@"Il PIN è stato modificato con successo" withTitle:@"Operazione completata" exitAfter:true];
+                    [self showMessage:@"Il PIN è stato modificato con successo" withTitle:@"Operazione completata" exitAfter:false];
                     break;
             }
         });

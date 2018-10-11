@@ -81,6 +81,10 @@ void* hModule;
                         [self showMessage:@"CIE disabilitata con successo" withTitle:@"CIE disabilitata" exitAfter:NO];
                         break;
                         
+                    case CKR_TOKEN_NOT_PRESENT:
+                        [self showMessage:@"CIE non presente sul lettore" withTitle:@"Abilitazione CIE" exitAfter:false];
+                        break;
+                        
                     default:
                         [self showMessage:@"Impossibile disabilitare la CIE" withTitle:@"CIE non disabilitata" exitAfter:NO];
                         break;
@@ -116,7 +120,7 @@ CK_RV progressCallback(const int progress,
     if(!pfnVerificaCIE)
     {
         dlclose(hModule);
-        [self showMessage: @"Funzione VerificaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:true];
+        [self showMessage: @"Funzione VerificaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:NO];
         return false;
     }
     
@@ -131,8 +135,12 @@ CK_RV progressCallback(const int progress,
             return true;
             break;
             
+        case CKR_TOKEN_NOT_PRESENT:
+            [self showMessage:@"CIE non presente sul lettore" withTitle:@"Verifica CIE" exitAfter:false];
+            break;
+            
         default:
-            [self showMessage:@"Errore nella verifica della CIE" withTitle:@"Verifica CIE" exitAfter:YES];
+            [self showMessage:@"Errore nella verifica della CIE" withTitle:@"Verifica CIE" exitAfter:false];
             break;
     }
     
@@ -151,7 +159,7 @@ CK_RV progressCallback(const int progress,
         if(!pfnAbilitaCIE)
         {
             dlclose(hModule);
-            [self showMessage: @"Funzione AbilitaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:true];
+            [self showMessage: @"Funzione AbilitaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:NO];
             return;
         }
         
@@ -195,7 +203,7 @@ CK_RV progressCallback(const int progress,
                     break;
                     
                 case CKR_OK:
-                    [self showMessage:@"L'abilitazione della CIE è avvennuta con successo" withTitle:@"CIE Abilitata" exitAfter:true];
+                    [self showMessage:@"L'abilitazione della CIE è avvennuta con successo" withTitle:@"CIE Abilitata" exitAfter:NO];
                     break;
             }
         });
