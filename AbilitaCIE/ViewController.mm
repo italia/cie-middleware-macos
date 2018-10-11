@@ -48,50 +48,45 @@ void* hModule;
         exit(1);
     }
     
-    NSArray *args = [[NSProcessInfo processInfo] arguments];
-    
-//    if(args.count < 2)
-//    {
-        if([self checkEnabled])
+    if([self checkEnabled])
+    {
+        NSAlert* confirmAlert = [NSAlert alertWithMessageText: @"CIE già abilitata"
+                                                defaultButton:@"No"
+                                              alternateButton:@"Si"
+                                                  otherButton:nil
+                                    informativeTextWithFormat:@"La CIE sul lettore è già abilitata. Vuoi disabilitarla?"];
+        
+        if([confirmAlert runModal] == NSAlertDefaultReturn)
         {
-            NSAlert* confirmAlert = [NSAlert alertWithMessageText: @"CIE già abilitata"
-                                                    defaultButton:@"No"
-                                                  alternateButton:@"Si"
-                                                      otherButton:nil
-                                        informativeTextWithFormat:@"La CIE sul lettore è già abilitata. Vuoi disabilitarla?"];
-            
-            if([confirmAlert runModal] == NSAlertDefaultReturn)
+            exit(1);
+        }
+        else
+        {
+            DisabilitaCIEfn pfnDisabilitaCIE = (VerificaCIEAbilitatafn)dlsym(hModule, "DisabilitaCIE");
+            if(!pfnDisabilitaCIE)
             {
-                exit(1);
+                dlclose(hModule);
+                [self showMessage: @"Funzione DisabilitaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:true];
+                return;
             }
-            else
-            {
-                DisabilitaCIEfn pfnDisabilitaCIE = (VerificaCIEAbilitatafn)dlsym(hModule, "DisabilitaCIE");
-                if(!pfnDisabilitaCIE)
-                {
-                    dlclose(hModule);
-                    [self showMessage: @"Funzione DisabilitaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:true];
-                    return;
-                }
-                
-                CK_RV rv = pfnDisabilitaCIE();
-                
-                switch (rv) {
-                    case CKR_OK:
-                        [self showMessage:@"CIE disabilitata con successo" withTitle:@"CIE disabilitata" exitAfter:NO];
-                        break;
-                        
-                    case CKR_TOKEN_NOT_PRESENT:
-                        [self showMessage:@"CIE non presente sul lettore" withTitle:@"Abilitazione CIE" exitAfter:false];
-                        break;
-                        
-                    default:
-                        [self showMessage:@"Impossibile disabilitare la CIE" withTitle:@"CIE non disabilitata" exitAfter:NO];
-                        break;
-                }
+            
+            CK_RV rv = pfnDisabilitaCIE();
+            
+            switch (rv) {
+                case CKR_OK:
+                    [self showMessage:@"CIE disabilitata con successo" withTitle:@"CIE disabilitata" exitAfter:NO];
+                    break;
+                    
+                case CKR_TOKEN_NOT_PRESENT:
+                    [self showMessage:@"CIE non presente sul lettore" withTitle:@"Abilitazione CIE" exitAfter:false];
+                    break;
+                    
+                default:
+                    [self showMessage:@"Impossibile disabilitare la CIE" withTitle:@"CIE non disabilitata" exitAfter:NO];
+                    break;
             }
         }
-//    }
+    }
 }
 
 - (void)setRepresentedObject:(id)representedObject {
