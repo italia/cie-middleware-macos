@@ -21,6 +21,8 @@ typedef CK_RV (*AbilitaCIEfn)(const char*  szPAN,
                               int* attempts,
                               PROGRESS_CALLBACK progressCallBack);
 
+typedef CK_RV (*VerificaCIEAbilitatafn)();
+typedef CK_RV (*DisabilitaCIEfn)();
 
 //typedef CK_RV abilitaCIE(const char*  szPAN, const char*  szPIN, PROGRESS_CALLBACK progressCallBack)
 

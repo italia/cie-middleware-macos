@@ -103,6 +103,7 @@ public:
 	void GetFirstPIN(ByteDynArray &PIN);
 	void SetCache(const char *PAN, ByteArray &certificate, ByteArray &FirstPIN);
 	bool IsEnrolled();
+    bool Unenroll();
 	void IconaSbloccoPIN();
 
 	void VerificaSOD(ByteArray &SOD, std::map<uint8_t, ByteDynArray> &hashSet);

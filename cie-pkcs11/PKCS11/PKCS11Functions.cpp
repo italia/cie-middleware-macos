@@ -123,6 +123,8 @@ __attribute__((constructor)) void DllMainAttach()
 
 __attribute__((destructor)) void DllMainDetach()
 {
+    Log.write("%s","DllMainDetach");
+    
     if (bP11Initialized) {
         Log.write("%s","Forzatura C_Finalize");
         C_Finalize(NULL);
@@ -365,7 +367,7 @@ CK_RV CK_ENTRY C_Finalize(CK_VOID_PTR pReserved)
 {
 	init_p11_func
 	std::unique_lock<std::mutex> lock(p11Mutex);
-
+ 
 	logParam(pReserved)
 
 		if (pReserved != NULL)

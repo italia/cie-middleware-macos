@@ -23,6 +23,8 @@ CK_FUNCTION_LIST_PTR g_pFuncList;
 
 NSTextField* labelProgressPointer;
 
+void* hModule;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -33,6 +35,60 @@ NSTextField* labelProgressPointer;
     labelProgressPointer = _labelProgress;
 }
 
+- (void) viewDidAppear
+{
+    [super viewDidAppear];
+    
+    const char* szCryptoki = "libcie-pkcs11.dylib";
+    
+    hModule = dlopen(szCryptoki, RTLD_LAZY);
+    if(!hModule)
+    {
+        [self showMessage: @"Middleware non trovato" withTitle:@"Errore inaspettato" exitAfter:true];
+        exit(1);
+    }
+    
+    NSArray *args = [[NSProcessInfo processInfo] arguments];
+    
+//    if(args.count < 2)
+//    {
+        if([self checkEnabled])
+        {
+            NSAlert* confirmAlert = [NSAlert alertWithMessageText: @"CIE già abilitata"
+                                                    defaultButton:@"No"
+                                                  alternateButton:@"Si"
+                                                      otherButton:nil
+                                        informativeTextWithFormat:@"La CIE sul lettore è già abilitata. Vuoi disabilitarla?"];
+            
+            if([confirmAlert runModal] == NSAlertDefaultReturn)
+            {
+                exit(1);
+            }
+            else
+            {
+                DisabilitaCIEfn pfnDisabilitaCIE = (VerificaCIEAbilitatafn)dlsym(hModule, "DisabilitaCIE");
+                if(!pfnDisabilitaCIE)
+                {
+                    dlclose(hModule);
+                    [self showMessage: @"Funzione DisabilitaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:true];
+                    return;
+                }
+                
+                CK_RV rv = pfnDisabilitaCIE();
+                
+                switch (rv) {
+                    case CKR_OK:
+                        [self showMessage:@"CIE disabilitata con successo" withTitle:@"CIE disabilitata" exitAfter:NO];
+                        break;
+                        
+                    default:
+                        [self showMessage:@"Impossibile disabilitare la CIE" withTitle:@"CIE non disabilitata" exitAfter:NO];
+                        break;
+                }
+            }
+        }
+//    }
+}
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
@@ -53,30 +109,43 @@ CK_RV progressCallback(const int progress,
     return 0;
 }
 
+- (bool) checkEnabled
+{
+    // check se abilitata ossia se cache presente
+    VerificaCIEAbilitatafn pfnVerificaCIE = (VerificaCIEAbilitatafn)dlsym(hModule, "VerificaCIEAbilitata");
+    if(!pfnVerificaCIE)
+    {
+        dlclose(hModule);
+        [self showMessage: @"Funzione VerificaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:true];
+        return false;
+    }
+    
+    CK_RV rv = pfnVerificaCIE();
+    
+    switch (rv) {
+        case CKR_OK:
+            return false;
+            break;
+        
+        case CKR_CANCEL:
+            return true;
+            break;
+            
+        default:
+            [self showMessage:@"Errore nella verifica della CIE" withTitle:@"Verifica CIE" exitAfter:YES];
+            break;
+    }
+    
+    return false;
+}
+           
 - (IBAction)onAbilita:(id)sender
 {
     NSString* pin = self.textFieldPIN.stringValue;
     
     [((NSControl*)sender) setEnabled:NO];
     
-    const char* szCryptoki = "libcie-pkcs11.dylib";
-    
     dispatch_async(dispatch_get_global_queue(0,0), ^{
-        
-        void* hModule = dlopen(szCryptoki, RTLD_LAZY);
-        if(!hModule)
-        {
-            [self showMessage: @"Middleware non trovato" withTitle:@"Errore inaspettato" exitAfter:true];
-            return;
-        }
-        
-        C_GETFUNCTIONLIST pfnGetFunctionList=(C_GETFUNCTIONLIST)dlsym(hModule, "C_GetFunctionList");
-        if(!pfnGetFunctionList)
-        {
-            dlclose(hModule);
-            [self showMessage: @"Il middleware non è valido" withTitle:@"Errore inaspettato" exitAfter:true];
-            return;
-        }
         
         AbilitaCIEfn pfnAbilitaCIE = (AbilitaCIEfn)dlsym(hModule, "AbilitaCIE");
         if(!pfnAbilitaCIE)

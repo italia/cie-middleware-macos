@@ -16,20 +16,20 @@ safeTransaction::safeTransaction(safeConnection &conn, DWORD dwDisposition) {
 	this->dwDisposition = dwDisposition;
 	locked = false;
 
-	auto td = std::make_shared<struct transData>();
-	td->context = conn.hContext;
-	td->started = false;
-	auto thread = std::thread([td]() {
-		for (int i = 0; i < 10; i++) {
-			sleep(500);
-			if (td->started) {
-				return 0;
-			}
-		}
-		SCardCancel(td->context);
-		return 0;
-	});
-	thread.detach();
+//    auto td = std::make_shared<struct transData>();
+//    td->context = conn.hContext;
+//    td->started = false;
+//    auto thread = std::thread([td]() {
+//        for (int i = 0; i < 10; i++) {
+//            sleep(500);
+//            if (td->started) {
+//                return 0;
+//            }
+//        }
+//        SCardCancel(td->context);
+//        return 0;
+//    });
+//    thread.detach();
 
 
 	if (SCardBeginTransaction(hCard) != SCARD_S_SUCCESS) {
@@ -38,7 +38,7 @@ safeTransaction::safeTransaction(safeConnection &conn, DWORD dwDisposition) {
 		return;
 	}
 	else {
-		td->started = true;
+//        td->started = true;
 		locked = true;
 	}
 }

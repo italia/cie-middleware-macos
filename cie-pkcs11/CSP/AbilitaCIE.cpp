@@ -34,6 +34,113 @@ DWORD CardAuthenticateEx(IAS*       ias,
 
 extern "C" {
     CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack);
+    CK_RV CK_ENTRY VerificaCIEAbilitata();
+    CK_RV CK_ENTRY DisabilitaCIE();
+}
+
+CK_RV CK_ENTRY VerificaCIEAbilitata()
+{
+    DWORD len = MAX_PATH;
+    
+    SCARDCONTEXT hSC;
+    
+    long nRet = SCardEstablishContext(SCARD_SCOPE_USER, nullptr, nullptr, &hSC);
+    if(nRet != SCARD_S_SUCCESS)
+        return CKR_DEVICE_ERROR;
+    
+    char readers[MAX_PATH];
+    
+    if (SCardListReaders(hSC, nullptr, (char*)&readers, &len) != SCARD_S_SUCCESS) {
+        return CKR_TOKEN_NOT_PRESENT;
+    }
+    
+    char *curreader = readers;
+    for (; curreader[0] != 0; curreader += strnlen(curreader, len) + 1)
+    {
+        try
+        {
+            safeConnection conn(hSC, curreader, SCARD_SHARE_SHARED);
+            if (!conn.hCard)
+                continue;
+            
+            uint32_t atrLen = 40;
+            char ATR[40];
+            SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen);
+            
+            ByteArray atrBa((BYTE*)ATR, atrLen);
+            
+            IAS ias((CToken::TokenTransmitCallback)TokenTransmitCallback, atrBa);
+            ias.SetCardContext(&conn);
+            ias.SelectAID_IAS();
+            ias.ReadPAN();
+            
+            if(ias.IsEnrolled())
+                return CKR_CANCEL;
+            else
+                return CKR_OK;
+        }
+        catch(...)
+        {
+            
+        }
+    }
+    
+    return CKR_GENERAL_ERROR;
+}
+
+CK_RV CK_ENTRY DisabilitaCIE()
+{
+    DWORD len = MAX_PATH;
+    
+    SCARDCONTEXT hSC;
+    
+    long nRet = SCardEstablishContext(SCARD_SCOPE_USER, nullptr, nullptr, &hSC);
+    if(nRet != SCARD_S_SUCCESS)
+        return CKR_DEVICE_ERROR;
+    
+    char readers[MAX_PATH];
+    
+    if (SCardListReaders(hSC, nullptr, (char*)&readers, &len) != SCARD_S_SUCCESS) {
+        return CKR_TOKEN_NOT_PRESENT;
+    }
+    
+    char *curreader = readers;
+    for (; curreader[0] != 0; curreader += strnlen(curreader, len) + 1)
+    {
+        try
+        {
+            safeConnection conn(hSC, curreader, SCARD_SHARE_SHARED);
+            if (!conn.hCard)
+                continue;
+            
+            uint32_t atrLen = 40;
+            char ATR[40];
+            SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen);
+            
+            ByteArray atrBa((BYTE*)ATR, atrLen);
+            
+            IAS ias((CToken::TokenTransmitCallback)TokenTransmitCallback, atrBa);
+            ias.SetCardContext(&conn);
+            ias.SelectAID_IAS();
+            ias.ReadPAN();
+            
+            if(ias.IsEnrolled())
+            {
+                ias.Unenroll();
+                return CKR_OK;
+            }
+            else
+            {
+                return CKR_FUNCTION_FAILED;
+            }
+        }
+        catch(...)
+        {
+            
+        }
+    }
+    
+    return CKR_GENERAL_ERROR;
 }
 
 CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack)
