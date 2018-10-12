@@ -301,29 +301,33 @@ void showAttributes(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
     CK_BBOOL        bToken        = 0;
     
     char btLabel[256];
+    char btID[256];
     //char szValue[256];
     
     
     CK_ATTRIBUTE    attr[]      = {
         {CKA_PRIVATE, &bPrivate, sizeof(bPrivate)},
         {CKA_TOKEN, &bToken, sizeof(bToken)},
-        {CKA_LABEL, btLabel, 256}//,
+        {CKA_LABEL, btLabel, 256},
+        {CKA_ID, btID, 256}//,
         //{CKA_VALUE, szValue, 256}
     };
     
     CK_RV rv = g_pFuncList->C_GetAttributeValue(hSession, hObject, attr, 3);
-    if (rv != CKR_OK)
-    {
-        error(rv);
-    }
+//    if (rv != CKR_OK)
+//    {
+//        error(rv);
+//    }
     
     btLabel[attr[2].ulValueLen] = 0;
+    btLabel[attr[3].ulValueLen] = 0;
     
     if(g_nLogLevel > 3)
     {
         std::cout << "      - Label: " << btLabel << std::endl;
         std::cout << "      - Private: " << bPrivate << std::endl;
         std::cout << "      - Token: " << bToken << std::endl;
+        std::cout << "      - ID: " << btID << std::endl;
         //std::cout << "      - Value: " << szValue << std::endl;
     }
     
