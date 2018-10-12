@@ -314,8 +314,8 @@ namespace p11 {
 		if (!bP11Initialized)
 			return;
 
-//        if (!Thread.joinable())
-//            Thread = std::thread(slotMonitor, &g_mSlots);
+        if (!Thread.joinable())
+            Thread = std::thread(slotMonitor, &g_mSlots);
 
 	}
 
