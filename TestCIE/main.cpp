@@ -302,6 +302,9 @@ void showAttributes(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
     
     char btLabel[256];
     char btID[256];
+    
+    memset(btID, 0, 256);
+    
     //char szValue[256];
     
     
@@ -313,14 +316,14 @@ void showAttributes(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
         //{CKA_VALUE, szValue, 256}
     };
     
-    CK_RV rv = g_pFuncList->C_GetAttributeValue(hSession, hObject, attr, 3);
+    CK_RV rv = g_pFuncList->C_GetAttributeValue(hSession, hObject, attr, 4);
 //    if (rv != CKR_OK)
 //    {
 //        error(rv);
 //    }
     
     btLabel[attr[2].ulValueLen] = 0;
-    btLabel[attr[3].ulValueLen] = 0;
+    btID[attr[3].ulValueLen] = 0;
     
     if(g_nLogLevel > 3)
     {
