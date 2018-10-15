@@ -93,6 +93,21 @@ CK_RV progressCallback(const int progress,
         return;
     }
     
+    c = [newpin characterAtIndex:0];
+    lastchar = c + 1;
+    
+    for(i = 1; i < newpin.length && c == lastchar - 1; i++)
+    {
+        lastchar = c;
+        c = [newpin characterAtIndex:i];
+    }
+    
+    if(c == lastchar - 1)
+    {
+        [self showMessage: @"Il nuovo PIN non deve essere composto da cifre consecutive" withTitle:@"PIN non valido" exitAfter:false];
+        return;
+    }
+    
     [((NSControl*)sender) setEnabled:NO];
     
     const char* szCryptoki = "libcie-pkcs11.dylib";

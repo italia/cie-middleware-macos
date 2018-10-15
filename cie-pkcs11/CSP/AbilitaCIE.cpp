@@ -81,11 +81,12 @@ CK_RV CK_ENTRY VerificaCIEAbilitata()
         }
         catch(...)
         {
-            
+            return CKR_GENERAL_ERROR;
         }
     }
     
-    return CKR_GENERAL_ERROR;
+    return CKR_TOKEN_NOT_PRESENT;
+    
 }
 
 CK_RV CK_ENTRY DisabilitaCIE()
@@ -136,11 +137,11 @@ CK_RV CK_ENTRY DisabilitaCIE()
         }
         catch(...)
         {
-            
+            return CKR_GENERAL_ERROR;
         }
     }
     
-    return CKR_GENERAL_ERROR;
+    return CKR_TOKEN_NOT_PRESENT;
 }
 
 CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack)
@@ -275,7 +276,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
 
             ByteArray pinBa((uint8_t*)szPIN, 4);
             
-            progressCallBack(5, "Nenorizzazione in cache");
+            progressCallBack(85, "Menorizzazione in cache");
             
             ias.SetCache((char*)IdServizi.data(), CertCIE, pinBa);
 		}
@@ -292,6 +293,8 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
         return CKR_GENERAL_ERROR;
 	}
 
+    progressCallBack(100, "");
+    
     return SCARD_S_SUCCESS;
 }
 

@@ -47,46 +47,6 @@ void* hModule;
         [self showMessage: @"Middleware non trovato" withTitle:@"Errore inaspettato" exitAfter:true];
         exit(1);
     }
-    
-    if([self checkEnabled])
-    {
-        NSAlert* confirmAlert = [NSAlert alertWithMessageText: @"CIE già abilitata"
-                                                defaultButton:@"No"
-                                              alternateButton:@"Si"
-                                                  otherButton:nil
-                                    informativeTextWithFormat:@"La CIE sul lettore è già abilitata. Vuoi disabilitarla?"];
-        
-        if([confirmAlert runModal] == NSAlertDefaultReturn)
-        {
-            exit(1);
-        }
-        else
-        {
-            DisabilitaCIEfn pfnDisabilitaCIE = (VerificaCIEAbilitatafn)dlsym(hModule, "DisabilitaCIE");
-            if(!pfnDisabilitaCIE)
-            {
-                dlclose(hModule);
-                [self showMessage: @"Funzione DisabilitaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:true];
-                return;
-            }
-            
-            CK_RV rv = pfnDisabilitaCIE();
-            
-            switch (rv) {
-                case CKR_OK:
-                    [self showMessage:@"CIE disabilitata con successo" withTitle:@"CIE disabilitata" exitAfter:NO];
-                    break;
-                    
-                case CKR_TOKEN_NOT_PRESENT:
-                    [self showMessage:@"CIE non presente sul lettore" withTitle:@"Abilitazione CIE" exitAfter:false];
-                    break;
-                    
-                default:
-                    [self showMessage:@"Impossibile disabilitare la CIE" withTitle:@"CIE non disabilitata" exitAfter:NO];
-                    break;
-            }
-        }
-    }
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -141,7 +101,64 @@ CK_RV progressCallback(const int progress,
     
     return false;
 }
-           
+
+- (IBAction)onDisabilita:(id)sender
+{
+    // check se abilitata ossia se cache presente
+    VerificaCIEAbilitatafn pfnVerificaCIE = (VerificaCIEAbilitatafn)dlsym(hModule, "VerificaCIEAbilitata");
+    if(!pfnVerificaCIE)
+    {
+        dlclose(hModule);
+        [self showMessage: @"Funzione VerificaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:NO];
+        return;
+    }
+    
+    CK_RV rv = pfnVerificaCIE();
+    
+    switch (rv) {
+        case CKR_OK:
+            [self showMessage:@"CIE non abilitata" withTitle:@"Verifica CIE" exitAfter:false];
+            return;
+            break;
+            
+        case CKR_CANCEL:
+            break;
+            
+        case CKR_TOKEN_NOT_PRESENT:
+            [self showMessage:@"CIE non presente sul lettore" withTitle:@"Verifica CIE" exitAfter:false];
+            break;
+            
+        default:
+            [self showMessage:@"Errore nella verifica della CIE" withTitle:@"Verifica CIE" exitAfter:false];
+            return;
+            break;
+    }
+    
+    DisabilitaCIEfn pfnDisabilitaCIE = (VerificaCIEAbilitatafn)dlsym(hModule, "DisabilitaCIE");
+    if(!pfnDisabilitaCIE)
+    {
+        dlclose(hModule);
+        [self showMessage: @"Funzione DisabilitaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:true];
+        return;
+    }
+    
+    rv = pfnDisabilitaCIE();
+    
+    switch (rv) {
+        case CKR_OK:
+            [self showMessage:@"CIE disabilitata con successo" withTitle:@"CIE disabilitata" exitAfter:NO];
+            break;
+            
+        case CKR_TOKEN_NOT_PRESENT:
+            [self showMessage:@"CIE non presente sul lettore" withTitle:@"Abilitazione CIE" exitAfter:false];
+            break;
+            
+        default:
+            [self showMessage:@"Impossibile disabilitare la CIE" withTitle:@"CIE non disabilitata" exitAfter:NO];
+            break;
+    }
+}
+
 - (IBAction)onAbilita:(id)sender
 {
     NSString* pin = self.textFieldPIN.stringValue;
@@ -177,11 +194,14 @@ CK_RV progressCallback(const int progress,
             switch(ret)
             {
                 case CKR_TOKEN_NOT_RECOGNIZED:
-                    [self showMessage:@"Impossibile trovare la CIE con Numero Identificativo" withTitle:@"Abilitazione CIE" exitAfter:false];
+                    if(szPAN)
+                        [self showMessage:[NSString stringWithFormat:@"CIE con numero identificativo %s non presente sul lettore", szPAN] withTitle:@"Abilitazione CIE" exitAfter:false];
+                    else
+                        [self showMessage:@"CIE non presente sul lettore" withTitle:@"Abilitazione CIE" exitAfter:false];
                     break;
                     
                 case CKR_TOKEN_NOT_PRESENT:
-                    [self showMessage:@"Impossibile trovare la CIE con Numero Identificativo" withTitle:@"Abilitazione CIE" exitAfter:false];
+                    
                     break;
                     
                 case CKR_PIN_INCORRECT:
