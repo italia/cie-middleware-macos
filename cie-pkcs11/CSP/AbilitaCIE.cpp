@@ -239,7 +239,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
 
             foundCIE = true;
             
-            progressCallBack(20, "Authenticazione...");
+            progressCallBack(20, "Autenticazione...");
             
             DWORD rs = CardAuthenticateEx(&ias, ROLE_USER, FULL_PIN, (BYTE*)szPIN, (DWORD)strnlen(szPIN, sizeof(szPIN)), nullptr, 0, attempts);
             if (rs == SCARD_W_WRONG_CHV)
