@@ -55,7 +55,7 @@
                                     <items>
                                         <menuItem title="AbilitaCIE Help" keyEquivalent="?" id="FKE-Sm-Kum">
                                             <connections>
-                                                <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
+                                                <action selector="showHelp:" target="Voe-Tx-rLC" id="cm3-03-jNw"/>
                                             </connections>
                                         </menuItem>
                                     </items>
