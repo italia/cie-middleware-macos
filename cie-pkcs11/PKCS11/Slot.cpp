@@ -364,11 +364,11 @@ namespace p11 {
 		if (IsTokenPresent())
 			pInfo->flags |= CKF_TOKEN_PRESENT;
 
-		memset(pInfo->slotDescription, ' ', 64);
+		memset(pInfo->slotDescription, 0, 64);
 		size_t SDLen = min(64, szName.size() - 1);
 		CryptoPP::memcpy_s(pInfo->slotDescription, 64, szName.c_str(), SDLen);
 
-		memset(pInfo->manufacturerID, ' ', 32);
+		memset(pInfo->manufacturerID, 0, 32);
 		// non so esattamente perchè, ma nella R1 il manufacturerID sono i primi 32 dello slotDescription
 		size_t MIDLen = min(32, szName.size());
         CryptoPP::memcpy_s(pInfo->manufacturerID, 32, szName.c_str(), MIDLen);
@@ -384,15 +384,13 @@ namespace p11 {
 	{
 		init_func
 
-			//CToken token;
-			//if (token.Connect(szName.stringlock())) _return(CKR_TOKEN_NOT_PRESENT)
-			if (pTemplate == nullptr)
-				pTemplate = CCardTemplate::GetTemplate(*this);
+        if (pTemplate == nullptr)
+            pTemplate = CCardTemplate::GetTemplate(*this);
 
 		if (pTemplate == nullptr)
 			throw p11_error(CKR_TOKEN_NOT_RECOGNIZED);
 
-		memset(pInfo->label, ' ', sizeof(pInfo->label));
+		memset(pInfo->label, 0, sizeof(pInfo->label));
 		CryptoPP::memcpy_s((char*)pInfo->label, 32, pTemplate->szName.c_str(), min(pTemplate->szName.length(), sizeof(pInfo->label)));
 		memset(pInfo->manufacturerID, ' ', sizeof(pInfo->manufacturerID));
 
@@ -416,13 +414,13 @@ namespace p11 {
 		std::string model;
 		pTemplate->FunctionList.templateGetModel(*this, model);
 
-		memset(pInfo->serialNumber, ' ', sizeof(pInfo->serialNumber));
+		memset(pInfo->serialNumber, 0, sizeof(pInfo->serialNumber));
 		size_t UIDsize = min(sizeof(pInfo->serialNumber), baSerial.size());
 		CryptoPP::memcpy_s(pInfo->serialNumber, 16, baSerial.data(), UIDsize);
 
 		CryptoPP::memcpy_s((char*)pInfo->label + pTemplate->szName.length() + 1, sizeof(pInfo->label) - pTemplate->szName.length() - 1, baSerial.data(), baSerial.size());
 
-		memset(pInfo->model, ' ', sizeof(pInfo->model));
+		memset(pInfo->model, 0, sizeof(pInfo->model));
 		CryptoPP::memcpy_s(pInfo->model, 16, model.c_str(), min(model.length(), sizeof(pInfo->model)));
 
 		CK_FLAGS dwFlags;
@@ -442,7 +440,7 @@ namespace p11 {
 		pInfo->ulRwSessionCount = dwRWSessCount;
 		pInfo->ulMaxRwSessionCount = MAXSESSIONS;
 
-		pInfo->ulMinPinLen = 5;
+		pInfo->ulMinPinLen = 4;
 		pInfo->ulMaxPinLen = 8;
 
 		pInfo->hardwareVersion.major = 0;

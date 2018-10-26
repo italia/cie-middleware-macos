@@ -578,12 +578,12 @@ CK_RV CK_ENTRY C_GetInfo(CK_INFO_PTR pInfo /* location that receives information
 
 	pInfo->cryptokiVersion.major = 2; /* Cryptoki interface ver */
 	pInfo->cryptokiVersion.minor = 10;   //12345678901234567890123456789012
-    CryptoPP::memcpy_s((char*)pInfo->manufacturerID,32,"IPZS                            ", 32);
+    CryptoPP::memcpy_s((char*)pInfo->manufacturerID,32,"IPZS\0                           ", 32);
 
 	pInfo->flags = 0; /* must be zero */
 
 	/* libraryDescription and libraryVersion are new for v2.0 */
-	CryptoPP::memcpy_s((char*)pInfo->libraryDescription,32,"CIE PKCS11                      ", 32);
+	CryptoPP::memcpy_s((char*)pInfo->libraryDescription,32,"CIE PKCS11\0                     ", 32);
 
 	pInfo->libraryVersion.major = 1; /* version of library */
 	pInfo->libraryVersion.minor = 0; /* version of library */

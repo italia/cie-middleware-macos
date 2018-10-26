@@ -43,7 +43,7 @@ int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, D
             
             
 			if (ris == SCARD_S_SUCCESS) {
-				SCardBeginTransaction(data->hCard);
+//                SCardBeginTransaction(data->hCard);
 				*respSize = 2;
 				resp[0] = 0x90;
 				resp[1] = 0x00;
@@ -54,7 +54,7 @@ int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, D
 			DWORD protocol = 0;
 			auto ris = SCardReconnect(data->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_RESET_CARD, &protocol);
 			if (ris == SCARD_S_SUCCESS) {
-				SCardBeginTransaction(data->hCard);
+//                SCardBeginTransaction(data->hCard);
 				*respSize = 2;
 				resp[0] = 0x90;
 				resp[1] = 0x00;
