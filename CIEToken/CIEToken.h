@@ -15,6 +15,8 @@
 static const TKTokenOperationConstraint CIEConstraintPIN = @"PIN";
 static const TKTokenOperationConstraint CIEConstraintPINAlways = @"PINAlways";
 
+bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR pObjects, CK_ULONG_PTR pulObjCount);
+
 @interface CIETokenKeychainKey : TKTokenKeychainKey
 
 - (instancetype)initWithCertificate:(SecCertificateRef)certificateRef objectID:(TKTokenObjectID)objectID certificateID:(TKTokenObjectID)certificateID alwaysAuthenticate:(BOOL)alwaysAuthenticate NS_DESIGNATED_INITIALIZER;
@@ -33,9 +35,26 @@ static const TKTokenOperationConstraint CIEConstraintPINAlways = @"PINAlways";
 
 @interface CIETokenSession : TKSmartCardTokenSession<TKTokenSessionDelegate>
 
+typedef NS_ENUM(NSInteger, PIVAuthState) {
+    CIEAuthStateUnauthorized = 0,
+    CIEAuthStateFreshlyAuthorized = 1,
+    CIEAuthStateAuthorizedButAlreadyUsed = 2,
+};
+
+@property PIVAuthState authState;
+
+@end
+
+@interface CIEAuthOperation : TKTokenSmartCardPINAuthOperation
+
+- (instancetype)initWithSession:(CIETokenSession *)session;
+@property (readonly) CIETokenSession *session;
+
 @end
 
 @interface CIEToken : TKSmartCardToken<TKTokenDelegate>
+
+@property CK_SESSION_HANDLE hSession;
 
 - (instancetype)initWithSmartCard:(TKSmartCard *)smartCard AID:(NSData *)AID tokenDriver:(CIETokenDriver *)tokenDriver error:(NSError **)error;
 

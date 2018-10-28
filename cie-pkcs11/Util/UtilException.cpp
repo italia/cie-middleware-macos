@@ -50,5 +50,4 @@ scard_error::scard_error(StatusWord sw) : logged_error(stdPrintf("Errore smart c
 
 windows_error::windows_error(long ris) : logged_error(stdPrintf("Errore windows:(%08x) ", ris)) {}
 
-
 //#endif

@@ -112,7 +112,7 @@
 		E570A7B12168C22800658AAF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50A8A0B213BE121006A000D /* Cocoa.framework */; };
 		E570A7B52168C22800658AAF /* CIEToken.mm in Sources */ = {isa = PBXBuildFile; fileRef = E570A7B42168C22800658AAF /* CIEToken.mm */; };
 		E570A7B72168C22800658AAF /* CIETokenDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = E570A7B62168C22800658AAF /* CIETokenDriver.m */; };
-		E570A7B92168C22800658AAF /* CIETokenSession.m in Sources */ = {isa = PBXBuildFile; fileRef = E570A7B82168C22800658AAF /* CIETokenSession.m */; };
+		E570A7B92168C22800658AAF /* CIETokenSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = E570A7B82168C22800658AAF /* CIETokenSession.mm */; };
 		E570A7BE2168C22800658AAF /* CIEToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E570A7B02168C22800658AAF /* CIEToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E59B65C2213C06B8007348D5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C1213C06B8007348D5 /* AppDelegate.m */; };
 		E59B65C5213C06B8007348D5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C4213C06B8007348D5 /* ViewController.mm */; };
@@ -144,6 +144,7 @@
 		E5BE7DC320FE86DC00004389 /* win32.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DC220FE86DC00004389 /* win32.h */; };
 		E5BE7DC520FE883300004389 /* wintypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7DC420FE883300004389 /* wintypes.h */; };
 		E5BE7DC820FE8A9A00004389 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7DC720FE8A9A00004389 /* PCSC.framework */; };
+		E5C627112184B76400A0A52D /* libcie-pkcs11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -301,7 +302,7 @@
 		E570A7B32168C22800658AAF /* CIEToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIEToken.h; sourceTree = "<group>"; };
 		E570A7B42168C22800658AAF /* CIEToken.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CIEToken.mm; sourceTree = "<group>"; };
 		E570A7B62168C22800658AAF /* CIETokenDriver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CIETokenDriver.m; sourceTree = "<group>"; };
-		E570A7B82168C22800658AAF /* CIETokenSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CIETokenSession.m; sourceTree = "<group>"; };
+		E570A7B82168C22800658AAF /* CIETokenSession.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CIETokenSession.mm; sourceTree = "<group>"; };
 		E570A7BA2168C22800658AAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E570A7BB2168C22800658AAF /* CIEToken.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIEToken.entitlements; sourceTree = "<group>"; };
 		E59B65BE213C06B8007348D5 /* AbilitaCIE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbilitaCIE.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -377,6 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E570A7B12168C22800658AAF /* Cocoa.framework in Frameworks */,
+				E5C627112184B76400A0A52D /* libcie-pkcs11.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,7 +588,7 @@
 				E570A7B32168C22800658AAF /* CIEToken.h */,
 				E570A7B42168C22800658AAF /* CIEToken.mm */,
 				E570A7B62168C22800658AAF /* CIETokenDriver.m */,
-				E570A7B82168C22800658AAF /* CIETokenSession.m */,
+				E570A7B82168C22800658AAF /* CIETokenSession.mm */,
 				E570A7BA2168C22800658AAF /* Info.plist */,
 				E570A7BB2168C22800658AAF /* CIEToken.entitlements */,
 			);
@@ -902,9 +904,19 @@
 					};
 					E570A7972168C1E500658AAF = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 					E570A7AF2168C22800658AAF = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 					E59B65BD213C06B8007348D5 = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -1082,7 +1094,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E570A7B52168C22800658AAF /* CIEToken.mm in Sources */,
-				E570A7B92168C22800658AAF /* CIETokenSession.m in Sources */,
+				E570A7B92168C22800658AAF /* CIETokenSession.mm in Sources */,
 				E570A7B72168C22800658AAF /* CIETokenDriver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

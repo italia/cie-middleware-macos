@@ -208,10 +208,9 @@ bool file_exists (const char* name) {
 std::string GetCardDir()
 {
     char* home = getenv("HOME");
-    
     std::string path(home);
     path.append("/.CIEPKI/");
-    
+
     printf("Card Dir: %s\n", path.c_str());
     
     return path.c_str();
@@ -295,7 +294,7 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     if (PAN == nullptr)
         throw logged_error("Il PAN è necessario");
     
-    auto szDir=GetCardDir();
+    auto szDir = GetCardDir();
     char chDir[MAX_PATH];
     strcpy(chDir, szDir.c_str());
     
@@ -303,91 +302,47 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
         
     if (stat(chDir, &st) == -1) {
         int r = mkdir(chDir, 0700);
-//        printf("mkdir: %d", r);
+        printf("mkdir: %d, %x\n", r, errno);
     }
     
-//    if (!file_exists(chDir)) {
-//
-    
-//        //creo la directory dando l'accesso a Edge (utente Packege).
-//        //Edge gira in low integrity quindi non potrà scrivere (enrollare) ma solo leggere il certificato
-//        bool done = false;
-//        CreateDirectory(chDir, nullptr);
-//
-//        if (IsWindows8OrGreater()) {
-//            PACL pOldDACL = nullptr, pNewDACL = nullptr;
-//            PSECURITY_DESCRIPTOR pSD = nullptr;
-//            EXPLICIT_ACCESS ea;
-//            SECURITY_INFORMATION si = DACL_SECURITY_INFORMATION;
-//
-//            DWORD dwRes = GetNamedSecurityInfo(chDir, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, &pOldDACL, NULL, &pSD);
-//            if (dwRes != ERROR_SUCCESS)
-//                throw logged_error("Impossibile attivare la CIE nel processo corrente");
-//
-//            PSID TheSID = nullptr;
-//            DWORD SidSize = SECURITY_MAX_SID_SIZE;
-//            if (!(TheSID = LocalAlloc(LMEM_FIXED, SidSize))) {
-//                if (pSD != NULL)
-//                    LocalFree((HLOCAL)pSD);
-//                throw logged_error("Impossibile attivare la CIE nel processo corrente");
-//            }
-//
-//            if (!CreateWellKnownSid(WinBuiltinAnyPackageSid, NULL, TheSID, &SidSize)) {
-//                if (TheSID != NULL)
-//                    LocalFree((HLOCAL)TheSID);
-//                if (pSD != NULL)
-//                    LocalFree((HLOCAL)pSD);
-//                throw logged_error("Impossibile attivare la CIE nel processo corrente");
-//            }
-//
-//            ZeroMemory(&ea, sizeof(EXPLICIT_ACCESS));
-//            ea.grfAccessPermissions = GENERIC_READ;
-//            ea.grfAccessMode = SET_ACCESS;
-//            ea.grfInheritance = SUB_CONTAINERS_AND_OBJECTS_INHERIT;
-//            ea.Trustee.TrusteeForm = TRUSTEE_IS_SID;
-//            ea.Trustee.TrusteeType = TRUSTEE_IS_WELL_KNOWN_GROUP;
-//            ea.Trustee.ptstrName = (LPSTR)TheSID;
-//
-//            if (SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL) != ERROR_SUCCESS)
-//            {
-//                if (TheSID != NULL)
-//                    LocalFree((HLOCAL)TheSID);
-//                if (pSD != NULL)
-//                    LocalFree((HLOCAL)pSD);
-//                if (pNewDACL != NULL)
-//                    LocalFree((HLOCAL)pNewDACL);
-//                throw logged_error("Impossibile attivare la CIE nel processo corrente");
-//            }
-//
-//            if (SetNamedSecurityInfo(chDir, SE_FILE_OBJECT, si, NULL, NULL, pNewDACL, NULL) != ERROR_SUCCESS)
-//            {
-//                if (pNewDACL != NULL)
-//                    LocalFree((HLOCAL)pNewDACL);
-//                if (TheSID != NULL)
-//                    LocalFree((HLOCAL)TheSID);
-//                if (pSD != NULL)
-//                    LocalFree((HLOCAL)pSD);
-//                throw logged_error("Impossibile attivare la CIE nel processo corrente");
-//            }
-//        
-//        }
-//    }
     char szPath[MAX_PATH];
     GetCardPath(PAN, szPath);
     
     ByteArray baCertificate(certificate, certificateSize);
     ByteArray baFirstPIN(FirstPIN, FirstPINSize);
     
+    char* home = getenv("HOME");
+    std::string path(home);
+    path.append("/Library/Containers/it.ipzs.CIETokenApp.CIEToken/Data/.CIEPKI/");
+    
+    printf("CIETokenDriver Dir: %s\n", path.c_str());
+    
+    if (stat(path.c_str(), &st) == -1) {
+        int r = mkdir(path.c_str(), 0777);
+        printf("mkdir: %d, %x\n", r, errno);
+    }
+    
+    path.append(PAN);
+    path.append(".cache");
+            
     std::ofstream file(szPath, std::ofstream::out | std::ofstream::binary);
+    std::ofstream fileForCIEToken(path.c_str(), std::ofstream::out | std::ofstream::binary);
     
     uint32_t len = (uint32_t)baFirstPIN.size();
     file.write((char*)&len, sizeof(len));
     file.write((char*)baFirstPIN.data(), len);
-    
     len = (uint32_t)baCertificate.size();
     file.write((char*)&len, sizeof(len));
     file.write((char*)baCertificate.data(), len);
     file.close();
+    
+    len = (uint32_t)baFirstPIN.size();
+    fileForCIEToken.write((char*)&len, sizeof(len));
+    fileForCIEToken.write((char*)baFirstPIN.data(), len);
+    len = (uint32_t)baCertificate.size();
+    fileForCIEToken.write((char*)&len, sizeof(len));
+    fileForCIEToken.write((char*)baCertificate.data(), len);
+    fileForCIEToken.close();
 }
 
 #endif

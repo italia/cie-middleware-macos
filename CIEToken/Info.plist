@@ -26,12 +26,10 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
-			<key>com.apple.ctk.aid</key>
-			<string>123</string>
 			<key>com.apple.ctk.class-id</key>
 			<string>it.ipzs.CIETokenApp.CIEToken</string>
 			<key>com.apple.ctk.driver-class</key>
-			<string>TokenDriver</string>
+			<string>CIETokenDriver</string>
 			<key>com.apple.ctk.token-type</key>
 			<string>smartcard</string>
 		</dict>
