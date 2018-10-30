@@ -82,9 +82,33 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
     if (keyItem == nil) {
         return NO;
     }
-    
-    CK_MECHANISM_TYPE mechanism;
-    return algorithmToMechanism(algorithm, &mechanism);
+    switch (operation) {
+        case TKTokenOperationSignData:
+            if (keyItem.canSign) {
+                if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
+                    // We support only RAW data format and PKCS1 padding.  Once SecKey gets support for PSS padding,
+                    // we should add it here.
+                    return [algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] &&
+                    [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw];
+                }
+            }
+            break;
+        case TKTokenOperationDecryptData:
+            if (keyItem.canDecrypt && [keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
+                return [algorithm isAlgorithm:kSecKeyAlgorithmRSAEncryptionRaw];
+            }
+            break;
+        case TKTokenOperationPerformKeyExchange:
+                break;
+        
+        default:
+                break;
+    }
+
+
+    return NO;
+//    CK_MECHANISM_TYPE mechanism;
+//    return algorithmToMechanism(algorithm, &mechanism);
     
 }
 
@@ -130,6 +154,7 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
     
     CK_ULONG outputLen = 256;
     
+    NSString* hex = dataToSign.hexString;
     
     CK_RV rv = g_pFuncList->C_SignInit(((CIEToken*)self.token).hSession, pMechanism, hObjectPriKey);
     if (rv != CKR_OK)
@@ -267,22 +292,36 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
 
 static bool algorithmToMechanism(TKTokenKeyAlgorithm * algorithm, CK_MECHANISM_TYPE* mechanismType)
 {
-    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSAEncryptionRaw]
-        || [algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw])
-    {
-        *mechanismType =  CKM_RSA_X_509;
-        return true;
-    }
+//    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSAEncryptionRaw]
+//        || [algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw])
+//    {
+//        *mechanismType =  CKM_RSA_PKCS;
+//        return true;
+//    }
+//
+//    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw])
+//    {
+//        *mechanismType =  CKM_RSA_PKCS;
+//        return true;
+//    }
+    
     if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1])
     {
-        *mechanismType = CKM_SHA1_RSA_PKCS;
+        *mechanismType = CKM_RSA_PKCS;
         return true;
     }
-    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256])
-    {
-        *mechanismType = CKM_SHA256_RSA_PKCS;
-        return true;
-    }
+    
+//    if([algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw])
+//    //if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw])
+//    {
+//        *mechanismType = CKM_RSA_PKCS;
+//        return true;
+//    }
+//    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256])
+//    {
+//        *mechanismType = CKM_SHA256_RSA_PKCS;
+//        return true;
+//    }
     
 //    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA384])
 //        return CKM_SHA384_RSA_PKCS;

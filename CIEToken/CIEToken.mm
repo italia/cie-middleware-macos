@@ -21,22 +21,22 @@ CK_SLOT_ID_PTR getSlotList(bool bPresent, CK_ULONG* pulCount);
 CK_SESSION_HANDLE openSession(CK_SLOT_ID slotid);
 bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR pObjects, CK_ULONG_PTR pulObjCount);
 
-//@implementation NSData(hexString)
-//
-//- (NSString *)hexString {
-//
-//    NSUInteger capacity = self.length * 2;
-//    NSMutableString *stringBuffer = [NSMutableString stringWithCapacity:capacity];
-//    const unsigned char *dataBuffer = (const unsigned char*) self.bytes;
-//
-//    for (NSInteger i = 0; i < self.length; i++) {
-//        [stringBuffer appendFormat:@"%02lX", (unsigned long)dataBuffer[i]];
-//    }
-//
-//    return stringBuffer;
-//}
-//
-//@end
+@implementation NSData(hexString)
+
+- (NSString *)hexString {
+
+    NSUInteger capacity = self.length * 2;
+    NSMutableString *stringBuffer = [NSMutableString stringWithCapacity:capacity];
+    const unsigned char *dataBuffer = (const unsigned char*) self.bytes;
+
+    for (NSInteger i = 0; i < self.length; i++) {
+        [stringBuffer appendFormat:@"%02lX", (unsigned long)dataBuffer[i]];
+    }
+
+    return stringBuffer;
+}
+
+@end
 
 @implementation TKTokenKeychainItem(CIEDataFormat)
 
@@ -52,10 +52,9 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 
 @implementation CIETokenKeychainKey
 
-- (instancetype)initWithCertificate:(SecCertificateRef)certificateRef objectID:(TKTokenObjectID)objectID certificateID:(TKTokenObjectID)certificateID alwaysAuthenticate:(BOOL)alwaysAuthenticate {
+- (instancetype)initWithCertificate:(SecCertificateRef)certificateRef objectID:(TKTokenObjectID)objectID certificateID:(TKTokenObjectID)certificateID  {
     if (self = [super initWithCertificate:certificateRef objectID:objectID]) {
         _certificateID = certificateID;
-        _alwaysAuthenticate = alwaysAuthenticate;
     }
     return self;
 }
@@ -71,7 +70,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     void* hModule = dlopen(szCryptoki, RTLD_LOCAL | RTLD_LAZY);
     if(!hModule)
     {
-        char* err = dlerror();
+//        char* err = dlerror();
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware not found" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:100 userInfo:errorDetail];
@@ -194,10 +193,11 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
         return nil;
     }
-        
-        
+    
     NSData* certData = [NSData dataWithBytes:attr[0].pValue length:attr[0].ulValueLen];
 
+    free(attr[0].pValue);
+    
     if (self = [super initWithSmartCard:smartCard AID:AID instanceID:instanceID tokenDriver:tokenDriver]) {
         
         NSMutableArray<TKTokenKeychainItem *> *items = [NSMutableArray array];
@@ -205,7 +205,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         NSString *certificateName = @"CIE0";
         NSString *keyName = @"CIE0_KEY";
         
-        if (![self populateIdentityFromSmartCard:smartCard into:items certificateData:certData certificateName:certificateName keyName:keyName sign:YES keyManagement:YES alwaysAuthenticate:NO error:error])
+        if (![self populateIdentityFromSmartCard:smartCard into:items certificateData:certData certificateName:certificateName keyName:keyName error:error])
         {
             return nil;
         }
@@ -220,7 +220,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     return [[CIETokenSession alloc] initWithToken:self];
 }
 
-- (BOOL)populateIdentityFromSmartCard:(TKSmartCard *)smartCard into:(NSMutableArray<TKTokenKeychainItem *> *)items certificateData:(NSData*)certificateData certificateName:(NSString *)certificateName keyName:(NSString *)keyName sign:(BOOL)sign keyManagement:(BOOL)keyManagement alwaysAuthenticate:(BOOL)alwaysAuthenticate error:(NSError **)error
+- (BOOL)populateIdentityFromSmartCard:(TKSmartCard *)smartCard into:(NSMutableArray<TKTokenKeychainItem *> *)items certificateData:(NSData*)certificateData certificateName:(NSString *)certificateName keyName:(NSString *)keyName error:(NSError **)error
 {
     // Create certificate item.
     id certificate = CFBridgingRelease(SecCertificateCreateWithData(kCFAllocatorDefault, (CFDataRef)certificateData));
@@ -240,7 +240,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     [certificateItem setName:certificateName];
     
     // Create key item.
-    TKTokenKeychainKey *keyItem = [[CIETokenKeychainKey alloc] initWithCertificate:(__bridge SecCertificateRef)certificate objectID:keyName certificateID:certificateItem.objectID alwaysAuthenticate:alwaysAuthenticate];
+    TKTokenKeychainKey *keyItem = [[CIETokenKeychainKey alloc] initWithCertificate:(__bridge SecCertificateRef)certificate objectID:keyName certificateID:certificateItem.objectID];
     if (keyItem == nil) {
         return NO;
     }
@@ -248,23 +248,14 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     [keyItem setName:keyName];
     
     NSMutableDictionary<NSNumber *, TKTokenOperationConstraint> *constraints = [NSMutableDictionary dictionary];
-    keyItem.canSign = sign;
-    keyItem.suitableForLogin = sign;
+    keyItem.canSign = true;
+    keyItem.suitableForLogin = false;
+    keyItem.canDecrypt = false;
+    keyItem.canPerformKeyExchange = false;
+    
     TKTokenOperationConstraint constraint = CIEConstraintPINAlways;//alwaysAuthenticate ? CIEConstraintPINAlways : CIEConstraintPIN;
-    if (sign) {
-        constraints[@(TKTokenOperationSignData)] = constraint;
-    }
-    if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
-        keyItem.canDecrypt = keyManagement;
-        if (keyManagement) {
-            constraints[@(TKTokenOperationDecryptData)] = constraint;
-        }
-    } else if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeECSECPrimeRandom]) {
-        keyItem.canPerformKeyExchange = keyManagement;
-        if (keyManagement) {
-            constraints[@(TKTokenOperationPerformKeyExchange)] = constraint;
-        }
-    }
+    constraints[@(TKTokenOperationSignData)] = constraint;
+    
     keyItem.constraints = constraints;
     [items addObject:certificateItem];
     [items addObject:keyItem];

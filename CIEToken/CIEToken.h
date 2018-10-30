@@ -19,16 +19,19 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 
 @interface CIETokenKeychainKey : TKTokenKeychainKey
 
-- (instancetype)initWithCertificate:(SecCertificateRef)certificateRef objectID:(TKTokenObjectID)objectID certificateID:(TKTokenObjectID)certificateID alwaysAuthenticate:(BOOL)alwaysAuthenticate NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCertificate:(SecCertificateRef)certificateRef objectID:(TKTokenObjectID)objectID certificateID:(TKTokenObjectID)certificateID  NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCertificate:(nullable SecCertificateRef)certificateRef objectID:(TKTokenObjectID)objectID NS_UNAVAILABLE;
 
 @property (readonly) TKTokenObjectID certificateID;
-@property (readonly) BOOL alwaysAuthenticate;
 @property (readonly) UInt8 keyID;
 @property (readonly) UInt8 algID;
 
 @end
 
+@interface NSData(hexString)
+- (NSString *)hexString;
+@end
+    
 @interface CIETokenDriver : TKSmartCardTokenDriver<TKSmartCardTokenDriverDelegate>
 
 @end

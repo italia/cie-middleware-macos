@@ -401,7 +401,6 @@ bool signVerify(CK_SESSION_HANDLE hSession)
         std::cout << "  -> Firma e verifica con chiave CIE\n    - C_Sign\n    - C_Verify" << std::endl;
     
     UUCByteArray dataValHashed;
-    UUCByteArray dataVal;
     
     CK_OBJECT_HANDLE hObjectPriKey;
     CK_OBJECT_HANDLE hObjectPubKey;
@@ -450,13 +449,17 @@ bool signVerify(CK_SESSION_HANDLE hSession)
     
     showAttributes(hSession, hObjectPubKey);
     
-    CK_MECHANISM pMechanism[] = {CKM_RSA_PKCS, NULL_PTR, 0};
+    CK_MECHANISM pMechanism[] = {CKM_RSA_X_509, NULL_PTR, 0};
     BYTE* pOutput;
     CK_ULONG outputLen = 256;
     
-    char* szToSign = "some text to sign";
+    char* szHex =  "0959208F14CC999E619536D85FEC0E7488FA2E99624228629A79512FE61274D4333824294279941F57DF36BCCC89DDB459D6607E43209874F2B631BD541ECA4A3FDFA8893E6ED0E0D4508AE335E7C85D77EEDFCB548472E172A661CAE514FFF6359407EF0FD595BED3D0BED606CA18032C1286606BE57A09CED2DD41955BB8176243BD0363D055B42C3017E726E26F4A680AF3FCE685C0AFF73ABF4F78DF55E4FD304DC2F8C81F4D918A23A5DE79E2BF7637DFC064C92ED7EE50FA2F168773C3D541CEB7439327C8B7176FBA3CEE8ADDC125A1518A6BBD4E5BB2D13EB9FF884875175774D60EB34F4EE08E81B8C65DB0CBBB251619B54BCFDA8C243DE0D037BC";
     
-    dataVal.append((BYTE*)szToSign, strlen(szToSign));
+    UUCByteArray dataVal(szHex);
+    
+//    char* szToSign = "some text to sign";
+    
+//    dataVal.append((BYTE*)szToSign, strlen(szToSign));
     
     if(g_nLogLevel > 2)
         std::cout << "  -> Appone la Firma digitale : " << std::endl;
