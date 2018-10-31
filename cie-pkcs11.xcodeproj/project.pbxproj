@@ -30,6 +30,7 @@
 		E50A8A0E213BE121006A000D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50A8A0C213BE121006A000D /* AppKit.framework */; };
 		E50A8A10213BE4C6006A000D /* AbilitaCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50A8A0F213BE4C6006A000D /* AbilitaCIE.cpp */; };
 		E50F9EF1217A27570083C821 /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = E50F9EF0217A27570083C821 /* help.html */; };
+		E51F431C2189A187007AAC10 /* CIEToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E570A7B02168C22800658AAF /* CIEToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E543F955215F6B1D0088CBC5 /* CryptoppUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */; };
 		E543F957215F6B250088CBC5 /* CryptoppUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E543F956215F6B250088CBC5 /* CryptoppUtils.h */; };
 		E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E54EF42F2100D91200E2EADD /* libcryptopp.a */; };
@@ -104,16 +105,10 @@
 		E570A78B2168B72700658AAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E570A7892168B72700658AAF /* Main.storyboard */; };
 		E570A78E2168B72700658AAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E570A78D2168B72700658AAF /* main.m */; };
 		E570A7932168B91500658AAF /* libcie-pkcs11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */; };
-		E570A79C2168C1E500658AAF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E570A79B2168C1E500658AAF /* AppDelegate.m */; };
-		E570A79F2168C1E500658AAF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E570A79E2168C1E500658AAF /* ViewController.m */; };
-		E570A7A12168C1E500658AAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E570A7A02168C1E500658AAF /* Assets.xcassets */; };
-		E570A7A42168C1E600658AAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E570A7A22168C1E600658AAF /* Main.storyboard */; };
-		E570A7A72168C1E600658AAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E570A7A62168C1E600658AAF /* main.m */; };
 		E570A7B12168C22800658AAF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50A8A0B213BE121006A000D /* Cocoa.framework */; };
 		E570A7B52168C22800658AAF /* CIEToken.mm in Sources */ = {isa = PBXBuildFile; fileRef = E570A7B42168C22800658AAF /* CIEToken.mm */; };
 		E570A7B72168C22800658AAF /* CIETokenDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = E570A7B62168C22800658AAF /* CIETokenDriver.m */; };
 		E570A7B92168C22800658AAF /* CIETokenSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = E570A7B82168C22800658AAF /* CIETokenSession.mm */; };
-		E570A7BE2168C22800658AAF /* CIEToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E570A7B02168C22800658AAF /* CIEToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E59B65C2213C06B8007348D5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C1213C06B8007348D5 /* AppDelegate.m */; };
 		E59B65C5213C06B8007348D5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E59B65C4213C06B8007348D5 /* ViewController.mm */; };
 		E59B65C7213C06B9007348D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E59B65C6213C06B9007348D5 /* Assets.xcassets */; };
@@ -148,7 +143,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E570A7BC2168C22800658AAF /* PBXContainerItemProxy */ = {
+		E51F431D2189A187007AAC10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E5BE7D8020FE84D200004389 /* Project object */;
 			proxyType = 1;
@@ -158,6 +153,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		E51F431F2189A187007AAC10 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E51F431C2189A187007AAC10 /* CIEToken.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5707B3021383CCA0054CF16 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -166,17 +172,6 @@
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-		};
-		E570A7C22168C22800658AAF /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				E570A7BE2168C22800658AAF /* CIEToken.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -288,16 +283,6 @@
 		E570A78C2168B72700658AAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E570A78D2168B72700658AAF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E570A78F2168B72700658AAF /* SbloccoPIN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SbloccoPIN.entitlements; sourceTree = "<group>"; };
-		E570A7982168C1E500658AAF /* CIETokenApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CIETokenApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E570A79A2168C1E500658AAF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		E570A79B2168C1E500658AAF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E570A79D2168C1E500658AAF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		E570A79E2168C1E500658AAF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		E570A7A02168C1E500658AAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E570A7A32168C1E600658AAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E570A7A52168C1E600658AAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E570A7A62168C1E600658AAF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		E570A7A82168C1E600658AAF /* CIETokenApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIETokenApp.entitlements; sourceTree = "<group>"; };
 		E570A7B02168C22800658AAF /* CIEToken.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CIEToken.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E570A7B32168C22800658AAF /* CIEToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIEToken.h; sourceTree = "<group>"; };
 		E570A7B42168C22800658AAF /* CIEToken.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CIEToken.mm; sourceTree = "<group>"; };
@@ -363,13 +348,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E570A7932168B91500658AAF /* libcie-pkcs11.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E570A7952168C1E500658AAF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,22 +544,6 @@
 			path = SbloccoPIN;
 			sourceTree = "<group>";
 		};
-		E570A7992168C1E500658AAF /* CIETokenApp */ = {
-			isa = PBXGroup;
-			children = (
-				E570A79A2168C1E500658AAF /* AppDelegate.h */,
-				E570A79B2168C1E500658AAF /* AppDelegate.m */,
-				E570A79D2168C1E500658AAF /* ViewController.h */,
-				E570A79E2168C1E500658AAF /* ViewController.m */,
-				E570A7A02168C1E500658AAF /* Assets.xcassets */,
-				E570A7A22168C1E600658AAF /* Main.storyboard */,
-				E570A7A52168C1E600658AAF /* Info.plist */,
-				E570A7A62168C1E600658AAF /* main.m */,
-				E570A7A82168C1E600658AAF /* CIETokenApp.entitlements */,
-			);
-			path = CIETokenApp;
-			sourceTree = "<group>";
-		};
 		E570A7B22168C22800658AAF /* CIEToken */ = {
 			isa = PBXGroup;
 			children = (
@@ -620,7 +582,6 @@
 				E59B65BF213C06B8007348D5 /* AbilitaCIE */,
 				E54F7D642167A2720026B16D /* CambioPIN */,
 				E570A7802168B72600658AAF /* SbloccoPIN */,
-				E570A7992168C1E500658AAF /* CIETokenApp */,
 				E570A7B22168C22800658AAF /* CIEToken */,
 				E5BE7D8920FE84D200004389 /* Products */,
 				E5BE7DC620FE8A9A00004389 /* Frameworks */,
@@ -636,7 +597,6 @@
 				E59B65BE213C06B8007348D5 /* AbilitaCIE.app */,
 				E54F7D632167A2720026B16D /* CambioPIN.app */,
 				E570A77F2168B72600658AAF /* SbloccoPIN.app */,
-				E570A7982168C1E500658AAF /* CIETokenApp.app */,
 				E570A7B02168C22800658AAF /* CIEToken.appex */,
 			);
 			name = Products;
@@ -812,25 +772,6 @@
 			productReference = E570A77F2168B72600658AAF /* SbloccoPIN.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E570A7972168C1E500658AAF /* CIETokenApp */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E570A7AB2168C1E600658AAF /* Build configuration list for PBXNativeTarget "CIETokenApp" */;
-			buildPhases = (
-				E570A7942168C1E500658AAF /* Sources */,
-				E570A7952168C1E500658AAF /* Frameworks */,
-				E570A7962168C1E500658AAF /* Resources */,
-				E570A7C22168C22800658AAF /* Embed App Extensions */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E570A7BD2168C22800658AAF /* PBXTargetDependency */,
-			);
-			name = CIETokenApp;
-			productName = CIETokenApp;
-			productReference = E570A7982168C1E500658AAF /* CIETokenApp.app */;
-			productType = "com.apple.product-type.application";
-		};
 		E570A7AF2168C22800658AAF /* CIEToken */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E570A7BF2168C22800658AAF /* Build configuration list for PBXNativeTarget "CIEToken" */;
@@ -855,10 +796,12 @@
 				E59B65BA213C06B8007348D5 /* Sources */,
 				E59B65BB213C06B8007348D5 /* Frameworks */,
 				E59B65BC213C06B8007348D5 /* Resources */,
+				E51F431F2189A187007AAC10 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E51F431E2189A187007AAC10 /* PBXTargetDependency */,
 			);
 			name = AbilitaCIE;
 			productName = AbilitaCIE;
@@ -901,14 +844,6 @@
 					};
 					E570A77E2168B72600658AAF = {
 						CreatedOnToolsVersion = 9.4.1;
-					};
-					E570A7972168C1E500658AAF = {
-						CreatedOnToolsVersion = 9.4.1;
-						SystemCapabilities = {
-							com.apple.Sandbox = {
-								enabled = 1;
-							};
-						};
 					};
 					E570A7AF2168C22800658AAF = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -955,7 +890,6 @@
 				E59B65BD213C06B8007348D5 /* AbilitaCIE */,
 				E54F7D622167A2720026B16D /* CambioPIN */,
 				E570A77E2168B72600658AAF /* SbloccoPIN */,
-				E570A7972168C1E500658AAF /* CIETokenApp */,
 				E570A7AF2168C22800658AAF /* CIEToken */,
 			);
 		};
@@ -981,15 +915,6 @@
 				E5042032218068BA00A41BF2 /* help.html in Resources */,
 				E570A78B2168B72700658AAF /* Main.storyboard in Resources */,
 				E504202E2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E570A7962168C1E500658AAF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E570A7A12168C1E500658AAF /* Assets.xcassets in Resources */,
-				E570A7A42168C1E600658AAF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1079,16 +1004,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E570A7942168C1E500658AAF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E570A79F2168C1E500658AAF /* ViewController.m in Sources */,
-				E570A7A72168C1E600658AAF /* main.m in Sources */,
-				E570A79C2168C1E500658AAF /* AppDelegate.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E570A7AC2168C22800658AAF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1165,10 +1080,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E570A7BD2168C22800658AAF /* PBXTargetDependency */ = {
+		E51F431E2189A187007AAC10 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E570A7AF2168C22800658AAF /* CIEToken */;
-			targetProxy = E570A7BC2168C22800658AAF /* PBXContainerItemProxy */;
+			targetProxy = E51F431D2189A187007AAC10 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1185,14 +1100,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				E570A78A2168B72700658AAF /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		E570A7A22168C1E600658AAF /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E570A7A32168C1E600658AAF /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1298,42 +1205,6 @@
 			};
 			name = Release;
 		};
-		E570A7A92168C1E600658AAF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = CIETokenApp/CIETokenApp.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
-				INFOPLIST_FILE = CIETokenApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CIETokenApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		E570A7AA2168C1E600658AAF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = CIETokenApp/CIETokenApp.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
-				INFOPLIST_FILE = CIETokenApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CIETokenApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		E570A7C02168C22800658AAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1347,7 +1218,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CIETokenApp.CIEToken;
+				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.AbilitaCIE.CIEToken;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1366,7 +1237,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CIETokenApp.CIEToken;
+				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.AbilitaCIE.CIEToken;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1385,7 +1256,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ugochirico.AbilitaCIE;
+				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.AbilitaCIE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1403,7 +1274,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ugochirico.AbilitaCIE;
+				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.AbilitaCIE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1585,15 +1456,6 @@
 			buildConfigurations = (
 				E570A7912168B72700658AAF /* Debug */,
 				E570A7922168B72700658AAF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E570A7AB2168C1E600658AAF /* Build configuration list for PBXNativeTarget "CIETokenApp" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E570A7A92168C1E600658AAF /* Debug */,
-				E570A7AA2168C1E600658AAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

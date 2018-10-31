@@ -86,18 +86,16 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
         case TKTokenOperationSignData:
             if (keyItem.canSign) {
                 if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
-                    // We support only RAW data format and PKCS1 padding.  Once SecKey gets support for PSS padding,
-                    // we should add it here.
-                    return [algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] &&
-                    [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw];
+                    // We support only PKCS1 padding.
+//                    return [algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] &&
+                    return [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw];
                 }
             }
             break;
+            
         case TKTokenOperationDecryptData:
-            if (keyItem.canDecrypt && [keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
-                return [algorithm isAlgorithm:kSecKeyAlgorithmRSAEncryptionRaw];
-            }
             break;
+            
         case TKTokenOperationPerformKeyExchange:
                 break;
         

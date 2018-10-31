@@ -27,7 +27,7 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>com.apple.ctk.class-id</key>
-			<string>it.ipzs.CIETokenApp.CIEToken</string>
+			<string>it.ipzs.AbilitaCIE.CIEToken</string>
 			<key>com.apple.ctk.driver-class</key>
 			<string>CIETokenDriver</string>
 			<key>com.apple.ctk.token-type</key>

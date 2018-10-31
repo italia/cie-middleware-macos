@@ -313,7 +313,7 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     
     char* home = getenv("HOME");
     std::string path(home);
-    path.append("/Library/Containers/it.ipzs.CIETokenApp.CIEToken/Data/.CIEPKI/");
+    path.append("/Library/Containers/it.ipzs.AbilitaCIE.CIEToken/Data/.CIEPKI/");
     
     printf("CIETokenDriver Dir: %s\n", path.c_str());
     
