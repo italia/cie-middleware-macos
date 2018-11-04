@@ -12,6 +12,9 @@
 #include "../cie-pkcs11/PKCS11/cryptoki.h"
 #include <dlfcn.h>
 
+// per abilitare il cryptotokendriver
+// sudo -u _securityagent pluginkit -a /Applications/AbilitaCIE.app/Contents/PlugIns/CIEToken.appex
+
 static const TKTokenOperationConstraint CIEConstraintPIN = @"PIN";
 static const TKTokenOperationConstraint CIEConstraintPINAlways = @"PINAlways";
 
@@ -58,6 +61,7 @@ typedef NS_ENUM(NSInteger, PIVAuthState) {
 @interface CIEToken : TKSmartCardToken<TKTokenDelegate>
 
 @property CK_SESSION_HANDLE hSession;
+@property bool loginRequired;
 
 - (instancetype)initWithSmartCard:(TKSmartCard *)smartCard AID:(NSData *)AID tokenDriver:(CIETokenDriver *)tokenDriver error:(NSError **)error;
 

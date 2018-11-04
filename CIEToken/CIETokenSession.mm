@@ -35,7 +35,7 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
     [[self.PIN dataUsingEncoding:NSUTF8StringEncoding] getBytes:szPIN length:5];
     
     CK_RV rv = g_pFuncList->C_Login(((CIEToken*)_session.token).hSession, CKU_USER, (CK_CHAR_PTR)szPIN, strlen(szPIN));
-    if (rv != CKR_OK)
+    if (rv != CKR_OK && rv != CKR_USER_ALREADY_LOGGED_IN)
     {
         if (error != nil) {
             *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationFailed userInfo:nil];
@@ -51,6 +51,9 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
 //
 //    [[self.PIN dataUsingEncoding:NSUTF8StringEncoding] getBytes:PINData.mutableBytes length:PINData.length];
 //
+    
+    ((CIEToken*)_session.token).loginRequired = false;
+    
     self.session.authState = CIEAuthStateFreshlyAuthorized;
     
     // Mark card session sensitive, because we entered PIN into it and no session should access it in this state.
@@ -86,9 +89,13 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
         case TKTokenOperationSignData:
             if (keyItem.canSign) {
                 if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
-                    // We support only PKCS1 padding.
-//                    return [algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] &&
-                    return [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw];
+                    
+                    return [algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] &&
+                    [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw];
+                    
+//                    // We support only PKCS1 padding.
+////                    return [algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] &&
+//                    return [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignaturePKCS1v15Raw];
                 }
             }
             break;
@@ -113,7 +120,7 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
 - (NSData *)tokenSession:(TKTokenSession *)session signData:(NSData *)dataToSign usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm error:(NSError **)error
 {
 
-    if(self.authState != CIEAuthStateFreshlyAuthorized)
+    if(self.authState != CIEAuthStateFreshlyAuthorized && ((CIEToken*)self.token).loginRequired)
     {
         if (error != nil) {
             *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationNeeded userInfo:nil];
@@ -142,11 +149,11 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
         return nil;
     }
     
-    CK_MECHANISM_TYPE mechanism;
-    if(!algorithmToMechanism(algorithm, &mechanism))
-    {
-        return nil;
-    }
+    CK_MECHANISM_TYPE mechanism = CKM_RSA_PKCS;
+//    if(!algorithmToMechanism(algorithm, &mechanism))
+//    {
+//        return nil;
+//    }
     
     CK_MECHANISM pMechanism[] = {mechanism, NULL_PTR, 0};
     
@@ -160,7 +167,12 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
         return nil;
     }
     
-    rv = g_pFuncList->C_Sign(((CIEToken*)self.token).hSession, (CK_BYTE*)dataToSign.bytes, dataToSign.length, NULL, &outputLen);
+    unsigned long offset = [self removePaddingBT1:dataToSign];
+    
+    CK_BYTE* data = ((CK_BYTE*)dataToSign.bytes) + offset;
+    unsigned long len = dataToSign.length - offset;
+    
+    rv = g_pFuncList->C_Sign(((CIEToken*)self.token).hSession, data, len, NULL, &outputLen);
     if (rv != CKR_OK)
     {
 //        error(rv);
@@ -169,7 +181,7 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
     
     CK_BYTE* pOutput = (CK_BYTE*)malloc(outputLen);
     
-    rv = g_pFuncList->C_Sign(((CIEToken*)self.token).hSession, (CK_BYTE*)dataToSign.bytes, dataToSign.length, pOutput, &outputLen);
+    rv = g_pFuncList->C_Sign(((CIEToken*)self.token).hSession, data, len, pOutput, &outputLen);
     if (rv != CKR_OK)
     {
         free(pOutput);
@@ -197,78 +209,80 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
 
 - (NSData *)tokenSession:(TKTokenSession *)session decryptData:(NSData *)ciphertext usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm error:(NSError **)error {
     
-    CK_OBJECT_HANDLE hObjectPriKey = 0;
-    CK_ULONG ulCount = 1;
-    CK_OBJECT_CLASS ckClassPri     = CKO_PRIVATE_KEY;
+    return nil;
     
-    CK_ATTRIBUTE template_cko_keyPri[] = {
-        {CKA_CLASS, &ckClassPri, sizeof(ckClassPri)},
-    };
-    
-    if(!findObject(((CIEToken*)self.token).hSession, template_cko_keyPri, 1, &hObjectPriKey, &ulCount))
-    {
-        //        std::cout << "  -> Operazione fallita" << std::endl;
-        return nil;
-    }
-    
-    if(ulCount < 1)
-    {
-        //        std::cout << "  -> Oggetto chiave privata non trovato" << std::endl;
-        return nil;
-    }
-    
-    CK_MECHANISM_TYPE mechanism;
-    if(!algorithmToMechanism(algorithm, &mechanism))
-    {
-        return nil;
-    }
-    
-    CK_MECHANISM pMechanism[] = {mechanism, NULL_PTR, 0};
-    
-    CK_ULONG outputLen = 256;
-    
-    CK_RV rv = g_pFuncList->C_DecryptInit(((CIEToken*)self.token).hSession, pMechanism, hObjectPriKey);
-    if (rv != CKR_OK)
-    {
-        return nil;
-    }
-    
-    rv = g_pFuncList->C_Decrypt(((CIEToken*)self.token).hSession, (CK_BYTE*)ciphertext.bytes, ciphertext.length, NULL, &outputLen);
-    if (rv != CKR_OK)
-    {
-        //        error(rv);
-        return nil;
-    }
-    
-    CK_BYTE* pOutput = (CK_BYTE*)malloc(outputLen);
-    
-    rv = g_pFuncList->C_Decrypt(((CIEToken*)self.token).hSession, (CK_BYTE*)ciphertext.bytes, ciphertext.length, pOutput, &outputLen);
-    if (rv != CKR_OK)
-    {
-        free(pOutput);
-        //        error(rv);
-        return nil;
-    }
-    
-    NSData* plaintext = [NSData dataWithBytes:pOutput length:outputLen];
-    
-    free(pOutput);
-    
-    
-//    NSData *plaintext;
+//    CK_OBJECT_HANDLE hObjectPriKey = 0;
+//    CK_ULONG ulCount = 1;
+//    CK_OBJECT_CLASS ckClassPri     = CKO_PRIVATE_KEY;
 //
-//    // Insert code here to decrypt the ciphertext using the specified key and algorithm.
-//    plaintext = nil;
+//    CK_ATTRIBUTE template_cko_keyPri[] = {
+//        {CKA_CLASS, &ckClassPri, sizeof(ckClassPri)},
+//    };
 //
-//    if (!plaintext) {
-//        if (error) {
-//            // If the operation failed for some reason, fill in an appropriate error like TKErrorCodeObjectNotFound, TKErrorCodeCorruptedData, etc.
-//            // Note that responding with TKErrorCodeAuthenticationNeeded will trigger user authentication after which the current operation will be re-attempted.
-//            *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationNeeded userInfo:@{NSLocalizedDescriptionKey: @"Authentication required!"}];
-//        }
+//    if(!findObject(((CIEToken*)self.token).hSession, template_cko_keyPri, 1, &hObjectPriKey, &ulCount))
+//    {
+//        //        std::cout << "  -> Operazione fallita" << std::endl;
+//        return nil;
 //    }
-
-    return plaintext;
+//
+//    if(ulCount < 1)
+//    {
+//        //        std::cout << "  -> Oggetto chiave privata non trovato" << std::endl;
+//        return nil;
+//    }
+//
+//    CK_MECHANISM_TYPE mechanism;
+//    if(!algorithmToMechanism(algorithm, &mechanism))
+//    {
+//        return nil;
+//    }
+//
+//    CK_MECHANISM pMechanism[] = {mechanism, NULL_PTR, 0};
+//
+//    CK_ULONG outputLen = 256;
+//
+//    CK_RV rv = g_pFuncList->C_DecryptInit(((CIEToken*)self.token).hSession, pMechanism, hObjectPriKey);
+//    if (rv != CKR_OK)
+//    {
+//        return nil;
+//    }
+//
+//    rv = g_pFuncList->C_Decrypt(((CIEToken*)self.token).hSession, (CK_BYTE*)ciphertext.bytes, ciphertext.length, NULL, &outputLen);
+//    if (rv != CKR_OK)
+//    {
+//        //        error(rv);
+//        return nil;
+//    }
+//
+//    CK_BYTE* pOutput = (CK_BYTE*)malloc(outputLen);
+//
+//    rv = g_pFuncList->C_Decrypt(((CIEToken*)self.token).hSession, (CK_BYTE*)ciphertext.bytes, ciphertext.length, pOutput, &outputLen);
+//    if (rv != CKR_OK)
+//    {
+//        free(pOutput);
+//        //        error(rv);
+//        return nil;
+//    }
+//
+//    NSData* plaintext = [NSData dataWithBytes:pOutput length:outputLen];
+//
+//    free(pOutput);
+//
+//
+////    NSData *plaintext;
+////
+////    // Insert code here to decrypt the ciphertext using the specified key and algorithm.
+////    plaintext = nil;
+////
+////    if (!plaintext) {
+////        if (error) {
+////            // If the operation failed for some reason, fill in an appropriate error like TKErrorCodeObjectNotFound, TKErrorCodeCorruptedData, etc.
+////            // Note that responding with TKErrorCodeAuthenticationNeeded will trigger user authentication after which the current operation will be re-attempted.
+////            *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationNeeded userInfo:@{NSLocalizedDescriptionKey: @"Authentication required!"}];
+////        }
+////    }
+//
+//    return plaintext;
 }
 
 - (NSData *)tokenSession:(TKTokenSession *)session performKeyExchangeWithPublicKey:(NSData *)otherPartyPublicKeyData usingKey:(TKTokenObjectID)objectID algorithm:(TKTokenKeyAlgorithm *)algorithm parameters:(TKTokenKeyExchangeParameters *)parameters error:(NSError **)error {
@@ -303,7 +317,7 @@ static bool algorithmToMechanism(TKTokenKeyAlgorithm * algorithm, CK_MECHANISM_T
 //        return true;
 //    }
     
-    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1])
+    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw])
     {
         *mechanismType = CKM_RSA_PKCS;
         return true;
@@ -327,6 +341,25 @@ static bool algorithmToMechanism(TKTokenKeyAlgorithm * algorithm, CK_MECHANISM_T
 //        return CKM_SHA512_RSA_PKCS;
 //    
     return false;
+}
+
+- (unsigned long) removePaddingBT1:(NSData*) paddedData
+{
+    CK_BYTE* data = (CK_BYTE*)paddedData.bytes;
+    
+    if (data[0]!=0)
+        return -1;
+    if (data[1]!=1)
+        return -2;
+    for (unsigned long i = 2; i<paddedData.length; i++)
+    {
+        if (data[i]==0) {
+            return i+1;
+        }
+        if (data[i] != 0xff)
+            return -3;
+    }
+    return -4;
 }
 
 @end

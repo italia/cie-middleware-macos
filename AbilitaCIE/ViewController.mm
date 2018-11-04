@@ -177,10 +177,10 @@ CK_RV progressCallback(const int progress,
         
         char* szPAN = NULL;
         
-        NSArray *args = [[NSProcessInfo processInfo] arguments];
-        
-        if(args.count > 1)
-            szPAN = (char*)[((NSString*)[args objectAtIndex:1]) cStringUsingEncoding:NSUTF8StringEncoding];
+//        NSArray *args = [[NSProcessInfo processInfo] arguments];
+//        
+//        if(args.count > 1)
+//            szPAN = (char*)[((NSString*)[args objectAtIndex:1]) cStringUsingEncoding:NSUTF8StringEncoding];
         
         int attempts = -1;
         

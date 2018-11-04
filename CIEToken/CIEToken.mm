@@ -134,7 +134,14 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         return nil;
     }
     
-    NSData *tokenSerial = [NSData dataWithBytes:tkInfo.serialNumber length:16];
+    _loginRequired = tkInfo.flags & CKF_LOGIN_REQUIRED;
+    
+    size_t len = strlen((char*)tkInfo.serialNumber);
+    
+    if(len > 16)
+        len = 16;
+    
+    NSData *tokenSerial = [NSData dataWithBytes:tkInfo.serialNumber length:len];
     NSString* serial = [[NSString alloc] initWithData:tokenSerial encoding:NSUTF8StringEncoding];
 //    NSString *stringBuffer = [tokenSerial hexString];
     NSString* instanceID = [@"CIE-" stringByAppendingString:serial];
