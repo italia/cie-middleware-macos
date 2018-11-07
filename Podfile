@@ -7,8 +7,8 @@ target 'cie-pkcs11' do
 
   # Pods for cie-pkcs11
 
-pod 'OpenSSL-Static', '1.0.2.c1'
+  pod 'OpenSSL-Static', '1.0.2.c1'
 
-#pod 'OpenSSL-Static', :git => 'https://github.com/bruceyibin/OpenSSL.git', :branch => :master
+  #pod 'OpenSSL-Static', :git => 'https://github.com/bruceyibin/OpenSSL.git', :branch => :master
 
 end

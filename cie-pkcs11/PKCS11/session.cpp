@@ -7,9 +7,6 @@
 
 extern CLog Log;
 
-static char *szCompiledFile = __FILE__;
-
-
 namespace {
 	template<class T>
 	class resetter;
@@ -138,7 +135,7 @@ namespace p11 {
 				throw p11_error(CKR_USER_ANOTHER_ALREADY_LOGGED_IN);
 		if (pSlot->User == CKU_SO && userType == CKU_USER)
 			throw p11_error(CKR_USER_ANOTHER_ALREADY_LOGGED_IN);
-					bool bExistsRO = false;
+					        
 		if (userType == CKU_SO) {
 			if (ExistsRO())
 				throw p11_error(CKR_SESSION_READ_ONLY_EXISTS);
@@ -618,7 +615,7 @@ namespace p11 {
 
 		auto mech = std::move(pVerifyRecoverMechanism);
 
-		CK_ULONG ulKeyLen = pVerifyRecoverMechanism->VerifyRecoverLength();
+//        CK_ULONG ulKeyLen = pVerifyRecoverMechanism->VerifyRecoverLength();
 		ByteDynArray baData = pVerifyRecoverMechanism->VerifyRecover(Signature);
 
 		if (!Data.isNull() && Data.size()<baData.size()) {
@@ -733,8 +730,6 @@ namespace p11 {
 			throw p11_error(CKR_KEY_HANDLE_INVALID);
 
 		auto pSignKey = std::static_pointer_cast<CP11PrivateKey>(pObject);
-
-		bool bPrivate = false;
 
 		if (pSignKey->IsPrivate() && pSlot->User != CKU_USER)
 			throw p11_error(CKR_USER_NOT_LOGGED_IN);
@@ -1077,7 +1072,7 @@ namespace p11 {
 		ByteArray *baKeyModule = pDecryptKey->getAttribute(CKA_MODULUS);
 		ER_ASSERT(baKeyModule != nullptr, ERR_CANT_GET_PUBKEY_MODULUS)
 
-		size_t dwKeyLenBytes = baKeyModule->size();
+//        size_t dwKeyLenBytes = baKeyModule->size();
 
         ByteDynArray baDecryptBuffer = pDecryptMechanism->DecryptFinal();
 

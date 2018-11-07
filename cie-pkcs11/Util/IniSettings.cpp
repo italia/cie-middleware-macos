@@ -19,7 +19,7 @@ void GetIniString(const char *fileName, const char* section, const char* name, s
 
 IniSettings::IniSettings(int typeIdconst, const char* section, const char* name, const char *description) {
 	_iniSettings.push_back(this);
-	this->typeId = typeId;
+	this->typeId = typeIdconst;
 	this->section = section;
 	this->name = name;
 	this->description = description;

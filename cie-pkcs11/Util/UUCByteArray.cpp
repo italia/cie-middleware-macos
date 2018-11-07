@@ -215,11 +215,6 @@ void UUCByteArray::removeAll()
 {
 	memset(m_pbtContent,0, m_nCapacity);
 	m_unLen = 0;
-
-	//m_nCapacity = DEFAULT_CAPACITY;
-	//GlobalFree(m_pbtContent);
-	//m_pbtContent = (BYTE*)GlobalAlloc(GPTR, m_nCapacity);	
-	//m_pbtContent = (BYTE*)malloc(m_nCapacity);
 }
 
 void UUCByteArray::append(const BYTE btVal)
@@ -227,11 +222,7 @@ void UUCByteArray::append(const BYTE btVal)
 	if(m_unLen == m_nCapacity)
 	{
 		m_nCapacity += DEFAULT_CAPACITY;
-		//m_pbtContent = (BYTE*)GlobalReAlloc(m_pbtContent, m_nCapacity, GMEM_ZEROINIT);
 		m_pbtContent = (BYTE*)realloc(m_pbtContent, m_nCapacity);
-		if(m_pbtContent == NULL)
-			throw -5L;
-		
 	}
 		
 	m_pbtContent[m_unLen] = btVal;
@@ -239,23 +230,18 @@ void UUCByteArray::append(const BYTE btVal)
 	m_unLen++;
 }
 
-void UUCByteArray::append(const BYTE* pbtVal, const unsigned int nLen)
+void UUCByteArray::append(const BYTE* pbtVal, const unsigned long nLen)
 {
 	if(m_unLen + nLen > m_nCapacity)
 	{
 		m_nCapacity += nLen;
-		//m_pbtContent = (BYTE*)GlobalReAlloc(m_pbtContent, m_nCapacity, GMEM_ZEROINIT);
 		m_pbtContent = (BYTE*)realloc(m_pbtContent, m_nCapacity);
-		if(m_pbtContent == NULL)
-			throw -5L;
-		
 	}
 
 	for(unsigned int i = 0; i < nLen; i++)
 	{
 		m_pbtContent[m_unLen] = pbtVal[i];
-		m_unLen++;
-		//append(pbtVal[i]);
+		m_unLen++;		
 	}	
 }
 
@@ -293,8 +279,6 @@ void UUCByteArray::toHexString(char* szHexString) const
 void UUCByteArray::reverse()
 {
 	BYTE* pbtContent = (BYTE*)malloc(m_unLen);
-	if(m_pbtContent == NULL)
-		throw -5L;
 	
 	for(int i = 0; i < m_unLen; i++)
 	{
@@ -321,20 +305,19 @@ const char* UUCByteArray::toHexString(int nSize)
 
 	if(nSize == 0 || nSize > m_unLen)
 	{
-		nSize = m_unLen;
+		nSize = (int)m_unLen;
 	}
-
-	//m_szHex = new char[(m_unLen + 1) * 2];
+	
 	m_szHex = new char[(nSize + 1) * 2];	
 
 	try
 	{
 		char szDigit[3];
-		strcpy(m_szHex, "");
+        memset(m_szHex, 0, (nSize + 1) * 2);
 		for(unsigned int i = 0; i < nSize; i++)
 		{
-			sprintf(szDigit, "%02X", m_pbtContent[i]);
-			strcat(m_szHex, szDigit);
+			snprintf(szDigit, 3, "%02X", m_pbtContent[i]);
+			strlcat(m_szHex, szDigit, 2);
 		}	
 
 		return m_szHex;

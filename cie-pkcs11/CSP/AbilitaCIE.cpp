@@ -40,7 +40,7 @@ extern "C" {
 
 CK_RV CK_ENTRY VerificaCIEAbilitata()
 {
-    DWORD len = MAX_PATH;
+    DWORD len = 0;
     
     SCARDCONTEXT hSC;
     
@@ -48,9 +48,16 @@ CK_RV CK_ENTRY VerificaCIEAbilitata()
     if(nRet != SCARD_S_SUCCESS)
         return CKR_DEVICE_ERROR;
     
-    char readers[MAX_PATH];
+    char* readers = NULL;
+    char* ATR = NULL;
+    if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
+        return CKR_TOKEN_NOT_PRESENT;
+    }
     
-    if (SCardListReaders(hSC, nullptr, (char*)&readers, &len) != SCARD_S_SUCCESS) {
+    readers = (char*)malloc(len);
+    
+    if (SCardListReaders(hSC, nullptr, (char*)readers, &len) != SCARD_S_SUCCESS) {
+        free(readers);
         return CKR_TOKEN_NOT_PRESENT;
     }
     
@@ -64,8 +71,18 @@ CK_RV CK_ENTRY VerificaCIEAbilitata()
                 continue;
             
             uint32_t atrLen = 40;
-            char ATR[40];
-            SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen);
+            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+                free(readers);
+                return CKR_DEVICE_ERROR;
+            }
+            
+            ATR = (char*)malloc(atrLen);
+            
+            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+                free(readers);
+                free(ATR);
+                return CKR_DEVICE_ERROR;
+            }
             
             ByteArray atrBa((BYTE*)ATR, atrLen);
             
@@ -74,16 +91,29 @@ CK_RV CK_ENTRY VerificaCIEAbilitata()
             ias.SelectAID_IAS();
             ias.ReadPAN();
             
+            free(ATR);
+            free(readers);
+            
             if(ias.IsEnrolled())
-                return CKR_CANCEL;
+                return 1;
             else
-                return CKR_OK;
+                return 0;
         }
         catch(...)
         {
+            if(ATR)
+                free(ATR);
+            if(readers)
+                free(readers);
             return CKR_GENERAL_ERROR;
         }
     }
+    
+    if(ATR)
+        free(ATR);
+    
+    if(readers)
+        free(readers);
     
     return CKR_TOKEN_NOT_PRESENT;
     
@@ -91,7 +121,7 @@ CK_RV CK_ENTRY VerificaCIEAbilitata()
 
 CK_RV CK_ENTRY DisabilitaCIE()
 {
-    DWORD len = MAX_PATH;
+    DWORD len = 0;
     
     SCARDCONTEXT hSC;
     
@@ -99,9 +129,17 @@ CK_RV CK_ENTRY DisabilitaCIE()
     if(nRet != SCARD_S_SUCCESS)
         return CKR_DEVICE_ERROR;
     
-    char readers[MAX_PATH];
+    char* readers = NULL;
+    char* ATR = NULL;
     
-    if (SCardListReaders(hSC, nullptr, (char*)&readers, &len) != SCARD_S_SUCCESS) {
+    if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
+        return CKR_TOKEN_NOT_PRESENT;
+    }
+    
+    readers = (char*)malloc(len);
+    
+    if (SCardListReaders(hSC, nullptr, (char*)readers, &len) != SCARD_S_SUCCESS) {
+        free(readers);
         return CKR_TOKEN_NOT_PRESENT;
     }
     
@@ -114,9 +152,19 @@ CK_RV CK_ENTRY DisabilitaCIE()
             if (!conn.hCard)
                 continue;
             
-            uint32_t atrLen = 40;
-            char ATR[40];
-            SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen);
+            uint32_t atrLen = 0;
+            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+                free(readers);
+                return CKR_DEVICE_ERROR;
+            }
+            
+            ATR = (char*)malloc(atrLen);
+            
+            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+                free(readers);
+                free(ATR);
+                return CKR_DEVICE_ERROR;
+            }
             
             ByteArray atrBa((BYTE*)ATR, atrLen);
             
@@ -128,30 +176,48 @@ CK_RV CK_ENTRY DisabilitaCIE()
             if(ias.IsEnrolled())
             {
                 ias.Unenroll();
+                free(ATR);
+                free(readers);
                 return CKR_OK;
             }
             else
             {
+                free(ATR);
+                free(readers);
                 return CKR_FUNCTION_FAILED;
             }
         }
         catch(...)
         {
+            if(ATR)
+                free(ATR);
+            
+            if(readers)
+                free(readers);
+            
             return CKR_GENERAL_ERROR;
         }
     }
+    
+    if(ATR)
+        free(ATR);
+    
+    if(readers)
+        free(readers);
     
     return CKR_TOKEN_NOT_PRESENT;
 }
 
 CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack)
 {
+    char* readers = NULL;
+    char* ATR = NULL;
 	try
     {
 		CSHA256 sha256;
 		std::map<uint8_t, ByteDynArray> hashSet;
 		
-		DWORD len = MAX_PATH;
+		DWORD len = 0;
 		ByteDynArray CertCIE;
 		ByteDynArray SOD;
 		ByteDynArray IdServizi;
@@ -164,11 +230,16 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
         if(nRet != SCARD_S_SUCCESS)
             return CKR_DEVICE_ERROR;
         
-		char readers[MAX_PATH];
-        
-		if (SCardListReaders(hSC, nullptr, (char*)&readers, &len) != SCARD_S_SUCCESS) {
+        if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
             return CKR_TOKEN_NOT_PRESENT;
-		}
+        }
+        
+        readers = (char*)malloc(len);
+        
+        if (SCardListReaders(hSC, nullptr, (char*)readers, &len) != SCARD_S_SUCCESS) {
+            free(readers);
+            return CKR_TOKEN_NOT_PRESENT;
+        }
 
         progressCallBack(5, "Connessione all CIE eseguita");
         
@@ -181,8 +252,18 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
                 continue;
 
             uint32_t atrLen = 40;
-            char ATR[40];
-            SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen);
+            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+                free(readers);
+                return CKR_DEVICE_ERROR;
+            }
+            
+            ATR = (char*)malloc(atrLen);
+            
+            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+                free(readers);
+                free(ATR);
+                return CKR_DEVICE_ERROR;
+            }
             
             ByteArray atrBa((BYTE*)ATR, atrLen);
             
@@ -197,13 +278,10 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
         
             progressCallBack(10, "Lettura dati dalla CIE");
             
-            ByteDynArray resp;
+            ByteDynArray IntAuth;
             ias.SelectAID_CIE();
-            ias.ReadDappPubKey(resp);
+            ias.ReadDappPubKey(IntAuth);
             ias.InitEncKey();
-            
-            ias.SelectAID_IAS();
-            ias.SelectAID_CIE();
             
             ByteDynArray IdServizi;
             ias.ReadIdServizi(IdServizi);
@@ -214,9 +292,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
 
             ByteDynArray SOD;
             ias.ReadSOD(SOD);
-            
-            ByteDynArray IntAuth;
-            ias.ReadDappPubKey(IntAuth);
+                        
             ByteArray intAuthData(IntAuth.left(GetASN1DataLenght(IntAuth)));
             
             hashSet[0xa4] = sha256.Digest(intAuthData);
@@ -244,14 +320,20 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             DWORD rs = CardAuthenticateEx(&ias, ROLE_USER, FULL_PIN, (BYTE*)szPIN, (DWORD)strnlen(szPIN, sizeof(szPIN)), nullptr, 0, attempts);
             if (rs == SCARD_W_WRONG_CHV)
             {
+                free(ATR);
+                free(readers);
                 return CKR_PIN_INCORRECT;
             }
             else if (rs == SCARD_W_CHV_BLOCKED)
             {
+                free(ATR);
+                free(readers);
                 return CKR_PIN_LOCKED;
             }
             else if (rs != SCARD_S_SUCCESS)
             {
+                free(ATR);
+                free(readers);
                 return CKR_GENERAL_ERROR;
             }
             
@@ -282,6 +364,8 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
 		}
         
 		if (!foundCIE) {
+            free(ATR);
+            free(readers);
             return CKR_TOKEN_NOT_RECOGNIZED;
             
 		}
@@ -289,10 +373,20 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
 	}
 	catch (std::exception &ex) {
 		OutputDebugString(ex.what());
+        if(ATR)
+            free(ATR);
         
+        if(readers)
+            free(readers);
         return CKR_GENERAL_ERROR;
 	}
 
+    if(ATR)
+        free(ATR);
+    
+    if(readers)
+        free(readers);
+    
     progressCallBack(100, "");
     
     return SCARD_S_SUCCESS;

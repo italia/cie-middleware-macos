@@ -13,8 +13,9 @@
 #include <unistd.h>
 #include "UUCProperties.h"
 #include <sys/stat.h>
+#include <regex>
 
-static char *szCompiledFile=__FILE__;
+
 std::string globalLogDir;
 std::string globalLogName;
 bool FunctionLog=false;
@@ -73,6 +74,12 @@ void initLog(const char *moduleName, const char *iniFile,const char *version)
     
     char* home = getenv("HOME");
     std::string path(home);
+//    std::smatch match;
+//    std::regex_search(path, match, std::regex("^/Users/"));
+//    std::string suffix = match.suffix();
+//    if(suffix.find("/") != std::string::npos)
+//        throw 1;
+    
     path.append("/.CIEPKI/");
     
     struct stat st = {0};
@@ -84,41 +91,6 @@ void initLog(const char *moduleName, const char *iniFile,const char *version)
     
     globalLogDir = settings.getProperty("LogDir", path.c_str()); //"Definisce il path in cui salvare il file di log (con / finale)"))
     
-    
-//    char SectionName[30];
-//    int numMod=1;
-//    while (true) {
-//        sprintf(SectionName,"%s%i","LogModule",numMod);
-//        std::string modName;
-//
-//        (IniSettingsString(SectionName, "Name", "", "Nome della sezione log di log")).GetValue((char*)iniFile, modName);
-//
-//        if (modName[0]==0)
-//            break;
-//
-//        CLog emptyLog;
-//        logInit.push_back(emptyLog);
-//        CLog &log=logInit[logInit.size()-1];
-//        log.logName=modName;
-//
-//        log.Enabled = (IniSettingsBool(SectionName, "LogEnable", MainEnable, "Abilitazione log della sezione")).GetValue((char*)iniFile);
-//
-//        (IniSettingsString(SectionName, "LogDir", logDirGlobal.c_str(), "Definisce il path in cui salvare il file di log di questa sezione (con \\ finale). Default: directory di log globale")).GetValue((char*)iniFile, log.logDir);
-//
-//        (IniSettingsString(SectionName, "LogFile", log.logName.c_str(), "Definisce il nome del file in cui salvare il file di log di questa sezione (con \\ finale). Default: il nome della sezione di log")).GetValue((char*)iniFile, log.logFileName);
-//
-//        log.FunctionLog = (IniSettingsBool(SectionName, "FunctionLog", FunctionLog, "Abilitazione log delle chiamate a funzione per questa sezione")).GetValue((char*)iniFile);
-//
-//        log.LogParam = (IniSettingsBool(SectionName, "ParamLog", GlobalParam, "Abilitazione log dei parametri di input delle funzioni per questa sezione")).GetValue((char*)iniFile);
-//
-//        log.Initialized=true;
-//        numMod++;
-//    }
-//    if (logInit.size()==0) {
-//        OutputDebugString("Nessun LogModule definito. Impostare le sezioni [LogModule1]...[LogModuleN] con i valori:\n");
-//        OutputDebugString("Name,LogEnable,LogDir,LogFile,FunctionLog,ParamLog\n");
-//    }
-	
 }
 
 CLog::CLog() {
@@ -221,7 +193,7 @@ DWORD CLog::write(const char *format,...) {
         time_t t = time(NULL);
         tm tm = *localtime(&t);
         
-        sprintf(pbtDate,"%05u:[%02d:%02d:%02d]", *Num, tm.tm_hour, tm.tm_min, tm.tm_sec);
+        snprintf(pbtDate,0x800,"%05u:[%02d:%02d:%02d]", *Num, tm.tm_hour, tm.tm_min, tm.tm_sec);
 #endif
 		// se siamo in LM_thread devo scrivere il thread nel nome del file
 		std::hash<std::thread::id> hasher;
@@ -293,7 +265,7 @@ DWORD CLog::write(const char *format,...) {
 void CLog::writePure(const char *format,...) {
  	va_list params;
 	va_start (params, format);
-	char pbtDate[0x800]={NULL};
+//    char pbtDate[0x800]={NULL};
 	if (Enabled && Initialized && mainEnable) {
 		if (!firstGlobal && LogMode==LM_Single) {
 			firstGlobal =true;
@@ -359,7 +331,7 @@ void CLog::writeBinData(BYTE *data, size_t datalen) {
 		writeModuleInfo();
 	}
 
-	char pbtDate[0x800]={NULL};
+//    char pbtDate[0x800]={NULL};
 
 	// se siamo in LM_thread devo scrivere il thread nel nome del file
 	std::hash<std::thread::id> hasher;

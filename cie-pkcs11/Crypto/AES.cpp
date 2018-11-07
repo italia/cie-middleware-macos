@@ -1,8 +1,6 @@
 
 #include "AES.h"
 
-static char *szCompiledFile=__FILE__;
-
 extern CLog Log;
 
 #ifdef WIN32

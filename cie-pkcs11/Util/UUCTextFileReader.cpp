@@ -1,5 +1,5 @@
 /* UUCTextFile.cpp: implementation of the UUCTextFile class.
-/*
+ *
  *  Copyright (c) 2000-2018 by Ugo Chirico - http://www.ugochirico.com
  *  All Rights Reserved
  *

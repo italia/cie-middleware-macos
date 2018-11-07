@@ -1,14 +1,12 @@
 
-#include "apdu.h"
-#include "../Util/tlv.h"
+#include "APDU.h"
+#include "../Util/TLV.h"
 #include "../Util/util.h"
-#include "../Crypto/des3.h"
-#include "../Crypto/mac.h"
+#include "../Crypto/DES3.h"
+#include "../Crypto/MAC.h"
 #include "Token.h"
 
 extern CLog Log;
-
-static char *szCompiledFile=__FILE__;
 
 APDU::APDU()  {
 }

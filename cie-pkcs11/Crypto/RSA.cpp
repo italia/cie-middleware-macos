@@ -5,8 +5,6 @@
 
 extern CLog Log;
 
-static char *szCompiledFile=__FILE__;
-
 #ifdef WIN32
 
 class init_rsa {

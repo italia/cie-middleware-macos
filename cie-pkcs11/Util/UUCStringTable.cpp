@@ -45,19 +45,6 @@ UUCStringTable::UUCStringTable()
 UUCStringTable::~UUCStringTable()
 {
 	removeAll();
-/*
-	// release memory in hashtable
-	POS p = getFirstPosition();
-	char* szKey;
-	char* szContent;
-
-	while(p != NULL)
-	{
-		p = getNextEntry(p, szKey, szContent);		
-		delete szContent;
-		delete szKey;
-	}	
-*/
 }
 
 void UUCStringTable::put(char* const& szKey, char* const& szValue)
@@ -77,11 +64,13 @@ void UUCStringTable::put(char* const& szKey, char* const& szValue)
 		szOldKey = NULL;
 	}
 	
-	szNewValue = new char[strlen(szValue) + 1];
-	strcpy(szNewValue, szValue);
+    size_t l1 = strlen(szValue);
+	szNewValue = new char[l1 + 1];
+	strlcpy(szNewValue, szValue, l1);
 
-	szNewKey = new char[strlen(szKey) + 1];
-	strcpy(szNewKey, szKey);
+    size_t l2 = strlen(szKey);
+	szNewKey = new char[l2 + 1];
+	strlcpy(szNewKey, szKey, l2);
 
 	UUCHashtable<char*, char*>::put(szNewKey, szNewValue);
 
@@ -101,11 +90,11 @@ unsigned long UUCStringTable::getHash(const char* szKey)
 	int h = 0;
 	int off = 0;
 	char* val = (char*)szKey;
-	int len = strlen((char*)szKey);
+	size_t len = strlen((char*)szKey);
 
 	if (len < 16) 
 	{
- 	    for (int i = len ; i > 0; i--) 
+ 	    for (unsigned long i = len ; i > 0; i--) 
 		{
  			h = (h * 37) + val[off++];
  	    }
@@ -113,8 +102,8 @@ unsigned long UUCStringTable::getHash(const char* szKey)
 	else 
 	{
  	    // only sample some characters
- 	    int skip = len / 8;
- 	    for (int i = len ; i > 0; i -= skip, off += skip) 
+ 	    unsigned long skip = len / 8;
+ 	    for (unsigned long i = len ; i > 0; i -= skip, off += skip)
 		{
  			h = (h * 39) + val[off];
  	    }

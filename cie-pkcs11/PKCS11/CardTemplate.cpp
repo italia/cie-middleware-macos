@@ -6,18 +6,22 @@
 
 extern CLog Log;
 
+#ifdef WIN32
 static char *szCompiledFile=__FILE__;
 
 const char szTemplatesQry[]="./TEMPLATES";
 const char szTemplateNode[]="TEMPLATE";
 const char szLibPathQry[]="./DLLMANAGER";
 const char szNameQry[]="./NAME";
+#endif
 
 extern CModuleInfo moduleInfo;
 
 namespace p11 {
-
+#ifdef WIN32
 static const char *szTemplateFuncListName = "TemplateGetFunctionList";
+#endif
+    
 TemplateVector CCardTemplate::g_mCardTemplates;
 
 CCardTemplate::CCardTemplate(void)

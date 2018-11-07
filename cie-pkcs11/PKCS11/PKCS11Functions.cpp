@@ -23,8 +23,6 @@
 #include "../Cryptopp/misc.h"
 #include "UUCByteArray.h"
 
-static char *szCompiledFile=__FILE__;
-
 CLog Log;
 
 // flag: P11 inizializzato
@@ -33,8 +31,6 @@ bool bP11Terminate=false;
 
 using namespace p11;
 
-// Function list P11
-static CK_FUNCTION_LIST m_FunctionList;
 std::mutex p11Mutex;
 auto_reset_event p11slotEvent/*("CardOS_P11_Event")*/;
 
@@ -321,7 +317,7 @@ CK_RV CK_ENTRY C_Initialize(CK_VOID_PTR pReserved)
 	
 	logParam(pReserved)
 	
-	CK_C_INITIALIZE_ARGS_PTR ptr=(CK_C_INITIALIZE_ARGS_PTR)pReserved;
+//    CK_C_INITIALIZE_ARGS_PTR ptr=(CK_C_INITIALIZE_ARGS_PTR)pReserved;
 
 	if (bP11Initialized)
 		return CKR_OK;

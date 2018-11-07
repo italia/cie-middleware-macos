@@ -1,9 +1,11 @@
 
 #include "SHA1.h"
 
-static char *szCompiledFile=__FILE__;
+
 
 #ifdef WIN32
+
+static char *szCompiledFile=__FILE__;
 
 class init_sha1 {
 public:

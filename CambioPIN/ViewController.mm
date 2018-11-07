@@ -56,6 +56,12 @@ CK_RV progressCallback(const int progress,
     NSString* newpin = self.textFieldNewPIN.stringValue;
     NSString* confirmpin = self.textFieldConfirmPIN.stringValue;
     
+    if(pin.length != 8 || newpin.length != 8)
+    {
+        [self showMessage: @"Il PIN deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
+        return;
+    }
+    
     if(![newpin isEqualToString:confirmpin])
     {
         [self showMessage: @"I PIN non corrispondono" withTitle:@"PIN non corrispondenti" exitAfter:false];
@@ -68,10 +74,35 @@ CK_RV progressCallback(const int progress,
         return;
     }
     
-    unichar c = [newpin characterAtIndex:0];
-    unichar lastchar = c;
+    unichar c = [pin characterAtIndex:0];
     
     int i = 1;
+    for(i = 1; i < pin.length && (c >= '0' && c <= '9'); i++)
+    {
+        c = [pin characterAtIndex:i];
+    }
+    
+    if(i < pin.length)
+    {
+        [self showMessage: @"Il PIN deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
+        return;
+    }
+    
+    
+    for(i = 1; i < newpin.length && (c >= '0' && c <= '9'); i++)
+    {
+        c = [newpin characterAtIndex:i];
+    }
+    
+    if(i < newpin.length)
+    {
+        [self showMessage: @"Il PIN deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
+        return;
+    }
+    
+    c = [newpin characterAtIndex:0];
+    unichar lastchar = c;
+        
     for(i = 1; i < newpin.length && c == lastchar; i++)
     {
         lastchar = c;

@@ -40,7 +40,7 @@ public:
 	
 	void reverse();
 	void append(const BYTE btVal);
-	void append(const BYTE* pbtVal, const unsigned int nLen);
+	void append(const BYTE* pbtVal, const unsigned long nLen);
 	void append(const UUCByteArray& val);
 	void append(const char* szHexString);
 	BYTE get(const unsigned int index) const;// throw(long);

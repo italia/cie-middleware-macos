@@ -16,6 +16,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string>
+#include <regex>
 
 //#endif
 
@@ -209,6 +210,13 @@ std::string GetCardDir()
 {
     char* home = getenv("HOME");
     std::string path(home);
+    
+//    std::smatch match;
+//    std::regex_search(path, match, std::regex("^/Users/"));
+//    std::string suffix = match.suffix();
+//    if(suffix.find("/") != std::string::npos)
+//        throw 1;
+    
     path.append("/.CIEPKI/");
 
     printf("Card Dir: %s\n", path.c_str());
@@ -216,25 +224,25 @@ std::string GetCardDir()
     return path.c_str();
 }
 
-void GetCardPath(const char *PAN, char szPath[MAX_PATH]) {
+void GetCardPath(const char *PAN, std::string& sPath) {
     auto Path=GetCardDir();
     
     Path += std::string(PAN);
     Path += ".cache";
-    strcpy(szPath, Path.c_str());
+    sPath = Path;
 }
 
 bool CacheExists(const char *PAN) {
-    char szPath[MAX_PATH];
-    GetCardPath(PAN, szPath);
-    return file_exists(szPath);
+    std::string sPath;
+    GetCardPath(PAN, sPath);
+    return file_exists(sPath.c_str());
 }
 
 bool CacheRemove(const char *PAN) {
-    char szPath[MAX_PATH];
-    GetCardPath(PAN, szPath);
+    std::string sPath;
+    GetCardPath(PAN, sPath);
     
-    return !remove(szPath);
+    return !remove(sPath.c_str());
 }
 
 void CacheGetCertificate(const char *PAN, std::vector<uint8_t>&certificate)
@@ -242,13 +250,13 @@ void CacheGetCertificate(const char *PAN, std::vector<uint8_t>&certificate)
     if (PAN == nullptr)
         throw logged_error("Il PAN è necessario");
     
-    char szPath[MAX_PATH];
-    GetCardPath(PAN, szPath);
+    std::string sPath;
+    GetCardPath(PAN, sPath);
     
-    if (file_exists(szPath)) {
+    if (file_exists(sPath.c_str())) {
         
         ByteDynArray data, Cert;
-        data.load(szPath);
+        data.load(sPath.c_str());
         uint8_t *ptr = data.data();
         uint32_t len = *(uint32_t*)ptr; ptr += sizeof(uint32_t);
         // salto il PIN
@@ -269,12 +277,12 @@ void CacheGetPIN(const char *PAN, std::vector<uint8_t>&PIN) {
     if (PAN == nullptr)
         throw logged_error("Il PAN è necessario");
     
-    char szPath[MAX_PATH];
-    GetCardPath(PAN, szPath);
+    std::string sPath;
+    GetCardPath(PAN, sPath);
     
-    if (file_exists(szPath)) {
+    if (file_exists(sPath.c_str())) {
         ByteDynArray data, ClearPIN;
-        data.load(szPath);
+        data.load(sPath.c_str());
         uint8_t *ptr = data.data();
         uint32_t len = *(uint32_t*)ptr; ptr += sizeof(uint32_t);
         ClearPIN.resize(len); ClearPIN.copy(ByteArray(ptr, len));
@@ -295,24 +303,28 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
         throw logged_error("Il PAN è necessario");
     
     auto szDir = GetCardDir();
-    char chDir[MAX_PATH];
-    strcpy(chDir, szDir.c_str());
     
     struct stat st = {0};
         
-    if (stat(chDir, &st) == -1) {
-        int r = mkdir(chDir, 0700);
+    if (stat(szDir.c_str(), &st) == -1) {
+        int r = mkdir(szDir.c_str(), 0700);
         printf("mkdir: %d, %x\n", r, errno);
     }
     
-    char szPath[MAX_PATH];
-    GetCardPath(PAN, szPath);
+    std::string sPath;
+    GetCardPath(PAN, sPath);
     
     ByteArray baCertificate(certificate, certificateSize);
     ByteArray baFirstPIN(FirstPIN, FirstPINSize);
     
     char* home = getenv("HOME");
     std::string path(home);
+//    std::smatch match;
+//    std::regex_search(path, match, std::regex("^/Users/"));
+//    std::string suffix = match.suffix();
+//    if(suffix.find("/") != std::string::npos)
+//        throw 1;
+    
     path.append("/Library/Containers/it.ipzs.AbilitaCIE.CIEToken/Data/.CIEPKI/");
     
     printf("CIETokenDriver Dir: %s\n", path.c_str());
@@ -325,7 +337,7 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     path.append(PAN);
     path.append(".cache");
             
-    std::ofstream file(szPath, std::ofstream::out | std::ofstream::binary);
+    std::ofstream file(sPath.c_str(), std::ofstream::out | std::ofstream::binary);
     std::ofstream fileForCIEToken(path.c_str(), std::ofstream::out | std::ofstream::binary);
     
     uint32_t len = (uint32_t)baFirstPIN.size();

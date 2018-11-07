@@ -4,8 +4,6 @@
 
 extern CLog Log;
 
-static char *szCompiledFile=__FILE__;
-
 void CCardContext::getContext() {
 	init_func
 #ifdef WIN32
@@ -51,9 +49,9 @@ void CCardContext::validate() {
     
 	if (hContext)
 		if (SCardIsValidContext(hContext)!=SCARD_S_SUCCESS) 
-			hContext=NULL;
+			hContext = NULL;
 
-	if (hContext==NULL) {
+	if (hContext == 0) {
 		getContext();
 	}
 }

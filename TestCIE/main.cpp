@@ -131,6 +131,9 @@ CK_SLOT_ID_PTR getSlotList(bool bPresent, CK_ULONG* pulCount)
             getSlotInfo(pSlotList[i]);
         }
         
+        if(g_nLogLevel > 1)
+            std::cout << "  -- Richiesta completata " << std::endl;
+        
         return pSlotList;
     }
     else
@@ -138,9 +141,6 @@ CK_SLOT_ID_PTR getSlotList(bool bPresent, CK_ULONG* pulCount)
         std::cout << "  -> Nessuno Slot disponibile " << std::endl;
         return NULL_PTR;
     }
-    
-    if(g_nLogLevel > 1)
-        std::cout << "  -- Richiesta completata " << std::endl;
 }
 
 void getTokenInfo(CK_SLOT_ID slotid)
@@ -198,8 +198,30 @@ bool login(CK_SESSION_HANDLE hSession)
         std::cout << "  -> Login allo slot\n    - C_Login" << std::endl;
     
     char szPIN[256];
-    std::cout << "   - Inserire il PIN ";
-    std::cin >> szPIN;
+    
+    bool pinIsGood = false;
+    
+    while(!pinIsGood)
+    {
+        std::cout << "   - Inserire la seconda parte del PIN ";
+        std::cin >> szPIN;
+        size_t len = strlen(szPIN);
+        if(len != 4)
+        {
+            std::cout << "   Attenzione: Il pin deve essere composto da 4 numeri" << std::endl;;
+        }
+        else
+        {
+            int i = 0;
+            while(i < len && (szPIN[i] >= '0' && szPIN[i] <= '9'))
+                i++;
+            
+            if(i == len)
+                pinIsGood = true;
+            else
+                std::cout << "   Attenzione: Il pin deve essere composto da 4 numeri" << std::endl;;
+        }
+    }
     
     CK_RV rv = g_pFuncList->C_Login(hSession, CKU_USER, (CK_CHAR_PTR)szPIN, strlen(szPIN));
     if (rv != CKR_OK)
@@ -300,27 +322,36 @@ void showAttributes(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
     CK_BBOOL        bPrivate       = 0;
     CK_BBOOL        bToken        = 0;
     
-    char btLabel[256];
-    char btID[256];
-    
-    memset(btID, 0, 256);
-    
-    //char szValue[256];
-    
+    char* btLabel = NULL;
+    char* btID = NULL;
     
     CK_ATTRIBUTE    attr[]      = {
         {CKA_PRIVATE, &bPrivate, sizeof(bPrivate)},
         {CKA_TOKEN, &bToken, sizeof(bToken)},
-        {CKA_LABEL, btLabel, 256},
-        {CKA_ID, btID, 256}//,
-        //{CKA_VALUE, szValue, 256}
+        {CKA_LABEL, btLabel, 0},
+        {CKA_ID, btID, 0}
     };
     
     CK_RV rv = g_pFuncList->C_GetAttributeValue(hSession, hObject, attr, 4);
-//    if (rv != CKR_OK)
-//    {
-//        error(rv);
-//    }
+    if (rv != CKR_OK)
+    {
+        error(rv);
+    }
+    
+    
+    attr[2].pValue = malloc(attr[2].ulValueLen + 2);
+    attr[3].pValue = malloc(attr[3].ulValueLen + 2);
+    
+    rv = g_pFuncList->C_GetAttributeValue(hSession, hObject, attr, 4);
+    if (rv != CKR_OK)
+    {
+        free(attr[2].pValue);
+        free(attr[3].pValue);
+        error(rv);
+    }
+    
+    btLabel = (char*)attr[2].pValue;
+    btID = (char*)attr[3].pValue;
     
     btLabel[attr[2].ulValueLen] = 0;
     btID[attr[3].ulValueLen] = 0;
@@ -334,6 +365,8 @@ void showAttributes(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
         //std::cout << "      - Value: " << szValue << std::endl;
     }
     
+    free(attr[2].pValue);
+    free(attr[3].pValue);
 }
 
 void showCertAttributes(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject)
@@ -406,8 +439,6 @@ bool signVerify(CK_SESSION_HANDLE hSession)
     CK_OBJECT_HANDLE hObjectPubKey;
     CK_ULONG ulCount = 1;
     
-    CK_BBOOL        bYes    = TRUE;
-    CK_BBOOL        bNo        = FALSE;
     CK_OBJECT_CLASS ckClassPri     = CKO_PRIVATE_KEY;
     CK_OBJECT_CLASS ckClassPub     = CKO_PUBLIC_KEY;
     
@@ -579,7 +610,7 @@ bool encryptDecrypt(CK_SESSION_HANDLE hSession)
         std::cout << "  -> Cifra un testo: " << std::endl;
     
     char* szToEncrypt = "some text to encrypt";
-    dataVal.append((BYTE*)szToEncrypt, strlen(szToEncrypt));
+    dataVal.append((BYTE*)szToEncrypt, (int)strlen(szToEncrypt));
     
     CK_RV rv = g_pFuncList->C_EncryptInit(hSession, pMechanism, hObjectPubKey);
     if (rv != CKR_OK)
@@ -680,18 +711,20 @@ int main(int argc, char* argv[])
     if(g_nLogLevel > 2)
         std::cout << "  -- Richiesta completata " << std::endl;
     
-    char szCmd[10];
+    char* szCmd;
     bool bEnd = false;
     
     while(!bEnd)
     {
-        if(argc > 1)
+        if(argc > 1 && strlen(argv[1]) <= 2)
         {
-            strcpy(szCmd, argv[1]);
+            szCmd = argv[1];
             bEnd = true;
         }
         else
         {
+            std::string sCommandLine;
+            
             std::cout << "\nTest numbers:" << std::endl;
             std::cout << "1 Init and Finalize" << std::endl;
             std::cout << "2 Read slot list" << std::endl;
@@ -703,7 +736,10 @@ int main(int argc, char* argv[])
 //            std::cout << "8 Encrypt + Decrypt" << std::endl;
             std::cout << "20 Exit" << std::endl;
             std::cout << "Insert the test number:" << std::endl;
-            std::cin >> szCmd;
+            std::cin >> sCommandLine;
+            
+            if(sCommandLine.length() < 2)
+                szCmd = (char*)sCommandLine.c_str();
         }
         
 //        long starttime = GetTickCount();

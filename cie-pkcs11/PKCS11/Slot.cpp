@@ -218,7 +218,7 @@ namespace p11 {
 	{
 		init_func
 
-			int i = 0;
+//            int i = 0;
 
 		if (Thread.joinable())
 			Thread.join();

@@ -4,7 +4,6 @@
 
 extern CLog Log;
 
-static char *szCompiledFile=__FILE__;
 
 namespace p11 {
 
@@ -133,7 +132,6 @@ void CP11Data::SetAttributes(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
 bool CP11Object::IsPrivate()
 {
 	init_func	
-	bool bPrivate=false;
 	ByteArray* baVal = getAttribute(CKA_PRIVATE);
 
 	if (baVal==nullptr)

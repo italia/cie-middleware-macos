@@ -4,10 +4,10 @@
 
 extern CLog Log;
 
-static char *szCompiledFile = __FILE__;
+
 
 #ifdef WIN32
-
+static char *szCompiledFile = __FILE__;
 class init_3des {
 public:
 	BCRYPT_ALG_HANDLE algo;

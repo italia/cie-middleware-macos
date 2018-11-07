@@ -90,7 +90,6 @@ readerMonitor::readerMonitor(void(*eventHandler)(std::string &reader, bool inser
 	}
 	stopMonitor = false;
 	readerEvent = eventHandler;
-	DWORD tid = 0;
 	
 	Thread = std::thread([](readerMonitor *rm) -> DWORD {
 		std::vector<std::string> readerList;

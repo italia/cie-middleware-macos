@@ -74,15 +74,15 @@ long UUCProperties::load(const char* szFilePath)
 		long nRes = textFileReader.readLine(line);
 
 		char* szLine	= (char*)line.getContent();
-
-		DWORD dwLineLen = line.getLength();
+        char* szSavePtr;
+		size_t dwLineLen = line.getLength();
 
 		while(nRes != nEOF)
 		{
 			if(szLine[0] != '#' && szLine[0] != '[')  // salta i commenti
 			{
-				szName  = strtok(szLine, "=");
-				szValue = strtok(NULL, "\n");
+				szName  = strtok_r(szLine, "=", &szSavePtr);
+				szValue = strtok_r(NULL, "\n", &szSavePtr);
 				putProperty(szName, szValue);			
 			}
 
@@ -112,10 +112,10 @@ long UUCProperties::load(const UUCByteArray& props)
 {
 	char* szName;
 	char* szValue;
-	long nEOF = -1;
 	char* szEqual;
+    char* szSavePtr;
 	char* szProps = (char*)props.getContent();
-	char* szLine	= strtok(szProps, "\r\n");
+	char* szLine	= strtok_r(szProps, "\r\n", &szSavePtr);
 	
 	while(szLine)
 	{
@@ -126,11 +126,11 @@ long UUCProperties::load(const UUCByteArray& props)
 			szName  = szLine;			
 			szValue = szEqual + 1;
 			putProperty(szName, szValue);
-			szLine = strtok(NULL, "\r\n");
+			szLine = strtok_r(NULL, "\r\n", &szSavePtr);
 		}
 		else
 		{
-			szLine = strtok(NULL, "\r\n");//strlen(szLine) + 1;
+			szLine = strtok_r(NULL, "\r\n", &szSavePtr);//strlen(szLine) + 1;
 			//szProps += strlen(szLine) + 1;
 		}
 	}
@@ -147,11 +147,12 @@ long UUCProperties::save(const char* szFilePath, const char* szHeader) const
 		UUCTextFileWriter textFileWriter(szFilePath);
 
 		if (szHeader != NULL) 
-		{			
-			szLine = new char[strlen(szHeader) + 3];
-			sprintf(szLine, "#%s", szHeader);
+		{
+            size_t l = strlen(szHeader) + 3;
+			szLine = new char[l];
+			snprintf(szLine, l, "#%s", szHeader);
 			textFileWriter.writeLine(szLine);
-			delete szLine;
+			delete[] szLine;
 		}
 
 		time_t ltime;
@@ -159,9 +160,9 @@ long UUCProperties::save(const char* szFilePath, const char* szHeader) const
 		time( &ltime );
 		
 		szLine = new char[255];
-		sprintf(szLine, "#%s", ctime( &ltime ) );		
+		snprintf(szLine, 255, "#%s", ctime( &ltime ) );
 		textFileWriter.writeLine(szLine);
-		delete szLine;
+		delete[] szLine;
 
 		// iterate in the hashtable
 		char* szName;
@@ -173,10 +174,11 @@ long UUCProperties::save(const char* szFilePath, const char* szHeader) const
 		{
 			p = m_pStringTable->getNextEntry(p, szName, szValue);		
 				
-			szLine = new char[strlen(szName) + strlen(szValue) + 2];
-			sprintf(szLine, "%s=%s", szName, szValue);	    	   
+            size_t l  = strlen(szName) + strlen(szValue) + 2;
+			szLine = new char[l];
+			snprintf(szLine, l, "%s=%s", szName, szValue);
 			textFileWriter.writeLine(szLine);
-			delete szLine; 
+			delete[] szLine;
 		}				
 	}
 	catch(long nErr)
@@ -202,11 +204,12 @@ long UUCProperties::save(UUCByteArray& props, const char* szHeader) const
 	try
 	{
 		if (szHeader != NULL) 
-		{			
-			szLine = new char[strlen(szHeader) + 4];
-			sprintf(szLine, "#%s\r\n", szHeader);
-			props.append((BYTE*)szLine, strlen(szLine));
-			delete szLine;
+		{
+            size_t l = strlen(szHeader) + 4;
+			szLine = new char[l];
+			snprintf(szLine, l, "#%s\r\n", szHeader);
+			props.append((BYTE*)szLine, (int)strlen(szLine));
+			delete[] szLine;
 		}
 
 		time_t ltime;
@@ -214,9 +217,9 @@ long UUCProperties::save(UUCByteArray& props, const char* szHeader) const
 		time( &ltime );
 		
 		szLine = new char[255];
-		sprintf(szLine, "#%s\r\n", ctime( &ltime ) );		
-		props.append((BYTE*)szLine, strlen(szLine));
-		delete szLine;
+		snprintf(szLine, 255, "#%s\r\n", ctime( &ltime ) );
+		props.append((BYTE*)szLine, (int)strlen(szLine));
+		delete[] szLine;
 
 		// iterate in the hashtable
 		char* szName;
@@ -228,10 +231,11 @@ long UUCProperties::save(UUCByteArray& props, const char* szHeader) const
 		{
 			p = m_pStringTable->getNextEntry(p, szName, szValue);		
 				
-			szLine = new char[strlen(szName) + strlen(szValue) + 2 + 3];
-			sprintf(szLine, "%s=%s\r\n", szName, szValue);	    	   
-			props.append((BYTE*)szLine, strlen(szLine));
-			delete szLine; 
+            size_t l = strlen(szName) + strlen(szValue) + 2 + 3;
+			szLine = new char[l];
+			snprintf(szLine, l, "%s=%s\r\n", szName, szValue);
+			props.append((BYTE*)szLine, (int)strlen(szLine));
+			delete[] szLine;
 		}				
 	}
 	catch(long nErr)

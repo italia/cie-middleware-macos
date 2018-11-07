@@ -206,12 +206,12 @@ void CIEtemplateInitSession(void *pTemplateData){
 				throw logged_error("Errore nella data di inizio validita' certificato");
 			if (!FileTimeToSystemTime(&certDS->pCertInfo->NotAfter, &sTo))
 				throw logged_error("Errore nella data di fine validita' certificato");
-			sprintf_s(temp, "%04i", sFrom.wYear); VarToByteArray(start.year).copy(ByteArray((BYTE*)temp, 4));
-			sprintf_s(temp, "%02i", sFrom.wMonth); VarToByteArray(start.month).copy(ByteArray((BYTE*)temp, 2));
-			sprintf_s(temp, "%02i", sFrom.wDay); VarToByteArray(start.day).copy(ByteArray((BYTE*)temp, 2));
-			sprintf_s(temp, "%04i", sTo.wYear); VarToByteArray(end.year).copy(ByteArray((BYTE*)temp, 2));
-			sprintf_s(temp, "%02i", sTo.wMonth); VarToByteArray(end.month).copy(ByteArray((BYTE*)temp, 2));
-			sprintf_s(temp, "%02i", sTo.wDay); VarToByteArray(end.day).copy(ByteArray((BYTE*)temp, 2));
+			snprintf_s(temp, 10, "%04i", sFrom.wYear); VarToByteArray(start.year).copy(ByteArray((BYTE*)temp, 4));
+			snprintf_s(temp, 10, "%02i", sFrom.wMonth); VarToByteArray(start.month).copy(ByteArray((BYTE*)temp, 2));
+			snprintf_s(temp, 10, "%02i", sFrom.wDay); VarToByteArray(start.day).copy(ByteArray((BYTE*)temp, 2));
+			snprintf_s(temp, 10, "%04i", sTo.wYear); VarToByteArray(end.year).copy(ByteArray((BYTE*)temp, 2));
+			snprintf_s(temp, 10, "%02i", sTo.wMonth); VarToByteArray(end.month).copy(ByteArray((BYTE*)temp, 2));
+			snprintf_s(temp, 10, "%02i", sTo.wDay); VarToByteArray(end.day).copy(ByteArray((BYTE*)temp, 2));
 			cie->cert->addAttribute(CKA_START_DATE, VarToByteArray(start));
 			cie->cert->addAttribute(CKA_END_DATE, VarToByteArray(end));
 		}

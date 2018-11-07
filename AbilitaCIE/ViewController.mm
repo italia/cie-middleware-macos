@@ -163,6 +163,20 @@ CK_RV progressCallback(const int progress,
 {
     NSString* pin = self.textFieldPIN.stringValue;
     
+    unichar c = [pin characterAtIndex:0];
+    
+    int i = 1;
+    for(i = 1; i < pin.length && (c >= '0' && c <= '9'); i++)
+    {
+        c = [pin characterAtIndex:i];
+    }
+    
+    if(i < pin.length)
+    {
+        [self showMessage: @"Il PIN deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
+        return;
+    }
+    
     [((NSControl*)sender) setEnabled:NO];
     
     dispatch_async(dispatch_get_global_queue(0,0), ^{
@@ -177,10 +191,10 @@ CK_RV progressCallback(const int progress,
         
         char* szPAN = NULL;
         
-//        NSArray *args = [[NSProcessInfo processInfo] arguments];
-//        
-//        if(args.count > 1)
-//            szPAN = (char*)[((NSString*)[args objectAtIndex:1]) cStringUsingEncoding:NSUTF8StringEncoding];
+        NSArray *args = [[NSProcessInfo processInfo] arguments];
+        
+        if(args.count > 1)
+            szPAN = (char*)[((NSString*)[args objectAtIndex:1]) cStringUsingEncoding:NSUTF8StringEncoding];
         
         int attempts = -1;
         

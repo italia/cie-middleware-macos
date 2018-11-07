@@ -32,9 +32,12 @@ int TokenTransmitCallback(safeConnection *data, uint8_t *apdu, DWORD apduSize, u
 
 CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* pAttempts, PROGRESS_CALLBACK progressCallBack)
 {
+    char* readers = NULL;
+    char* ATR = NULL;
+    
     try
     {
-        DWORD len = MAX_PATH;
+        DWORD len = 0;
         
         SCARDCONTEXT hSC;
         
@@ -44,9 +47,14 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
         if(nRet != SCARD_S_SUCCESS)
             return CKR_DEVICE_ERROR;
         
-        char readers[MAX_PATH];
+        if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
+            return CKR_TOKEN_NOT_PRESENT;
+        }
         
-        if (SCardListReaders(hSC, nullptr, (char*)&readers, &len) != SCARD_S_SUCCESS) {
+        readers = (char*)malloc(len);
+        
+        if (SCardListReaders(hSC, nullptr, (char*)readers, &len) != SCARD_S_SUCCESS) {
+            free(readers);
             return CKR_TOKEN_NOT_PRESENT;
         }
         
@@ -62,8 +70,18 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
                 continue;
             
             uint32_t atrLen = 40;
-            char ATR[40];
-            SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen);
+            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+                free(readers);
+                return CKR_DEVICE_ERROR;
+            }
+            
+            ATR = (char*)malloc(atrLen);
+            
+            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+                free(readers);
+                free(ATR);
+                return CKR_DEVICE_ERROR;
+            }
             
             ByteArray atrBa((BYTE*)ATR, atrLen);
             
@@ -161,9 +179,12 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
 
 CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttempts, PROGRESS_CALLBACK progressCallBack)
 {
+    char* readers = NULL;
+    char* ATR = NULL;
+    
     try
     {
-        DWORD len = MAX_PATH;
+        DWORD len = 0;
         
         SCARDCONTEXT hSC;
         
@@ -173,9 +194,14 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
         if(nRet != SCARD_S_SUCCESS)
             return CKR_DEVICE_ERROR;
         
-        char readers[MAX_PATH];
+        if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
+            return CKR_TOKEN_NOT_PRESENT;
+        }
         
-        if (SCardListReaders(hSC, nullptr, (char*)&readers, &len) != SCARD_S_SUCCESS) {
+        readers = (char*)malloc(len);
+        
+        if (SCardListReaders(hSC, nullptr, (char*)readers, &len) != SCARD_S_SUCCESS) {
+            free(readers);
             return CKR_TOKEN_NOT_PRESENT;
         }
         
@@ -191,8 +217,18 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
                 continue;
             
             uint32_t atrLen = 40;
-            char ATR[40];
-            SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen);
+            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+                free(readers);
+                return CKR_DEVICE_ERROR;
+            }
+            
+            ATR = (char*)malloc(atrLen);
+            
+            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+                free(readers);
+                free(ATR);
+                return CKR_DEVICE_ERROR;
+            }
             
             ByteArray atrBa((BYTE*)ATR, atrLen);
             
@@ -232,10 +268,17 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
             
             StatusWord sw = ias.VerifyPUK(pukBa);
             
+            free(ATR);
+            free(readers);
+            
             if (sw == 0x6983) {
+                free(ATR);
+                free(readers);
                 return CKR_PIN_LOCKED;
             }
             if (sw >= 0x63C0 && sw <= 0x63CF) {
+                free(ATR);
+                free(readers);
                 if (pAttempts!=nullptr)
                     *pAttempts = sw - 0x63C0;
                 
@@ -243,11 +286,17 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
             }
             
             if (sw == 0x6700) {
+                free(ATR);
+                free(readers);
                 return CKR_PIN_INCORRECT;
             }
-            if (sw == 0x6300)
+            if (sw == 0x6300) {
+                free(ATR);
+                free(readers);
                 return CKR_PIN_INCORRECT;
+            }
             if (sw != 0x9000) {
+                
                 throw scard_error(sw);
             }
             
@@ -275,14 +324,27 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
         }
         
         if (!foundCIE) {
-            return CKR_TOKEN_NOT_RECOGNIZED;
-            
+            free(ATR);
+            free(readers);
+            return CKR_TOKEN_NOT_RECOGNIZED;            
         }
     }
     catch(...)
     {
+        if(ATR)
+            free(ATR);
+        
+        if(readers)
+            free(readers);
+        
         return CKR_GENERAL_ERROR;
     }
+    
+    if(ATR)
+        free(ATR);
+    
+    if(readers)
+        free(readers);
     
     return CKR_OK;
 }

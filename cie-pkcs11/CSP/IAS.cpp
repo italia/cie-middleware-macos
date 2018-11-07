@@ -362,7 +362,7 @@ void IAS::DAPP() {
 	uint8_t shaOID = 0x04;
 	DWORD shaSize = 32;
 	CSHA256 sha256;
-	uint8_t Val01 = 1;
+//    uint8_t Val01 = 1;
 
 	if (DappPubKey.isEmpty()) {
 		throw logged_error("La chiave DAPP non e' diponibile");
@@ -394,7 +394,7 @@ void IAS::DAPP() {
 	endEntityCert.set(CPI, &CA_CAR, &CHR, &CHA, &OID, &module, &pubexp);
 
 	ByteDynArray certSign, toSign;
-	uint8_t ValBC = 0xBC;
+//    uint8_t ValBC = 0xBC;
     
     ByteArray endEntityCertBa = endEntityCert.left(CA_module.size() - shaSize - 2);
     
@@ -871,7 +871,7 @@ StatusWord IAS::SendAPDU_SM(ByteArray head, ByteArray data, ByteDynArray &resp, 
 		// Per daesso l'ho osservato solo su una virtual machine Win7 con il lettore in sharing con l'host
 		
 
-		size_t ds = data.size();
+//        size_t ds = data.size();
 		size_t i = 0;
 		uint8_t cla = head[0];
 		while (true) {

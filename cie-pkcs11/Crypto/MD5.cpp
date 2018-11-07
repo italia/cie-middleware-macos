@@ -1,8 +1,6 @@
 
 #include "MD5.h"
 
-static char *szCompiledFile=__FILE__;
-
 #ifdef WIN32
 
 class init_md5 {
@@ -59,7 +57,7 @@ CMD5::~CMD5() {
 
 void CMD5::Init() {
 	if (isInit)
-		throw logged_error("Un'operazione di hash Ë gi‡ in corso");
+		throw logged_error("Un'operazione di hash è già in corso");
 	MD5_Init(&ctx);
 	isInit = true;
 }

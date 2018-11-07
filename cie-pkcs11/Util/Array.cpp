@@ -296,9 +296,11 @@ ByteDynArray &ByteDynArray::push(const uint8_t data) {
 }
 
 uint8_t* ByteDynArray::detach() {
-	return _data;
+    uint8_t* data = _data;
 	_data = nullptr;
 	_size = 0;
+    
+    return data;
 }
 bool ByteArray::indexOf(ByteArray &data,size_t &position) const {
 	if (data.size() == 0)

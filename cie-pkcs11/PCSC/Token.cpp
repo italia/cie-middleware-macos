@@ -44,7 +44,7 @@ void CToken::SelectMF() {
 
 ByteDynArray CToken::BinaryRead(WORD start,BYTE size) {
 	init_func
-	DWORD dwBase=0;
+	
 	std::vector<BYTE> dt;
 
 	ER_ASSERT(transmitCallback,"Carta non Connessa")

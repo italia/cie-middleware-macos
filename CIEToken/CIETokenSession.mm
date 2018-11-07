@@ -20,14 +20,11 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
         
         self.smartCard = session.smartCard;
         self.APDUTemplate = nil;
-        //self.PINFormat = [[TKSmartCardPINFormat alloc] init];
-        //self.PINFormat.PINBitOffset = 5 * 8;
     }
     
     return self;
 }
 
-// Remove this as soon as PIVAuthOperation implements automatic PIN submission according to APDUTemplate.
 - (BOOL)finishWithError:(NSError * _Nullable __autoreleasing *)error
 {
     char szPIN[5];
@@ -43,15 +40,6 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
         return false;
     }
     
-//
-//    // Format PIN as UTF-8, right padded with 0xff to 8 bytes.
-//    NSMutableData *PINData = [NSMutableData dataWithLength:8];
-//    memset(PINData.mutableBytes, 0xff, PINData.length);
-//
-//
-//    [[self.PIN dataUsingEncoding:NSUTF8StringEncoding] getBytes:PINData.mutableBytes length:PINData.length];
-//
-    
     ((CIEToken*)_session.token).loginRequired = false;
     
     self.session.authState = CIEAuthStateFreshlyAuthorized;
@@ -62,8 +50,6 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
     // Remember in card context that the card is authenticated.
     self.session.smartCard.context = @(YES);
     
-    // Mark PIVTokenSession as freshly authorized.
-//    self.session.authState = CIEAuthStateFreshlyAuthorized;
     return YES;
 }
 
@@ -73,10 +59,7 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
 
 
 - (TKTokenAuthOperation *)tokenSession:(TKTokenSession *)session beginAuthForOperation:(TKTokenOperation)operation constraint:(TKTokenOperationConstraint)constraint error:(NSError **)error {
-    // Insert code here to create an instance of TKTokenAuthOperation based on the specified operation and constraint.
-    // Note that the constraint was previously established when populating keychainContents during token initialization.
     return [[CIEAuthOperation alloc] initWithSession:self];
-//    return [TKTokenSmartCardPINAuthOperation new];
 }
 
 - (BOOL)tokenSession:(TKTokenSession *)session supportsOperation:(TKTokenOperation)operation usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm {
@@ -92,10 +75,6 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
                     
                     return [algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] &&
                     [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw];
-                    
-//                    // We support only PKCS1 padding.
-////                    return [algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] &&
-//                    return [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignaturePKCS1v15Raw];
                 }
             }
             break;
@@ -104,17 +83,14 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
             break;
             
         case TKTokenOperationPerformKeyExchange:
-                break;
+            break;
         
         default:
-                break;
+            break;
     }
 
 
     return NO;
-//    CK_MECHANISM_TYPE mechanism;
-//    return algorithmToMechanism(algorithm, &mechanism);
-    
 }
 
 - (NSData *)tokenSession:(TKTokenSession *)session signData:(NSData *)dataToSign usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm error:(NSError **)error
@@ -130,36 +106,29 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
     
     CK_OBJECT_HANDLE hObjectPriKey = 0;
     CK_ULONG ulCount = 1;
-    CK_OBJECT_CLASS ckClassPri     = CKO_PRIVATE_KEY;
+    CK_OBJECT_CLASS ckClassPri = CKO_PRIVATE_KEY;
     
     CK_ATTRIBUTE template_cko_keyPri[] = {
         {CKA_CLASS, &ckClassPri, sizeof(ckClassPri)},
     };
     
-    
     if(!findObject(((CIEToken*)self.token).hSession, template_cko_keyPri, 1, &hObjectPriKey, &ulCount))
     {
-//        std::cout << "  -> Operazione fallita" << std::endl;
         return nil;
     }
     
     if(ulCount < 1)
     {
-//        std::cout << "  -> Oggetto chiave privata non trovato" << std::endl;
         return nil;
     }
     
     CK_MECHANISM_TYPE mechanism = CKM_RSA_PKCS;
-//    if(!algorithmToMechanism(algorithm, &mechanism))
-//    {
-//        return nil;
-//    }
     
     CK_MECHANISM pMechanism[] = {mechanism, NULL_PTR, 0};
     
     CK_ULONG outputLen = 256;
     
-    NSString* hex = dataToSign.hexString;
+//    NSString* hex = dataToSign.hexString;
     
     CK_RV rv = g_pFuncList->C_SignInit(((CIEToken*)self.token).hSession, pMechanism, hObjectPriKey);
     if (rv != CKR_OK)
@@ -286,61 +255,7 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
 }
 
 - (NSData *)tokenSession:(TKTokenSession *)session performKeyExchangeWithPublicKey:(NSData *)otherPartyPublicKeyData usingKey:(TKTokenObjectID)objectID algorithm:(TKTokenKeyAlgorithm *)algorithm parameters:(TKTokenKeyExchangeParameters *)parameters error:(NSError **)error {
-    NSData *secret = nil;
-//
-//    // Insert code here to perform Diffie-Hellman style key exchange.
-//    secret = nil;
-//
-//    if (!secret) {
-//        if (error) {
-//            // If the operation failed for some reason, fill in an appropriate error like TKErrorCodeObjectNotFound, TKErrorCodeCorruptedData, etc.
-//            // Note that responding with TKErrorCodeAuthenticationNeeded will trigger user authentication after which the current operation will be re-attempted.
-//            *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationNeeded userInfo:@{NSLocalizedDescriptionKey: @"Authentication required!"}];
-//        }
-//    }
-
-    return secret;
-}
-
-static bool algorithmToMechanism(TKTokenKeyAlgorithm * algorithm, CK_MECHANISM_TYPE* mechanismType)
-{
-//    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSAEncryptionRaw]
-//        || [algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw])
-//    {
-//        *mechanismType =  CKM_RSA_PKCS;
-//        return true;
-//    }
-//
-//    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw])
-//    {
-//        *mechanismType =  CKM_RSA_PKCS;
-//        return true;
-//    }
-    
-    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw])
-    {
-        *mechanismType = CKM_RSA_PKCS;
-        return true;
-    }
-    
-//    if([algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw])
-//    //if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw])
-//    {
-//        *mechanismType = CKM_RSA_PKCS;
-//        return true;
-//    }
-//    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256])
-//    {
-//        *mechanismType = CKM_SHA256_RSA_PKCS;
-//        return true;
-//    }
-    
-//    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA384])
-//        return CKM_SHA384_RSA_PKCS;
-//    if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA512])
-//        return CKM_SHA512_RSA_PKCS;
-//    
-    return false;
+    return nil;
 }
 
 - (unsigned long) removePaddingBT1:(NSData*) paddedData

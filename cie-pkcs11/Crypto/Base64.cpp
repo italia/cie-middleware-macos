@@ -8,8 +8,6 @@ extern CLog Log;
 
 //#include <Wincrypt.h>
 
-static char *szCompiledFile=__FILE__;
-
 CBase64::CBase64()
 {
 }

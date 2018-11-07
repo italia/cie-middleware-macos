@@ -201,7 +201,7 @@ public:
 
     bool containsKey(const KEY& key) const
 	{
-		unsigned int hash = getHashValue(key);
+		unsigned long hash = getHashValue(key);
 		long index = (hash & 0x7FFFFFFF) % m_nSize;
 
 		for(HashtableEntry* e = m_table[index]; e != NULL; e = e->next)
@@ -217,7 +217,7 @@ public:
 	
     virtual bool get(KEY& key, VALUE& value) const
 	{
-		UINT hash = getHashValue(key);
+		unsigned long hash = getHashValue(key);
 		int index = (hash & 0x7FFFFFFF) % m_nSize;
 
 		for(HashtableEntry* e = m_table[index]; e != NULL; e = e->next)
@@ -239,7 +239,7 @@ public:
 		//	throw 1;
 
 		// Makes sure the key is not already in the hashtable.
-		UINT hash = getHashValue(key);
+		unsigned long hash = getHashValue(key);
 		int index = (hash & 0x7FFFFFFF) % m_nSize;
 		HashtableEntry* e;
 		for(e = m_table[index]; e != NULL; e = e->next)
@@ -271,7 +271,7 @@ public:
 		m_nCount++;		
     };
 
-	virtual void removeAll()
+	void removeAll()
 	{
 		KEY* keys = new KEY[size()];
 		KEY key;
@@ -292,13 +292,13 @@ public:
 
 		m_nCount = 0;
 
-		delete keys;
+        delete[] keys;
 	}
 
 
     virtual bool remove(const KEY& key) 
 	{
-		UINT hash = getHashValue(key);
+		unsigned long hash = getHashValue(key);
 		int index = (hash & 0x7FFFFFFF) % m_nSize;
 		
 		HashtableEntry* prev = NULL;
