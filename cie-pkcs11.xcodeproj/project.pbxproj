@@ -1393,6 +1393,7 @@
 			baseConfigurationReference = 79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = UV5M7CH7SB;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1415,6 +1416,7 @@
 			baseConfigurationReference = 438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = UV5M7CH7SB;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
