@@ -63,24 +63,29 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 
 @implementation CIEToken
 
+void* hModule = NULL;
+
 - (instancetype)initWithSmartCard:(TKSmartCard *)smartCard AID:(NSData *)AID tokenDriver:(CIETokenDriver *)tokenDriver error:(NSError **)error
 {
-    
-    const char* szCryptoki = "libcie-pkcs11.dylib";
-    void* hModule = dlopen(szCryptoki, RTLD_LOCAL | RTLD_LAZY);
     if(!hModule)
     {
-//        char* err = dlerror();
-        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-        [errorDetail setValue:@"Middleware not found" forKey:NSLocalizedDescriptionKey];
-        *error = [NSError errorWithDomain:@"CIEToken" code:100 userInfo:errorDetail];
-        return nil;
+        const char* szCryptoki = "libcie-pkcs11.dylib";
+        hModule = dlopen(szCryptoki, RTLD_LOCAL | RTLD_LAZY);
+        if(!hModule)
+        {
+    //        char* err = dlerror();
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Middleware not found" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"CIEToken" code:100 userInfo:errorDetail];
+            return nil;
+        }
     }
     
     C_GETFUNCTIONLIST pfnGetFunctionList=(C_GETFUNCTIONLIST)dlsym(hModule, "C_GetFunctionList");
     if(!pfnGetFunctionList)
     {
         dlclose(hModule);
+        hModule = NULL;
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware's functions list not found'" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
@@ -91,6 +96,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     if(rv != CKR_OK)
     {
         dlclose(hModule);
+        hModule = NULL;
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware's functions list fails'" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
@@ -117,6 +123,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
             free(pSlotList);
         
         dlclose(hModule);
+        hModule = NULL;
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware's getSlotList fails'" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
@@ -132,6 +139,8 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     if (rv != CKR_OK)
     {
         free(pSlotList);
+        dlclose(hModule);
+        hModule = NULL;
         
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware's getSlotList fails'" forKey:NSLocalizedDescriptionKey];
@@ -154,8 +163,8 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     if(!_hSession)
     {
         free(pSlotList);
-        
         dlclose(hModule);
+        hModule = NULL;
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware openSession fails'" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
@@ -174,6 +183,9 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     
     if(!findObject(_hSession, template_ck, 1, phObject, &ulObjCount) || ulObjCount == 0)
     {
+        dlclose(hModule);
+        hModule = NULL;
+        
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware's findObject fails'" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
@@ -190,6 +202,9 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     rv = g_pFuncList->C_GetAttributeValue(_hSession, hObject, attr, 1);
     if (rv != CKR_OK)
     {
+        dlclose(hModule);
+        hModule = NULL;
+        
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware C_GetAttributeValue fails'" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
@@ -201,6 +216,8 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     rv = g_pFuncList->C_GetAttributeValue(_hSession, hObject, attr, 1);
     if (rv != CKR_OK)
     {
+        dlclose(hModule);
+        hModule = NULL;
         free(attr[0].pValue);
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware C_GetAttributeValue fails'" forKey:NSLocalizedDescriptionKey];
