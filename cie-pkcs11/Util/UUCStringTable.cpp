@@ -19,6 +19,7 @@
 */
 
 #include "UUCStringTable.h"
+#include <string>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -52,9 +53,6 @@ void UUCStringTable::put(char* const& szKey, char* const& szValue)
 	char* szOldValue = NULL;
 	char* szOldKey = szKey;
 
-	char* szNewValue;
-	char* szNewKey;
-
 	if(containsKey(szKey))
 	{
 		get(szOldKey, szOldValue);
@@ -64,15 +62,10 @@ void UUCStringTable::put(char* const& szKey, char* const& szValue)
 		szOldKey = NULL;
 	}
 	
-    size_t l1 = strlen(szValue);
-	szNewValue = new char[l1 + 1];
-	strlcpy(szNewValue, szValue, l1);
-
-    size_t l2 = strlen(szKey);
-	szNewKey = new char[l2 + 1];
-	strlcpy(szNewKey, szKey, l2);
-
-	UUCHashtable<char*, char*>::put(szNewKey, szNewValue);
+    std::string sNewValue(szValue);
+    std::string sNewKey(szKey);
+    
+	UUCHashtable<char*, char*>::put((char*)sNewKey.c_str(), (char*)sNewValue.c_str());
 
 	if(szOldKey)
 		delete szOldKey;
@@ -90,7 +83,8 @@ unsigned long UUCStringTable::getHash(const char* szKey)
 	int h = 0;
 	int off = 0;
 	char* val = (char*)szKey;
-	size_t len = strlen((char*)szKey);
+    std::string sKey(szKey);
+	size_t len = sKey.size();
 
 	if (len < 16) 
 	{
@@ -98,7 +92,7 @@ unsigned long UUCStringTable::getHash(const char* szKey)
 		{
  			h = (h * 37) + val[off++];
  	    }
- 	} 
+ 	} MAX_PATH
 	else 
 	{
  	    // only sample some characters

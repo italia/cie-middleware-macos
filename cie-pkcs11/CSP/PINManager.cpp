@@ -268,9 +268,6 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
             
             StatusWord sw = ias.VerifyPUK(pukBa);
             
-            free(ATR);
-            free(readers);
-            
             if (sw == 0x6983) {
                 free(ATR);
                 free(readers);
@@ -331,20 +328,14 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
     }
     catch(...)
     {
-        if(ATR)
-            free(ATR);
-        
-        if(readers)
-            free(readers);
+        free(ATR);
+        free(readers);
         
         return CKR_GENERAL_ERROR;
     }
     
-    if(ATR)
-        free(ATR);
-    
-    if(readers)
-        free(readers);
+    free(ATR);
+    free(readers);
     
     return CKR_OK;
 }

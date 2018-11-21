@@ -77,24 +77,7 @@ UUCByteArray::UUCByteArray(const UUCByteArray& blob)
 		if(m_pbtContent == NULL)
 			throw -5L;
 		
-	}	
-	
-
-	/*
-	m_unLen = blob.getLength();
-	if(m_unLen > 0)
-	{
-		m_nCapacity = m_unLen;	
-		m_pbtContent = (BYTE*)malloc(m_nCapacity);	
-		memcpy(m_pbtContent, blob.getContent(), m_unLen);
 	}
-	else
-	{
-		m_unLen = 0;
-		m_nCapacity = DEFAULT_CAPACITY;
-		m_pbtContent = (BYTE*)malloc(m_nCapacity);		
-	}
-	*/
 }
 
 UUCByteArray::UUCByteArray(const char* szHexString)
@@ -146,7 +129,7 @@ UUCByteArray::~UUCByteArray()
 		delete m_szHex;
 }
 
-void UUCByteArray::load(const char* szHexString)
+long UUCByteArray::load(const char* szHexString)
 {
 	m_unLen = (strlen(szHexString)/2);
 	
@@ -155,11 +138,15 @@ void UUCByteArray::load(const char* szHexString)
 	m_nCapacity = m_unLen;	
 	//m_pbtContent = (BYTE*)GlobalAlloc(GPTR, m_nCapacity);
 	m_pbtContent = (BYTE*)malloc(m_nCapacity);
-
+    if(m_pbtContent == NULL)
+        return ERROR_UNABLE_TO_ALLOCATE;
+        
 	for(unsigned int i = 0; i < m_unLen; i++)
 	{
 		m_pbtContent[i] = atox((char*)szHexString + (i * 2));
 	}
+    
+    return S_OK;
 }
 
 const BYTE* UUCByteArray::getContent() const
@@ -217,43 +204,51 @@ void UUCByteArray::removeAll()
 	m_unLen = 0;
 }
 
-void UUCByteArray::append(const BYTE btVal)
+long UUCByteArray::append(const BYTE btVal)
 {
 	if(m_unLen == m_nCapacity)
 	{
 		m_nCapacity += DEFAULT_CAPACITY;
 		m_pbtContent = (BYTE*)realloc(m_pbtContent, m_nCapacity);
+        if(m_pbtContent == NULL)
+            return ERROR_UNABLE_TO_ALLOCATE;
 	}
 		
 	m_pbtContent[m_unLen] = btVal;
 
 	m_unLen++;
+    
+    return S_OK;
 }
 
-void UUCByteArray::append(const BYTE* pbtVal, const unsigned long nLen)
+long UUCByteArray::append(const BYTE* pbtVal, const unsigned long nLen)
 {
 	if(m_unLen + nLen > m_nCapacity)
 	{
 		m_nCapacity += nLen;
 		m_pbtContent = (BYTE*)realloc(m_pbtContent, m_nCapacity);
+        if(m_pbtContent == NULL)
+            return ERROR_UNABLE_TO_ALLOCATE;
 	}
 
 	for(unsigned int i = 0; i < nLen; i++)
 	{
 		m_pbtContent[m_unLen] = pbtVal[i];
 		m_unLen++;		
-	}	
+	}
+    
+    return S_OK;
 }
 
-void UUCByteArray::append(const UUCByteArray& val)
+long UUCByteArray::append(const UUCByteArray& val)
 {
-	append(val.getContent(), val.getLength());
+	return append(val.getContent(), val.getLength());
 }
 
-void UUCByteArray::append(const char* szHexString)
+long UUCByteArray::append(const char* szHexString)
 {
 	UUCByteArray ba(szHexString);
-	append(ba.getContent(), ba.getLength());
+	return append(ba.getContent(), ba.getLength());
 }
 
 /*
@@ -276,10 +271,12 @@ void UUCByteArray::toHexString(char* szHexString) const
 }
 */
 
-void UUCByteArray::reverse()
+long UUCByteArray::reverse()
 {
 	BYTE* pbtContent = (BYTE*)malloc(m_unLen);
-	
+    if(m_pbtContent == NULL)
+        return ERROR_UNABLE_TO_ALLOCATE;
+    
 	for(int i = 0; i < m_unLen; i++)
 	{
 		pbtContent[i] = m_pbtContent[m_unLen - i - 1];
@@ -288,6 +285,8 @@ void UUCByteArray::reverse()
 	memcpy(m_pbtContent, pbtContent, m_unLen);
 
 	free(pbtContent);
+    
+    return S_OK;
 }
 
 const char* UUCByteArray::toHexString() 

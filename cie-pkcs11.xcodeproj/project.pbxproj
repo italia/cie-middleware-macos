@@ -56,8 +56,6 @@
 		E5659037211864470039865C /* SyncroEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659012211864470039865C /* SyncroEvent.h */; };
 		E5659038211864470039865C /* SyncroMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659013211864470039865C /* SyncroMutex.cpp */; };
 		E5659039211864470039865C /* SyncroMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659014211864470039865C /* SyncroMutex.h */; };
-		E565903C211864470039865C /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659017211864470039865C /* tinyxml2.cpp */; };
-		E565903D211864470039865C /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659018211864470039865C /* tinyxml2.h */; };
 		E565903E211864470039865C /* TLV.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659019211864470039865C /* TLV.cpp */; };
 		E565903F211864470039865C /* TLV.h in Headers */ = {isa = PBXBuildFile; fileRef = E565901A211864470039865C /* TLV.h */; };
 		E5659040211864470039865C /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565901B211864470039865C /* util.cpp */; };
@@ -229,8 +227,6 @@
 		E5659012211864470039865C /* SyncroEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncroEvent.h; sourceTree = "<group>"; };
 		E5659013211864470039865C /* SyncroMutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SyncroMutex.cpp; sourceTree = "<group>"; };
 		E5659014211864470039865C /* SyncroMutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncroMutex.h; sourceTree = "<group>"; };
-		E5659017211864470039865C /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
-		E5659018211864470039865C /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		E5659019211864470039865C /* TLV.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TLV.cpp; sourceTree = "<group>"; };
 		E565901A211864470039865C /* TLV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLV.h; sourceTree = "<group>"; };
 		E565901B211864470039865C /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = util.cpp; sourceTree = "<group>"; };
@@ -451,8 +447,6 @@
 				E5659012211864470039865C /* SyncroEvent.h */,
 				E5659013211864470039865C /* SyncroMutex.cpp */,
 				E5659014211864470039865C /* SyncroMutex.h */,
-				E5659017211864470039865C /* tinyxml2.cpp */,
-				E5659018211864470039865C /* tinyxml2.h */,
 				E5659019211864470039865C /* TLV.cpp */,
 				E565901A211864470039865C /* TLV.h */,
 				E565901B211864470039865C /* util.cpp */,
@@ -711,7 +705,6 @@
 				E5659082211875950039865C /* sha256.h in Headers */,
 				E5659031211864470039865C /* IniSettings.h in Headers */,
 				E5659057211875830039865C /* CardLocker.h in Headers */,
-				E565903D211864470039865C /* tinyxml2.h in Headers */,
 				E565907C211875950039865C /* MD5.h in Headers */,
 				E565904A211875760039865C /* IAS.h in Headers */,
 				E5BE7DB820FE853800004389 /* session.h in Headers */,
@@ -1055,7 +1048,6 @@
 				E5BE7DA920FE853800004389 /* CardContext.cpp in Sources */,
 				E5659077211875950039865C /* DES3.cpp in Sources */,
 				E55BE03C2136CD0300E5F396 /* CacheLib.cpp in Sources */,
-				E565903C211864470039865C /* tinyxml2.cpp in Sources */,
 				E5659036211864470039865C /* SyncroEvent.cpp in Sources */,
 				E565907F211875950039865C /* SHA1.cpp in Sources */,
 				E5659040211864470039865C /* util.cpp in Sources */,

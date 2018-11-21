@@ -197,21 +197,23 @@ bool login(CK_SESSION_HANDLE hSession)
     if(g_nLogLevel > 1)
         std::cout << "  -> Login allo slot\n    - C_Login" << std::endl;
     
-    char szPIN[256];
     
     bool pinIsGood = false;
     
     while(!pinIsGood)
     {
         std::cout << "   - Inserire la seconda parte del PIN ";
-        std::cin >> szPIN;
-        size_t len = strlen(szPIN);
+        std::string sPIN;
+        std::getline(std::cin, sPIN);
+        size_t len = sPIN.size();
         if(len != 4)
         {
             std::cout << "   Attenzione: Il pin deve essere composto da 4 numeri" << std::endl;;
         }
         else
         {
+            const char* szPIN = sPIN.c_str();
+            
             int i = 0;
             while(i < len && (szPIN[i] >= '0' && szPIN[i] <= '9'))
                 i++;

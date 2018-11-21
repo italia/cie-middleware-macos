@@ -31,18 +31,18 @@ public:
 	UUCByteArray(const unsigned long nLen);
 	UUCByteArray();
 
-	void load(const char* szHexString);
+	long load(const char* szHexString);
 
 	virtual ~UUCByteArray();
 
 	const BYTE* getContent() const;
 	unsigned long getLength() const;
 	
-	void reverse();
-	void append(const BYTE btVal);
-	void append(const BYTE* pbtVal, const unsigned long nLen);
-	void append(const UUCByteArray& val);
-	void append(const char* szHexString);
+	long reverse();
+	long append(const BYTE btVal);
+	long append(const BYTE* pbtVal, const unsigned long nLen);
+	long append(const UUCByteArray& val);
+	long append(const char* szHexString);
 	BYTE get(const unsigned int index) const;// throw(long);
 	void set(const unsigned int index, const BYTE btVal);// throw (long);
 	BYTE operator [] (const unsigned int index) const;// throw(long);

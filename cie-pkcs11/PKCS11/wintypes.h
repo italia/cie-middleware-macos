@@ -24,6 +24,7 @@
 #define ERROR_FILE_NOT_FOUND  0x02
 #define ERROR_MORE_DATA  0xE0
 #define ERROR_INVALID_DATA 0xE1
+#define ERROR_UNABLE_TO_ALLOCATE  0xE2
 
 #define NNULL 0
 #define UINT unsigned int

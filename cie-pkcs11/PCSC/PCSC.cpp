@@ -106,10 +106,11 @@ readerMonitor::readerMonitor(void(*eventHandler)(std::string &reader, bool inser
                 throw logged_error("Nessun lettore installato");
             }
 #else
-            LONG rv = SCardListReaders(rm->hContext, NULL, NULL, &len);
+            if(SCardListReaders(rm->hContext, NULL, NULL, &len))
+                throw logged_error("Nessun lettore installato");
             
             readers = (char*)calloc(len, sizeof(char));
-            rv = SCardListReaders(rm->hContext, NULL, readers, &len);
+            SCardListReaders(rm->hContext, NULL, readers, &len);
 #endif
             
             		          
@@ -119,6 +120,8 @@ readerMonitor::readerMonitor(void(*eventHandler)(std::string &reader, bool inser
 				readerList.push_back(std::string(curReader));
 #ifdef SCARD_AUTOALLOCATE
 			SCardFreeMemory(rm->hContext, readers);
+#else
+            free(readers);
 #endif
 			states.resize((DWORD)readerList.size() + 1);
 			for (DWORD i = 0; i < readerList.size(); i++) {
