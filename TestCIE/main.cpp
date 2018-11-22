@@ -199,11 +199,10 @@ bool login(CK_SESSION_HANDLE hSession)
     
     
     bool pinIsGood = false;
-    
+    std::string sPIN;
     while(!pinIsGood)
     {
         std::cout << "   - Inserire la seconda parte del PIN ";
-        std::string sPIN;
         std::getline(std::cin, sPIN);
         size_t len = sPIN.size();
         if(len != 4)
@@ -225,7 +224,7 @@ bool login(CK_SESSION_HANDLE hSession)
         }
     }
     
-    CK_RV rv = g_pFuncList->C_Login(hSession, CKU_USER, (CK_CHAR_PTR)szPIN, strlen(szPIN));
+    CK_RV rv = g_pFuncList->C_Login(hSession, CKU_USER, (CK_CHAR_PTR)sPIN.c_str(), sPIN.size());
     if (rv != CKR_OK)
     {
         error(rv);
