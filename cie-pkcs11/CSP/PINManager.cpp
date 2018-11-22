@@ -125,20 +125,30 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
             StatusWord sw = ias.VerifyPIN(oldPINBa);
             
             if (sw == 0x6983) {
+                free(readers);
+                free(ATR);
                 return CKR_PIN_LOCKED;
             }
             if (sw >= 0x63C0 && sw <= 0x63CF) {
                 if (pAttempts!=nullptr)
                     *pAttempts = sw - 0x63C0;
                 
+                free(readers);
+                free(ATR);
                 return CKR_PIN_INCORRECT;
             }
             
             if (sw == 0x6700) {
+                free(readers);
+                free(ATR);
                 return CKR_PIN_INCORRECT;
             }
             if (sw == 0x6300)
+            {
+                free(readers);
+                free(ATR);
                 return CKR_PIN_INCORRECT;
+            }
             if (sw != 0x9000) {
                 throw scard_error(sw);
             }
@@ -167,14 +177,25 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
         }
         
         if (!foundCIE) {
+            free(readers);
+            free(ATR);
             return CKR_TOKEN_NOT_RECOGNIZED;
             
         }
     }
     catch(...)
     {
+        if(readers)
+            free(readers);
+        if(ATR)
+            free(ATR);
         return CKR_GENERAL_ERROR;
     }
+    
+    if(readers)
+        free(readers);
+    if(ATR)
+        free(ATR);
     
     return CKR_OK;
 }
@@ -334,14 +355,20 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
     }
     catch(...)
     {
-        free(ATR);
-        free(readers);
+        if(ATR)
+            free(ATR);
+        
+        if(readers)
+            free(readers);
         
         return CKR_GENERAL_ERROR;
     }
     
-    free(ATR);
-    free(readers);
+    if(ATR)
+        free(ATR);
+    
+    if(readers)
+        free(readers);
     
     return CKR_OK;
 }

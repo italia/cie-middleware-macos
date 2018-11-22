@@ -172,38 +172,26 @@ CK_RV CK_ENTRY DisabilitaCIE()
                 return CKR_DEVICE_ERROR;
             }
             
-            printf("atr ok");
-            
             ByteArray atrBa((BYTE*)ATR, atrLen);
-            
-            printf("atr ok 2");
             
             IAS ias((CToken::TokenTransmitCallback)TokenTransmitCallback, atrBa);
             
-            printf("ias ok");
             ias.SetCardContext(&conn);
             
-            printf("card context ok");
             ias.SelectAID_CIE();
-            printf("select CIE ok");
             ias.SelectAID_IAS();
-            printf("select ias ok");
             ias.ReadPAN();
-            printf("read pan ok");
             if(ias.IsEnrolled())
             {
-                printf("is enrolled ok");
                 ias.Unenroll();
-                
-                printf("unenroll ok");
-                //free(ATR);
-                //free(readers);
+                free(ATR);
+                free(readers);
                 return CKR_OK;
             }
             else
             {
-                //free(ATR);
-                //free(readers);
+                free(ATR);
+                free(readers);
                 return CKR_FUNCTION_FAILED;
             }
         }
@@ -212,9 +200,8 @@ CK_RV CK_ENTRY DisabilitaCIE()
             if(ATR)
                 free(ATR);
             
-            if(readers)
-                free(readers);
-            
+             free(readers);
+        
             return CKR_GENERAL_ERROR;
         }
     }
@@ -222,8 +209,7 @@ CK_RV CK_ENTRY DisabilitaCIE()
     if(ATR)
         free(ATR);
     
-    if(readers)
-        free(readers);
+    free(readers);
     
     return CKR_TOKEN_NOT_PRESENT;
 }
@@ -407,8 +393,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
     if(ATR)
         free(ATR);
     
-    if(readers)
-        free(readers);
+    free(readers);
     
     progressCallBack(100, "");
     
