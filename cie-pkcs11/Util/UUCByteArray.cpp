@@ -209,9 +209,11 @@ long UUCByteArray::append(const BYTE btVal)
 	if(m_unLen == m_nCapacity)
 	{
 		m_nCapacity += DEFAULT_CAPACITY;
-		m_pbtContent = (BYTE*)realloc(m_pbtContent, m_nCapacity);
-        if(m_pbtContent == NULL)
+        BYTE* buffer = (BYTE*)realloc(m_pbtContent, m_nCapacity);
+        if(buffer == NULL)
             return ERROR_UNABLE_TO_ALLOCATE;
+        
+        m_pbtContent = buffer;
 	}
 		
 	m_pbtContent[m_unLen] = btVal;
@@ -226,9 +228,11 @@ long UUCByteArray::append(const BYTE* pbtVal, const unsigned long nLen)
 	if(m_unLen + nLen > m_nCapacity)
 	{
 		m_nCapacity += nLen;
-		m_pbtContent = (BYTE*)realloc(m_pbtContent, m_nCapacity);
-        if(m_pbtContent == NULL)
+        BYTE* buffer = (BYTE*)realloc(m_pbtContent, m_nCapacity);
+        if(buffer == NULL)
             return ERROR_UNABLE_TO_ALLOCATE;
+        
+        m_pbtContent = buffer;
 	}
 
 	for(unsigned int i = 0; i < nLen; i++)

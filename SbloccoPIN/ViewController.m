@@ -56,6 +56,18 @@ CK_RV progressCallback(const int progress,
     NSString* newpin = self.textFieldNewPIN.stringValue;
     NSString* confirmpin = self.textFieldConfirmPIN.stringValue;
     
+    if(puk.length != 8)
+    {
+        [self showMessage: @"Il PUK deve essere composto da 8 numeri" withTitle:@"PUK non corretto" exitAfter:false];
+        return;
+    }
+    
+    if(newpin.length != 8)
+    {
+        [self showMessage: @"Il nuovo PIN deve essere composto da 8 numeri" withTitle:@"Nuovo PIN non corretto" exitAfter:false];
+        return;
+    }
+    
     unichar c = [puk characterAtIndex:0];
     
     int i = 1;
@@ -64,21 +76,22 @@ CK_RV progressCallback(const int progress,
         c = [puk characterAtIndex:i];
     }
     
-    if(i < puk.length)
+    if(!(c >= '0' && c <= '9'))
     {
         [self showMessage: @"Il PUK deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
         return;
     }
     
+    c = [newpin characterAtIndex:0];
     
     for(i = 1; i < newpin.length && (c >= '0' && c <= '9'); i++)
     {
         c = [newpin characterAtIndex:i];
     }
     
-    if(i < newpin.length)
+    if(!(c >= '0' && c <= '9'))
     {
-        [self showMessage: @"Il PIN deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
+        [self showMessage: @"Il nuovo PIN deve essere composto da 8 numeri" withTitle:@"Nuovo PIN non corretto" exitAfter:false];
         return;
     }
     

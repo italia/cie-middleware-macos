@@ -47,7 +47,7 @@ void GetCardPath(const char *PAN, char szPath[MAX_PATH]) {
 	Path += std::string(PAN);
 	Path += ".cache";
     
-    strncpy(szPath, Path.c_str(), Path.size());
+    strlcpy(szPath, Path.c_str(), Path.size());
 }
 
 bool CacheExists(const char *PAN) {

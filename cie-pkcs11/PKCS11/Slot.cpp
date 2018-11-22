@@ -440,7 +440,7 @@ namespace p11 {
 		pInfo->ulRwSessionCount = dwRWSessCount;
 		pInfo->ulMaxRwSessionCount = MAXSESSIONS;
 
-		pInfo->ulMinPinLen = 4;
+		pInfo->ulMinPinLen = 8;
 		pInfo->ulMaxPinLen = 8;
 
 		pInfo->hardwareVersion.major = 0;

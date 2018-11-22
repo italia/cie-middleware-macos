@@ -51,6 +51,9 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
             return CKR_TOKEN_NOT_PRESENT;
         }
         
+        if(len == 1)
+            return CKR_TOKEN_NOT_PRESENT;
+        
         readers = (char*)malloc(len);
         
         if (SCardListReaders(hSC, nullptr, (char*)readers, &len) != SCARD_S_SUCCESS) {
@@ -197,6 +200,9 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
         if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
             return CKR_TOKEN_NOT_PRESENT;
         }
+        
+        if(len == 1)
+            return CKR_TOKEN_NOT_PRESENT;
         
         readers = (char*)malloc(len);
         

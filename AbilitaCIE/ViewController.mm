@@ -163,6 +163,12 @@ CK_RV progressCallback(const int progress,
 {
     NSString* pin = self.textFieldPIN.stringValue;
     
+    if(pin.length != 8)
+    {
+        [self showMessage: @"Il PIN deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
+        return;
+    }
+    
     unichar c = [pin characterAtIndex:0];
     
     int i = 1;
@@ -171,7 +177,7 @@ CK_RV progressCallback(const int progress,
         c = [pin characterAtIndex:i];
     }
     
-    if(i < pin.length)
+    if(i < pin.length || !(c >= '0' && c <= '9'))
     {
         [self showMessage: @"Il PIN deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
         return;

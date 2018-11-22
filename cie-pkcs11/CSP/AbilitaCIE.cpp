@@ -54,6 +54,9 @@ CK_RV CK_ENTRY VerificaCIEAbilitata()
         return CKR_TOKEN_NOT_PRESENT;
     }
     
+    if(len == 1)
+        return CKR_TOKEN_NOT_PRESENT;
+    
     readers = (char*)malloc(len);
     
     if (SCardListReaders(hSC, nullptr, (char*)readers, &len) != SCARD_S_SUCCESS) {
@@ -135,6 +138,9 @@ CK_RV CK_ENTRY DisabilitaCIE()
     if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
         return CKR_TOKEN_NOT_PRESENT;
     }
+    
+    if(len == 1)
+        return CKR_TOKEN_NOT_PRESENT;
     
     readers = (char*)malloc(len);
     
@@ -247,6 +253,9 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
         if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
             return CKR_TOKEN_NOT_PRESENT;
         }
+        
+        if(len == 1)
+            return CKR_TOKEN_NOT_PRESENT;
         
         readers = (char*)malloc(len);
         

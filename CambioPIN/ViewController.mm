@@ -82,19 +82,20 @@ CK_RV progressCallback(const int progress,
         c = [pin characterAtIndex:i];
     }
     
-    if(i < pin.length)
+    if(!(c >= '0' && c <= '9'))
     {
         [self showMessage: @"Il PIN deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
         return;
     }
     
+    c = [newpin characterAtIndex:0];
     
     for(i = 1; i < newpin.length && (c >= '0' && c <= '9'); i++)
     {
         c = [newpin characterAtIndex:i];
     }
     
-    if(i < newpin.length)
+    if(!(c >= '0' && c <= '9'))
     {
         [self showMessage: @"Il PIN deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
         return;
@@ -190,7 +191,7 @@ CK_RV progressCallback(const int progress,
                     break;
                     
                 case CKR_TOKEN_NOT_PRESENT:
-                    [self showMessage:@"Impossibile trovare la CIE con Numero Identificativo" withTitle:@"Abilitazione CIE" exitAfter:false];
+                    [self showMessage:@"CIE presente sul lettore" withTitle:@"Abilitazione CIE" exitAfter:false];
                     break;
                     
                 case CKR_PIN_INCORRECT:

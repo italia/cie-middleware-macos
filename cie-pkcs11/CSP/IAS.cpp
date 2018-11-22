@@ -1144,54 +1144,10 @@ bool IsLowIntegrity()
 		integrity == 1;
 }
 
-bool IsUserInteractive()
-{
-	BOOL bIsUserInteractive = true;
-
-//    HWINSTA hWinStation = GetProcessWindowStation();
-//    if (hWinStation != NULL)
-//    {
-//        USEROBJECTFLAGS uof = { 0 };
-//        if (GetUserObjectInformation(hWinStation, UOI_FLAGS, &uof, sizeof(USEROBJECTFLAGS), NULL) && ((uof.dwFlags & WSF_VISIBLE) == 0))
-//        {
-//            bIsUserInteractive = FALSE;
-//        }
-//    }
-	return bIsUserInteractive == true;
-}
 
 void IAS::IconaSbloccoPIN() {
 	init_func
-		if (IsUserInteractive()) {
-//        PROCESS_INFORMATION pi;
-//        STARTUPINFO si;
-//        ZeroMem(si);
-//        si.cb = sizeof(STARTUPINFO);
-//
-//        WORD getHandle = 0xfffd;
-//        ByteDynArray resp;
-//        token.Transmit(VarToByteArray(getHandle), &resp);
-//        SCARDHANDLE hCard = *(SCARDHANDLE*)resp.data();
-//
-//        char runDll32Path[MAX_PATH];
-//        GetSystemDirectory(runDll32Path, MAX_PATH);
-//        strcat_s(runDll32Path, "\\");
-//        strcat_s(runDll32Path, "rundll32.exe");
-//
-//        // check impersonation
-//        HANDLE token = NULL;
-//        OpenThreadToken(GetCurrentThread(), TOKEN_QUERY, FALSE, &token);
-//
-//        if (token == NULL) {
-//            if (CreateProcess(runDll32Path, (char*)std::string("rundll32.exe \"").append(moduleInfo.szModuleFullPath).append("\",SbloccoPIN ICON").c_str(), nullptr, nullptr, FALSE, 0, nullptr, nullptr, &si, &pi)) {
-//                CloseHandle(pi.hThread);
-//                CloseHandle(pi.hProcess);
-//            }
-//        }
-//        else {
-//            CloseHandle(token);
-//        }
-	}
+		
 }
 
 void IAS::GetFirstPIN(ByteDynArray &PIN) {
@@ -1230,47 +1186,11 @@ void IAS::GetCertificate(ByteDynArray &certificate,bool askEnable) {
 	dumpHexData(PAN.mid(5, 6), PANStr, false);
 	if (!CacheExists(PANStr.c_str())) {
                 
-//        ReadCertCIE(certificate);
-        
-        
-		if (askEnable && IsUserInteractive() && !IsLowIntegrity()) {
+		if (askEnable) {
             
             showUI(PANStr.c_str());
             
             return;
-//            PROCESS_INFORMATION pi;
-//            STARTUPINFO si;
-//            ZeroMem(si);
-//            si.cb = sizeof(STARTUPINFO);
-//
-//            WORD getHandle = 0xfffd;
-//            ByteDynArray resp;
-//            token.Transmit(VarToByteArray(getHandle), &resp);
-//            SCARDHANDLE hCard = *(SCARDHANDLE*)resp.data();
-//
-//            SCardEndTransaction(hCard, SCARD_UNPOWER_CARD);
-//
-//            // check impersonation
-//            HANDLE token=NULL;
-//            OpenThreadToken(GetCurrentThread(), TOKEN_QUERY, FALSE, &token);
-//
-//            if (token == NULL) {
-//                char runDll32Path[MAX_PATH];
-//                GetSystemDirectory(runDll32Path, MAX_PATH);
-//                strcat_s(runDll32Path, "\\");
-//                strcat_s(runDll32Path, "rundll32.exe");
-//
-//                if (!CreateProcess(runDll32Path, (char*)std::string("rundll32.exe \"").append(moduleInfo.szModuleFullPath).append("\",AbilitaCIE ").append(dumpHexData(PAN.mid(5, 6), std::string(), false)).c_str(), NULL, NULL, FALSE, 0, nullptr, nullptr, &si, &pi))
-//                    throw logged_error("Errore in creazione processo AbilitaCIE");
-//                else
-//                    CloseHandle(pi.hThread);
-//                WaitForSingleObject(pi.hProcess, INFINITE);
-//                CloseHandle(pi.hProcess);
-//            }
-//            else {
-//                CloseHandle(token);
-//            }
-//            SCardBeginTransaction(hCard);
 		}
 		else {
 			certificate.clear();
