@@ -65,7 +65,7 @@ OutputDebugString("EXC: %s", err.what()); \
 OutputDebugString("<-EXCLOG");\
 return CKR_GENERAL_ERROR; \
 } \
-catch (...) { Log.write("CKR_GENERAL_ERROR"); return CKR_GENERAL_ERROR; }
+catch (...) { Log.writePure("%s, CKR_GENERAL_ERROR", __FUNCTION__); return CKR_GENERAL_ERROR; }
 
 #endif
         

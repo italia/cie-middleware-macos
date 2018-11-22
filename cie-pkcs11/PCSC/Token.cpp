@@ -61,6 +61,7 @@ ByteDynArray CToken::BinaryRead(WORD start,BYTE size) {
 StatusWord CToken::Transmit(ByteArray apdu, ByteDynArray *resp)
 {
 	init_func
+    
 	BYTE pbtResp[3000];
 	DWORD dwResp = 3000;
 	HRESULT res = transmitCallback(transmitCallbackData, apdu.data(), apdu.size(), pbtResp, &dwResp);

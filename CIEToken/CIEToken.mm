@@ -78,33 +78,36 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
             *error = [NSError errorWithDomain:@"CIEToken" code:100 userInfo:errorDetail];
             return nil;
         }
-    }
     
-    C_GETFUNCTIONLIST pfnGetFunctionList=(C_GETFUNCTIONLIST)dlsym(hModule, "C_GetFunctionList");
-    if(!pfnGetFunctionList)
-    {
-        dlclose(hModule);
-        hModule = NULL;
-        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-        [errorDetail setValue:@"Middleware's functions list not found'" forKey:NSLocalizedDescriptionKey];
-        *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
-        return nil;
-    }
-    
-    CK_RV rv = pfnGetFunctionList(&g_pFuncList);
-    if(rv != CKR_OK)
-    {
-        dlclose(hModule);
-        hModule = NULL;
-        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-        [errorDetail setValue:@"Middleware's functions list fails'" forKey:NSLocalizedDescriptionKey];
-        *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
-        return nil;
+        C_GETFUNCTIONLIST pfnGetFunctionList=(C_GETFUNCTIONLIST)dlsym(hModule, "C_GetFunctionList");
+        if(!pfnGetFunctionList)
+        {
+            dlclose(hModule);
+            hModule = NULL;
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Middleware's functions list not found'" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
+            return nil;
+        }
+        
+        CK_RV rv = pfnGetFunctionList(&g_pFuncList);
+        if(rv != CKR_OK)
+        {
+            dlclose(hModule);
+            hModule = NULL;
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Middleware's functions list fails'" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
+            return nil;
+        }
+        
+        _hSession = NULL;
     }
     
     if(!initPKCS11())
     {
         dlclose(hModule);
+        hModule = NULL;
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware's init fails'" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
@@ -132,7 +135,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         
     CK_TOKEN_INFO tkInfo;
     
-    rv = g_pFuncList->C_GetTokenInfo(pSlotList[0], &tkInfo);
+    CK_RV rv = g_pFuncList->C_GetTokenInfo(pSlotList[0], &tkInfo);
     if (rv != CKR_OK)
     {
         free(pSlotList);
@@ -158,6 +161,9 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     NSString* instanceID = [@"CIE-" stringByAppendingString:serial];
     
     _hSlot = pSlotList[0];
+    
+    if(_hSession)
+        closeSession(_hSession);
     
     _hSession = NULL;
     
@@ -263,9 +269,6 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         [self.keychainContents fillWithItems:items];
     }
     
-    closeSession(_hSession);
-    _hSession = NULL;
-    
     return self;
 }
 
@@ -274,6 +277,12 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
  */
 - (void)tokenDriver:(TKTokenDriver *)driver terminateToken:(TKToken *)token
 {
+    if(_hSession)
+    {
+        closeSession(_hSession);
+        _hSession = NULL;
+    }
+    
     closePKCS11();
     dlclose(hModule);
     hModule = NULL;
@@ -282,35 +291,12 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 - (TKTokenSession *)token:(TKToken *)token createSessionWithError:(NSError **)error {
     
     CIETokenSession* tokenSession = [[CIETokenSession alloc] initWithToken:self];
-    tokenSession.hSession = NULL;
+    tokenSession.hSession = _hSession;
     tokenSession.hSlot = self.hSlot;
-    
-//    tokenSession.hSession = openSession(_hSlot);
-//
-//    if(!tokenSession.hSession)
-//    {
-//        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-//        [errorDetail setValue:@"Middleware openSession fails'" forKey:NSLocalizedDescriptionKey];
-//        *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
-//        return nil;
-//    }
     
     return tokenSession;
     
 }
-
-///*!
-// @abstract Terminates previously created session, implementation should free all associated resources.
-// @param token Related token instance.
-// */
-//- (void)token:(TKToken *)token terminateSession:(TKTokenSession *)session;
-//{
-//    if(((CIETokenSession*)session).hSession)
-//    {
-//        closeSession(((CIETokenSession*)session).hSession);
-//        ((CIETokenSession*)session).hSession = NULL;
-//    }
-//}
 
 - (BOOL)populateIdentityFromSmartCard:(TKSmartCard *)smartCard into:(NSMutableArray<TKTokenKeychainItem *> *)items certificateData:(NSData*)certificateData certificateName:(NSString *)certificateName keyName:(NSString *)keyName error:(NSError **)error
 {
@@ -363,6 +349,12 @@ bool initPKCS11()
     
     CK_C_INITIALIZE_ARGS* pInitArgs = NULL_PTR;
     CK_RV rv = g_pFuncList->C_Initialize(pInitArgs);
+    if(rv == CKR_CRYPTOKI_ALREADY_INITIALIZED)
+    {
+        closePKCS11();
+        rv = g_pFuncList->C_Initialize(pInitArgs);
+    }
+    
     if(rv != CKR_OK)
     {
 //        error(rv);

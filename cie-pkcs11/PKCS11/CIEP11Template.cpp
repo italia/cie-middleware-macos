@@ -43,7 +43,7 @@ int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, D
             
             
 			if (ris == SCARD_S_SUCCESS) {
-//                SCardBeginTransaction(data->hCard);
+                SCardBeginTransaction(data->hCard);
 				*respSize = 2;
 				resp[0] = 0x90;
 				resp[1] = 0x00;
@@ -54,7 +54,7 @@ int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, D
 			DWORD protocol = 0;
 			auto ris = SCardReconnect(data->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_RESET_CARD, &protocol);
 			if (ris == SCARD_S_SUCCESS) {
-//                SCardBeginTransaction(data->hCard);
+                SCardBeginTransaction(data->hCard);
 				*respSize = 2;
 				resp[0] = 0x90;
 				resp[1] = 0x00;
@@ -63,9 +63,28 @@ int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, D
 			return ris;
 		}
 	}
+    
+    Log.writePure("APDU: %s", dumpHexData(ByteArray(apdu, apduSize)).c_str());
+                  
 	//ODS(String().printf("APDU: %s\n", dumpHexData(ByteArray(apdu, apduSize), String()).lock()).lock());
 	auto ris = SCardTransmit(data->hCard, SCARD_PCI_T1, apdu, apduSize, NULL, resp, respSize);
-	if (ris != SCARD_S_SUCCESS) {
+    if(ris == SCARD_W_RESET_CARD || ris == SCARD_W_UNPOWERED_CARD)
+    {
+        Log.writePure("Errore card reset: %x", ris);
+        ODS("card resetted");
+        DWORD protocol = 0;
+        ris = SCardReconnect(data->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_LEAVE_CARD, &protocol);
+        if (ris != SCARD_S_SUCCESS)
+        {
+            ODS("Errore reconnect");
+            Log.writePure("Errore reconnect: %x", ris);
+        }
+        else
+            ris = SCardTransmit(data->hCard, SCARD_PCI_T1, apdu, apduSize, NULL, resp, respSize);
+    }
+    
+    if (ris != SCARD_S_SUCCESS) {
+        Log.writePure("Errore trasmissione APDU: %x", ris);
 		ODS("Errore trasmissione APDU");
 	}
 	//else 

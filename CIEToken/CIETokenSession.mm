@@ -97,19 +97,6 @@ void closeSession(CK_SESSION_HANDLE hSession);
 
 - (NSData *)tokenSession:(TKTokenSession *)session signData:(NSData *)dataToSign usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm error:(NSError **)error
 {
-    if(!self.hSession)
-    {
-        self.hSession = openSession(self.hSlot);
-    
-        if(!self.hSession)
-        {
-            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:@"Middleware openSession fails'" forKey:NSLocalizedDescriptionKey];
-            *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
-            return nil;
-        }
-    }
-    
     if(self.authState != CIEAuthStateFreshlyAuthorized && ((CIEToken*)self.token).loginRequired)
     {
         if (error != nil) {
@@ -132,17 +119,11 @@ void closeSession(CK_SESSION_HANDLE hSession);
     
     if(!findObject(self.hSession, template_cko_keyPri, 1, &hObjectPriKey, &ulCount))
     {
-        closeSession(self.hSession);
-        self.hSession = NULL;
-        
         return nil;
     }
     
     if(ulCount < 1)
     {
-        closeSession(self.hSession);
-        self.hSession = NULL;
-        
         return nil;
     }
     
@@ -157,9 +138,6 @@ void closeSession(CK_SESSION_HANDLE hSession);
     CK_RV rv = g_pFuncList->C_SignInit(self.hSession, pMechanism, hObjectPriKey);
     if (rv != CKR_OK)
     {
-        closeSession(self.hSession);
-        self.hSession = NULL;
-        
         return nil;
     }
     
@@ -172,9 +150,6 @@ void closeSession(CK_SESSION_HANDLE hSession);
     if (rv != CKR_OK)
     {
 //        error(rv);
-        closeSession(self.hSession);
-        self.hSession = NULL;
-        
         return nil;
     }
     
@@ -185,9 +160,6 @@ void closeSession(CK_SESSION_HANDLE hSession);
     {
         free(pOutput);
 //        error(rv);
-        closeSession(self.hSession);
-        self.hSession = NULL;
-        
         return nil;
     }
     
@@ -206,9 +178,6 @@ void closeSession(CK_SESSION_HANDLE hSession);
 //        }
 //    }
 
-    closeSession(self.hSession);
-    self.hSession = NULL;
-    
     return signature;
 }
 
