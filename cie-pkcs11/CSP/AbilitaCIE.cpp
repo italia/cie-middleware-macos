@@ -166,24 +166,38 @@ CK_RV CK_ENTRY DisabilitaCIE()
                 return CKR_DEVICE_ERROR;
             }
             
+            printf("atr ok");
+            
             ByteArray atrBa((BYTE*)ATR, atrLen);
             
-            IAS ias((CToken::TokenTransmitCallback)TokenTransmitCallback, atrBa);
-            ias.SetCardContext(&conn);
-            ias.SelectAID_IAS();
-            ias.ReadPAN();
+            printf("atr ok 2");
             
+            IAS ias((CToken::TokenTransmitCallback)TokenTransmitCallback, atrBa);
+            
+            printf("ias ok");
+            ias.SetCardContext(&conn);
+            
+            printf("card context ok");
+            ias.SelectAID_CIE();
+            printf("select CIE ok");
+            ias.SelectAID_IAS();
+            printf("select ias ok");
+            ias.ReadPAN();
+            printf("read pan ok");
             if(ias.IsEnrolled())
             {
+                printf("is enrolled ok");
                 ias.Unenroll();
-                free(ATR);
-                free(readers);
+                
+                printf("unenroll ok");
+                //free(ATR);
+                //free(readers);
                 return CKR_OK;
             }
             else
             {
-                free(ATR);
-                free(readers);
+                //free(ATR);
+                //free(readers);
                 return CKR_FUNCTION_FAILED;
             }
         }
@@ -479,7 +493,7 @@ int TokenTransmitCallback(safeConnection *conn, BYTE *apdu, DWORD apduSize, BYTE
             
             
             if (ris == SCARD_S_SUCCESS) {
-                SCardBeginTransaction(conn->hCard);
+//                SCardBeginTransaction(conn->hCard);
                 *respSize = 2;
                 resp[0] = 0x90;
                 resp[1] = 0x00;
@@ -490,7 +504,7 @@ int TokenTransmitCallback(safeConnection *conn, BYTE *apdu, DWORD apduSize, BYTE
             DWORD protocol = 0;
             auto ris = SCardReconnect(conn->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_RESET_CARD, &protocol);
             if (ris == SCARD_S_SUCCESS) {
-                SCardBeginTransaction(conn->hCard);
+//                SCardBeginTransaction(conn->hCard);
                 *respSize = 2;
                 resp[0] = 0x90;
                 resp[1] = 0x00;
@@ -501,9 +515,21 @@ int TokenTransmitCallback(safeConnection *conn, BYTE *apdu, DWORD apduSize, BYTE
     }
     //ODS(String().printf("APDU: %s\n", dumpHexData(ByteArray(apdu, apduSize), String()).lock()).lock());
     auto ris = SCardTransmit(conn->hCard, SCARD_PCI_T1, apdu, apduSize, NULL, resp, respSize);
+    if(ris == SCARD_W_RESET_CARD || ris == SCARD_W_UNPOWERED_CARD)
+    {
+        ODS("card resetted");
+        DWORD protocol = 0;
+        ris = SCardReconnect(conn->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_LEAVE_CARD, &protocol);
+        if (ris != SCARD_S_SUCCESS)
+            ODS("Errore reconnect");
+        else
+            ris = SCardTransmit(conn->hCard, SCARD_PCI_T1, apdu, apduSize, NULL, resp, respSize);
+    }
+    
     if (ris != SCARD_S_SUCCESS) {
         ODS("Errore trasmissione APDU");
     }
+    
     //else
     //ODS(String().printf("RESP: %s\n", dumpHexData(ByteArray(resp, *respSize), String()).lock()).lock());
     

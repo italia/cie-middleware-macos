@@ -67,8 +67,11 @@ StatusWord CToken::Transmit(ByteArray apdu, ByteDynArray *resp)
 	ByteArray scResp(pbtResp, dwResp);
 
 	if (res != SCARD_S_SUCCESS) // la smart card è stata estratta durante l'operazione
+    {
+        printf("sc err %x", res);
 		throw windows_error(res);
-
+    }
+    
 	if (scResp.size() < 2)
 		throw logged_error("Risposta della smart card non valida");
 

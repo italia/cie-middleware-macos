@@ -92,7 +92,7 @@ unsigned long UUCStringTable::getHash(const char* szKey)
 		{
  			h = (h * 37) + val[off++];
  	    }
- 	} MAX_PATH
+ 	}
 	else 
 	{
  	    // only sample some characters

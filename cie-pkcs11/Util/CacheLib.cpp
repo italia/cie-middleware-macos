@@ -241,8 +241,22 @@ bool CacheExists(const char *PAN) {
 bool CacheRemove(const char *PAN) {
     std::string sPath;
     GetCardPath(PAN, sPath);
+    remove(sPath.c_str());
     
-    return !remove(sPath.c_str());
+    // remove the cache for CIEToken
+    char* home = getenv("HOME");
+    std::string path(home);
+        std::smatch match;
+        std::regex_search(path, match, std::regex("^/Users/"));
+        std::string suffix = match.suffix();
+        if(suffix.find("/") != std::string::npos)
+            throw 1;
+    
+    path.append("/Library/Containers/it.ipzs.AbilitaCIE.CIEToken/Data/.CIEPKI/");
+    path.append(PAN);
+    path.append(".cache");
+    
+    return !remove(path.c_str());
 }
 
 void CacheGetCertificate(const char *PAN, std::vector<uint8_t>&certificate)
@@ -319,11 +333,11 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     
     char* home = getenv("HOME");
     std::string path(home);
-//    std::smatch match;
-//    std::regex_search(path, match, std::regex("^/Users/"));
-//    std::string suffix = match.suffix();
-//    if(suffix.find("/") != std::string::npos)
-//        throw 1;
+    std::smatch match;
+    std::regex_search(path, match, std::regex("^/Users/"));
+    std::string suffix = match.suffix();
+    if(suffix.find("/") != std::string::npos)
+        throw 1;
     
     path.append("/Library/Containers/it.ipzs.AbilitaCIE.CIEToken/Data/.CIEPKI/");
     

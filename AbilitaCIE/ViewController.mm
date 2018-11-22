@@ -194,7 +194,11 @@ CK_RV progressCallback(const int progress,
         NSArray *args = [[NSProcessInfo processInfo] arguments];
         
         if(args.count > 1)
-            szPAN = (char*)[((NSString*)[args objectAtIndex:1]) cStringUsingEncoding:NSUTF8StringEncoding];
+        {
+            NSString* arg = ((NSString*)[args objectAtIndex:1]);
+            if(![arg hasPrefix:@"-NS"]) // for running in debug from xcode
+                szPAN = (char*)[arg cStringUsingEncoding:NSUTF8StringEncoding];
+        }
         
         int attempts = -1;
         
