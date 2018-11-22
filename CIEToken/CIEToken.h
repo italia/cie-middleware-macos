@@ -41,6 +41,9 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 
 @interface CIETokenSession : TKSmartCardTokenSession<TKTokenSessionDelegate>
 
+@property CK_SESSION_HANDLE hSession;
+@property CK_SLOT_ID hSlot;
+
 typedef NS_ENUM(NSInteger, PIVAuthState) {
     CIEAuthStateUnauthorized = 0,
     CIEAuthStateFreshlyAuthorized = 1,
@@ -60,6 +63,7 @@ typedef NS_ENUM(NSInteger, PIVAuthState) {
 
 @interface CIEToken : TKSmartCardToken<TKTokenDelegate>
 
+@property CK_SLOT_ID hSlot;
 @property CK_SESSION_HANDLE hSession;
 @property bool loginRequired;
 

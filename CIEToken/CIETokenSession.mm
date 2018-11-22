@@ -9,6 +9,8 @@
 #import "CIEToken.h"
 
 extern CK_FUNCTION_LIST_PTR g_pFuncList;
+CK_SESSION_HANDLE openSession(CK_SLOT_ID slotid);
+void closeSession(CK_SESSION_HANDLE hSession);
 
 //bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR pObjects, CK_ULONG_PTR pulObjCount);
 
@@ -31,7 +33,7 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
     
     [[self.PIN dataUsingEncoding:NSUTF8StringEncoding] getBytes:szPIN length:5];
     
-    CK_RV rv = g_pFuncList->C_Login(((CIEToken*)_session.token).hSession, CKU_USER, (CK_CHAR_PTR)szPIN, strlen(szPIN));
+    CK_RV rv = g_pFuncList->C_Login(((CIETokenSession*)_session).hSession, CKU_USER, (CK_CHAR_PTR)szPIN, strlen(szPIN));
     if (rv != CKR_OK && rv != CKR_USER_ALREADY_LOGGED_IN)
     {
         if (error != nil) {
@@ -95,12 +97,28 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
 
 - (NSData *)tokenSession:(TKTokenSession *)session signData:(NSData *)dataToSign usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm error:(NSError **)error
 {
-
+    if(!self.hSession)
+    {
+        self.hSession = openSession(self.hSlot);
+    
+        if(!self.hSession)
+        {
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Middleware openSession fails'" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
+            return nil;
+        }
+    }
+    
     if(self.authState != CIEAuthStateFreshlyAuthorized && ((CIEToken*)self.token).loginRequired)
     {
         if (error != nil) {
             *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationNeeded userInfo:nil];
         }
+        
+        // non va chiamata la close session perchè dopo il return con error TKErrorCodeAuthenticationNeeded
+        // verà chiamata la C_Login
+        
         return nil;
     }
     
@@ -112,13 +130,19 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
         {CKA_CLASS, &ckClassPri, sizeof(ckClassPri)},
     };
     
-    if(!findObject(((CIEToken*)self.token).hSession, template_cko_keyPri, 1, &hObjectPriKey, &ulCount))
+    if(!findObject(self.hSession, template_cko_keyPri, 1, &hObjectPriKey, &ulCount))
     {
+        closeSession(self.hSession);
+        self.hSession = NULL;
+        
         return nil;
     }
     
     if(ulCount < 1)
     {
+        closeSession(self.hSession);
+        self.hSession = NULL;
+        
         return nil;
     }
     
@@ -130,9 +154,12 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
     
 //    NSString* hex = dataToSign.hexString;
     
-    CK_RV rv = g_pFuncList->C_SignInit(((CIEToken*)self.token).hSession, pMechanism, hObjectPriKey);
+    CK_RV rv = g_pFuncList->C_SignInit(self.hSession, pMechanism, hObjectPriKey);
     if (rv != CKR_OK)
     {
+        closeSession(self.hSession);
+        self.hSession = NULL;
+        
         return nil;
     }
     
@@ -141,20 +168,26 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
     CK_BYTE* data = ((CK_BYTE*)dataToSign.bytes) + offset;
     unsigned long len = dataToSign.length - offset;
     
-    rv = g_pFuncList->C_Sign(((CIEToken*)self.token).hSession, data, len, NULL, &outputLen);
+    rv = g_pFuncList->C_Sign(self.hSession, data, len, NULL, &outputLen);
     if (rv != CKR_OK)
     {
 //        error(rv);
+        closeSession(self.hSession);
+        self.hSession = NULL;
+        
         return nil;
     }
     
     CK_BYTE* pOutput = (CK_BYTE*)malloc(outputLen);
     
-    rv = g_pFuncList->C_Sign(((CIEToken*)self.token).hSession, data, len, pOutput, &outputLen);
+    rv = g_pFuncList->C_Sign(self.hSession, data, len, pOutput, &outputLen);
     if (rv != CKR_OK)
     {
         free(pOutput);
 //        error(rv);
+        closeSession(self.hSession);
+        self.hSession = NULL;
+        
         return nil;
     }
     
@@ -173,6 +206,9 @@ extern CK_FUNCTION_LIST_PTR g_pFuncList;
 //        }
 //    }
 
+    closeSession(self.hSession);
+    self.hSession = NULL;
+    
     return signature;
 }
 
