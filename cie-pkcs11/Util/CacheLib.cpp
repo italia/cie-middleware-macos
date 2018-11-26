@@ -211,11 +211,11 @@ std::string GetCardDir()
     char* home = getenv("HOME");
     std::string path(home);
     
-//    std::smatch match;
-//    std::regex_search(path, match, std::regex("^/Users/"));
-//    std::string suffix = match.suffix();
-//    if(suffix.find("/") != std::string::npos)
-//        throw 1;
+    std::smatch match;
+    std::regex_search(path, match, std::regex("^/Users/"));
+    std::string suffix = match.suffix();
+    if(suffix.find("/") != std::string::npos)
+        throw 1;
     
     path.append("/.CIEPKI/");
 
