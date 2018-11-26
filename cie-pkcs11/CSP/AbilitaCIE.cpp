@@ -367,7 +367,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
 
             ByteArray pinBa((uint8_t*)szPIN, 4);
             
-            progressCallBack(85, "Menorizzazione in cache");
+            progressCallBack(85, "Memorizzazione in cache");
             
             ias.SetCache((char*)IdServizi.data(), CertCIE, pinBa);
 		}
