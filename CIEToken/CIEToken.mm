@@ -272,21 +272,22 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     return self;
 }
 
-/*!
- @discussion Terminates previously created token, should release all resources associated with it.
- */
-- (void)tokenDriver:(TKTokenDriver *)driver terminateToken:(TKToken *)token
-{
-    if(_hSession)
-    {
-        closeSession(_hSession);
-        _hSession = NULL;
-    }
-    
-    closePKCS11();
-    dlclose(hModule);
-    hModule = NULL;
-}
+///*!
+// @discussion Terminates previously created token, should release all resources associated with it.
+// */
+// si è deciso di commentarlo perchè sembra non essere mai chiamato dal SO
+//- (void)tokenDriver:(TKTokenDriver *)driver terminateToken:(TKToken *)token
+//{
+//    if(_hSession)
+//    {
+//        closeSession(_hSession);
+//        _hSession = NULL;
+//    }
+//
+//    closePKCS11();
+//    dlclose(hModule);
+//    hModule = NULL;
+//}
 
 - (TKTokenSession *)token:(TKToken *)token createSessionWithError:(NSError **)error {
     
