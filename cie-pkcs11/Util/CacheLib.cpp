@@ -209,12 +209,13 @@ bool file_exists (const char* name) {
 std::string GetCardDir()
 {
     char* home = getenv("HOME");
+    
     std::string path(home);
     
     std::smatch match;
     std::regex_search(path, match, std::regex("^/Users/"));
     std::string suffix = match.suffix();
-    if(suffix.find("/") != std::string::npos)
+    if(suffix.find("/") != std::string::npos && suffix.find("Library/Containers/it.ipzs.AbilitaCIE.CIEToken/Data") == std::string::npos)
         throw 1;
     
     path.append("/.CIEPKI/");
