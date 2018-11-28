@@ -27,7 +27,7 @@ void showUI(const char* szPAN)
 //    task.arguments = @[@"-a", @"/usr/local/bin/AbilitaCIE.app"];//, [NSString stringWithUTF8String:szPAN]];
 
     task.launchPath = @"/usr/bin/open";
-    task.arguments = @[@"-a", @"/Applications/AbilitaCIE.app"];//, [NSString stringWithUTF8String:szPAN]];
+    task.arguments = @[@"-n", @"/Applications/AbilitaCIE.app"];//, [NSString stringWithUTF8String:szPAN]];
 
     [task launch];
     
