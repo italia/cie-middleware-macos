@@ -38,7 +38,7 @@
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
-									<string>build/AbilitaCIE/AbilitaCIE.app</string>
+									<string>build/AbilitaCIE.app</string>
 									<key>PATH_TYPE</key>
 									<integer>1</integer>
 									<key>PERMISSIONS</key>
@@ -66,7 +66,7 @@
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
-									<string>build/CambioPIN/CambioPIN.app</string>
+									<string>build/CambioPIN.app</string>
 									<key>PATH_TYPE</key>
 									<integer>1</integer>
 									<key>PERMISSIONS</key>
@@ -94,7 +94,7 @@
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
-									<string>build/SbloccoPIN/SbloccoPIN.app</string>
+									<string>build/SbloccoPIN.app</string>
 									<key>PATH_TYPE</key>
 									<integer>1</integer>
 									<key>PERMISSIONS</key>
@@ -256,9 +256,9 @@
 											<key>CHILDREN</key>
 											<array/>
 											<key>GID</key>
-											<integer>80</integer>
+											<integer>0</integer>
 											<key>PATH</key>
-											<string>build/cie-pkcs11/libcie-pkcs11.dylib</string>
+											<string>build/libcie-pkcs11.dylib</string>
 											<key>PATH_TYPE</key>
 											<integer>1</integer>
 											<key>PERMISSIONS</key>
@@ -548,7 +548,7 @@
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>build/AbilitaCIE/AbilitaCIE.app</string>
+													<string>build/AbilitaCIE.app</string>
 													<key>PATH_TYPE</key>
 													<integer>1</integer>
 													<key>PERMISSIONS</key>
@@ -581,7 +581,7 @@
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>build/cie-pkcs11/libcie-pkcs11.dylib</string>
+													<string>build/libcie-pkcs11.dylib</string>
 													<key>PATH_TYPE</key>
 													<integer>1</integer>
 													<key>PERMISSIONS</key>
