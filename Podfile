@@ -12,3 +12,13 @@ target 'cie-pkcs11' do
   #pod 'OpenSSL-Static', :git => 'https://github.com/bruceyibin/OpenSSL.git', :branch => :master
 
 end
+
+target 'CIE ID' do
+    # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+    use_frameworks!
+    
+    pod 'FlatButton'
+    
+end
+
+

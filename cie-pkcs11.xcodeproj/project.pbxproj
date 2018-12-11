@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		461398B8C02047C25F03D065 /* Pods_CIE_ID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */; };
 		5CA6E27FF73910B2FFB64484 /* libPods-cie-pkcs11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */; };
 		E504202C2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png in Resources */ = {isa = PBXBuildFile; fileRef = E504202B2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png */; };
 		E504202D2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png in Resources */ = {isa = PBXBuildFile; fileRef = E504202B2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png */; };
@@ -33,6 +34,12 @@
 		E51F431C2189A187007AAC10 /* CIEToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E570A7B02168C22800658AAF /* CIEToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E543F955215F6B1D0088CBC5 /* CryptoppUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */; };
 		E543F957215F6B250088CBC5 /* CryptoppUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E543F956215F6B250088CBC5 /* CryptoppUtils.h */; };
+		E544F56721BFAFC60038B2CA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E544F56621BFAFC60038B2CA /* AppDelegate.m */; };
+		E544F56A21BFAFC60038B2CA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E544F56921BFAFC60038B2CA /* ViewController.m */; };
+		E544F56C21BFAFC90038B2CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E544F56B21BFAFC90038B2CA /* Assets.xcassets */; };
+		E544F56F21BFAFC90038B2CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E544F56D21BFAFC90038B2CA /* Main.storyboard */; };
+		E544F57221BFAFC90038B2CA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E544F57121BFAFC90038B2CA /* main.m */; };
+		E544F57921BFB06A0038B2CA /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E544F57821BFB06A0038B2CA /* MainViewController.m */; };
 		E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E54EF42F2100D91200E2EADD /* libcryptopp.a */; };
 		E54F7D672167A2720026B16D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E54F7D662167A2720026B16D /* AppDelegate.m */; };
 		E54F7D6A2167A2720026B16D /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E54F7D692167A2720026B16D /* ViewController.mm */; };
@@ -175,8 +182,11 @@
 
 /* Begin PBXFileReference section */
 		228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cie-pkcs11.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.release.xcconfig"; sourceTree = "<group>"; };
 		438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.release.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.release.xcconfig"; sourceTree = "<group>"; };
+		6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.debug.xcconfig"; sourceTree = "<group>"; };
 		79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.debug.xcconfig"; sourceTree = "<group>"; };
+		DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIE_ID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E504202B2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CIE-LOGO-REGISTRATO.png"; sourceTree = "<group>"; };
 		E504202F218067BC00A41BF2 /* help.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
 		E5042031218068BA00A41BF2 /* help.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
@@ -198,6 +208,18 @@
 		E50F9EF0217A27570083C821 /* help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
 		E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CryptoppUtils.cpp; sourceTree = "<group>"; };
 		E543F956215F6B250088CBC5 /* CryptoppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptoppUtils.h; sourceTree = "<group>"; };
+		E544F56321BFAFC60038B2CA /* CIE ID.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CIE ID.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E544F56521BFAFC60038B2CA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E544F56621BFAFC60038B2CA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E544F56821BFAFC60038B2CA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E544F56921BFAFC60038B2CA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E544F56B21BFAFC90038B2CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E544F56E21BFAFC90038B2CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E544F57021BFAFC90038B2CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E544F57121BFAFC90038B2CA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E544F57321BFAFC90038B2CA /* CIE_ID.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIE_ID.entitlements; sourceTree = "<group>"; };
+		E544F57721BFB06A0038B2CA /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		E544F57821BFB06A0038B2CA /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		E54EF42F2100D91200E2EADD /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcryptopp.a; sourceTree = "<group>"; };
 		E54EF4312100D99500E2EADD /* Cryptopp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Cryptopp; sourceTree = "<group>"; };
 		E54F7D632167A2720026B16D /* CambioPIN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CambioPIN.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -324,6 +346,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E544F56021BFAFC60038B2CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				461398B8C02047C25F03D065 /* Pods_CIE_ID.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E54F7D602167A2720026B16D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -384,6 +414,8 @@
 			children = (
 				79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */,
 				438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */,
+				6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */,
+				2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -394,6 +426,24 @@
 				E50A8A09213BE053006A000D /* AbilitaCIE.mm */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		E544F56421BFAFC60038B2CA /* CIE ID */ = {
+			isa = PBXGroup;
+			children = (
+				E544F56521BFAFC60038B2CA /* AppDelegate.h */,
+				E544F56621BFAFC60038B2CA /* AppDelegate.m */,
+				E544F56821BFAFC60038B2CA /* ViewController.h */,
+				E544F56921BFAFC60038B2CA /* ViewController.m */,
+				E544F56B21BFAFC90038B2CA /* Assets.xcassets */,
+				E544F56D21BFAFC90038B2CA /* Main.storyboard */,
+				E544F57021BFAFC90038B2CA /* Info.plist */,
+				E544F57121BFAFC90038B2CA /* main.m */,
+				E544F57321BFAFC90038B2CA /* CIE_ID.entitlements */,
+				E544F57721BFB06A0038B2CA /* MainViewController.h */,
+				E544F57821BFB06A0038B2CA /* MainViewController.m */,
+			);
+			path = "CIE ID";
 			sourceTree = "<group>";
 		};
 		E54F7D642167A2720026B16D /* CambioPIN */ = {
@@ -577,6 +627,7 @@
 				E54F7D642167A2720026B16D /* CambioPIN */,
 				E570A7802168B72600658AAF /* SbloccoPIN */,
 				E570A7B22168C22800658AAF /* CIEToken */,
+				E544F56421BFAFC60038B2CA /* CIE ID */,
 				E5BE7D8920FE84D200004389 /* Products */,
 				E5BE7DC620FE8A9A00004389 /* Frameworks */,
 				B7FB7DAC107919BD2BEDD28E /* Pods */,
@@ -592,6 +643,7 @@
 				E54F7D632167A2720026B16D /* CambioPIN.app */,
 				E570A77F2168B72600658AAF /* SbloccoPIN.app */,
 				E570A7B02168C22800658AAF /* CIEToken.appex */,
+				E544F56321BFAFC60038B2CA /* CIE ID.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -648,6 +700,7 @@
 				E50A8A0B213BE121006A000D /* Cocoa.framework */,
 				E5BE7DC720FE8A9A00004389 /* PCSC.framework */,
 				228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */,
+				DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -714,6 +767,26 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		E544F56221BFAFC60038B2CA /* CIE ID */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E544F57621BFAFC90038B2CA /* Build configuration list for PBXNativeTarget "CIE ID" */;
+			buildPhases = (
+				35A28E0C9D0794F2711E7E4B /* [CP] Check Pods Manifest.lock */,
+				E544F55F21BFAFC60038B2CA /* Sources */,
+				E544F56021BFAFC60038B2CA /* Frameworks */,
+				E544F56121BFAFC60038B2CA /* Resources */,
+				6869D0A90207445F94C0CEE8 /* [CP] Embed Pods Frameworks */,
+				2DC5A4E9D39903D59D4F28C3 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CIE ID";
+			productName = "CIE ID";
+			productReference = E544F56321BFAFC60038B2CA /* CIE ID.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E54F7D622167A2720026B16D /* CambioPIN */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E54F7D742167A2730026B16D /* Build configuration list for PBXNativeTarget "CambioPIN" */;
@@ -829,6 +902,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = IPZS;
 				TargetAttributes = {
+					E544F56221BFAFC60038B2CA = {
+						CreatedOnToolsVersion = 10.1;
+					};
 					E54F7D622167A2720026B16D = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -884,11 +960,21 @@
 				E54F7D622167A2720026B16D /* CambioPIN */,
 				E570A77E2168B72600658AAF /* SbloccoPIN */,
 				E570A7AF2168C22800658AAF /* CIEToken */,
+				E544F56221BFAFC60038B2CA /* CIE ID */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E544F56121BFAFC60038B2CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E544F56C21BFAFC90038B2CA /* Assets.xcassets in Resources */,
+				E544F56F21BFAFC90038B2CA /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E54F7D612167A2720026B16D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -932,6 +1018,39 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2DC5A4E9D39903D59D4F28C3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		35A28E0C9D0794F2711E7E4B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CIE ID-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		51235AD0B0EC5D7CC97C0CAE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -948,6 +1067,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6869D0A90207445F94C0CEE8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FlatButton/FlatButton.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatButton.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8A8865E07180174E58CCB0AD /* [CP] Copy Pods Resources */ = {
@@ -968,6 +1105,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E544F55F21BFAFC60038B2CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E544F56A21BFAFC60038B2CA /* ViewController.m in Sources */,
+				E544F57221BFAFC90038B2CA /* main.m in Sources */,
+				E544F56721BFAFC60038B2CA /* AppDelegate.m in Sources */,
+				E544F57921BFB06A0038B2CA /* MainViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E54F7D5F2167A2720026B16D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1080,6 +1228,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		E544F56D21BFAFC90038B2CA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E544F56E21BFAFC90038B2CA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		E54F7D6D2167A2730026B16D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1107,6 +1263,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E544F57421BFAFC90038B2CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "CIE ID/CIE_ID.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				INFOPLIST_FILE = "CIE ID/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E544F57521BFAFC90038B2CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "CIE ID/CIE_ID.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				INFOPLIST_FILE = "CIE ID/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		E54F7D752167A2730026B16D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1429,6 +1628,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E544F57621BFAFC90038B2CA /* Build configuration list for PBXNativeTarget "CIE ID" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E544F57421BFAFC90038B2CA /* Debug */,
+				E544F57521BFAFC90038B2CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E54F7D742167A2730026B16D /* Build configuration list for PBXNativeTarget "CambioPIN" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
