@@ -15,8 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property IBOutlet NSView* homeFirstPageView;
 @property IBOutlet NSView* homeSecondPageView;
 @property IBOutlet NSView* homeThirdPageView;
-
+@property IBOutlet NSView* cambioPINPageView;
 @property IBOutlet NSTextField* labelProgress;
+
+@property IBOutlet NSTextField* textFieldPIN;
+@property IBOutlet NSTextField* textFieldNewPIN;
+@property IBOutlet NSTextField* textFieldConfirmPIN;
+
+
 @end
 
 NS_ASSUME_NONNULL_END
