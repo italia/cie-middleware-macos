@@ -10,8 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MainViewController : NSTabViewController
+@interface MainViewController : NSViewController
 
+@property IBOutlet NSView* homeFirstPageView;
+@property IBOutlet NSView* homeSecondPageView;
+@property IBOutlet NSView* homeThirdPageView;
+
+@property IBOutlet NSTextField* labelProgress;
 @end
 
 NS_ASSUME_NONNULL_END

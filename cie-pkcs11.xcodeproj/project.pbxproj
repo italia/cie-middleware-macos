@@ -121,6 +121,7 @@
 		E59B65CD213C06B9007348D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B65CC213C06B9007348D5 /* main.m */; };
 		E59B65D2213DD84B007348D5 /* libcie-pkcs11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */; };
 		E59DCCDF21C3BB7300CE4790 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59DCCDE21C3BB7300CE4790 /* IntroViewController.m */; };
+		E59DCCE321C4221600CE4790 /* libcie-pkcs11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */; };
 		E5BE7DA920FE853800004389 /* CardContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D9720FE853800004389 /* CardContext.cpp */; };
 		E5BE7DAA20FE853800004389 /* CardContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D9820FE853800004389 /* CardContext.h */; };
 		E5BE7DAB20FE853800004389 /* CardTemplate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D9920FE853800004389 /* CardTemplate.cpp */; };
@@ -353,6 +354,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59DCCE321C4221600CE4790 /* libcie-pkcs11.dylib in Frameworks */,
 				461398B8C02047C25F03D065 /* Pods_CIE_ID.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

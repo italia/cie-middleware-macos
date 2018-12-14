@@ -696,7 +696,7 @@
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="74a-tW-DGM"/>
+                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="6dz-Jx-F2d"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -722,33 +722,26 @@
                             <stackView distribution="fillEqually" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JIa-Hw-XSf">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="340"/>
                                 <subviews>
-                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="pDV-0n-dB4">
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="fvc-Lr-Yuk">
                                         <rect key="frame" x="0.0" y="290" width="200" height="50"/>
                                         <subviews>
-                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5En-SK-29q">
-                                                <rect key="frame" x="10" y="0.0" width="50" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="qga-TF-LaD"/>
-                                                    <constraint firstAttribute="width" constant="50" id="zEg-QS-QbC"/>
-                                                </constraints>
-                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_home_piccola" id="YDI-b6-SJb"/>
-                                            </imageView>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MSe-jd-gc8">
-                                                <rect key="frame" x="60" y="17" width="140" height="17"/>
-                                                <buttonCell key="cell" type="squareTextured" title="Home" bezelStyle="texturedSquare" alignment="left" inset="2" id="STU-Dh-uGF">
+                                            <button focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Ma-BO-83u">
+                                                <rect key="frame" x="10" y="13" width="190" height="25"/>
+                                                <buttonCell key="cell" type="squareTextured" title="Home" bezelStyle="texturedSquare" image="icona_home_piccola" imagePosition="left" alignment="left" focusRingType="exterior" inset="2" id="grz-6Y-VtY">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
-                                                <color key="contentTintColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="contentTintColor" name="leftTextColor"/>
+                                                <connections>
+                                                    <action selector="home:" target="XfG-lQ-9wD" id="3PS-mI-NtW"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="MSe-jd-gc8" secondAttribute="trailing" id="1iQ-rE-F2a"/>
-                                            <constraint firstItem="MSe-jd-gc8" firstAttribute="centerY" secondItem="pDV-0n-dB4" secondAttribute="centerY" id="FRJ-ro-60S"/>
-                                            <constraint firstItem="MSe-jd-gc8" firstAttribute="leading" secondItem="5En-SK-29q" secondAttribute="trailing" id="THj-LL-bnp"/>
-                                            <constraint firstItem="5En-SK-29q" firstAttribute="leading" secondItem="pDV-0n-dB4" secondAttribute="leading" constant="10" id="ZJZ-hf-oMd"/>
-                                            <constraint firstAttribute="height" constant="50" id="hkk-ok-KqC"/>
-                                            <constraint firstItem="5En-SK-29q" firstAttribute="centerY" secondItem="pDV-0n-dB4" secondAttribute="centerY" id="xec-G8-Wfe"/>
+                                            <constraint firstItem="0Ma-BO-83u" firstAttribute="leading" secondItem="fvc-Lr-Yuk" secondAttribute="leading" constant="10" id="91h-vw-Uil"/>
+                                            <constraint firstAttribute="trailing" secondItem="0Ma-BO-83u" secondAttribute="trailing" id="aic-AE-hTf"/>
+                                            <constraint firstItem="0Ma-BO-83u" firstAttribute="centerY" secondItem="fvc-Lr-Yuk" secondAttribute="centerY" id="tNZ-1h-0zm"/>
+                                            <constraint firstAttribute="height" constant="50" id="vAR-zv-XD5"/>
                                         </constraints>
                                     </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="lrL-iW-R0U">
@@ -761,6 +754,9 @@
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <color key="contentTintColor" name="leftTextColor"/>
+                                                <connections>
+                                                    <action selector="cambioPIN:" target="XfG-lQ-9wD" id="4aH-Y9-YxJ"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -780,6 +776,9 @@
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <color key="contentTintColor" name="leftTextColor"/>
+                                                <connections>
+                                                    <action selector="sbloccaCarta:" target="XfG-lQ-9wD" id="hv4-8e-oOD"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -799,6 +798,9 @@
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <color key="contentTintColor" name="leftTextColor"/>
+                                                <connections>
+                                                    <action selector="tutorial:" target="XfG-lQ-9wD" id="yqO-Hr-kZ6"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -817,6 +819,9 @@
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
+                                                <connections>
+                                                    <action selector="aiuto:" target="XfG-lQ-9wD" id="AmW-2y-zJo"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -835,6 +840,9 @@
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
+                                                <connections>
+                                                    <action selector="informazioni:" target="XfG-lQ-9wD" id="aqJ-96-TZr"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -846,8 +854,6 @@
                                     </customView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="pDV-0n-dB4" secondAttribute="trailing" id="8Se-aw-4AY"/>
-                                    <constraint firstItem="pDV-0n-dB4" firstAttribute="leading" secondItem="JIa-Hw-XSf" secondAttribute="leading" id="Srw-JK-z3U"/>
                                     <constraint firstAttribute="width" constant="200" id="Z7E-ih-Koe"/>
                                 </constraints>
                                 <visibilityPriorities>
@@ -870,8 +876,9 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="6OI-bz-nRs">
                                 <rect key="frame" x="200" y="0.0" width="550" height="510"/>
                                 <subviews>
-                                    <view hidden="YES" focusRingType="none" appearanceType="aqua" translatesAutoresizingMaskIntoConstraints="NO" id="qWW-mh-vJN">
+                                    <view hidden="YES" focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qWW-mh-vJN">
                                         <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
+                                        <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jgI-41-ekk">
                                                 <rect key="frame" x="72" y="416" width="405" height="57"/>
@@ -913,7 +920,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="nextPage:" target="XkM-64-qp5" id="yWC-kB-doi"/>
+                                                    <action selector="abbina:" target="XfG-lQ-9wD" id="SSu-3E-TdE"/>
                                                 </connections>
                                             </button>
                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BmZ-fU-7Ac">
@@ -921,101 +928,125 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="aCQ-Tj-Rkw"/>
                                             </imageView>
-                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="poc-AO-9hL">
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="poc-AO-9hL">
                                                 <rect key="frame" x="204" y="223" width="27" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="dh1-Yi-Qdk">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="dh1-Yi-Qdk">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="leftTextColor"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <allowedInputSourceLocales>
                                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                     </allowedInputSourceLocales>
                                                 </secureTextFieldCell>
+                                                <connections>
+                                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="Ln3-6Z-xgN"/>
+                                                </connections>
                                             </secureTextField>
-                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p3k-1g-68m">
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="p3k-1g-68m">
                                                 <rect key="frame" x="239" y="223" width="27" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="bpj-Ym-vSn">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="bpj-Ym-vSn">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="leftTextColor"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <allowedInputSourceLocales>
                                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                     </allowedInputSourceLocales>
                                                 </secureTextFieldCell>
+                                                <connections>
+                                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="56W-W1-9li"/>
+                                                </connections>
                                             </secureTextField>
-                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ALN-Hy-sCB">
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="ALN-Hy-sCB">
                                                 <rect key="frame" x="274" y="223" width="27" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="v5b-AA-xLP">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="v5b-AA-xLP">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="leftTextColor"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <allowedInputSourceLocales>
                                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                     </allowedInputSourceLocales>
                                                 </secureTextFieldCell>
+                                                <connections>
+                                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="AEw-zZ-SqM"/>
+                                                </connections>
                                             </secureTextField>
-                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i8O-8h-CYb">
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="i8O-8h-CYb">
                                                 <rect key="frame" x="309" y="223" width="27" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="I9u-vG-A8Q">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="I9u-vG-A8Q">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="leftTextColor"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <allowedInputSourceLocales>
                                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                     </allowedInputSourceLocales>
                                                 </secureTextFieldCell>
+                                                <connections>
+                                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="PTF-Fc-S5K"/>
+                                                </connections>
                                             </secureTextField>
-                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="klj-9n-Xvb">
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="klj-9n-Xvb">
                                                 <rect key="frame" x="344" y="223" width="27" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="MDd-wL-4G9">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="MDd-wL-4G9">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="leftTextColor"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <allowedInputSourceLocales>
                                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                     </allowedInputSourceLocales>
                                                 </secureTextFieldCell>
+                                                <connections>
+                                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="SBP-1A-LMO"/>
+                                                </connections>
                                             </secureTextField>
-                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dES-tM-ZPA">
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="dES-tM-ZPA">
                                                 <rect key="frame" x="379" y="223" width="27" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="RKy-AA-37K">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="RKy-AA-37K">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="leftTextColor"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <allowedInputSourceLocales>
                                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                     </allowedInputSourceLocales>
                                                 </secureTextFieldCell>
+                                                <connections>
+                                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="bbA-5h-RYJ"/>
+                                                </connections>
                                             </secureTextField>
-                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EYp-ZO-RhM">
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="EYp-ZO-RhM">
                                                 <rect key="frame" x="414" y="223" width="27" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="t5X-lF-xgm">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="t5X-lF-xgm">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="leftTextColor"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <allowedInputSourceLocales>
                                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                     </allowedInputSourceLocales>
                                                 </secureTextFieldCell>
+                                                <connections>
+                                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="5tz-sM-6wH"/>
+                                                </connections>
                                             </secureTextField>
-                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A88-C8-3z2">
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="A88-C8-3z2">
                                                 <rect key="frame" x="449" y="223" width="27" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="56G-6Q-KKs">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="56G-6Q-KKs">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="leftTextColor"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <allowedInputSourceLocales>
                                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                     </allowedInputSourceLocales>
                                                 </secureTextFieldCell>
+                                                <connections>
+                                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="ORW-i6-UCD"/>
+                                                </connections>
                                             </secureTextField>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Ua-WR-97w">
                                                 <rect key="frame" x="260" y="263" width="125" height="24"/>
@@ -1033,64 +1064,140 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <view focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Qn-TH-dVl">
-                                        <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
+                                    <view focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hnq-5I-07c">
+                                        <rect key="frame" x="1" y="0.0" width="548" height="510"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aAq-bv-Jyd">
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YHf-XQ-TpH">
                                                 <rect key="frame" x="72" y="416" width="405" height="57"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbina la tua CIE" id="9JY-jN-cYq">
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbina la tua CIE" id="ptW-Ig-Skd">
                                                     <font key="font" metaFont="system" size="37"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0QA-Gy-OGe">
-                                                <rect key="frame" x="28" y="352" width="450" height="56"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <textFieldCell key="cell" alignment="center" title="Dopo aver collegato ed installato il lettore di smarat card posiziona la CIE sul lettore ed inserisci il PIN" id="SpK-Tl-lw8">
-                                                    <font key="font" metaFont="system" size="17"/>
-                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                            </textField>
-                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2mN-lm-U6E" customClass="FlatButton" customModule="FlatButton">
-                                                <rect key="frame" x="222" y="23" width="83" height="32"/>
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xYT-ph-qGU" customClass="FlatButton" customModule="FlatButton">
+                                                <rect key="frame" x="221" y="23" width="85" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <buttonCell key="cell" type="push" title="Abbina" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fok-wr-QUb">
+                                                <buttonCell key="cell" type="push" title="Annulla" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UEe-yw-ESe">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
-                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="value" name="customDarkBackgroundColor"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
-                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="value" name="customDarkBackgroundColor"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                                        <color key="value" name="customViewColor"/>
+                                                        <color key="value" name="customTextColor"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
-                                                        <color key="value" name="customViewColor"/>
+                                                        <color key="value" name="customTextColor"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="nextPage:" target="XkM-64-qp5" id="iIn-ke-gW9"/>
+                                                    <action selector="nextPage:" target="XkM-64-qp5" id="Nfq-zl-6GA"/>
                                                 </connections>
                                             </button>
-                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S9h-Ug-xlM">
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hgH-ec-fij">
                                                 <rect key="frame" x="30" y="199" width="140" height="140"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="z92-et-tmb"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="ofU-iX-shb"/>
                                             </imageView>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tSf-AI-yJX">
-                                                <rect key="frame" x="260" y="263" width="125" height="24"/>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="81v-HY-YGK">
+                                                <rect key="frame" x="214" y="257" width="234" height="24"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Inserisci il PIN" id="9Qg-yj-DTl">
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbinamento in corso" id="cLv-KH-p6n">
                                                     <font key="font" metaFont="system" size="20"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="QaF-ot-ZLo">
+                                                <rect key="frame" x="216" y="233" width="230" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            </progressIndicator>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kr6-mx-N63">
+                                                <rect key="frame" x="49" y="359" width="450" height="56"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" alignment="center" title="Dopo aver collegato ed installato il lettore di smart card posiziona la CIE sul lettore ed inserisci il PIN" id="aaV-4O-eh7">
+                                                    <font key="font" metaFont="system" size="17"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                <color key="value" name="customViewColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mdd-Wr-o9p">
+                                        <rect key="frame" x="1" y="0.0" width="548" height="510"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fxe-0S-PKf">
+                                                <rect key="frame" x="72" y="416" width="405" height="57"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbina la tua CIE" id="i0n-S4-aRH">
+                                                    <font key="font" metaFont="system" size="37"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v6m-KX-59g" customClass="FlatButton" customModule="FlatButton">
+                                                <rect key="frame" x="221" y="23" width="85" height="32"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="push" title="Annulla" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZOU-z9-nzQ">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                        <color key="value" name="customDarkBackgroundColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                        <color key="value" name="customDarkBackgroundColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                        <color key="value" name="customTextColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                        <color key="value" name="customTextColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="nextPage:" target="XkM-64-qp5" id="evF-2g-iZj"/>
+                                                </connections>
+                                            </button>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nud-Nu-IcK">
+                                                <rect key="frame" x="30" y="199" width="140" height="140"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="mkK-P9-AOG"/>
+                                            </imageView>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ip5-uR-ODb">
+                                                <rect key="frame" x="214" y="257" width="234" height="24"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbinamento in corso" id="PPv-Za-sbU">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="Ika-U6-Lrs">
+                                                <rect key="frame" x="216" y="233" width="230" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            </progressIndicator>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iur-zT-w0H">
+                                                <rect key="frame" x="49" y="359" width="450" height="56"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" alignment="center" title="Dopo aver collegato ed installato il lettore di smart card posiziona la CIE sul lettore ed inserisci il PIN" id="Yd6-vp-N4P">
+                                                    <font key="font" metaFont="system" size="17"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
@@ -1102,12 +1209,6 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="qWW-mh-vJN" firstAttribute="leading" secondItem="6OI-bz-nRs" secondAttribute="leading" id="FYo-ot-h0N"/>
-                                    <constraint firstItem="qWW-mh-vJN" firstAttribute="top" secondItem="6OI-bz-nRs" secondAttribute="top" id="VSM-Zm-X8y"/>
-                                    <constraint firstAttribute="bottom" secondItem="qWW-mh-vJN" secondAttribute="bottom" id="aj7-IU-Ydy"/>
-                                    <constraint firstAttribute="trailing" secondItem="qWW-mh-vJN" secondAttribute="trailing" id="d0n-IV-VN8"/>
-                                </constraints>
                             </customView>
                         </subviews>
                         <constraints>
@@ -1127,6 +1228,12 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="homeFirstPageView" destination="qWW-mh-vJN" id="6vp-OJ-uzY"/>
+                        <outlet property="homeSecondPageView" destination="Hnq-5I-07c" id="HIf-h9-rbs"/>
+                        <outlet property="homeThirdPageView" destination="Mdd-Wr-o9p" id="AjK-Bq-dKD"/>
+                        <outlet property="labelProgress" destination="81v-HY-YGK" id="6UT-oc-cXu"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1277,18 +1384,6 @@ nuova Carta di Identità elettronica.</string>
             </objects>
         </scene>
         <!--View Controller-->
-        <scene sceneID="Mz1-7A-6U3">
-            <objects>
-                <viewController id="NdQ-AA-rll" sceneMemberID="viewController">
-                    <view key="view" id="RHy-OB-6Ep">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
-                <customObject id="oWv-2h-lbq" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
-        <!--View Controller-->
         <scene sceneID="amc-0j-wvu">
             <objects>
                 <viewController id="nxX-hW-8f7" sceneMemberID="viewController">
@@ -1351,7 +1446,7 @@ nuova Carta di Identità elettronica.</string>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YOW-m0-Urs">
                                 <rect key="frame" x="49" y="359" width="450" height="56"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" alignment="center" title="Dopo aver collegato ed installato il lettore di smarat card posiziona la CIE sul lettore ed inserisci il PIN" id="fnC-BQ-SpN">
+                                <textFieldCell key="cell" alignment="center" title="Dopo aver collegato ed installato il lettore di smart card posiziona la CIE sul lettore ed inserisci il PIN" id="fnC-BQ-SpN">
                                     <font key="font" metaFont="system" size="17"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
