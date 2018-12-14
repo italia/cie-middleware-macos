@@ -17,4 +17,17 @@
     self.tabView.tabViewType = NSNoTabsNoBorder;
 }
 
+- (void) viewWillAppear
+{
+    [super viewWillAppear];
+    
+    if(![NSUserDefaults.standardUserDefaults objectForKey:@"firstTime"])
+    {
+        NSStoryboard* storyboard = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+        NSViewController* viewController = [storyboard instantiateControllerWithIdentifier:@"IntroViewController"];
+        
+        [self presentViewControllerAsModalWindow:viewController];
+    }
+}
+
 @end

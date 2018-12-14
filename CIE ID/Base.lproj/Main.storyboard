@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -695,168 +696,701 @@
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="XkM-64-qp5" kind="relationship" relationship="window.shadowedContentViewController" id="cHr-eD-Oto"/>
+                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="74a-tW-DGM"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="MainViewController" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="700" height="500"/>
+                        <rect key="frame" x="0.0" y="0.0" width="750" height="510"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UAT-vu-9T5">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="500"/>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WAT-68-kg6">
+                                <rect key="frame" x="50" y="380" width="100" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="NpT-jH-bXh"/>
+                                    <constraint firstAttribute="width" constant="100" id="G0l-AF-GLZ"/>
+                                    <constraint firstAttribute="height" constant="100" id="NuT-ni-ey6"/>
                                 </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Logo_Cie_ID_Windowed" id="bnp-Xy-NSy"/>
+                            </imageView>
+                            <stackView distribution="fillEqually" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JIa-Hw-XSf">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="340"/>
+                                <subviews>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="pDV-0n-dB4">
+                                        <rect key="frame" x="0.0" y="290" width="200" height="50"/>
+                                        <subviews>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5En-SK-29q">
+                                                <rect key="frame" x="10" y="0.0" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="qga-TF-LaD"/>
+                                                    <constraint firstAttribute="width" constant="50" id="zEg-QS-QbC"/>
+                                                </constraints>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_home_piccola" id="YDI-b6-SJb"/>
+                                            </imageView>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MSe-jd-gc8">
+                                                <rect key="frame" x="60" y="17" width="140" height="17"/>
+                                                <buttonCell key="cell" type="squareTextured" title="Home" bezelStyle="texturedSquare" alignment="left" inset="2" id="STU-Dh-uGF">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <color key="contentTintColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="MSe-jd-gc8" secondAttribute="trailing" id="1iQ-rE-F2a"/>
+                                            <constraint firstItem="MSe-jd-gc8" firstAttribute="centerY" secondItem="pDV-0n-dB4" secondAttribute="centerY" id="FRJ-ro-60S"/>
+                                            <constraint firstItem="MSe-jd-gc8" firstAttribute="leading" secondItem="5En-SK-29q" secondAttribute="trailing" id="THj-LL-bnp"/>
+                                            <constraint firstItem="5En-SK-29q" firstAttribute="leading" secondItem="pDV-0n-dB4" secondAttribute="leading" constant="10" id="ZJZ-hf-oMd"/>
+                                            <constraint firstAttribute="height" constant="50" id="hkk-ok-KqC"/>
+                                            <constraint firstItem="5En-SK-29q" firstAttribute="centerY" secondItem="pDV-0n-dB4" secondAttribute="centerY" id="xec-G8-Wfe"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="lrL-iW-R0U">
+                                        <rect key="frame" x="0.0" y="232" width="200" height="50"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zw0-o0-VWc">
+                                                <rect key="frame" x="10" y="15" width="190" height="20"/>
+                                                <buttonCell key="cell" type="squareTextured" title="Cambia PIN" bezelStyle="texturedSquare" image="icona_cambio_Pin" imagePosition="leading" alignment="left" inset="2" id="XP3-lM-Bl7">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <color key="contentTintColor" name="leftTextColor"/>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Zw0-o0-VWc" firstAttribute="leading" secondItem="lrL-iW-R0U" secondAttribute="leading" constant="10" id="F7A-C2-jo7"/>
+                                            <constraint firstItem="Zw0-o0-VWc" firstAttribute="centerY" secondItem="lrL-iW-R0U" secondAttribute="centerY" id="Fq0-ZB-Z5z"/>
+                                            <constraint firstAttribute="trailing" secondItem="Zw0-o0-VWc" secondAttribute="trailing" id="Svl-X6-TFQ"/>
+                                            <constraint firstAttribute="height" constant="50" id="wA8-wA-dZr"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="CJp-ds-vmS">
+                                        <rect key="frame" x="0.0" y="174" width="200" height="50"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4sw-wd-jcx">
+                                                <rect key="frame" x="10" y="15" width="190" height="20"/>
+                                                <buttonCell key="cell" type="squareTextured" title="Sblocca Carta" bezelStyle="texturedSquare" image="icona_lucchetto" imagePosition="leading" alignment="left" inset="2" id="2rQ-dm-hT1">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <color key="contentTintColor" name="leftTextColor"/>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="4sw-wd-jcx" firstAttribute="centerY" secondItem="CJp-ds-vmS" secondAttribute="centerY" id="Bou-fL-4TO"/>
+                                            <constraint firstAttribute="trailing" secondItem="4sw-wd-jcx" secondAttribute="trailing" id="TTQ-5W-ZPT"/>
+                                            <constraint firstItem="4sw-wd-jcx" firstAttribute="leading" secondItem="CJp-ds-vmS" secondAttribute="leading" constant="10" id="Toi-FJ-bmU"/>
+                                            <constraint firstAttribute="height" constant="50" id="wqG-Hn-9us"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="aoW-Zr-NId">
+                                        <rect key="frame" x="0.0" y="116" width="200" height="50"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s3d-nf-52P">
+                                                <rect key="frame" x="10" y="-5" width="190" height="60"/>
+                                                <buttonCell key="cell" type="squareTextured" title="Tutorial" bezelStyle="texturedSquare" image="icona_tutorial" imagePosition="leading" alignment="left" inset="2" id="Ivh-9A-eyV">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <color key="contentTintColor" name="leftTextColor"/>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="s3d-nf-52P" secondAttribute="trailing" id="3fW-CT-SmU"/>
+                                            <constraint firstAttribute="height" constant="50" id="7oI-CS-5bD"/>
+                                            <constraint firstItem="s3d-nf-52P" firstAttribute="centerY" secondItem="aoW-Zr-NId" secondAttribute="centerY" id="sJE-KK-4A9"/>
+                                            <constraint firstItem="s3d-nf-52P" firstAttribute="leading" secondItem="aoW-Zr-NId" secondAttribute="leading" constant="10" id="vhw-xu-mPd"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="N1v-fW-RP4">
+                                        <rect key="frame" x="0.0" y="58" width="200" height="50"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EHG-55-OLE">
+                                                <rect key="frame" x="10" y="15" width="190" height="20"/>
+                                                <buttonCell key="cell" type="squareTextured" title="Aiuto" bezelStyle="texturedSquare" image="icona_aiuto" imagePosition="leading" alignment="left" inset="2" id="r5G-lK-iuD">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="EHG-55-OLE" secondAttribute="trailing" id="5In-mB-cp7"/>
+                                            <constraint firstItem="EHG-55-OLE" firstAttribute="leading" secondItem="N1v-fW-RP4" secondAttribute="leading" constant="10" id="c0H-VS-VpL"/>
+                                            <constraint firstItem="EHG-55-OLE" firstAttribute="centerY" secondItem="N1v-fW-RP4" secondAttribute="centerY" id="tJj-2l-5eT"/>
+                                            <constraint firstAttribute="height" constant="50" id="vF5-SV-X9d"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="V6m-k1-rj5">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c5h-lq-Zc7">
+                                                <rect key="frame" x="10" y="15" width="190" height="20"/>
+                                                <buttonCell key="cell" type="squareTextured" title="Informazioni" bezelStyle="texturedSquare" image="icona_aiuto" imagePosition="leading" alignment="left" inset="2" id="2Pz-v6-4RI">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="c5h-lq-Zc7" firstAttribute="leading" secondItem="V6m-k1-rj5" secondAttribute="leading" constant="10" id="PWB-cZ-HcD"/>
+                                            <constraint firstAttribute="height" constant="50" id="Uv7-A5-yId"/>
+                                            <constraint firstAttribute="trailing" secondItem="c5h-lq-Zc7" secondAttribute="trailing" id="aYi-H9-Tst"/>
+                                            <constraint firstItem="c5h-lq-Zc7" firstAttribute="centerY" secondItem="V6m-k1-rj5" secondAttribute="centerY" id="rKF-Jl-HRD"/>
+                                        </constraints>
+                                    </customView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="pDV-0n-dB4" secondAttribute="trailing" id="8Se-aw-4AY"/>
+                                    <constraint firstItem="pDV-0n-dB4" firstAttribute="leading" secondItem="JIa-Hw-XSf" secondAttribute="leading" id="Srw-JK-z3U"/>
+                                    <constraint firstAttribute="width" constant="200" id="Z7E-ih-Koe"/>
+                                </constraints>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
                             </stackView>
-                            <tabView type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="0cU-OO-Jrq">
-                                <rect key="frame" x="158" y="0.0" width="542" height="500"/>
-                                <font key="font" metaFont="system"/>
-                                <tabViewItems>
-                                    <tabViewItem label="Tab" identifier="" id="SJP-b7-CgF">
-                                        <view key="view" id="7vl-cZ-VeZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="542" height="500"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </view>
-                                    </tabViewItem>
-                                    <tabViewItem label="View" identifier="" id="hjc-hX-oLT">
-                                        <view key="view" id="X1k-qH-Mvv">
-                                            <rect key="frame" x="0.0" y="0.0" width="322" height="270"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </view>
-                                    </tabViewItem>
-                                </tabViewItems>
-                            </tabView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="6OI-bz-nRs">
+                                <rect key="frame" x="200" y="0.0" width="550" height="510"/>
+                                <subviews>
+                                    <view hidden="YES" focusRingType="none" appearanceType="aqua" translatesAutoresizingMaskIntoConstraints="NO" id="qWW-mh-vJN">
+                                        <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jgI-41-ekk">
+                                                <rect key="frame" x="72" y="416" width="405" height="57"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbina la tua CIE" id="B5f-Sl-ec1">
+                                                    <font key="font" metaFont="system" size="37"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="knQ-pW-6aU">
+                                                <rect key="frame" x="28" y="352" width="450" height="56"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" alignment="center" title="Dopo aver collegato ed installato il lettore di smarat card posiziona la CIE sul lettore ed inserisci il PIN" id="UbP-om-J0O">
+                                                    <font key="font" metaFont="system" size="17"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0QW-wr-CHb" customClass="FlatButton" customModule="FlatButton">
+                                                <rect key="frame" x="222" y="23" width="83" height="32"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="push" title="Abbina" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2vc-WY-mDF">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                        <color key="value" name="customViewColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                        <color key="value" name="customViewColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="nextPage:" target="XkM-64-qp5" id="yWC-kB-doi"/>
+                                                </connections>
+                                            </button>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BmZ-fU-7Ac">
+                                                <rect key="frame" x="30" y="199" width="140" height="140"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="aCQ-Tj-Rkw"/>
+                                            </imageView>
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="poc-AO-9hL">
+                                                <rect key="frame" x="204" y="223" width="27" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="dh1-Yi-Qdk">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <allowedInputSourceLocales>
+                                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                    </allowedInputSourceLocales>
+                                                </secureTextFieldCell>
+                                            </secureTextField>
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p3k-1g-68m">
+                                                <rect key="frame" x="239" y="223" width="27" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="bpj-Ym-vSn">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <allowedInputSourceLocales>
+                                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                    </allowedInputSourceLocales>
+                                                </secureTextFieldCell>
+                                            </secureTextField>
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ALN-Hy-sCB">
+                                                <rect key="frame" x="274" y="223" width="27" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="v5b-AA-xLP">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <allowedInputSourceLocales>
+                                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                    </allowedInputSourceLocales>
+                                                </secureTextFieldCell>
+                                            </secureTextField>
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i8O-8h-CYb">
+                                                <rect key="frame" x="309" y="223" width="27" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="I9u-vG-A8Q">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <allowedInputSourceLocales>
+                                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                    </allowedInputSourceLocales>
+                                                </secureTextFieldCell>
+                                            </secureTextField>
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="klj-9n-Xvb">
+                                                <rect key="frame" x="344" y="223" width="27" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="MDd-wL-4G9">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <allowedInputSourceLocales>
+                                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                    </allowedInputSourceLocales>
+                                                </secureTextFieldCell>
+                                            </secureTextField>
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dES-tM-ZPA">
+                                                <rect key="frame" x="379" y="223" width="27" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="RKy-AA-37K">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <allowedInputSourceLocales>
+                                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                    </allowedInputSourceLocales>
+                                                </secureTextFieldCell>
+                                            </secureTextField>
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EYp-ZO-RhM">
+                                                <rect key="frame" x="414" y="223" width="27" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="t5X-lF-xgm">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <allowedInputSourceLocales>
+                                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                    </allowedInputSourceLocales>
+                                                </secureTextFieldCell>
+                                            </secureTextField>
+                                            <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A88-C8-3z2">
+                                                <rect key="frame" x="449" y="223" width="27" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" drawsBackground="YES" usesSingleLineMode="YES" id="56G-6Q-KKs">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <allowedInputSourceLocales>
+                                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                    </allowedInputSourceLocales>
+                                                </secureTextFieldCell>
+                                            </secureTextField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Ua-WR-97w">
+                                                <rect key="frame" x="260" y="263" width="125" height="24"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Inserisci il PIN" id="tk1-wZ-PGC">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                <color key="value" name="customViewColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Qn-TH-dVl">
+                                        <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aAq-bv-Jyd">
+                                                <rect key="frame" x="72" y="416" width="405" height="57"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbina la tua CIE" id="9JY-jN-cYq">
+                                                    <font key="font" metaFont="system" size="37"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0QA-Gy-OGe">
+                                                <rect key="frame" x="28" y="352" width="450" height="56"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" alignment="center" title="Dopo aver collegato ed installato il lettore di smarat card posiziona la CIE sul lettore ed inserisci il PIN" id="SpK-Tl-lw8">
+                                                    <font key="font" metaFont="system" size="17"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2mN-lm-U6E" customClass="FlatButton" customModule="FlatButton">
+                                                <rect key="frame" x="222" y="23" width="83" height="32"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="push" title="Abbina" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fok-wr-QUb">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                        <color key="value" name="customViewColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                        <color key="value" name="customViewColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="nextPage:" target="XkM-64-qp5" id="iIn-ke-gW9"/>
+                                                </connections>
+                                            </button>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S9h-Ug-xlM">
+                                                <rect key="frame" x="30" y="199" width="140" height="140"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="z92-et-tmb"/>
+                                            </imageView>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tSf-AI-yJX">
+                                                <rect key="frame" x="260" y="263" width="125" height="24"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Inserisci il PIN" id="9Qg-yj-DTl">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                <color key="value" name="customViewColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="qWW-mh-vJN" firstAttribute="leading" secondItem="6OI-bz-nRs" secondAttribute="leading" id="FYo-ot-h0N"/>
+                                    <constraint firstItem="qWW-mh-vJN" firstAttribute="top" secondItem="6OI-bz-nRs" secondAttribute="top" id="VSM-Zm-X8y"/>
+                                    <constraint firstAttribute="bottom" secondItem="qWW-mh-vJN" secondAttribute="bottom" id="aj7-IU-Ydy"/>
+                                    <constraint firstAttribute="trailing" secondItem="qWW-mh-vJN" secondAttribute="trailing" id="d0n-IV-VN8"/>
+                                </constraints>
+                            </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="0cU-OO-Jrq" secondAttribute="bottom" id="A7H-1c-KW2"/>
-                            <constraint firstItem="0cU-OO-Jrq" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="CEt-s5-H3o"/>
-                            <constraint firstAttribute="bottom" secondItem="UAT-vu-9T5" secondAttribute="bottom" id="HsP-8h-phh"/>
-                            <constraint firstItem="0cU-OO-Jrq" firstAttribute="leading" secondItem="UAT-vu-9T5" secondAttribute="trailing" constant="-142" id="IYz-F3-I7R"/>
-                            <constraint firstItem="UAT-vu-9T5" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="h9A-iA-c63"/>
-                            <constraint firstItem="UAT-vu-9T5" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="si2-bC-B6Z"/>
-                            <constraint firstAttribute="trailing" secondItem="0cU-OO-Jrq" secondAttribute="trailing" id="x9v-Nw-zqz"/>
+                            <constraint firstAttribute="bottom" secondItem="JIa-Hw-XSf" secondAttribute="bottom" id="4Nu-6a-1qU"/>
+                            <constraint firstItem="6OI-bz-nRs" firstAttribute="leading" secondItem="JIa-Hw-XSf" secondAttribute="trailing" id="4bb-Zq-Cts"/>
+                            <constraint firstAttribute="bottom" secondItem="6OI-bz-nRs" secondAttribute="bottom" id="Cxw-2E-ptE"/>
+                            <constraint firstAttribute="trailing" secondItem="6OI-bz-nRs" secondAttribute="trailing" id="Gnl-Fv-fhi"/>
+                            <constraint firstItem="WAT-68-kg6" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="30" id="Jfb-a1-E8j"/>
+                            <constraint firstItem="JIa-Hw-XSf" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="LGU-NZ-GfG"/>
+                            <constraint firstItem="WAT-68-kg6" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="50" id="Ye4-hb-YX5"/>
+                            <constraint firstItem="JIa-Hw-XSf" firstAttribute="top" secondItem="WAT-68-kg6" secondAttribute="bottom" constant="40" id="bLf-KD-Xpp"/>
+                            <constraint firstItem="6OI-bz-nRs" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="qD1-n6-n4q"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                <color key="value" name="customDarkBackgroundColor"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="-364" y="692"/>
         </scene>
-        <!--Main View Controller-->
-        <scene sceneID="14h-3x-tJV">
-            <objects>
-                <tabViewController tabStyle="unspecified" canPropagateSelectedChildViewControllerTitle="NO" id="VNz-sN-E4W" customClass="MainViewController" sceneMemberID="viewController">
-                    <tabViewItems>
-                        <tabViewItem identifier="" id="42D-gj-E0l"/>
-                        <tabViewItem identifier="" id="quu-qt-T7N"/>
-                    </tabViewItems>
-                    <tabView key="tabView" allowsTruncatedLabels="NO" type="noTabsNoBorder" id="5eS-p2-ohp">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <font key="font" metaFont="message"/>
-                        <connections>
-                            <outlet property="delegate" destination="VNz-sN-E4W" id="WXl-hy-THt"/>
-                        </connections>
-                    </tabView>
-                    <connections>
-                        <outlet property="tabView" destination="5eS-p2-ohp" id="qjy-GS-Ymd"/>
-                        <segue destination="Ebr-d3-fKf" kind="relationship" relationship="tabItems" id="fAY-o5-CYE"/>
-                        <segue destination="eog-aZ-VBH" kind="relationship" relationship="tabItems" id="gdr-jO-RsE"/>
-                    </connections>
-                </tabViewController>
-                <customObject id="A9k-Xs-44B" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
-        <!--Main View Controller-->
-        <scene sceneID="B2S-z1-KnH">
-            <objects>
-                <viewController id="Ebr-d3-fKf" customClass="MainViewController" sceneMemberID="viewController">
-                    <view key="view" id="0mM-1h-ohw">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
-                <customObject id="fK9-Yc-sab" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
-        <!--Main View Controller-->
-        <scene sceneID="0F8-GR-Ci0">
-            <objects>
-                <viewController id="eog-aZ-VBH" customClass="MainViewController" sceneMemberID="viewController">
-                    <view key="view" id="Xxs-71-Re7">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
-                <customObject id="xc3-nM-gYC" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
-        <!--View Controller-->
+        <!--Intro View Controller-->
         <scene sceneID="bvz-Lv-EFf">
             <objects>
-                <viewController id="XkM-64-qp5" sceneMemberID="viewController">
-                    <view key="view" focusRingType="none" appearanceType="aqua" id="wAu-w1-gzz">
+                <viewController storyboardIdentifier="IntroViewController" id="XkM-64-qp5" customClass="IntroViewController" sceneMemberID="viewController">
+                    <view key="view" focusRingType="none" appearanceType="aqua" id="Imw-bO-gXX">
                         <rect key="frame" x="0.0" y="0.0" width="700" height="500"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Kx-bi-N4L">
-                                <rect key="frame" x="148" y="414" width="405" height="57"/>
+                            <view focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f7k-HT-hf6">
+                                <rect key="frame" x="0.0" y="0.0" width="700" height="500"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Benvenuto in CIE ID" id="jhN-QD-Sjo">
-                                    <font key="font" metaFont="system" size="48"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eD6-Od-WKW">
+                                        <rect key="frame" x="148" y="414" width="405" height="57"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Benvenuto in CIE ID" id="lNl-wG-OB4">
+                                            <font key="font" metaFont="system" size="48"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sg4-S8-BUL">
+                                        <rect key="frame" x="87" y="325" width="536" height="81"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" id="dfS-fT-8rj">
+                                            <font key="font" metaFont="system" size="22"/>
+                                            <string key="title">Il software che ti permette di autenticarti ai servizi online
+della Pubblica Amministrazione per mezzo della
+nuova Carta di Identità elettronica.</string>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Spm-ac-b5J">
+                                        <rect key="frame" x="183" y="79" width="345" height="228"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="flusso_intro_01" id="SmI-gS-dtb"/>
+                                    </imageView>
+                                    <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mGv-b2-uBb" customClass="FlatButton" customModule="FlatButton">
+                                        <rect key="frame" x="303" y="20" width="95" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Continua" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5cM-lK-FaB">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                <color key="value" name="customViewColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                <color key="value" name="customViewColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="nextPage:" target="XkM-64-qp5" id="wKf-wB-AzE"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" name="customViewColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view hidden="YES" focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wt7-6M-bq7">
+                                <rect key="frame" x="0.0" y="0.0" width="700" height="500"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs0-MV-jK2">
+                                        <rect key="frame" x="148" y="414" width="405" height="57"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Per Iniziare" id="QyT-Sz-HOc">
+                                            <font key="font" metaFont="system" size="48"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jOE-oP-dQz">
+                                        <rect key="frame" x="127" y="325" width="437" height="89"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <textFieldCell key="cell" alignment="center" title="Munisciti di lettore di smart card contactless, della tua Carta d'Identità e del PIN di 8 cifre che hai ricevuto con la carta." id="jW9-iR-ENP">
+                                            <font key="font" metaFont="system" size="22"/>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gY6-BH-pk1">
+                                        <rect key="frame" x="183" y="79" width="345" height="228"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="flusso_intro_02" id="wJw-0V-hGQ"/>
+                                    </imageView>
+                                    <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WhJ-PT-43O" customClass="FlatButton" customModule="FlatButton">
+                                        <rect key="frame" x="315" y="20" width="72" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Inizia" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a1h-7A-E3R">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                <color key="value" name="customViewColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                <color key="value" name="customViewColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="start:" target="XkM-64-qp5" id="SjR-g4-WoA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" name="customViewColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                <color key="value" name="customViewColor"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <connections>
+                        <outlet property="firstPageView" destination="f7k-HT-hf6" id="AFa-Nc-dgb"/>
+                        <outlet property="secondPageView" destination="wt7-6M-bq7" id="jLa-GJ-B6b"/>
+                    </connections>
+                </viewController>
+                <customObject id="O4M-Dp-tn5" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Mz1-7A-6U3">
+            <objects>
+                <viewController id="NdQ-AA-rll" sceneMemberID="viewController">
+                    <view key="view" id="RHy-OB-6Ep">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="oWv-2h-lbq" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="amc-0j-wvu">
+            <objects>
+                <viewController id="nxX-hW-8f7" sceneMemberID="viewController">
+                    <view key="view" focusRingType="none" appearanceType="aqua" id="bWF-ki-pnF">
+                        <rect key="frame" x="0.0" y="0.0" width="548" height="510"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sDs-jB-7EJ">
+                                <rect key="frame" x="72" y="416" width="405" height="57"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbina la tua CIE" id="1hj-QU-SDp">
+                                    <font key="font" metaFont="system" size="37"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZAK-J2-CTs">
-                                <rect key="frame" x="87" y="325" width="536" height="81"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" id="JnH-UJ-8jn">
-                                    <font key="font" metaFont="system" size="22"/>
-                                    <string key="title">Il software che ti permette di autenticarti ai servizi online
-della Pubblica Amministrazione per mezzo della
-nuova Carta di Identità elettronica.</string>
-                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="74x-u6-lg9">
-                                <rect key="frame" x="183" y="79" width="345" height="228"/>
+                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8tj-AP-qih" customClass="FlatButton" customModule="FlatButton">
+                                <rect key="frame" x="221" y="23" width="85" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="flusso_intro_01" id="THd-qX-0im"/>
-                            </imageView>
-                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zif-HO-pAT" customClass="FlatButton" customModule="FlatButton">
-                                <rect key="frame" x="303" y="20" width="95" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Continua" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="md0-o5-wif">
+                                <buttonCell key="cell" type="push" title="Annulla" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="L3d-Ru-dtg">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
-                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="value" name="customDarkBackgroundColor"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
-                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="value" name="customDarkBackgroundColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" name="customTextColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                        <color key="value" name="customTextColor"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="nextPage:" target="XkM-64-qp5" id="SWV-MD-Nfb"/>
+                                </connections>
                             </button>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6rD-Ib-afr">
+                                <rect key="frame" x="30" y="199" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="wDB-Vs-8eq"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3hd-r3-sHf">
+                                <rect key="frame" x="214" y="257" width="234" height="24"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbinamento in corso" id="m1Z-tL-Dwt">
+                                    <font key="font" metaFont="system" size="20"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="bq9-J9-23c">
+                                <rect key="frame" x="216" y="233" width="230" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </progressIndicator>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YOW-m0-Urs">
+                                <rect key="frame" x="49" y="359" width="450" height="56"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" alignment="center" title="Dopo aver collegato ed installato il lettore di smarat card posiziona la CIE sul lettore ed inserisci il PIN" id="fnC-BQ-SpN">
+                                    <font key="font" metaFont="system" size="17"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                <color key="value" name="customViewColor"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
-                <customObject id="O4M-Dp-tn5" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="P5j-Pt-SBF" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-263" y="692"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Logo_Cie_ID_Windowed" width="156" height="154"/>
         <image name="flusso_intro_01" width="613" height="388"/>
+        <image name="flusso_intro_02" width="651" height="373"/>
+        <image name="icona_aiuto" width="20" height="20"/>
+        <image name="icona_cambio_Pin" width="30" height="20"/>
+        <image name="icona_home_piccola" width="25" height="25"/>
+        <image name="icona_lettore_card_white" width="192" height="192"/>
+        <image name="icona_lucchetto" width="18" height="20"/>
+        <image name="icona_tutorial" width="60" height="60"/>
+        <namedColor name="customDarkBackgroundColor">
+            <color white="0.8059999942779541" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
+        <namedColor name="customTextColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="customViewColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="leftTextColor">
+            <color white="0.1940000057220459" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
     </resources>
 </document>

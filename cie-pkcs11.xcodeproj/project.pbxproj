@@ -120,6 +120,7 @@
 		E59B65CA213C06B9007348D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59B65C8213C06B9007348D5 /* Main.storyboard */; };
 		E59B65CD213C06B9007348D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E59B65CC213C06B9007348D5 /* main.m */; };
 		E59B65D2213DD84B007348D5 /* libcie-pkcs11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */; };
+		E59DCCDF21C3BB7300CE4790 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E59DCCDE21C3BB7300CE4790 /* IntroViewController.m */; };
 		E5BE7DA920FE853800004389 /* CardContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D9720FE853800004389 /* CardContext.cpp */; };
 		E5BE7DAA20FE853800004389 /* CardContext.h in Headers */ = {isa = PBXBuildFile; fileRef = E5BE7D9820FE853800004389 /* CardContext.h */; };
 		E5BE7DAB20FE853800004389 /* CardTemplate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5BE7D9920FE853800004389 /* CardTemplate.cpp */; };
@@ -318,6 +319,8 @@
 		E59B65CB213C06B9007348D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E59B65CC213C06B9007348D5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E59B65CE213C06B9007348D5 /* AbilitaCIE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AbilitaCIE.entitlements; sourceTree = "<group>"; };
+		E59DCCDD21C3BB7300CE4790 /* IntroViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
+		E59DCCDE21C3BB7300CE4790 /* IntroViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
 		E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libcie-pkcs11.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5BE7D9720FE853800004389 /* CardContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardContext.cpp; sourceTree = "<group>"; };
 		E5BE7D9820FE853800004389 /* CardContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardContext.h; sourceTree = "<group>"; };
@@ -442,6 +445,8 @@
 				E544F57321BFAFC90038B2CA /* CIE_ID.entitlements */,
 				E544F57721BFB06A0038B2CA /* MainViewController.h */,
 				E544F57821BFB06A0038B2CA /* MainViewController.m */,
+				E59DCCDD21C3BB7300CE4790 /* IntroViewController.h */,
+				E59DCCDE21C3BB7300CE4790 /* IntroViewController.m */,
 			);
 			path = "CIE ID";
 			sourceTree = "<group>";
@@ -1113,6 +1118,7 @@
 				E544F57221BFAFC90038B2CA /* main.m in Sources */,
 				E544F56721BFAFC60038B2CA /* AppDelegate.m in Sources */,
 				E544F57921BFB06A0038B2CA /* MainViewController.m in Sources */,
+				E59DCCDF21C3BB7300CE4790 /* IntroViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
