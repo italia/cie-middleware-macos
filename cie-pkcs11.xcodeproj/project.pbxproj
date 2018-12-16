@@ -39,7 +39,7 @@
 		E544F56C21BFAFC90038B2CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E544F56B21BFAFC90038B2CA /* Assets.xcassets */; };
 		E544F56F21BFAFC90038B2CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E544F56D21BFAFC90038B2CA /* Main.storyboard */; };
 		E544F57221BFAFC90038B2CA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E544F57121BFAFC90038B2CA /* main.m */; };
-		E544F57921BFB06A0038B2CA /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E544F57821BFB06A0038B2CA /* MainViewController.m */; };
+		E544F57921BFB06A0038B2CA /* MainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E544F57821BFB06A0038B2CA /* MainViewController.mm */; };
 		E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E54EF42F2100D91200E2EADD /* libcryptopp.a */; };
 		E54F7D672167A2720026B16D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E54F7D662167A2720026B16D /* AppDelegate.m */; };
 		E54F7D6A2167A2720026B16D /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E54F7D692167A2720026B16D /* ViewController.mm */; };
@@ -221,7 +221,7 @@
 		E544F57121BFAFC90038B2CA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E544F57321BFAFC90038B2CA /* CIE_ID.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIE_ID.entitlements; sourceTree = "<group>"; };
 		E544F57721BFB06A0038B2CA /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		E544F57821BFB06A0038B2CA /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		E544F57821BFB06A0038B2CA /* MainViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MainViewController.mm; sourceTree = "<group>"; };
 		E54EF42F2100D91200E2EADD /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcryptopp.a; sourceTree = "<group>"; };
 		E54EF4312100D99500E2EADD /* Cryptopp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Cryptopp; sourceTree = "<group>"; };
 		E54F7D632167A2720026B16D /* CambioPIN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CambioPIN.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -446,7 +446,7 @@
 				E544F57121BFAFC90038B2CA /* main.m */,
 				E544F57321BFAFC90038B2CA /* CIE_ID.entitlements */,
 				E544F57721BFB06A0038B2CA /* MainViewController.h */,
-				E544F57821BFB06A0038B2CA /* MainViewController.m */,
+				E544F57821BFB06A0038B2CA /* MainViewController.mm */,
 				E59DCCDD21C3BB7300CE4790 /* IntroViewController.h */,
 				E59DCCDE21C3BB7300CE4790 /* IntroViewController.m */,
 			);
@@ -1119,7 +1119,7 @@
 				E544F56A21BFAFC60038B2CA /* ViewController.m in Sources */,
 				E544F57221BFAFC90038B2CA /* main.m in Sources */,
 				E544F56721BFAFC60038B2CA /* AppDelegate.m in Sources */,
-				E544F57921BFB06A0038B2CA /* MainViewController.m in Sources */,
+				E544F57921BFB06A0038B2CA /* MainViewController.mm in Sources */,
 				E59DCCDF21C3BB7300CE4790 /* IntroViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

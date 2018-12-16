@@ -30,9 +30,4 @@ void showUI(const char* szPAN)
     task.arguments = @[@"-n", @"/Applications/AbilitaCIE.app"];//, [NSString stringWithUTF8String:szPAN]];
 
     [task launch];
-    
-    
-//    NSTask *task = [[NSTask alloc] init];
-//    [task setLaunchPath:@"open -a AbilitaCIE.app"];
-//    [task launch];
 }

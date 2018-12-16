@@ -33,7 +33,7 @@ DWORD CardAuthenticateEx(IAS*       ias,
                         int*        pcAttemptsRemaining);
 
 extern "C" {
-    CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack);
+    CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack, COMPLETED_CALLBACK completedCallBack);
     CK_RV CK_ENTRY VerificaCIEAbilitata();
     CK_RV CK_ENTRY DisabilitaCIE();
 }
@@ -214,7 +214,7 @@ CK_RV CK_ENTRY DisabilitaCIE()
     return CKR_TOKEN_NOT_PRESENT;
 }
 
-CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack)
+CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack, COMPLETED_CALLBACK completedCallBack)
 {
     char* readers = NULL;
     char* ATR = NULL;
@@ -250,7 +250,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             return CKR_TOKEN_NOT_PRESENT;
         }
 
-        progressCallBack(5, "Connessione all CIE eseguita");
+        progressCallBack(5, "Connessione alla CIE eseguita");
         
 		char *curreader = readers;
 		bool foundCIE = false;
@@ -370,6 +370,11 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             progressCallBack(85, "Memorizzazione in cache");
             
             ias.SetCache((char*)IdServizi.data(), CertCIE, pinBa);
+            
+            std::string span((char*)IdServizi.data());
+            std::string name;
+            
+            completedCallBack(span, name); // TODO aggiungere nome e cognome del cardholder scritto nel certificato
 		}
         
 		if (!foundCIE) {

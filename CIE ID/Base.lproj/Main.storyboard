@@ -1000,6 +1000,51 @@ trattalo con cautela.</string>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <view focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gbY-3C-V3N">
+                                        <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OcM-Ze-c8X">
+                                                <rect key="frame" x="72" y="416" width="405" height="57"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Cambia PIN" id="5AC-BH-5e0">
+                                                    <font key="font" metaFont="system" size="37"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ijF-O2-aBF">
+                                                <rect key="frame" x="30" y="199" width="140" height="140"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="wWS-0W-pE1"/>
+                                            </imageView>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F33-LS-eyK">
+                                                <rect key="frame" x="49" y="359" width="450" height="56"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" alignment="center" id="7Dp-1o-z1M">
+                                                    <font key="font" metaFont="system" size="17"/>
+                                                    <string key="title">IL PIN della tua CIE è un dato sensibile,
+trattalo con cautela.</string>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ThL-aZ-Hh9">
+                                                <rect key="frame" x="229" y="237" width="234" height="64"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" alignment="center" title="Cambio PIN terminato con successo" id="QbT-2e-epF">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                <color key="value" name="customViewColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                     <view hidden="YES" focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qWW-mh-vJN">
                                         <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1201,31 +1246,6 @@ trattalo con cautela.</string>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xYT-ph-qGU" customClass="FlatButton" customModule="FlatButton">
-                                                <rect key="frame" x="221" y="23" width="85" height="32"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <buttonCell key="cell" type="push" title="Annulla" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UEe-yw-ESe">
-                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system"/>
-                                                </buttonCell>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
-                                                        <color key="value" name="customDarkBackgroundColor"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
-                                                        <color key="value" name="customDarkBackgroundColor"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                                        <color key="value" name="customTextColor"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
-                                                        <color key="value" name="customTextColor"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="nextPage:" target="XkM-64-qp5" id="Nfq-zl-6GA"/>
-                                                </connections>
-                                            </button>
                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hgH-ec-fij">
                                                 <rect key="frame" x="30" y="199" width="140" height="140"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1267,16 +1287,16 @@ trattalo con cautela.</string>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fxe-0S-PKf">
                                                 <rect key="frame" x="72" y="416" width="405" height="57"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbina la tua CIE" id="i0n-S4-aRH">
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" id="i0n-S4-aRH">
                                                     <font key="font" metaFont="system" size="37"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
                                             <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v6m-KX-59g" customClass="FlatButton" customModule="FlatButton">
-                                                <rect key="frame" x="221" y="23" width="85" height="32"/>
+                                                <rect key="frame" x="217" y="23" width="94" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <buttonCell key="cell" type="push" title="Annulla" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZOU-z9-nzQ">
+                                                <buttonCell key="cell" type="push" title="Concludi" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZOU-z9-nzQ">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -1295,7 +1315,7 @@ trattalo con cautela.</string>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="nextPage:" target="XkM-64-qp5" id="evF-2g-iZj"/>
+                                                    <action selector="concludi:" target="XfG-lQ-9wD" id="L1h-J8-KC0"/>
                                                 </connections>
                                             </button>
                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nud-Nu-IcK">
@@ -1304,24 +1324,115 @@ trattalo con cautela.</string>
                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="mkK-P9-AOG"/>
                                             </imageView>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ip5-uR-ODb">
-                                                <rect key="frame" x="214" y="257" width="234" height="24"/>
+                                                <rect key="frame" x="214" y="257" width="234" height="64"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbinamento in corso" id="PPv-Za-sbU">
+                                                <textFieldCell key="cell" alignment="center" title="Abbinamento terminato con successo" id="PPv-Za-sbU">
                                                     <font key="font" metaFont="system" size="20"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="Ika-U6-Lrs">
-                                                <rect key="frame" x="216" y="233" width="230" height="20"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            </progressIndicator>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iur-zT-w0H">
                                                 <rect key="frame" x="49" y="359" width="450" height="56"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <textFieldCell key="cell" alignment="center" title="Dopo aver collegato ed installato il lettore di smart card posiziona la CIE sul lettore ed inserisci il PIN" id="Yd6-vp-N4P">
                                                     <font key="font" metaFont="system" size="17"/>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                <color key="value" name="customViewColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view hidden="YES" focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Hi-tR-7XT">
+                                        <rect key="frame" x="1" y="0.0" width="548" height="510"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f5o-tI-wX5">
+                                                <rect key="frame" x="72" y="416" width="405" height="57"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="CIE ID" id="fVy-wj-Ho9">
+                                                    <font key="font" metaFont="system" size="37"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-1Y-LJv" customClass="FlatButton" customModule="FlatButton">
+                                                <rect key="frame" x="201" y="23" width="125" height="32"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="push" title="Rimuovi Carta" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fnd-Zc-Uui">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                        <color key="value" name="customDarkBackgroundColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                        <color key="value" name="customDarkBackgroundColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                        <color key="value" name="customTextColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                        <color key="value" name="customTextColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="nextPage:" target="XkM-64-qp5" id="qrx-yA-8zc"/>
+                                                </connections>
+                                            </button>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jjs-gE-2SP">
+                                                <rect key="frame" x="30" y="199" width="140" height="140"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="rCI-Wi-qtF"/>
+                                            </imageView>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NxT-Wb-YRN">
+                                                <rect key="frame" x="214" y="257" width="234" height="24"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Numero carta" id="Nbq-k7-beG">
+                                                    <font key="font" metaFont="system" size="14"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IIj-YB-SQZ">
+                                                <rect key="frame" x="214" y="234" width="234" height="24"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Abbinamento in corso" id="7e5-eb-aOK">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S5E-YH-vWh">
+                                                <rect key="frame" x="214" y="202" width="234" height="24"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Intestatario" id="gcw-UU-KCr">
+                                                    <font key="font" metaFont="system" size="14"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dLB-vK-mHF">
+                                                <rect key="frame" x="49" y="359" width="450" height="56"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" alignment="center" title="Carta d'Identità Elettronica abbinata correttamente" id="YVP-B6-zQp">
+                                                    <font key="font" metaFont="system" size="17"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BZs-1Z-CBF">
+                                                <rect key="frame" x="214" y="177" width="234" height="24"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Abbinamento in corso" id="drg-45-Ckd">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
@@ -1353,11 +1464,16 @@ trattalo con cautela.</string>
                         </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
+                        <outlet property="cambioPINOKPageView" destination="gbY-3C-V3N" id="xZV-6g-SgL"/>
                         <outlet property="cambioPINPageView" destination="Qux-KY-phF" id="XzU-be-vxC"/>
                         <outlet property="homeFirstPageView" destination="qWW-mh-vJN" id="6vp-OJ-uzY"/>
+                        <outlet property="homeFourthPageView" destination="5Hi-tR-7XT" id="Ang-tn-IRX"/>
                         <outlet property="homeSecondPageView" destination="Hnq-5I-07c" id="HIf-h9-rbs"/>
                         <outlet property="homeThirdPageView" destination="Mdd-Wr-o9p" id="AjK-Bq-dKD"/>
+                        <outlet property="labelCardHolder" destination="BZs-1Z-CBF" id="Dky-XG-8sV"/>
                         <outlet property="labelProgress" destination="81v-HY-YGK" id="6UT-oc-cXu"/>
+                        <outlet property="labelSerialNumber" destination="IIj-YB-SQZ" id="6Zu-Ns-YOe"/>
+                        <outlet property="progressIndicator" destination="QaF-ot-ZLo" id="FaV-L5-cRP"/>
                         <outlet property="textFieldConfirmPIN" destination="mM9-yS-eBC" id="aXr-82-U77"/>
                         <outlet property="textFieldNewPIN" destination="utn-Se-gYZ" id="ND2-zO-x1D"/>
                         <outlet property="textFieldPIN" destination="itc-nx-2Ki" id="DsB-ek-Jc5"/>
@@ -1640,6 +1756,175 @@ trattalo con cautela.</string>
                         </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
+                <view focusRingType="none" appearanceType="aqua" id="dT5-2H-TbI">
+                    <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bkk-DR-Vlk">
+                            <rect key="frame" x="72" y="416" width="405" height="57"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Cambia PIN" id="97B-Ac-cS8">
+                                <font key="font" metaFont="system" size="37"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qYV-fJ-y4W">
+                            <rect key="frame" x="30" y="199" width="140" height="140"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="RSC-UF-jbd"/>
+                        </imageView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rmo-OZ-oz1">
+                            <rect key="frame" x="49" y="359" width="450" height="56"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <textFieldCell key="cell" alignment="center" id="8Ps-n1-VtS">
+                                <font key="font" metaFont="system" size="17"/>
+                                <string key="title">IL PIN della tua CIE è un dato sensibile,
+trattalo con cautela.</string>
+                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JT3-Po-y9S">
+                            <rect key="frame" x="229" y="237" width="234" height="64"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <textFieldCell key="cell" alignment="center" title="Cambio PIN terminato con successo" id="ugC-0e-dyK">
+                                <font key="font" metaFont="system" size="20"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                            <color key="value" name="customViewColor"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view focusRingType="none" appearanceType="aqua" id="Bug-tF-5nP">
+                    <rect key="frame" x="0.0" y="0.0" width="548" height="510"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3OU-CR-vPQ">
+                            <rect key="frame" x="72" y="416" width="405" height="57"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Cambia PIN" id="2GU-AT-KTM">
+                                <font key="font" metaFont="system" size="37"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aOk-Ax-sYK" customClass="FlatButton" customModule="FlatButton">
+                            <rect key="frame" x="208" y="23" width="111" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="push" title="Cambia PIN" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8QF-eX-xTq">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="nextPage:" target="XkM-64-qp5" id="pm5-dS-Sk4"/>
+                            </connections>
+                        </button>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQ7-8C-UEh">
+                            <rect key="frame" x="30" y="199" width="140" height="140"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="3OT-4c-4qi"/>
+                        </imageView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="20i-SE-ekv">
+                            <rect key="frame" x="49" y="359" width="450" height="56"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <textFieldCell key="cell" alignment="center" id="PCj-hk-Mi6">
+                                <font key="font" metaFont="system" size="17"/>
+                                <string key="title">IL PIN della tua CIE è un dato sensibile,
+trattalo con cautela.</string>
+                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i5Q-En-MMA">
+                            <rect key="frame" x="208" y="300" width="83" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="PIN Corrente" id="cur-03-aFc">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MEV-19-dN1">
+                            <rect key="frame" x="208" y="253" width="68" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Nuovo PIN" id="Mu8-3v-eW9">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x9m-0o-Pfa">
+                            <rect key="frame" x="210" y="278" width="215" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="abD-W9-xnn">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <allowedInputSourceLocales>
+                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                </allowedInputSourceLocales>
+                            </secureTextFieldCell>
+                        </secureTextField>
+                        <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OVL-wv-sm8">
+                            <rect key="frame" x="210" y="230" width="176" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Lea-Um-Cbx">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <allowedInputSourceLocales>
+                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                </allowedInputSourceLocales>
+                            </secureTextFieldCell>
+                        </secureTextField>
+                        <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pHh-SW-M9U">
+                            <rect key="frame" x="210" y="183" width="176" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="EU7-ba-kxP">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <allowedInputSourceLocales>
+                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                </allowedInputSourceLocales>
+                            </secureTextFieldCell>
+                        </secureTextField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JHe-1y-m1r">
+                            <rect key="frame" x="208" y="205" width="131" height="17"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Conferma Nuovo PIN" id="ak1-HU-4Q4">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                            <color key="value" name="customViewColor"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
                 <customObject id="P5j-Pt-SBF" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <view focusRingType="none" appearanceType="aqua" id="5KF-MH-rGo">
                     <rect key="frame" x="0.0" y="0.0" width="548" height="510"/>
@@ -1648,16 +1933,16 @@ trattalo con cautela.</string>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Ur-WX-2XX">
                             <rect key="frame" x="72" y="416" width="405" height="57"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Cambia PIN" id="EAo-YZ-cd1">
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="CIE ID" id="EAo-YZ-cd1">
                                 <font key="font" metaFont="system" size="37"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
                         <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U1O-j7-VUC" customClass="FlatButton" customModule="FlatButton">
-                            <rect key="frame" x="221" y="23" width="85" height="32"/>
+                            <rect key="frame" x="201" y="23" width="125" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="push" title="Annulla" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4TI-u0-7il">
+                            <buttonCell key="cell" type="push" title="Rimuovi Carta" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4TI-u0-7il">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -1700,11 +1985,104 @@ trattalo con cautela.</string>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="adI-84-fHn">
                             <rect key="frame" x="49" y="359" width="450" height="56"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <textFieldCell key="cell" alignment="center" id="ljX-QY-VKM">
+                            <textFieldCell key="cell" alignment="center" title="Carta d'Identità Elettronica abbinata correttamente" id="ljX-QY-VKM">
                                 <font key="font" metaFont="system" size="17"/>
-                                <string key="title">IL PIN della tua CIE è un dato sensibile,
-trattalo con cautela.</string>
                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                            <color key="value" name="customViewColor"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view focusRingType="none" appearanceType="aqua" id="aDW-eU-U4D">
+                    <rect key="frame" x="0.0" y="0.0" width="548" height="510"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XXf-nr-UhC">
+                            <rect key="frame" x="72" y="416" width="405" height="57"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="CIE ID" id="vda-zi-tZo">
+                                <font key="font" metaFont="system" size="37"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fch-yz-akB" customClass="FlatButton" customModule="FlatButton">
+                            <rect key="frame" x="201" y="23" width="125" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="push" title="Rimuovi Carta" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sPm-uy-8EI">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                    <color key="value" name="customDarkBackgroundColor"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                    <color key="value" name="customDarkBackgroundColor"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                    <color key="value" name="customTextColor"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                    <color key="value" name="customTextColor"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="nextPage:" target="XkM-64-qp5" id="rns-Fl-hHu"/>
+                            </connections>
+                        </button>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r7d-9q-Nam">
+                            <rect key="frame" x="30" y="199" width="140" height="140"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="1jd-fs-nBz"/>
+                        </imageView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M6s-qO-IVP">
+                            <rect key="frame" x="214" y="257" width="234" height="24"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Numero carta" id="46e-Ef-2t8">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B2v-8v-vSm">
+                            <rect key="frame" x="214" y="234" width="234" height="24"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Abbinamento in corso" id="bqy-eR-2yF">
+                                <font key="font" metaFont="system" size="20"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4KD-FQ-d8A">
+                            <rect key="frame" x="214" y="202" width="234" height="24"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Intestatario" id="14N-qK-xmp">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="huK-uW-PHq">
+                            <rect key="frame" x="49" y="359" width="450" height="56"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <textFieldCell key="cell" alignment="center" title="Carta d'Identità Elettronica abbinata correttamente" id="maw-ZO-cd4">
+                                <font key="font" metaFont="system" size="17"/>
+                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zid-eH-eln">
+                            <rect key="frame" x="214" y="177" width="234" height="24"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Abbinamento in corso" id="LgX-a0-OTi">
+                                <font key="font" metaFont="system" size="20"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>

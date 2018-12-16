@@ -14,9 +14,12 @@
 #include <memory.h>
 #include <time.h>
 #include <dlfcn.h>
+
+
 #include "../cie-pkcs11/CSP/AbilitaCIE.h"
 #include "../cie-pkcs11/CSP/PINManager.h"
 
+using namespace std;
 
 typedef CK_RV (*C_GETFUNCTIONLIST)(CK_FUNCTION_LIST_PTR_PTR ppFunctionList);
 CK_FUNCTION_LIST_PTR g_pFuncList;
@@ -25,6 +28,9 @@ CK_FUNCTION_LIST_PTR g_pFuncList;
 @implementation MainViewController
 
 NSTextField* labelProgressPointer;
+NSProgressIndicator* progressIndicatorPointer;
+string sPAN;
+string sName;
 
 void* hModule;
 
@@ -35,6 +41,7 @@ void* hModule;
     _labelProgress.stringValue = @"";
     
     labelProgressPointer = _labelProgress;
+    progressIndicatorPointer = _progressIndicator;
 }
 
 - (void) viewDidAppear
@@ -68,9 +75,7 @@ void* hModule;
     }
     else
     {
-        _homeFirstPageView.hidden = NO;
-        _homeSecondPageView.hidden = YES;
-        _homeThirdPageView.hidden = YES	;
+        [self showHomeFirstPage];
     }
 }
 
@@ -99,7 +104,19 @@ CK_RV progressCallback(const int progress,
     
     dispatch_async(dispatch_get_main_queue(), ^{
         labelProgressPointer.stringValue = [NSString stringWithUTF8String:szMessage];
+        progressIndicatorPointer.doubleValue = progress;
     });
+    
+    return 0;
+}
+
+CK_RV completedCallback(string& PAN,
+                        string& name)
+{
+    NSLog(@"%s %s", PAN.c_str(), name.c_str());
+    
+    sPAN = PAN;
+    sName = name;
     
     return 0;
 }
@@ -227,10 +244,6 @@ CK_RV progressCallback(const int progress,
 
 - (IBAction)abbina:(id)sender
 {
-    _homeFirstPageView.hidden = YES;
-    _homeSecondPageView.hidden = NO;
-    _homeThirdPageView.hidden = YES;
-    
     NSString* pin = @"";
     
     for(int i = 1; i < 9; i++)
@@ -258,7 +271,6 @@ CK_RV progressCallback(const int progress,
     if(i < pin.length || !(c >= '0' && c <= '9'))
     {
         [self showMessage: @"Il PIN deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
-        [self showHomeFirstPage];
         return;
     }
     
@@ -271,7 +283,6 @@ CK_RV progressCallback(const int progress,
         {
             dlclose(hModule);
             [self showMessage: @"Funzione AbilitaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:NO];
-            [self showHomeFirstPage];
             return;
         }
         
@@ -288,8 +299,9 @@ CK_RV progressCallback(const int progress,
         
         int attempts = -1;
         
+        [self showHomeSecondPage];
         
-        long ret = pfnAbilitaCIE(szPAN, [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback);
+        long ret = pfnAbilitaCIE(szPAN, [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback, &completedCallback);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -331,6 +343,9 @@ CK_RV progressCallback(const int progress,
                 case CKR_OK:
                     [self showMessage:@"L'abilitazione della CIE è avvennuta con successo" withTitle:@"CIE Abilitata" exitAfter:NO];
                     [self showHomeThirdPage];
+                    self.labelSerialNumber.stringValue = [NSString stringWithUTF8String:sPAN.c_str()];
+                    self.labelCardHolder.stringValue = [NSString stringWithUTF8String:sName.c_str()];
+                    
                     break;
             }
         });
@@ -339,12 +354,16 @@ CK_RV progressCallback(const int progress,
 
 - (void) showHomeFirstPage
 {
-    if(_homeFirstPageView.hidden)
-    {
-        _homeFirstPageView.hidden = NO;
-        _homeSecondPageView.hidden = YES;
-        _homeThirdPageView.hidden = YES;
-        _cambioPINPageView.hidden = YES;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+//    if(self.homeFirstPageView.hidden)
+//    {
+        self.homeFirstPageView.hidden = NO;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
         
         for(int i = 1; i < 9; i++)
         {
@@ -355,23 +374,74 @@ CK_RV progressCallback(const int progress,
         
         NSTextField* txtField = [self.view viewWithTag:1];
         [txtField selectText:nil];
-    }
+//    }
+    });
 }
 
 - (void) showHomeThirdPage
 {
-    _homeFirstPageView.hidden = YES;
-    _homeSecondPageView.hidden = YES;
-    _homeThirdPageView.hidden = NO;
-    _cambioPINPageView.hidden = YES;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = NO;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+    });
+}
+
+- (void) showHomeSecondPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = NO;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+    });
+}
+
+
+- (void) showHomeFourthPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = NO;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+    });
 }
 
 - (void) showCambioPINPage
 {
-    _homeFirstPageView.hidden = YES;
-    _homeSecondPageView.hidden = YES;
-    _homeThirdPageView.hidden = YES;
-    _cambioPINPageView.hidden = NO;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = NO;
+        self.cambioPINOKPageView.hidden = YES;
+    });
+}
+
+- (void) showCambioPINOKPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = NO;
+    });
 }
 
 - (void) showMessage: (NSString*) message withTitle: (NSString*) title exitAfter: (bool) exitAfter
@@ -387,6 +457,11 @@ CK_RV progressCallback(const int progress,
         
         [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:&exit];
     });
+}
+
+- (IBAction)concludi:(id)sender
+{
+    [self showHomeFourthPage];
 }
 
 - (IBAction)cambiaPIN:(id)sender
