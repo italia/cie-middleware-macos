@@ -18,12 +18,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property IBOutlet NSView* homeFourthPageView;
 @property IBOutlet NSView* cambioPINPageView;
 @property IBOutlet NSView* cambioPINOKPageView;
+@property IBOutlet NSView* sbloccoPageView;
+@property IBOutlet NSView* sbloccoOKPageView;
+
 @property IBOutlet NSTextField* labelProgress;
 @property IBOutlet NSProgressIndicator* progressIndicator;
 
 @property IBOutlet NSTextField* textFieldPIN;
 @property IBOutlet NSTextField* textFieldNewPIN;
 @property IBOutlet NSTextField* textFieldConfirmPIN;
+
+@property IBOutlet NSTextField* textFieldPUK;
+@property IBOutlet NSTextField* textFieldNewPINSblocco;
+@property IBOutlet NSTextField* textFieldConfirmPINSbloco;
 
 @property IBOutlet NSTextField* labelSerialNumber;
 @property IBOutlet NSTextField* labelCardHolder;

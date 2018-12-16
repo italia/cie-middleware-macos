@@ -224,7 +224,7 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)sbloccaCarta:(id)sender
 {
-    
+    [self showSbloccoPage];
 }
 
 - (IBAction)tutorial:(id)sender
@@ -352,6 +352,157 @@ CK_RV completedCallback(string& PAN,
     });
 }
 
+- (IBAction)sblocca:(id)sender
+{
+    NSString* puk = self.textFieldPUK.stringValue;
+    NSString* newpin = self.textFieldNewPINSblocco.stringValue;
+    NSString* confirmpin = self.textFieldConfirmPINSbloco.stringValue;
+    
+    if(puk.length != 8)
+    {
+        [self showMessage: @"Il PUK deve essere composto da 8 numeri" withTitle:@"PUK non corretto" exitAfter:false];
+        return;
+    }
+    
+    if(newpin.length != 8)
+    {
+        [self showMessage: @"Il nuovo PIN deve essere composto da 8 numeri" withTitle:@"Nuovo PIN non corretto" exitAfter:false];
+        return;
+    }
+    
+    unichar c = [puk characterAtIndex:0];
+    
+    int i = 1;
+    for(i = 1; i < puk.length && (c >= '0' && c <= '9'); i++)
+    {
+        c = [puk characterAtIndex:i];
+    }
+    
+    if(!(c >= '0' && c <= '9'))
+    {
+        [self showMessage: @"Il PUK deve essere composto da 8 numeri" withTitle:@"PIN non corretto" exitAfter:false];
+        return;
+    }
+    
+    c = [newpin characterAtIndex:0];
+    
+    for(i = 1; i < newpin.length && (c >= '0' && c <= '9'); i++)
+    {
+        c = [newpin characterAtIndex:i];
+    }
+    
+    if(!(c >= '0' && c <= '9'))
+    {
+        [self showMessage: @"Il nuovo PIN deve essere composto da 8 numeri" withTitle:@"Nuovo PIN non corretto" exitAfter:false];
+        return;
+    }
+    
+    if(![newpin isEqualToString:confirmpin])
+    {
+        [self showMessage: @"I PIN non corrispondono" withTitle:@"PIN non corrispondenti" exitAfter:false];
+        return;
+    }
+    
+    c = [newpin characterAtIndex:0];
+    unichar lastchar = c;
+    
+    i = 1;
+    for(i = 1; i < newpin.length && c == lastchar; i++)
+    {
+        lastchar = c;
+        c = [newpin characterAtIndex:i];
+    }
+    
+    if(c == lastchar)
+    {
+        [self showMessage: @"Il nuovo PIN non deve essere composto da cifre uguali" withTitle:@"PIN non valido" exitAfter:false];
+        return;
+    }
+    
+    c = [newpin characterAtIndex:0];
+    lastchar = c - 1;
+    
+    for(i = 1; i < newpin.length && c == lastchar + 1; i++)
+    {
+        lastchar = c;
+        c = [newpin characterAtIndex:i];
+    }
+    
+    if(c == lastchar + 1)
+    {
+        [self showMessage: @"Il nuovo PIN non deve essere composto da cifre consecutive" withTitle:@"PIN non valido" exitAfter:false];
+        return;
+    }
+    
+    c = [newpin characterAtIndex:0];
+    lastchar = c + 1;
+    
+    for(i = 1; i < newpin.length && c == lastchar - 1; i++)
+    {
+        lastchar = c;
+        c = [newpin characterAtIndex:i];
+    }
+    
+    if(c == lastchar - 1)
+    {
+        [self showMessage: @"Il nuovo PIN non deve essere composto da cifre consecutive" withTitle:@"PIN non valido" exitAfter:false];
+        return;
+    }
+    
+    [((NSControl*)sender) setEnabled:NO];
+    
+    const char* szCryptoki = "libcie-pkcs11.dylib";
+    
+    dispatch_async(dispatch_get_global_queue(0,0), ^{
+        
+        SbloccoPINfn pfnSbloccoPIN = (SbloccoPINfn)dlsym(hModule, "SbloccoPIN");
+        if(!pfnSbloccoPIN)
+        {
+            dlclose(hModule);
+            [self showMessage: @"Funzione SbloccoPIN non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:false];
+            return;
+        }
+        
+        int attempts = -1;
+        
+        long ret = pfnSbloccoPIN([puk cStringUsingEncoding:NSUTF8StringEncoding], [newpin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [((NSControl*)sender) setEnabled:YES];
+            
+            switch(ret)
+            {
+                case CKR_TOKEN_NOT_RECOGNIZED:
+                    [self showMessage:@"La smart card inserita non è una CIE" withTitle:@"Abilitazione CIE" exitAfter:false];
+                    break;
+                    
+                case CKR_TOKEN_NOT_PRESENT:
+                    [self showMessage:@"Nessuna CIE trovata" withTitle:@"Abilitazione CIE" exitAfter:false];
+                    break;
+                    
+                case CKR_PIN_INCORRECT:
+                    [self showMessage:[NSString stringWithFormat:@"Il PUK digitato è errato. rimangono %d tentativi", attempts] withTitle:@"PIN non corretto" exitAfter:false];
+                    break;
+                    
+                case CKR_PIN_LOCKED:
+                    [self showMessage:@"Il PUK è bloccato" withTitle:@"PUK bloccato" exitAfter:false];
+                    break;
+                    
+                case CKR_GENERAL_ERROR:
+                    [self showMessage:@"Errore inaspettato durante la comunicazione con la CIE" withTitle:@"Errore inaspettato" exitAfter:false];
+                    break;
+                    
+                case CKR_OK:
+                    [self showSbloccoOKPage];
+                    [self showMessage:@"Il PIN è stato sbloccato con successo" withTitle:@"Operazione completata" exitAfter:false];
+                    break;
+            }
+        });
+    });
+}
+
+
 - (void) showHomeFirstPage
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -364,6 +515,8 @@ CK_RV completedCallback(string& PAN,
         self.homeFourthPageView.hidden = YES;
         self.cambioPINPageView.hidden = YES;
         self.cambioPINOKPageView.hidden = YES;
+        self.sbloccoPageView.hidden = YES;
+        self.sbloccoOKPageView.hidden = YES;
         
         for(int i = 1; i < 9; i++)
         {
@@ -428,6 +581,8 @@ CK_RV completedCallback(string& PAN,
         self.homeFourthPageView.hidden = YES;
         self.cambioPINPageView.hidden = NO;
         self.cambioPINOKPageView.hidden = YES;
+        self.sbloccoPageView.hidden = YES;
+        self.sbloccoOKPageView.hidden = YES;
     });
 }
 
@@ -443,6 +598,37 @@ CK_RV completedCallback(string& PAN,
         self.cambioPINOKPageView.hidden = NO;
     });
 }
+
+- (void) showSbloccoPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.sbloccoPageView.hidden = NO;
+        self.sbloccoOKPageView.hidden = YES;
+    });
+}
+
+- (void) showSbloccoOKPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.sbloccoPageView.hidden = YES;
+        self.sbloccoOKPageView.hidden = NO;
+    });
+}
+
 
 - (void) showMessage: (NSString*) message withTitle: (NSString*) title exitAfter: (bool) exitAfter
 {
