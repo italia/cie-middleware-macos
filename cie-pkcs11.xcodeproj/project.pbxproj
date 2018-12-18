@@ -32,6 +32,7 @@
 		E50A8A10213BE4C6006A000D /* AbilitaCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50A8A0F213BE4C6006A000D /* AbilitaCIE.cpp */; };
 		E50F9EF1217A27570083C821 /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = E50F9EF0217A27570083C821 /* help.html */; };
 		E51F431C2189A187007AAC10 /* CIEToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E570A7B02168C22800658AAF /* CIEToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E531443521C907E100341E71 /* CIEView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E531443421C907E100341E71 /* CIEView.xib */; };
 		E543F955215F6B1D0088CBC5 /* CryptoppUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */; };
 		E543F957215F6B250088CBC5 /* CryptoppUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E543F956215F6B250088CBC5 /* CryptoppUtils.h */; };
 		E544F56721BFAFC60038B2CA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E544F56621BFAFC60038B2CA /* AppDelegate.m */; };
@@ -208,6 +209,7 @@
 		E50A8A0C213BE121006A000D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		E50A8A0F213BE4C6006A000D /* AbilitaCIE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbilitaCIE.cpp; sourceTree = "<group>"; };
 		E50F9EF0217A27570083C821 /* help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
+		E531443421C907E100341E71 /* CIEView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CIEView.xib; sourceTree = "<group>"; };
 		E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CryptoppUtils.cpp; sourceTree = "<group>"; };
 		E543F956215F6B250088CBC5 /* CryptoppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptoppUtils.h; sourceTree = "<group>"; };
 		E544F56321BFAFC60038B2CA /* CIE ID.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CIE ID.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -449,6 +451,7 @@
 				E544F57821BFB06A0038B2CA /* MainViewController.mm */,
 				E59DCCDD21C3BB7300CE4790 /* IntroViewController.h */,
 				E59DCCDE21C3BB7300CE4790 /* IntroViewController.m */,
+				E531443421C907E100341E71 /* CIEView.xib */,
 			);
 			path = "CIE ID";
 			sourceTree = "<group>";
@@ -979,6 +982,7 @@
 			files = (
 				E544F56C21BFAFC90038B2CA /* Assets.xcassets in Resources */,
 				E544F56F21BFAFC90038B2CA /* Main.storyboard in Resources */,
+				E531443521C907E100341E71 /* CIEView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

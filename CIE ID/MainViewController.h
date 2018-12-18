@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <WebKit/WebKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property IBOutlet NSView* cambioPINOKPageView;
 @property IBOutlet NSView* sbloccoPageView;
 @property IBOutlet NSView* sbloccoOKPageView;
+@property IBOutlet NSView* helpPageView;
+@property IBOutlet NSView* infoPageView;
+@property IBOutlet NSTextField* labelHelp;
+@property IBOutlet WKWebView* helpWebView;
+@property IBOutlet WKWebView* infoWebView;
 
 @property IBOutlet NSTextField* labelProgress;
 @property IBOutlet NSProgressIndicator* progressIndicator;

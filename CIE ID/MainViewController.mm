@@ -229,17 +229,17 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)tutorial:(id)sender
 {
-    
+    [self showTutorialPage];
 }
 
 - (IBAction)aiuto:(id)sender
 {
-    
+    [self showHelpPage];
 }
 
 - (IBAction)informazioni:(id)sender
 {
-    
+    [self showInfoPage];
 }
 
 - (IBAction)abbina:(id)sender
@@ -517,6 +517,8 @@ CK_RV completedCallback(string& PAN,
         self.cambioPINOKPageView.hidden = YES;
         self.sbloccoPageView.hidden = YES;
         self.sbloccoOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
         
         for(int i = 1; i < 9; i++)
         {
@@ -541,6 +543,8 @@ CK_RV completedCallback(string& PAN,
         self.homeFourthPageView.hidden = YES;
         self.cambioPINPageView.hidden = YES;
         self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
     });
 }
 
@@ -554,6 +558,8 @@ CK_RV completedCallback(string& PAN,
         self.homeFourthPageView.hidden = YES;
         self.cambioPINPageView.hidden = YES;
         self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
     });
 }
 
@@ -568,6 +574,8 @@ CK_RV completedCallback(string& PAN,
         self.homeFourthPageView.hidden = NO;
         self.cambioPINPageView.hidden = YES;
         self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
     });
 }
 
@@ -583,6 +591,8 @@ CK_RV completedCallback(string& PAN,
         self.cambioPINOKPageView.hidden = YES;
         self.sbloccoPageView.hidden = YES;
         self.sbloccoOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
     });
 }
 
@@ -596,6 +606,8 @@ CK_RV completedCallback(string& PAN,
         self.homeFourthPageView.hidden = YES;
         self.cambioPINPageView.hidden = YES;
         self.cambioPINOKPageView.hidden = NO;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
     });
 }
 
@@ -611,6 +623,8 @@ CK_RV completedCallback(string& PAN,
         self.cambioPINOKPageView.hidden = YES;
         self.sbloccoPageView.hidden = NO;
         self.sbloccoOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
     });
 }
 
@@ -626,6 +640,59 @@ CK_RV completedCallback(string& PAN,
         self.cambioPINOKPageView.hidden = YES;
         self.sbloccoPageView.hidden = YES;
         self.sbloccoOKPageView.hidden = NO;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
+    });
+}
+
+- (void) showHelpPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = NO;
+        self.infoPageView.hidden = YES;
+        
+        [self.helpWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://idserver.servizicie.interno.gov.it/idp/aiuto.jsp"]]];
+    });
+}
+
+- (void) showTutorialPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = NO;
+        self.infoPageView.hidden = YES;
+        
+        [self.helpWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://idserver.servizicie.interno.gov.it/idp/tutorial_mac.jsp"]]];
+    });
+}
+
+- (void) showInfoPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = NO;
+        
+        [self.infoWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://idserver.servizicie.interno.gov.it/idp/privacy.jsp"]]];
     });
 }
 
