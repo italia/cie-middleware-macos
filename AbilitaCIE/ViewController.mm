@@ -16,6 +16,8 @@
 #include <dlfcn.h>
 #include "../cie-pkcs11/CSP/AbilitaCIE.h"
 
+using namespace std;
+
 typedef CK_RV (*C_GETFUNCTIONLIST)(CK_FUNCTION_LIST_PTR_PTR ppFunctionList);
 CK_FUNCTION_LIST_PTR g_pFuncList;
 
@@ -64,6 +66,14 @@ CK_RV progressCallback(const int progress,
     dispatch_async(dispatch_get_main_queue(), ^{
         labelProgressPointer.stringValue = [NSString stringWithUTF8String:szMessage];
     });
+    
+    return 0;
+}
+
+CK_RV completedCallback(string& PAN,
+                        string& name)
+{
+    NSLog(@"%s %s", PAN.c_str(), name.c_str());
     
     return 0;
 }
@@ -209,7 +219,7 @@ CK_RV progressCallback(const int progress,
         int attempts = -1;
         
         
-        long ret = pfnAbilitaCIE(szPAN, [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback);
+        long ret = pfnAbilitaCIE(szPAN, [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback, &completedCallback);
 
         dispatch_async(dispatch_get_main_queue(), ^{
             

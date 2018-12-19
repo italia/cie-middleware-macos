@@ -38,6 +38,15 @@ void* hModule;
 {
     [super viewDidLoad];
     
+    const char* szCryptoki = "libcie-pkcs11.dylib";
+    
+    hModule = dlopen(szCryptoki, RTLD_LAZY);
+    if(!hModule)
+    {
+        [self showMessage: @"Middleware non trovato" withTitle:@"Errore inaspettato" exitAfter:true];
+        exit(1);
+    }
+    
     _labelProgress.stringValue = @"";
     
     labelProgressPointer = _labelProgress;
@@ -47,21 +56,6 @@ void* hModule;
 - (void) viewDidAppear
 {
     [super viewDidAppear];
-    
-    const char* szCryptoki = "libcie-pkcs11.dylib";
-    
-    hModule = dlopen(szCryptoki, RTLD_LAZY);
-    if(!hModule)
-    {
-        [self showMessage: @"Middleware non trovato" withTitle:@"Errore inaspettato" exitAfter:true];
-        exit(1);
-    }
-}
-
-
-- (void) viewWillAppear
-{
-    [super viewWillAppear];
     
     if(![NSUserDefaults.standardUserDefaults objectForKey:@"firstTime"])
     {
@@ -77,6 +71,14 @@ void* hModule;
     {
         [self showHomeFirstPage];
     }
+}
+
+
+- (void) viewWillAppear
+{
+    [super viewWillAppear];
+    
+    
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {
