@@ -13,13 +13,32 @@
 #include <string>
 #include "../Cryptopp/misc.h"
 
+#include "../Crypto/ASNParser.h"
+#include <stdio.h>
+#include "../Crypto/AES.h"
+#include "../Cryptopp/cryptlib.h"
+#include "../Cryptopp/asn.h"
+#include "../Util/CryptoppUtils.h"
+
 #define ROLE_USER 1
 #define ROLE_ADMIN 2
 
+OID OID_SURNAME = ((OID(2) += 5) += 4) += 4;
+
+OID OID_GIVENNAME = ((OID(2) += 5) += 4) += 42;
+
 extern CModuleInfo moduleInfo;
 
+void GetCertInfo(CryptoPP::BufferedTransformation & certin,
+                 std::string & serial,
+                 CryptoPP::BufferedTransformation & issuer,
+                 CryptoPP::BufferedTransformation & subject,
+                 std::string & notBefore,
+                 std::string & notAfter,
+                 CryptoPP::Integer& mod,
+                 CryptoPP::Integer& pubExp);
 
-
+std::vector<word32> fromObjectIdentifier(std::string sObjId);
 
 int TokenTransmitCallback(safeConnection *data, uint8_t *apdu, DWORD apduSize, uint8_t *resp, DWORD *respSize);
 
@@ -373,8 +392,53 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             
             std::string span((char*)IdServizi.data());
             std::string name;
+            std::string surname;
             
-            completedCallBack(span, name); // TODO aggiungere nome e cognome del cardholder scritto nel certificato
+            CryptoPP::ByteQueue certin;
+            certin.Put(CertCIE.data(),CertCIE.size());
+            
+            std::string serial;
+            CryptoPP::ByteQueue issuer;
+            CryptoPP::ByteQueue subject;
+            std::string notBefore;
+            std::string notAfter;
+            CryptoPP::Integer mod;
+            CryptoPP::Integer pubExp;
+            
+            GetCertInfo(certin, serial, issuer, subject, notBefore, notAfter, mod, pubExp);
+            
+            CryptoPP::BERSequenceDecoder subjectEncoder(subject);
+            {
+                while(!subjectEncoder.EndReached())
+                {
+                    CryptoPP::BERSetDecoder item(subjectEncoder);
+                    CryptoPP::BERSequenceDecoder attributes(item); {
+                        
+                        OID oid(attributes);
+                        if(oid == OID_GIVENNAME)
+                        {
+                            CryptoPP::BERDecodeTextString(
+                                                          attributes,
+                                                          name,
+                                                          CryptoPP::PRINTABLE_STRING);
+                        }
+                        else if(oid == OID_SURNAME)
+                        {
+                            CryptoPP::BERDecodeTextString(
+                                                          attributes,
+                                                          surname,
+                                                          CryptoPP::PRINTABLE_STRING);
+                        }
+                        
+                        item.SkipAll();
+                    }
+                }
+            }
+        
+            subjectEncoder.SkipAll();
+            
+            std::string fullname = name + " " + surname;
+            completedCallBack(span, fullname);
 		}
         
 		if (!foundCIE) {
@@ -533,4 +597,65 @@ int TokenTransmitCallback(safeConnection *conn, BYTE *apdu, DWORD apduSize, BYTE
     //ODS(String().printf("RESP: %s\n", dumpHexData(ByteArray(resp, *respSize), String()).lock()).lock());
     
     return ris;
+}
+
+
+
+std::vector<word32> fromObjectIdentifier(std::string sObjId)
+{
+    std::vector<word32> out;
+    
+    int nVal;
+    int nAux;
+    char* szTok;
+    char* szOID = new char[sObjId.size()];
+    strcpy(szOID, sObjId.c_str());
+    
+    szTok = strtok(szOID, ".");
+    
+    UINT nFirst = 40 * atoi(szTok) + atoi(strtok(NULL, "."));
+    if(nFirst > 0xff)
+    {
+        delete[] szOID;
+        throw -1;//new CASN1BadObjectIdException(strObjId);
+    }
+    
+    out.push_back(nFirst);
+    
+    int i = 0;
+    
+    while ((szTok = strtok(NULL, ".")) != NULL)
+    {
+        nVal = atoi(szTok);
+        if(nVal == 0)
+        {
+            out.push_back(0x00);
+        }
+        else if (nVal == 1)
+        {
+            out.push_back(0x01);
+        }
+        else
+        {
+            i = (int)ceil((log((double)abs(nVal)) / log((double)2)) / 7); // base 128
+            while (nVal != 0)
+            {
+                nAux = (int)(floor(nVal / pow(128, i - 1)));
+                nVal = nVal - (int)(pow(128, i - 1) * nAux);
+                
+                // next value (or with 0x80)
+                if(nVal != 0)
+                    nAux |= 0x80;
+
+                out.push_back(nAux);
+                
+                i--;
+            }
+        }
+    }
+    
+    
+    delete[] szOID;
+
+    return out;
 }

@@ -591,7 +591,7 @@ trattalo con cautela.</string>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="knQ-pW-6aU">
                                                 <rect key="frame" x="28" y="352" width="450" height="56"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <textFieldCell key="cell" alignment="center" title="Dopo aver collegato ed installato il lettore di smarat card posiziona la CIE sul lettore ed inserisci il PIN" id="UbP-om-J0O">
+                                                <textFieldCell key="cell" alignment="center" title="Dopo aver collegato ed installato il lettore di smart card posiziona la CIE sul lettore ed inserisci il PIN" id="UbP-om-J0O">
                                                     <font key="font" metaFont="system" size="17"/>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -897,7 +897,7 @@ trattalo con cautela.</string>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-1Y-LJv" customClass="FlatButton" customModule="FlatButton">
+                                            <button hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-1Y-LJv" customClass="FlatButton" customModule="FlatButton">
                                                 <rect key="frame" x="220" y="23" width="110" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="bevel" title="Rimuovi Carta" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Fnd-Zc-Uui">
@@ -921,9 +921,6 @@ trattalo con cautela.</string>
                                                         <real key="value" value="0.0"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="nextPage:" target="XkM-64-qp5" id="qrx-yA-8zc"/>
-                                                </connections>
                                             </button>
                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jjs-gE-2SP">
                                                 <rect key="frame" x="30" y="150" width="190" height="190"/>
@@ -931,7 +928,7 @@ trattalo con cautela.</string>
                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="rCI-Wi-qtF"/>
                                             </imageView>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NxT-Wb-YRN">
-                                                <rect key="frame" x="230" y="257" width="234" height="24"/>
+                                                <rect key="frame" x="240" y="280" width="234" height="24"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Numero carta" id="Nbq-k7-beG">
                                                     <font key="font" metaFont="system" size="14"/>
@@ -940,7 +937,7 @@ trattalo con cautela.</string>
                                                 </textFieldCell>
                                             </textField>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IIj-YB-SQZ">
-                                                <rect key="frame" x="230" y="234" width="234" height="24"/>
+                                                <rect key="frame" x="240" y="255" width="234" height="24"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Abbinamento in corso" id="7e5-eb-aOK">
                                                     <font key="font" metaFont="system" size="20"/>
@@ -949,7 +946,7 @@ trattalo con cautela.</string>
                                                 </textFieldCell>
                                             </textField>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S5E-YH-vWh">
-                                                <rect key="frame" x="230" y="202" width="234" height="24"/>
+                                                <rect key="frame" x="240" y="225" width="234" height="24"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Intestatario" id="gcw-UU-KCr">
                                                     <font key="font" metaFont="system" size="14"/>
@@ -967,7 +964,7 @@ trattalo con cautela.</string>
                                                 </textFieldCell>
                                             </textField>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BZs-1Z-CBF">
-                                                <rect key="frame" x="230" y="177" width="234" height="24"/>
+                                                <rect key="frame" x="240" y="200" width="234" height="24"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Abbinamento in corso" id="drg-45-Ckd">
                                                     <font key="font" metaFont="system" size="20"/>
@@ -1086,6 +1083,33 @@ trattalo con cautela.</string>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-364" y="692"/>
+        </scene>
+        <!--Message View Controller-->
+        <scene sceneID="xjY-LL-s5q">
+            <objects>
+                <viewController storyboardIdentifier="MessageViewController" id="fRE-1N-KQb" customClass="MessageViewController" sceneMemberID="viewController">
+                    <view key="view" id="bCe-EF-RSp">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="100"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="htQ-cl-95I">
+                                <rect key="frame" x="-2" y="6" width="204" height="85"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Label" id="13A-Ag-atd">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="messageText" destination="htQ-cl-95I" id="VaE-yU-442"/>
+                    </connections>
+                </viewController>
+                <customObject id="Qoh-97-GjZ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-480" y="1241"/>
         </scene>
         <!--Intro View Controller-->
         <scene sceneID="bvz-Lv-EFf">

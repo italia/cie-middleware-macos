@@ -309,6 +309,7 @@
 		E570A7BA2168C22800658AAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E570A7BB2168C22800658AAF /* CIEToken.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIEToken.entitlements; sourceTree = "<group>"; };
 		E58222EF21CAABF600A6B6F0 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		E58222FB21DCFC3600A6B6F0 /* libxpc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxpc.tbd; path = usr/lib/system/libxpc.tbd; sourceTree = SDKROOT; };
 		E59B65BE213C06B8007348D5 /* AbilitaCIE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbilitaCIE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E59B65C0213C06B8007348D5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E59B65C1213C06B8007348D5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -701,6 +702,7 @@
 		E5BE7DC620FE8A9A00004389 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E58222FB21DCFC3600A6B6F0 /* libxpc.tbd */,
 				E58222EF21CAABF600A6B6F0 /* WebKit.framework */,
 				E50A8A0C213BE121006A000D /* AppKit.framework */,
 				E50A8A0B213BE121006A000D /* Cocoa.framework */,
@@ -1284,6 +1286,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1307,6 +1313,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_FAST_MATH = YES;
