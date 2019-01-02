@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MainViewController : NSViewController
+@interface MainViewController : NSViewController <NSWindowDelegate>
 
 @property IBOutlet NSView* homeFirstPageView;
 @property IBOutlet NSView* homeSecondPageView;

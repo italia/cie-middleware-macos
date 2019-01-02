@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property IBOutlet NSView* firstPageView;
 @property IBOutlet NSView* secondPageView;
+@property IBOutlet NSButton* checkDontShowAnymore;
 
 @end
 

@@ -57,11 +57,10 @@ void* hModule;
 {
     [super viewDidAppear];
     
-    if(![NSUserDefaults.standardUserDefaults objectForKey:@"firstTime"])
+    self.view.window.delegate = self;
+    
+    if(![NSUserDefaults.standardUserDefaults objectForKey:@"dontShowIntro"])
     {
-        [NSUserDefaults.standardUserDefaults setObject:@"OK" forKey:@"firstTime"];
-        [NSUserDefaults.standardUserDefaults synchronize];
-        
         NSStoryboard* storyboard = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
         NSViewController* viewController = [storyboard instantiateControllerWithIdentifier:@"IntroViewController"];
         
@@ -73,12 +72,11 @@ void* hModule;
     }
 }
 
-
-- (void) viewWillAppear
+- (BOOL) windowShouldClose: (NSObject*) sender
 {
-    [super viewWillAppear];
+    [NSApplication.sharedApplication terminate:self];
     
-    
+    return YES;
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {
@@ -333,7 +331,7 @@ CK_RV completedCallback(string& PAN,
                     break;
                     
                 case CKR_PIN_LOCKED:
-                    [self showMessage:@"Il PIN è bloccato" withTitle:@"PIN bloccato" exitAfter:false];
+                    [self showMessage:@"Munisciti del codice PUK e utilizza la funzione di sblocco carta per abilitarla" withTitle:@"Carta bloccata" exitAfter:false];
                     [self showHomeFirstPage];
                     break;
                     
@@ -488,7 +486,7 @@ CK_RV completedCallback(string& PAN,
                     break;
                     
                 case CKR_PIN_LOCKED:
-                    [self showMessage:@"Il PUK è bloccato" withTitle:@"PUK bloccato" exitAfter:false];
+                    [self showMessage:@"La carta utilizzata è bloccata in modo irreversibile, è necessaria la sostituzione" withTitle:@"Carta bloccata" exitAfter:false];
                     break;
                     
                 case CKR_GENERAL_ERROR:
@@ -498,6 +496,9 @@ CK_RV completedCallback(string& PAN,
                 case CKR_OK:
                     [self showSbloccoOKPage];
                     [self showMessage:@"Il PIN è stato sbloccato con successo" withTitle:@"Operazione completata" exitAfter:false];
+                    self.textFieldPUK.stringValue = @"";
+                    self.textFieldNewPINSblocco.stringValue = @"";
+                    self.textFieldConfirmPINSbloco.stringValue = @"";
                     break;
             }
         });
@@ -868,7 +869,8 @@ CK_RV completedCallback(string& PAN,
                     break;
                     
                 case CKR_PIN_LOCKED:
-                    [self showMessage:@"Il PIN è bloccato" withTitle:@"PIN bloccato" exitAfter:false];
+                    [self showMessage:@"Munisciti del codice PUK e utilizza la funzione di sblocco carta per abilitarla" withTitle:@"Carta bloccata" exitAfter:false];
+                                        
                     break;
                     
                 case CKR_GENERAL_ERROR:
@@ -877,6 +879,9 @@ CK_RV completedCallback(string& PAN,
                     
                 case CKR_OK:
                     [self showMessage:@"Il PIN è stato modificato con successo" withTitle:@"Operazione completata" exitAfter:false];
+                    self.textFieldPIN.stringValue = @"";
+                    self.textFieldNewPIN.stringValue = @"";
+                    self.textFieldConfirmPIN.stringValue = @"";
                     break;
             }
         });

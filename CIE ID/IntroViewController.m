@@ -29,6 +29,12 @@
 
 - (IBAction)start:(id)sender
 {
+    if(_checkDontShowAnymore.state == NSOnState)
+    {
+        [NSUserDefaults.standardUserDefaults setObject:@"OK" forKey:@"dontShowIntro"];
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
+    
     [self dismissViewController:self];
 }
 
