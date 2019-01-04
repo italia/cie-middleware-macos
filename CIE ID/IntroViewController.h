@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IntroViewController : NSViewController
+@interface IntroViewController : NSViewController <NSWindowDelegate>
 
 @property IBOutlet NSView* firstPageView;
 @property IBOutlet NSView* secondPageView;

@@ -197,8 +197,9 @@ CK_RV CK_ENTRY DisabilitaCIE()
             
             ias.SetCardContext(&conn);
             
-            ias.SelectAID_CIE();
+            ias.token.Reset();
             ias.SelectAID_IAS();
+            
             ias.ReadPAN();
             if(ias.IsEnrolled())
             {
@@ -269,7 +270,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             return CKR_TOKEN_NOT_PRESENT;
         }
 
-        progressCallBack(5, "Connessione alla CIE eseguita");
+        progressCallBack(5, "CIE Connessa");
         
 		char *curreader = readers;
 		bool foundCIE = false;
@@ -309,6 +310,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             ByteDynArray IntAuth;
             ias.SelectAID_CIE();
             ias.ReadDappPubKey(IntAuth);
+            //ias.SelectAID_CIE();
             ias.InitEncKey();
             
             ByteDynArray IdServizi;
@@ -417,17 +419,23 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
                         OID oid(attributes);
                         if(oid == OID_GIVENNAME)
                         {
+                            byte tag = 0;
+                            attributes.Peek(tag);
+                            
                             CryptoPP::BERDecodeTextString(
                                                           attributes,
                                                           name,
-                                                          CryptoPP::PRINTABLE_STRING);
+                                                          tag);
                         }
                         else if(oid == OID_SURNAME)
                         {
+                            byte tag = 0;
+                            attributes.Peek(tag);
+                            
                             CryptoPP::BERDecodeTextString(
                                                           attributes,
                                                           surname,
-                                                          CryptoPP::PRINTABLE_STRING);
+                                                          tag);
                         }
                         
                         item.SkipAll();
@@ -556,7 +564,7 @@ int TokenTransmitCallback(safeConnection *conn, BYTE *apdu, DWORD apduSize, BYTE
             
             
             if (ris == SCARD_S_SUCCESS) {
-//                SCardBeginTransaction(conn->hCard);
+                SCardBeginTransaction(conn->hCard);
                 *respSize = 2;
                 resp[0] = 0x90;
                 resp[1] = 0x00;
@@ -567,7 +575,7 @@ int TokenTransmitCallback(safeConnection *conn, BYTE *apdu, DWORD apduSize, BYTE
             DWORD protocol = 0;
             auto ris = SCardReconnect(conn->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_RESET_CARD, &protocol);
             if (ris == SCARD_S_SUCCESS) {
-//                SCardBeginTransaction(conn->hCard);
+                SCardBeginTransaction(conn->hCard);
                 *respSize = 2;
                 resp[0] = 0x90;
                 resp[1] = 0x00;

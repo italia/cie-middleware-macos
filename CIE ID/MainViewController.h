@@ -27,8 +27,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property IBOutlet WKWebView* helpWebView;
 @property IBOutlet WKWebView* infoWebView;
 
+@property IBOutlet NSImageView* assistenzaImageView;
+@property IBOutlet NSImageView* sbloccoImageView;
+
 @property IBOutlet NSTextField* labelProgress;
 @property IBOutlet NSProgressIndicator* progressIndicator;
+
+@property IBOutlet NSTextField* labelProgressCambioPIN;
+@property IBOutlet NSProgressIndicator* progressIndicatorCambioPIN;
+
+@property IBOutlet NSTextField* labelProgressSbloccoPIN;
+@property IBOutlet NSProgressIndicator* progressIndicatorSbloccoPIN;
 
 @property IBOutlet NSTextField* textFieldPIN;
 @property IBOutlet NSTextField* textFieldNewPIN;

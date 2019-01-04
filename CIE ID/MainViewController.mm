@@ -29,6 +29,13 @@ CK_FUNCTION_LIST_PTR g_pFuncList;
 
 NSTextField* labelProgressPointer;
 NSProgressIndicator* progressIndicatorPointer;
+
+NSTextField* labelProgressPointerCambioPIN;
+NSProgressIndicator* progressIndicatorPointerCambioPIN;
+
+NSTextField* labelProgressPointerSbloccoPIN;
+NSProgressIndicator* progressIndicatorPointerSbloccoPIN;
+
 string sPAN;
 string sName;
 
@@ -51,6 +58,12 @@ void* hModule;
     
     labelProgressPointer = _labelProgress;
     progressIndicatorPointer = _progressIndicator;
+    
+    labelProgressPointerCambioPIN = _labelProgressCambioPIN;
+    progressIndicatorPointerCambioPIN = _progressIndicatorCambioPIN;
+    
+    labelProgressPointerSbloccoPIN = _labelProgressSbloccoPIN;
+    progressIndicatorPointerSbloccoPIN = _progressIndicatorSbloccoPIN;
 }
 
 - (void) viewDidAppear
@@ -58,6 +71,9 @@ void* hModule;
     [super viewDidAppear];
     
     self.view.window.delegate = self;
+
+    [self showHomeFirstPage];
+    
     
     if(![NSUserDefaults.standardUserDefaults objectForKey:@"dontShowIntro"])
     {
@@ -66,10 +82,6 @@ void* hModule;
         
         [self presentViewControllerAsModalWindow:viewController];
     }
-    else
-    {
-        [self showHomeFirstPage];
-    }
 }
 
 - (BOOL) windowShouldClose: (NSObject*) sender
@@ -77,6 +89,37 @@ void* hModule;
     [NSApplication.sharedApplication terminate:self];
     
     return YES;
+}
+
+// delete key detection
+- (BOOL)control:(NSTextField *)textField textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
+{
+    if (commandSelector == @selector(deleteBackward:)){
+        NSLog(@"Backspace!!");
+        
+        if(textField.tag > 1)
+        {
+            NSTextField* textField1;
+            if(textField.stringValue.length == 0)
+            {
+                textField1 = [self.view viewWithTag:textField.tag - 1];
+            }
+            else
+            {
+                textField1 = textField;
+            }
+            
+            textField1.stringValue = @"";
+            [textField1 selectText:nil];
+        }
+    }
+    else if (commandSelector == @selector(insertNewline:)){
+        NSLog(@"newline!!");
+        if(textField.tag == 8)
+            [self abbina:textField];
+    }
+        
+    return NO;
 }
 
 - (void)controlTextDidChange:(NSNotification *)notification {
@@ -105,6 +148,33 @@ CK_RV progressCallback(const int progress,
     dispatch_async(dispatch_get_main_queue(), ^{
         labelProgressPointer.stringValue = [NSString stringWithUTF8String:szMessage];
         progressIndicatorPointer.doubleValue = progress;
+    });
+    
+    return 0;
+}
+
+CK_RV progressCallbackCambioPIN(const int progress,
+                       const char* szMessage)
+{
+    NSLog(@"%d %s", progress, szMessage);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        labelProgressPointerCambioPIN.stringValue = [NSString stringWithUTF8String:szMessage];
+        progressIndicatorPointerCambioPIN.doubleValue = progress;
+    });
+    
+    return 0;
+}
+
+
+CK_RV progressCallbackSbloccoPIN(const int progress,
+                       const char* szMessage)
+{
+    NSLog(@"%d %s", progress, szMessage);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        labelProgressPointerSbloccoPIN.stringValue = [NSString stringWithUTF8String:szMessage];
+        progressIndicatorPointerSbloccoPIN.doubleValue = progress;
     });
     
     return 0;
@@ -200,6 +270,14 @@ CK_RV completedCallback(string& PAN,
     switch (rv) {
         case CKR_OK:
             [self showMessage:@"CIE disabilitata con successo" withTitle:@"CIE disabilitata" exitAfter:NO];
+            self.labelSerialNumber.stringValue = @"";
+            self.labelCardHolder.stringValue = @"";
+            
+            [NSUserDefaults.standardUserDefaults removeObjectForKey:@"serialnumber"];
+            [NSUserDefaults.standardUserDefaults removeObjectForKey:@"cardholder"];
+            [NSUserDefaults.standardUserDefaults synchronize];
+            
+            [self showHomeFirstPage];
             break;
             
         case CKR_TOKEN_NOT_PRESENT:
@@ -346,6 +424,10 @@ CK_RV completedCallback(string& PAN,
                     self.labelSerialNumber.stringValue = [NSString stringWithUTF8String:sPAN.c_str()];
                     self.labelCardHolder.stringValue = [NSString stringWithUTF8String:sName.c_str()];
                     
+                    [NSUserDefaults.standardUserDefaults setObject:self.labelSerialNumber.stringValue forKey:@"serialnumber"];
+                    [NSUserDefaults.standardUserDefaults setObject:self.labelCardHolder.stringValue forKey:@"cardholder"];
+                    [NSUserDefaults.standardUserDefaults synchronize];
+                    
                     break;
             }
         });
@@ -465,7 +547,10 @@ CK_RV completedCallback(string& PAN,
         
         int attempts = -1;
         
-        long ret = pfnSbloccoPIN([puk cStringUsingEncoding:NSUTF8StringEncoding], [newpin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback);
+        self.progressIndicatorSbloccoPIN.hidden = NO;
+        self.labelProgressSbloccoPIN.hidden = NO;
+        
+        long ret = pfnSbloccoPIN([puk cStringUsingEncoding:NSUTF8StringEncoding], [newpin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallbackSbloccoPIN);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -510,28 +595,41 @@ CK_RV completedCallback(string& PAN,
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
-//    if(self.homeFirstPageView.hidden)
-//    {
-        self.homeFirstPageView.hidden = NO;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.sbloccoPageView.hidden = YES;
-        self.sbloccoOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-        
-        for(int i = 1; i < 9; i++)
+        if([NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"])
         {
-            NSTextField* txtField = [self.view viewWithTag:i];
-         
-            txtField.stringValue = @"";
+            self.labelSerialNumber.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"];
+            self.labelCardHolder.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"];
+            
+            [self showHomeFourthPage];
         }
-        
-        NSTextField* txtField = [self.view viewWithTag:1];
-        [txtField selectText:nil];
+        else
+        {
+            self.labelSerialNumber.stringValue = @"";
+            self.labelCardHolder.stringValue = @"";
+
+    //    if(self.homeFirstPageView.hidden)
+    //    {
+            self.homeFirstPageView.hidden = NO;
+            self.homeSecondPageView.hidden = YES;
+            self.homeThirdPageView.hidden = YES;
+            self.homeFourthPageView.hidden = YES;
+            self.cambioPINPageView.hidden = YES;
+            self.cambioPINOKPageView.hidden = YES;
+            self.sbloccoPageView.hidden = YES;
+            self.sbloccoOKPageView.hidden = YES;
+            self.helpPageView.hidden = YES;
+            self.infoPageView.hidden = YES;
+            
+            for(int i = 1; i < 9; i++)
+            {
+                NSTextField* txtField = [self.view viewWithTag:i];
+             
+                txtField.stringValue = @"";
+            }
+            
+            NSTextField* txtField = [self.view viewWithTag:1];
+            [txtField selectText:nil];
+        }
 //    }
     });
 }
@@ -586,6 +684,9 @@ CK_RV completedCallback(string& PAN,
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        self.progressIndicatorCambioPIN.hidden = YES;
+        self.labelProgressCambioPIN.hidden = YES;
+        
         self.homeFirstPageView.hidden = YES;
         self.homeSecondPageView.hidden = YES;
         self.homeThirdPageView.hidden = YES;
@@ -617,6 +718,9 @@ CK_RV completedCallback(string& PAN,
 - (void) showSbloccoPage
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.progressIndicatorSbloccoPIN.hidden = YES;
+        self.labelProgressSbloccoPIN.hidden = YES;
         
         self.homeFirstPageView.hidden = YES;
         self.homeSecondPageView.hidden = YES;
@@ -652,6 +756,10 @@ CK_RV completedCallback(string& PAN,
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        self.labelHelp.stringValue = @"Aiuto";
+        self.assistenzaImageView.hidden = NO;
+        self.sbloccoImageView.hidden = NO;
+        
         self.homeFirstPageView.hidden = YES;
         self.homeSecondPageView.hidden = YES;
         self.homeThirdPageView.hidden = YES;
@@ -668,6 +776,10 @@ CK_RV completedCallback(string& PAN,
 - (void) showTutorialPage
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.labelHelp.stringValue = @"Tutorial";
+        self.assistenzaImageView.hidden = YES;
+        self.sbloccoImageView.hidden = YES;
         
         self.homeFirstPageView.hidden = YES;
         self.homeSecondPageView.hidden = YES;
@@ -847,8 +959,10 @@ CK_RV completedCallback(string& PAN,
         
         int attempts = -1;
         
+        self.progressIndicatorCambioPIN.hidden = NO;
+        self.labelProgressCambioPIN.hidden = NO;
         
-        long ret = pfnCambioPIN([pin cStringUsingEncoding:NSUTF8StringEncoding], [newpin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback);
+        long ret = pfnCambioPIN([pin cStringUsingEncoding:NSUTF8StringEncoding], [newpin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallbackCambioPIN);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -882,6 +996,8 @@ CK_RV completedCallback(string& PAN,
                     self.textFieldPIN.stringValue = @"";
                     self.textFieldNewPIN.stringValue = @"";
                     self.textFieldConfirmPIN.stringValue = @"";
+                    
+                    [self showCambioPINOKPage];
                     break;
             }
         });

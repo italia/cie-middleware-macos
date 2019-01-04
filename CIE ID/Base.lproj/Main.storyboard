@@ -279,7 +279,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view hidden="YES" focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ynb-ts-Yci">
-                                        <rect key="frame" x="1" y="0.0" width="548" height="510"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bzc-oC-fwS">
@@ -297,6 +297,9 @@
                                                 <buttonCell key="cell" type="bevel" title="Sblocca" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Er1-3v-SuR">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                                 </buttonCell>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
@@ -396,6 +399,19 @@
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
+                                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="8K8-eY-cK8">
+                                                <rect key="frame" x="220" y="100" width="234" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            </progressIndicator>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HLv-rF-pbb">
+                                                <rect key="frame" x="220" y="120" width="234" height="24"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbinamento in corso" id="jkF-z5-Dtv">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
                                         </subviews>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
@@ -422,6 +438,9 @@
                                                 <buttonCell key="cell" type="bevel" title="Cambia PIN" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="2qs-u4-uer">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                                 </buttonCell>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
@@ -457,6 +476,19 @@
                                                     <string key="title">IL PIN della tua CIE è un dato sensibile,
 trattalo con cautela.</string>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="0Xi-ba-4N3">
+                                                <rect key="frame" x="220" y="100" width="234" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            </progressIndicator>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QOb-Qn-LfD">
+                                                <rect key="frame" x="220" y="120" width="234" height="24"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Abbinamento in corso" id="2Dl-0R-xYF">
+                                                    <font key="font" metaFont="system" size="20"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
@@ -832,19 +864,22 @@ trattalo con cautela.</string>
                                                 <buttonCell key="cell" type="bevel" title="Concludi" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="ZOU-z9-nzQ">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                                 </buttonCell>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
-                                                        <color key="value" name="customDarkBackgroundColor"/>
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
-                                                        <color key="value" name="customDarkBackgroundColor"/>
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                                        <color key="value" name="customTextColor"/>
+                                                        <color key="value" name="customViewColor"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
-                                                        <color key="value" name="customTextColor"/>
+                                                        <color key="value" name="customViewColor"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                         <real key="value" value="0.0"/>
@@ -885,7 +920,7 @@ trattalo con cautela.</string>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view hidden="YES" focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Hi-tR-7XT">
-                                        <rect key="frame" x="1" y="0.0" width="548" height="510"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f5o-tI-wX5">
@@ -897,30 +932,36 @@ trattalo con cautela.</string>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <button hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-1Y-LJv" customClass="FlatButton" customModule="FlatButton">
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-1Y-LJv" customClass="FlatButton" customModule="FlatButton">
                                                 <rect key="frame" x="220" y="23" width="110" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="bevel" title="Rimuovi Carta" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Fnd-Zc-Uui">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                                 </buttonCell>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
-                                                        <color key="value" name="customDarkBackgroundColor"/>
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
-                                                        <color key="value" name="customDarkBackgroundColor"/>
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                                        <color key="value" name="customTextColor"/>
+                                                        <color key="value" name="customViewColor"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
-                                                        <color key="value" name="customTextColor"/>
+                                                        <color key="value" name="customViewColor"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                         <real key="value" value="0.0"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="onDisabilita:" target="XfG-lQ-9wD" id="ESC-W5-9h5"/>
+                                                </connections>
                                             </button>
                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jjs-gE-2SP">
                                                 <rect key="frame" x="30" y="150" width="190" height="190"/>
@@ -980,17 +1021,32 @@ trattalo con cautela.</string>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view hidden="YES" focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aPP-S9-VQ9">
-                                        <rect key="frame" x="1" y="0.0" width="548" height="510"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nrU-jR-5Zs">
-                                                <rect key="frame" x="20" y="20" width="508" height="399"/>
+                                                <rect key="frame" x="20" y="83" width="508" height="336"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                                     <wkPreferences key="preferences"/>
                                                 </wkWebViewConfiguration>
                                             </wkWebView>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ffk-8L-WFm">
+                                                <rect key="frame" x="0.0" y="20" width="137" height="48"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="logoIPZS" id="Ih6-rN-GF2"/>
+                                            </imageView>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zNO-Fe-cjF">
+                                                <rect key="frame" x="205" y="20" width="137" height="48"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="logo-cie" id="cCM-Po-6S8"/>
+                                            </imageView>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="39H-3d-eIU">
+                                                <rect key="frame" x="390" y="20" width="137" height="48"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="logo_MinisteroInterno" id="i7r-3M-YtS"/>
+                                            </imageView>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pTG-UD-jI2">
                                                 <rect key="frame" x="72" y="416" width="405" height="57"/>
                                                 <autoresizingMask key="autoresizingMask"/>
@@ -1008,21 +1064,31 @@ trattalo con cautela.</string>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view hidden="YES" focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h2G-yn-wAx">
-                                        <rect key="frame" x="1" y="0.0" width="548" height="510"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QZz-x1-A6n">
-                                                <rect key="frame" x="20" y="117" width="508" height="302"/>
+                                                <rect key="frame" x="20" y="83" width="508" height="336"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                                     <wkPreferences key="preferences"/>
                                                 </wkWebViewConfiguration>
                                             </wkWebView>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jq5-Jt-6Ss">
+                                                <rect key="frame" x="20" y="10" width="170" height="70"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="icona_assistenza" id="zDU-pl-OBf"/>
+                                            </imageView>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eng-ai-RIc">
+                                                <rect key="frame" x="390" y="20" width="137" height="48"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="icona_sblocco_carta" id="aTt-R1-VUj"/>
+                                            </imageView>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="86I-3k-8I2">
                                                 <rect key="frame" x="72" y="416" width="405" height="57"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Tutorial" id="6ir-HA-zil">
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Aiuto" id="6ir-HA-zil">
                                                     <font key="font" metaFont="system" size="37"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1056,6 +1122,7 @@ trattalo con cautela.</string>
                         </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
+                        <outlet property="assistenzaImageView" destination="Jq5-Jt-6Ss" id="ehu-2y-l90"/>
                         <outlet property="cambioPINOKPageView" destination="gbY-3C-V3N" id="xZV-6g-SgL"/>
                         <outlet property="cambioPINPageView" destination="Qux-KY-phF" id="XzU-be-vxC"/>
                         <outlet property="helpPageView" destination="h2G-yn-wAx" id="M73-vK-6gv"/>
@@ -1065,11 +1132,17 @@ trattalo con cautela.</string>
                         <outlet property="homeSecondPageView" destination="Hnq-5I-07c" id="HIf-h9-rbs"/>
                         <outlet property="homeThirdPageView" destination="Mdd-Wr-o9p" id="AjK-Bq-dKD"/>
                         <outlet property="infoPageView" destination="aPP-S9-VQ9" id="lUB-CV-9GR"/>
+                        <outlet property="infoWebView" destination="nrU-jR-5Zs" id="snQ-Tc-78e"/>
                         <outlet property="labelCardHolder" destination="BZs-1Z-CBF" id="Dky-XG-8sV"/>
                         <outlet property="labelHelp" destination="86I-3k-8I2" id="K4N-c2-40A"/>
                         <outlet property="labelProgress" destination="81v-HY-YGK" id="6UT-oc-cXu"/>
+                        <outlet property="labelProgressCambioPIN" destination="QOb-Qn-LfD" id="mlM-wM-SU2"/>
+                        <outlet property="labelProgressSbloccoPIN" destination="HLv-rF-pbb" id="Xac-Ec-3Q4"/>
                         <outlet property="labelSerialNumber" destination="IIj-YB-SQZ" id="6Zu-Ns-YOe"/>
                         <outlet property="progressIndicator" destination="QaF-ot-ZLo" id="FaV-L5-cRP"/>
+                        <outlet property="progressIndicatorCambioPIN" destination="0Xi-ba-4N3" id="DBt-j0-f73"/>
+                        <outlet property="progressIndicatorSbloccoPIN" destination="8K8-eY-cK8" id="sNT-3Q-TVu"/>
+                        <outlet property="sbloccoImageView" destination="eng-ai-RIc" id="1rf-zU-zWY"/>
                         <outlet property="sbloccoOKPageView" destination="fcD-gd-OQM" id="KAb-Fx-Nu5"/>
                         <outlet property="sbloccoPageView" destination="ynb-ts-Yci" id="ZGj-tG-AqL"/>
                         <outlet property="textFieldConfirmPIN" destination="mM9-yS-eBC" id="aXr-82-U77"/>
@@ -1082,7 +1155,7 @@ trattalo con cautela.</string>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-364" y="692"/>
+            <point key="canvasLocation" x="-664" y="749"/>
         </scene>
         <!--Message View Controller-->
         <scene sceneID="xjY-LL-s5q">
@@ -1111,11 +1184,11 @@ trattalo con cautela.</string>
             </objects>
             <point key="canvasLocation" x="-480" y="1241"/>
         </scene>
-        <!--Intro View Controller-->
+        <!--CIE ID-->
         <scene sceneID="bvz-Lv-EFf">
             <objects>
-                <viewController storyboardIdentifier="IntroViewController" id="XkM-64-qp5" customClass="IntroViewController" sceneMemberID="viewController">
-                    <view key="view" focusRingType="none" appearanceType="aqua" id="Imw-bO-gXX">
+                <viewController title="CIE ID" storyboardIdentifier="IntroViewController" id="XkM-64-qp5" customClass="IntroViewController" sceneMemberID="viewController">
+                    <view key="view" autoresizesSubviews="NO" focusRingType="none" appearanceType="aqua" id="Imw-bO-gXX">
                         <rect key="frame" x="0.0" y="0.0" width="700" height="500"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1155,6 +1228,9 @@ nuova Carta di Identità elettronica.</string>
                                         <buttonCell key="cell" type="push" title="Continua" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5cM-lK-FaB">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                         </buttonCell>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
@@ -1214,6 +1290,9 @@ nuova Carta di Identità elettronica.</string>
                                         <buttonCell key="cell" type="push" title="Inizia" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a1h-7A-E3R">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                         </buttonCell>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
@@ -1909,7 +1988,12 @@ trattalo con cautela.</string>
         <image name="Risorsa 19" width="60" height="60"/>
         <image name="flusso_intro_01" width="613" height="388"/>
         <image name="flusso_intro_02" width="651" height="373"/>
+        <image name="icona_assistenza" width="141" height="39"/>
         <image name="icona_lettore_card_white" width="192" height="192"/>
+        <image name="icona_sblocco_carta" width="116" height="39"/>
+        <image name="logo-cie" width="84" height="40"/>
+        <image name="logoIPZS" width="99" height="40"/>
+        <image name="logo_MinisteroInterno" width="130" height="40"/>
         <namedColor name="customDarkBackgroundColor">
             <color white="0.8059999942779541" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>

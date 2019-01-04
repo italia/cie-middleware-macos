@@ -41,7 +41,7 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
         
         SCARDCONTEXT hSC;
         
-        progressCallBack(1, "Connessione alla CIE");
+        progressCallBack(10, "Connessione alla CIE");
         
         long nRet = SCardEstablishContext(SCARD_SCOPE_USER, nullptr, nullptr, &hSC);
         if(nRet != SCARD_S_SUCCESS)
@@ -61,7 +61,7 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
             return CKR_TOKEN_NOT_PRESENT;
         }
         
-        progressCallBack(5, "Connessione all CIE eseguita");
+        progressCallBack(10, "CIE Connessa");
         
         char *curreader = readers;
         bool foundCIE = false;
@@ -96,7 +96,7 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
             ias.SelectAID_IAS();
             ias.ReadPAN();
             
-            progressCallBack(10, "Lettura dati dalla CIE");
+            progressCallBack(20, "Lettura dati dalla CIE");
             
             ByteDynArray resp;
             ias.SelectAID_CIE();
@@ -111,14 +111,14 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
             
             ias.InitExtAuthKeyParam();
             
-            progressCallBack(20, "Autenticazione...");
+            progressCallBack(40, "Autenticazione...");
             
             ias.DHKeyExchange();
             
             // DAPP
             ias.DAPP();
             
-            progressCallBack(70, "Cambio PIN...");
+            progressCallBack(80, "Cambio PIN...");
             
             ByteArray oldPINBa((BYTE*)szCurrentPIN, strlen(szCurrentPIN));
             
@@ -174,6 +174,8 @@ CK_RV CK_ENTRY CambioPIN(const char*  szCurrentPIN, const char*  szNewPIN, int* 
                 ByteArray leftPINBa = newPINBa.left(4);
                 ias.SetCache(strPAN.c_str(), cert,     leftPINBa);
             }
+            
+            progressCallBack(100, "Cambio PIN eseguito");
         }
         
         if (!foundCIE) {
@@ -212,7 +214,7 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
         
         SCARDCONTEXT hSC;
         
-        progressCallBack(1, "Connessione alla CIE");
+        progressCallBack(10, "Connessione alla CIE");
         
         long nRet = SCardEstablishContext(SCARD_SCOPE_USER, nullptr, nullptr, &hSC);
         if(nRet != SCARD_S_SUCCESS)
@@ -232,7 +234,7 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
             return CKR_TOKEN_NOT_PRESENT;
         }
         
-        progressCallBack(5, "Connessione all CIE eseguita");
+        progressCallBack(20, "CIE Connessa");
         
         char *curreader = readers;
         bool foundCIE = false;
@@ -267,7 +269,7 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
             ias.SelectAID_IAS();
             ias.ReadPAN();
             
-            progressCallBack(10, "Lettura dati dalla CIE");
+            progressCallBack(30, "Lettura dati dalla CIE");
             
             ByteDynArray resp;
             ias.SelectAID_CIE();
@@ -282,14 +284,14 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
             
             ias.InitExtAuthKeyParam();
             
-            progressCallBack(40, "Autenticazione...");
+            progressCallBack(50, "Autenticazione...");
             
             ias.DHKeyExchange();
             
             // DAPP
             ias.DAPP();
             
-            progressCallBack(70, "Sblocco PIN...");
+            progressCallBack(80, "Sblocco carta...");
             
             ByteArray pukBa((BYTE*)szPUK, strlen(szPUK));
             
@@ -345,6 +347,8 @@ CK_RV CK_ENTRY SbloccoPIN(const char*  szPUK, const char*  szNewPIN, int* pAttem
                 ByteArray leftPINBa = newPINBa.left(4);
                 ias.SetCache(strPAN.c_str(), cert,     leftPINBa);
             }
+            
+            progressCallBack(100, "Sblocco carta eseguito");
         }
         
         if (!foundCIE) {

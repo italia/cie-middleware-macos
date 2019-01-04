@@ -19,6 +19,17 @@
     // Do view setup here.
     
     //NSUserDefaults.standardUserDefaults
+    
+    self.preferredContentSize = self.view.frame.size;
+    
+    self.view.window.delegate = self;
+}
+
+- (BOOL) windowShouldClose: (NSObject*) sender
+{
+    [NSApplication.sharedApplication terminate:self];
+    
+    return YES;
 }
 
 - (IBAction)nextPage:(id)sender

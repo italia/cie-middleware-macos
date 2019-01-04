@@ -1061,17 +1061,29 @@ void IAS::InitEncKey() {
 	StatusWord sw;
 	if (sessSSC.isEmpty()) {
 		if ((sw = SendAPDU(VarToByteArray(mseSet), VarToByteArray(mseSetData), resp)) != 0x9000)
-		throw scard_error(sw);
+        {
+            Log.writePure("sendapdu1 error: %x", sw);
+            throw scard_error(sw);
+        }
 		uint8_t intAuth[] = { 0x00, 0x88, 0x00, 0x00 };
 		if ((sw = SendAPDU(VarToByteArray(intAuth), ByteArray((BYTE*)strPAN.c_str(), strPAN.length()), resp)) != 0x9000)
-		throw scard_error(sw);
+        {
+            Log.writePure("sendapdu2 error: %x", sw);
+            throw scard_error(sw);
+        }
 	}
 	else {
 		if ((sw = SendAPDU_SM(VarToByteArray(mseSet), VarToByteArray(mseSetData), resp)) != 0x9000)
-		throw scard_error(sw);
+        {
+            Log.writePure("sendapdu3 error: %x", sw);
+            throw scard_error(sw);
+        }
 		uint8_t intAuth[] = { 0x00, 0x88, 0x00, 0x00 };
 		if ((sw = SendAPDU_SM(VarToByteArray(intAuth), ByteArray((BYTE*)strPAN.c_str(), strPAN.length()), resp)) != 0x9000)
-		throw scard_error(sw);
+        {
+            Log.writePure("sendapdu4 error: %x", sw);
+            throw scard_error(sw);
+        }
 	}
 
 	CSHA512 sha512;
