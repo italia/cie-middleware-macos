@@ -533,8 +533,9 @@ CK_RV completedCallback(string& PAN,
     
     [((NSControl*)sender) setEnabled:NO];
     
-    const char* szCryptoki = "libcie-pkcs11.dylib";
-    
+    self.progressIndicatorSbloccoPIN.hidden = NO;
+    self.labelProgressSbloccoPIN.hidden = NO;
+
     dispatch_async(dispatch_get_global_queue(0,0), ^{
         
         SbloccoPINfn pfnSbloccoPIN = (SbloccoPINfn)dlsym(hModule, "SbloccoPIN");
@@ -547,12 +548,13 @@ CK_RV completedCallback(string& PAN,
         
         int attempts = -1;
         
-        self.progressIndicatorSbloccoPIN.hidden = NO;
-        self.labelProgressSbloccoPIN.hidden = NO;
-        
         long ret = pfnSbloccoPIN([puk cStringUsingEncoding:NSUTF8StringEncoding], [newpin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallbackSbloccoPIN);
         
         dispatch_async(dispatch_get_main_queue(), ^{
+        
+            self.progressIndicatorSbloccoPIN.hidden = YES;
+            self.labelProgressSbloccoPIN.hidden = YES;
+
             
             [((NSControl*)sender) setEnabled:YES];
             
@@ -591,241 +593,6 @@ CK_RV completedCallback(string& PAN,
 }
 
 
-- (void) showHomeFirstPage
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if([NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"])
-        {
-            self.labelSerialNumber.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"];
-            self.labelCardHolder.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"];
-            
-            [self showHomeFourthPage];
-        }
-        else
-        {
-            self.labelSerialNumber.stringValue = @"";
-            self.labelCardHolder.stringValue = @"";
-
-    //    if(self.homeFirstPageView.hidden)
-    //    {
-            self.homeFirstPageView.hidden = NO;
-            self.homeSecondPageView.hidden = YES;
-            self.homeThirdPageView.hidden = YES;
-            self.homeFourthPageView.hidden = YES;
-            self.cambioPINPageView.hidden = YES;
-            self.cambioPINOKPageView.hidden = YES;
-            self.sbloccoPageView.hidden = YES;
-            self.sbloccoOKPageView.hidden = YES;
-            self.helpPageView.hidden = YES;
-            self.infoPageView.hidden = YES;
-            
-            for(int i = 1; i < 9; i++)
-            {
-                NSTextField* txtField = [self.view viewWithTag:i];
-             
-                txtField.stringValue = @"";
-            }
-            
-            NSTextField* txtField = [self.view viewWithTag:1];
-            [txtField selectText:nil];
-        }
-//    }
-    });
-}
-
-- (void) showHomeThirdPage
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = NO;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-    });
-}
-
-- (void) showHomeSecondPage
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = NO;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-    });
-}
-
-
-- (void) showHomeFourthPage
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = NO;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-    });
-}
-
-- (void) showCambioPINPage
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.progressIndicatorCambioPIN.hidden = YES;
-        self.labelProgressCambioPIN.hidden = YES;
-        
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = NO;
-        self.cambioPINOKPageView.hidden = YES;
-        self.sbloccoPageView.hidden = YES;
-        self.sbloccoOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-    });
-}
-
-- (void) showCambioPINOKPage
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = NO;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-    });
-}
-
-- (void) showSbloccoPage
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.progressIndicatorSbloccoPIN.hidden = YES;
-        self.labelProgressSbloccoPIN.hidden = YES;
-        
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.sbloccoPageView.hidden = NO;
-        self.sbloccoOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-    });
-}
-
-- (void) showSbloccoOKPage
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.sbloccoPageView.hidden = YES;
-        self.sbloccoOKPageView.hidden = NO;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-    });
-}
-
-- (void) showHelpPage
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.labelHelp.stringValue = @"Aiuto";
-        self.assistenzaImageView.hidden = NO;
-        self.sbloccoImageView.hidden = NO;
-        
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.helpPageView.hidden = NO;
-        self.infoPageView.hidden = YES;
-        
-        [self.helpWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://idserver.servizicie.interno.gov.it/idp/aiuto.jsp"]]];
-    });
-}
-
-- (void) showTutorialPage
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.labelHelp.stringValue = @"Tutorial";
-        self.assistenzaImageView.hidden = YES;
-        self.sbloccoImageView.hidden = YES;
-        
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.helpPageView.hidden = NO;
-        self.infoPageView.hidden = YES;
-        
-        [self.helpWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://idserver.servizicie.interno.gov.it/idp/tutorial_mac.jsp"]]];
-    });
-}
-
-- (void) showInfoPage
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = NO;
-        
-        [self.infoWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://idserver.servizicie.interno.gov.it/idp/privacy.jsp"]]];
-    });
-}
-
-
-- (void) showMessage: (NSString*) message withTitle: (NSString*) title exitAfter: (bool) exitAfter
-{
-    __block bool exit = exitAfter;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"Ok"];
-        [alert setMessageText:title];
-        [alert setInformativeText:message];
-        [alert setAlertStyle:NSWarningAlertStyle];
-        
-        [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:&exit];
-    });
-}
 
 - (IBAction)concludi:(id)sender
 {
@@ -930,16 +697,10 @@ CK_RV completedCallback(string& PAN,
     
     [((NSControl*)sender) setEnabled:NO];
     
-    const char* szCryptoki = "libcie-pkcs11.dylib";
-    
+    self.progressIndicatorCambioPIN.hidden = NO;
+    self.labelProgressCambioPIN.hidden = NO;
+
     dispatch_async(dispatch_get_global_queue(0,0), ^{
-        
-        void* hModule = dlopen(szCryptoki, RTLD_LAZY);
-        if(!hModule)
-        {
-            [self showMessage: @"Middleware non trovato" withTitle:@"Errore inaspettato" exitAfter:true];
-            return;
-        }
         
         C_GETFUNCTIONLIST pfnGetFunctionList=(C_GETFUNCTIONLIST)dlsym(hModule, "C_GetFunctionList");
         if(!pfnGetFunctionList)
@@ -959,12 +720,13 @@ CK_RV completedCallback(string& PAN,
         
         int attempts = -1;
         
-        self.progressIndicatorCambioPIN.hidden = NO;
-        self.labelProgressCambioPIN.hidden = NO;
         
         long ret = pfnCambioPIN([pin cStringUsingEncoding:NSUTF8StringEncoding], [newpin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallbackCambioPIN);
         
         dispatch_async(dispatch_get_main_queue(), ^{
+        
+            self.progressIndicatorCambioPIN.hidden = YES;
+            self.labelProgressCambioPIN.hidden = YES;
             
             [((NSControl*)sender) setEnabled:YES];
             
@@ -1003,6 +765,324 @@ CK_RV completedCallback(string& PAN,
         });
     });
 }
+
+- (void) showHomeFirstPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
+        if([NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"])
+        {
+            self.labelSerialNumber.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"];
+            self.labelCardHolder.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"];
+            
+            [self showHomeFourthPage];
+        }
+        else
+        {
+            self.labelSerialNumber.stringValue = @"";
+            self.labelCardHolder.stringValue = @"";
+            
+            //    if(self.homeFirstPageView.hidden)
+            //    {
+            self.homeFirstPageView.hidden = NO;
+            self.homeSecondPageView.hidden = YES;
+            self.homeThirdPageView.hidden = YES;
+            self.homeFourthPageView.hidden = YES;
+            self.cambioPINPageView.hidden = YES;
+            self.cambioPINOKPageView.hidden = YES;
+            self.sbloccoPageView.hidden = YES;
+            self.sbloccoOKPageView.hidden = YES;
+            self.helpPageView.hidden = YES;
+            self.infoPageView.hidden = YES;
+            
+            for(int i = 1; i < 9; i++)
+            {
+                NSTextField* txtField = [self.view viewWithTag:i];
+                
+                txtField.stringValue = @"";
+            }
+            
+            NSTextField* txtField = [self.view viewWithTag:1];
+            [txtField selectText:nil];
+        }
+        //    }
+    });
+}
+
+- (void) showHomeThirdPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = NO;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
+    });
+}
+
+- (void) showHomeSecondPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = NO;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
+    });
+}
+
+
+- (void) showHomeFourthPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = NO;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
+    });
+}
+
+- (void) showCambioPINPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.cambioPINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
+        self.progressIndicatorCambioPIN.hidden = YES;
+        self.labelProgressCambioPIN.hidden = YES;
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = NO;
+        self.cambioPINOKPageView.hidden = YES;
+        self.sbloccoPageView.hidden = YES;
+        self.sbloccoOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
+    });
+}
+
+- (void) showCambioPINOKPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.cambioPINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = NO;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
+    });
+}
+
+- (void) showSbloccoPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
+        self.progressIndicatorSbloccoPIN.hidden = YES;
+        self.labelProgressSbloccoPIN.hidden = YES;
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.sbloccoPageView.hidden = NO;
+        self.sbloccoOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
+    });
+}
+
+- (void) showSbloccoOKPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.sbloccoPageView.hidden = YES;
+        self.sbloccoOKPageView.hidden = NO;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = YES;
+    });
+}
+
+- (void) showHelpPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.helpButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
+        
+        self.labelHelp.stringValue = @"Aiuto";
+        self.assistenzaImageView.hidden = NO;
+        self.sbloccoImageView.hidden = NO;
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = NO;
+        self.infoPageView.hidden = YES;
+        
+        [self.helpWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://idserver.servizicie.interno.gov.it/idp/aiuto.jsp"]]];
+    });
+}
+
+- (void) showTutorialPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.tutorialButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
+        self.labelHelp.stringValue = @"Tutorial";
+        self.assistenzaImageView.hidden = YES;
+        self.sbloccoImageView.hidden = YES;
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = NO;
+        self.infoPageView.hidden = YES;
+        
+        [self.helpWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://idserver.servizicie.interno.gov.it/idp/tutorial_mac.jsp"]]];
+    });
+}
+
+- (void) showInfoPage
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.infoButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        
+        self.homeFirstPageView.hidden = YES;
+        self.homeSecondPageView.hidden = YES;
+        self.homeThirdPageView.hidden = YES;
+        self.homeFourthPageView.hidden = YES;
+        self.cambioPINPageView.hidden = YES;
+        self.cambioPINOKPageView.hidden = YES;
+        self.helpPageView.hidden = YES;
+        self.infoPageView.hidden = NO;
+        
+        [self.infoWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://idserver.servizicie.interno.gov.it/idp/privacy.jsp"]]];
+    });
+}
+
+
+- (void) showMessage: (NSString*) message withTitle: (NSString*) title exitAfter: (bool) exitAfter
+{
+    __block bool exit = exitAfter;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"Ok"];
+        [alert setMessageText:title];
+        [alert setInformativeText:message];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        
+        [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) contextInfo:&exit];
+    });
+}
+
+
 - (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(bool*)contextInfo
 {
     if(*contextInfo)

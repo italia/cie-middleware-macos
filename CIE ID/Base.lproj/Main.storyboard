@@ -97,6 +97,7 @@
                                         <constraints>
                                             <constraint firstItem="0Ma-BO-83u" firstAttribute="leading" secondItem="fvc-Lr-Yuk" secondAttribute="leading" constant="10" id="91h-vw-Uil"/>
                                             <constraint firstAttribute="trailing" secondItem="0Ma-BO-83u" secondAttribute="trailing" id="aic-AE-hTf"/>
+                                            <constraint firstAttribute="width" constant="200" id="hVi-Oc-WCf"/>
                                             <constraint firstItem="0Ma-BO-83u" firstAttribute="centerY" secondItem="fvc-Lr-Yuk" secondAttribute="centerY" id="tNZ-1h-0zm"/>
                                             <constraint firstAttribute="height" constant="50" id="vAR-zv-XD5"/>
                                         </constraints>
@@ -120,6 +121,7 @@
                                             <constraint firstItem="Zw0-o0-VWc" firstAttribute="leading" secondItem="lrL-iW-R0U" secondAttribute="leading" constant="10" id="F7A-C2-jo7"/>
                                             <constraint firstItem="Zw0-o0-VWc" firstAttribute="centerY" secondItem="lrL-iW-R0U" secondAttribute="centerY" id="Fq0-ZB-Z5z"/>
                                             <constraint firstAttribute="trailing" secondItem="Zw0-o0-VWc" secondAttribute="trailing" id="Svl-X6-TFQ"/>
+                                            <constraint firstAttribute="width" constant="200" id="tud-wS-hPX"/>
                                             <constraint firstAttribute="height" constant="50" id="wA8-wA-dZr"/>
                                         </constraints>
                                     </customView>
@@ -140,6 +142,7 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="4sw-wd-jcx" firstAttribute="centerY" secondItem="CJp-ds-vmS" secondAttribute="centerY" id="Bou-fL-4TO"/>
+                                            <constraint firstAttribute="width" constant="200" id="LE6-uS-qVY"/>
                                             <constraint firstAttribute="trailing" secondItem="4sw-wd-jcx" secondAttribute="trailing" id="TTQ-5W-ZPT"/>
                                             <constraint firstItem="4sw-wd-jcx" firstAttribute="leading" secondItem="CJp-ds-vmS" secondAttribute="leading" constant="10" id="Toi-FJ-bmU"/>
                                             <constraint firstAttribute="height" constant="50" id="wqG-Hn-9us"/>
@@ -163,6 +166,7 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="s3d-nf-52P" secondAttribute="trailing" id="3fW-CT-SmU"/>
                                             <constraint firstAttribute="height" constant="50" id="7oI-CS-5bD"/>
+                                            <constraint firstAttribute="width" constant="200" id="Zec-Us-fq7"/>
                                             <constraint firstItem="s3d-nf-52P" firstAttribute="centerY" secondItem="aoW-Zr-NId" secondAttribute="centerY" id="sJE-KK-4A9"/>
                                             <constraint firstItem="s3d-nf-52P" firstAttribute="leading" secondItem="aoW-Zr-NId" secondAttribute="leading" constant="10" id="vhw-xu-mPd"/>
                                         </constraints>
@@ -185,6 +189,7 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="EHG-55-OLE" secondAttribute="trailing" id="5In-mB-cp7"/>
                                             <constraint firstItem="EHG-55-OLE" firstAttribute="leading" secondItem="N1v-fW-RP4" secondAttribute="leading" constant="10" id="c0H-VS-VpL"/>
+                                            <constraint firstAttribute="width" constant="200" id="p0r-Al-Nt2"/>
                                             <constraint firstItem="EHG-55-OLE" firstAttribute="centerY" secondItem="N1v-fW-RP4" secondAttribute="centerY" id="tJj-2l-5eT"/>
                                             <constraint firstAttribute="height" constant="50" id="vF5-SV-X9d"/>
                                         </constraints>
@@ -208,6 +213,7 @@
                                             <constraint firstItem="c5h-lq-Zc7" firstAttribute="leading" secondItem="V6m-k1-rj5" secondAttribute="leading" constant="10" id="PWB-cZ-HcD"/>
                                             <constraint firstAttribute="height" constant="50" id="Uv7-A5-yId"/>
                                             <constraint firstAttribute="trailing" secondItem="c5h-lq-Zc7" secondAttribute="trailing" id="aYi-H9-Tst"/>
+                                            <constraint firstAttribute="width" constant="200" id="lM8-XX-qtj"/>
                                             <constraint firstItem="c5h-lq-Zc7" firstAttribute="centerY" secondItem="V6m-k1-rj5" secondAttribute="centerY" id="rKF-Jl-HRD"/>
                                         </constraints>
                                     </customView>
@@ -1123,14 +1129,18 @@ DQ
                     </view>
                     <connections>
                         <outlet property="assistenzaImageView" destination="Jq5-Jt-6Ss" id="ehu-2y-l90"/>
+                        <outlet property="cambioPINButtonView" destination="lrL-iW-R0U" id="xaW-Ke-Qi1"/>
                         <outlet property="cambioPINOKPageView" destination="gbY-3C-V3N" id="xZV-6g-SgL"/>
                         <outlet property="cambioPINPageView" destination="Qux-KY-phF" id="XzU-be-vxC"/>
+                        <outlet property="helpButtonView" destination="N1v-fW-RP4" id="NqV-rC-OdN"/>
                         <outlet property="helpPageView" destination="h2G-yn-wAx" id="M73-vK-6gv"/>
                         <outlet property="helpWebView" destination="QZz-x1-A6n" id="JRV-pY-Kfa"/>
+                        <outlet property="homeButtonView" destination="fvc-Lr-Yuk" id="eo2-M5-te8"/>
                         <outlet property="homeFirstPageView" destination="qWW-mh-vJN" id="6vp-OJ-uzY"/>
                         <outlet property="homeFourthPageView" destination="5Hi-tR-7XT" id="Ang-tn-IRX"/>
                         <outlet property="homeSecondPageView" destination="Hnq-5I-07c" id="HIf-h9-rbs"/>
                         <outlet property="homeThirdPageView" destination="Mdd-Wr-o9p" id="AjK-Bq-dKD"/>
+                        <outlet property="infoButtonView" destination="V6m-k1-rj5" id="Gm8-XE-0zr"/>
                         <outlet property="infoPageView" destination="aPP-S9-VQ9" id="lUB-CV-9GR"/>
                         <outlet property="infoWebView" destination="nrU-jR-5Zs" id="snQ-Tc-78e"/>
                         <outlet property="labelCardHolder" destination="BZs-1Z-CBF" id="Dky-XG-8sV"/>
@@ -1144,6 +1154,7 @@ DQ
                         <outlet property="progressIndicatorSbloccoPIN" destination="8K8-eY-cK8" id="sNT-3Q-TVu"/>
                         <outlet property="sbloccoImageView" destination="eng-ai-RIc" id="1rf-zU-zWY"/>
                         <outlet property="sbloccoOKPageView" destination="fcD-gd-OQM" id="KAb-Fx-Nu5"/>
+                        <outlet property="sbloccoPINButtonView" destination="CJp-ds-vmS" id="dz9-Ah-MDe"/>
                         <outlet property="sbloccoPageView" destination="ynb-ts-Yci" id="ZGj-tG-AqL"/>
                         <outlet property="textFieldConfirmPIN" destination="mM9-yS-eBC" id="aXr-82-U77"/>
                         <outlet property="textFieldConfirmPINSbloco" destination="YRY-Uh-ZL7" id="GtM-w3-R7i"/>
@@ -1151,6 +1162,7 @@ DQ
                         <outlet property="textFieldNewPINSblocco" destination="uuv-mU-tKX" id="5i2-zf-mKe"/>
                         <outlet property="textFieldPIN" destination="itc-nx-2Ki" id="DsB-ek-Jc5"/>
                         <outlet property="textFieldPUK" destination="OxO-IO-sF8" id="yjY-De-fYL"/>
+                        <outlet property="tutorialButtonView" destination="aoW-Zr-NId" id="lC5-8q-MnC"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

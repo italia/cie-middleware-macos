@@ -50,6 +50,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property IBOutlet NSTextField* labelSerialNumber;
 @property IBOutlet NSTextField* labelCardHolder;
 
+@property IBOutlet NSView* homeButtonView;
+@property IBOutlet NSView* cambioPINButtonView;
+@property IBOutlet NSView* sbloccoPINButtonView;
+@property IBOutlet NSView* tutorialButtonView;
+@property IBOutlet NSView* helpButtonView;
+@property IBOutlet NSView* infoButtonView;
+
+
 @end
 
 NS_ASSUME_NONNULL_END
