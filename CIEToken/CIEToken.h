@@ -14,6 +14,17 @@
 
 // per abilitare il cryptotokendriver
 // sudo -u _securityagent pluginkit -a /Applications/CIE ID.app/Contents/PlugIns/CIEToken.appex
+//
+// Per verificare la registrazione esegui:
+//
+// verifica cryptotokenkit installato
+// pluginkit -vv -m -p com.apple.ctk-tokens
+//
+// verifica riconoscimento CIE, con CIE posta sul lettore
+// security list-smartcards
+//
+// verifica contenuto della card, con CIE posta sul lettore
+// system_profiler SPSmartCardsDataType
 
 static const TKTokenOperationConstraint CIEConstraintPIN = @"PIN";
 static const TKTokenOperationConstraint CIEConstraintPINAlways = @"PINAlways";
