@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MessageViewController : NSViewController
 
+@property (weak) IBOutlet NSTextField *messageLabel;
+@property NSPopover* popover;
+
 + (MessageViewController*) freshController;
 
 @end

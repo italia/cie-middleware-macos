@@ -14,6 +14,7 @@
 
 @implementation MessageViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
@@ -22,9 +23,15 @@
 // MARK: Storyboard instantiation
 + (MessageViewController*) freshController {
     
-    MessageViewController* vc = (MessageViewController*)[[NSViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
+    MessageViewController* vc = (MessageViewController*)[[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
     
     return vc;
+}
+- (IBAction)openCIEID:(id)sender {
+}
+
+- (IBAction)close:(id)sender {
+    [_popover performClose:sender];
 }
 
 

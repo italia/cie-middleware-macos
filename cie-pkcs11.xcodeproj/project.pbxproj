@@ -34,9 +34,7 @@
 		E526E9F321E0BAFE0098AE8A /* CIEToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E570A7B02168C22800658AAF /* CIEToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E526E9FF21E0C44F0098AE8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E526E9FE21E0C44F0098AE8A /* AppDelegate.m */; };
 		E526EA0121E0C4500098AE8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E526EA0021E0C4500098AE8A /* Assets.xcassets */; };
-		E526EA0421E0C4500098AE8A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E526EA0221E0C4500098AE8A /* MainMenu.xib */; };
 		E526EA0721E0C4500098AE8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E526EA0621E0C4500098AE8A /* main.m */; };
-		E526EA0E21E0CA5E0098AE8A /* CIEMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E526EA0D21E0CA5E0098AE8A /* CIEMessageView.m */; };
 		E526EA1221E0CD3A0098AE8A /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E526EA1021E0CD3A0098AE8A /* MessageViewController.m */; };
 		E526EA1321E0CD3A0098AE8A /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E526EA1121E0CD3A0098AE8A /* MessageViewController.xib */; };
 		E543F955215F6B1D0088CBC5 /* CryptoppUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */; };
@@ -219,12 +217,9 @@
 		E526E9FD21E0C44F0098AE8A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E526E9FE21E0C44F0098AE8A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E526EA0021E0C4500098AE8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E526EA0321E0C4500098AE8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E526EA0521E0C4500098AE8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E526EA0621E0C4500098AE8A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E526EA0821E0C4500098AE8A /* CIEIDBar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIEIDBar.entitlements; sourceTree = "<group>"; };
-		E526EA0C21E0CA5E0098AE8A /* CIEMessageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIEMessageView.h; sourceTree = "<group>"; };
-		E526EA0D21E0CA5E0098AE8A /* CIEMessageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CIEMessageView.m; sourceTree = "<group>"; };
 		E526EA0F21E0CD3A0098AE8A /* MessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
 		E526EA1021E0CD3A0098AE8A /* MessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		E526EA1121E0CD3A0098AE8A /* MessageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
@@ -467,12 +462,9 @@
 				E526E9FD21E0C44F0098AE8A /* AppDelegate.h */,
 				E526E9FE21E0C44F0098AE8A /* AppDelegate.m */,
 				E526EA0021E0C4500098AE8A /* Assets.xcassets */,
-				E526EA0221E0C4500098AE8A /* MainMenu.xib */,
 				E526EA0521E0C4500098AE8A /* Info.plist */,
 				E526EA0621E0C4500098AE8A /* main.m */,
 				E526EA0821E0C4500098AE8A /* CIEIDBar.entitlements */,
-				E526EA0C21E0CA5E0098AE8A /* CIEMessageView.h */,
-				E526EA0D21E0CA5E0098AE8A /* CIEMessageView.m */,
 				E526EA0F21E0CD3A0098AE8A /* MessageViewController.h */,
 				E526EA1021E0CD3A0098AE8A /* MessageViewController.m */,
 				E526EA1121E0CD3A0098AE8A /* MessageViewController.xib */,
@@ -1048,7 +1040,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E526EA0121E0C4500098AE8A /* Assets.xcassets in Resources */,
-				E526EA0421E0C4500098AE8A /* MainMenu.xib in Resources */,
 				E526EA1321E0CD3A0098AE8A /* MessageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1199,7 +1190,6 @@
 				E526EA0721E0C4500098AE8A /* main.m in Sources */,
 				E526E9FF21E0C44F0098AE8A /* AppDelegate.m in Sources */,
 				E526EA1221E0CD3A0098AE8A /* MessageViewController.m in Sources */,
-				E526EA0E21E0CA5E0098AE8A /* CIEMessageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1326,14 +1316,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E526EA0221E0C4500098AE8A /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E526EA0321E0C4500098AE8A /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
 		E544F56D21BFAFC90038B2CA /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

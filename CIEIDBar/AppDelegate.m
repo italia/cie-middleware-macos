@@ -33,15 +33,18 @@
     NSImage* icon = [NSImage imageNamed:@"icona_minimize_01"];
     //icon.template = true; // best for dark mode
     _statusItem.image = icon;
-    _statusItem.menu = _statusMenu;
+    //_statusItem.menu = _statusMenu;
     
-//    NSButton* button = _statusItem.button;
-//    button.image = icon;
-//    button.action = @selector(togglePopover:);
+    NSButton* button = _statusItem.button;
+    button.image = icon;
+    button.action = @selector(togglePopover:);
     
     _popover = [[NSPopover alloc] init];
     
-    _popover.contentViewController = MessageViewController.freshController;
+    MessageViewController* vc = MessageViewController.freshController;
+    vc.popover = _popover;
+    
+    _popover.contentViewController = vc;
     
 }
 
