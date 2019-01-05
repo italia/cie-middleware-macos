@@ -14,7 +14,7 @@
 		<key>CIE ID.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>9</integer>
+			<integer>8</integer>
 		</dict>
 		<key>CIEToken.xcscheme</key>
 		<dict>
@@ -24,7 +24,7 @@
 		<key>CIEToken.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
+			<integer>9</integer>
 		</dict>
 		<key>CIETokenApp.xcscheme</key>
 		<dict>
@@ -39,7 +39,7 @@
 		<key>CambioPIN.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>6</integer>
 		</dict>
 		<key>SbloccoPIN.xcscheme</key>
 		<dict>
@@ -49,7 +49,7 @@
 		<key>SbloccoPIN.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>7</integer>
 		</dict>
 		<key>TestCIE.xcscheme</key>
 		<dict>
