@@ -32,6 +32,13 @@
 		E50A8A10213BE4C6006A000D /* AbilitaCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50A8A0F213BE4C6006A000D /* AbilitaCIE.cpp */; };
 		E50F9EF1217A27570083C821 /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = E50F9EF0217A27570083C821 /* help.html */; };
 		E526E9F321E0BAFE0098AE8A /* CIEToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E570A7B02168C22800658AAF /* CIEToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E526E9FF21E0C44F0098AE8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E526E9FE21E0C44F0098AE8A /* AppDelegate.m */; };
+		E526EA0121E0C4500098AE8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E526EA0021E0C4500098AE8A /* Assets.xcassets */; };
+		E526EA0421E0C4500098AE8A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E526EA0221E0C4500098AE8A /* MainMenu.xib */; };
+		E526EA0721E0C4500098AE8A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E526EA0621E0C4500098AE8A /* main.m */; };
+		E526EA0E21E0CA5E0098AE8A /* CIEMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E526EA0D21E0CA5E0098AE8A /* CIEMessageView.m */; };
+		E526EA1221E0CD3A0098AE8A /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E526EA1021E0CD3A0098AE8A /* MessageViewController.m */; };
+		E526EA1321E0CD3A0098AE8A /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E526EA1121E0CD3A0098AE8A /* MessageViewController.xib */; };
 		E543F955215F6B1D0088CBC5 /* CryptoppUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */; };
 		E543F957215F6B250088CBC5 /* CryptoppUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E543F956215F6B250088CBC5 /* CryptoppUtils.h */; };
 		E544F56721BFAFC60038B2CA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E544F56621BFAFC60038B2CA /* AppDelegate.m */; };
@@ -208,6 +215,19 @@
 		E50A8A0C213BE121006A000D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		E50A8A0F213BE4C6006A000D /* AbilitaCIE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbilitaCIE.cpp; sourceTree = "<group>"; };
 		E50F9EF0217A27570083C821 /* help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
+		E526E9FB21E0C44F0098AE8A /* CIEIDBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CIEIDBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E526E9FD21E0C44F0098AE8A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E526E9FE21E0C44F0098AE8A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E526EA0021E0C4500098AE8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E526EA0321E0C4500098AE8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E526EA0521E0C4500098AE8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E526EA0621E0C4500098AE8A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E526EA0821E0C4500098AE8A /* CIEIDBar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CIEIDBar.entitlements; sourceTree = "<group>"; };
+		E526EA0C21E0CA5E0098AE8A /* CIEMessageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIEMessageView.h; sourceTree = "<group>"; };
+		E526EA0D21E0CA5E0098AE8A /* CIEMessageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CIEMessageView.m; sourceTree = "<group>"; };
+		E526EA0F21E0CD3A0098AE8A /* MessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
+		E526EA1021E0CD3A0098AE8A /* MessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
+		E526EA1121E0CD3A0098AE8A /* MessageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
 		E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CryptoppUtils.cpp; sourceTree = "<group>"; };
 		E543F956215F6B250088CBC5 /* CryptoppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptoppUtils.h; sourceTree = "<group>"; };
 		E544F56321BFAFC60038B2CA /* CIE ID.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CIE ID.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -350,6 +370,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E526E9F821E0C44F0098AE8A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E544F56021BFAFC60038B2CA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -432,6 +459,25 @@
 				E50A8A09213BE053006A000D /* AbilitaCIE.mm */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		E526E9FC21E0C44F0098AE8A /* CIEIDBar */ = {
+			isa = PBXGroup;
+			children = (
+				E526E9FD21E0C44F0098AE8A /* AppDelegate.h */,
+				E526E9FE21E0C44F0098AE8A /* AppDelegate.m */,
+				E526EA0021E0C4500098AE8A /* Assets.xcassets */,
+				E526EA0221E0C4500098AE8A /* MainMenu.xib */,
+				E526EA0521E0C4500098AE8A /* Info.plist */,
+				E526EA0621E0C4500098AE8A /* main.m */,
+				E526EA0821E0C4500098AE8A /* CIEIDBar.entitlements */,
+				E526EA0C21E0CA5E0098AE8A /* CIEMessageView.h */,
+				E526EA0D21E0CA5E0098AE8A /* CIEMessageView.m */,
+				E526EA0F21E0CD3A0098AE8A /* MessageViewController.h */,
+				E526EA1021E0CD3A0098AE8A /* MessageViewController.m */,
+				E526EA1121E0CD3A0098AE8A /* MessageViewController.xib */,
+			);
+			path = CIEIDBar;
 			sourceTree = "<group>";
 		};
 		E544F56421BFAFC60038B2CA /* CIE ID */ = {
@@ -634,6 +680,7 @@
 				E570A7802168B72600658AAF /* SbloccoPIN */,
 				E570A7B22168C22800658AAF /* CIEToken */,
 				E544F56421BFAFC60038B2CA /* CIE ID */,
+				E526E9FC21E0C44F0098AE8A /* CIEIDBar */,
 				E5BE7D8920FE84D200004389 /* Products */,
 				E5BE7DC620FE8A9A00004389 /* Frameworks */,
 				B7FB7DAC107919BD2BEDD28E /* Pods */,
@@ -650,6 +697,7 @@
 				E570A77F2168B72600658AAF /* SbloccoPIN.app */,
 				E570A7B02168C22800658AAF /* CIEToken.appex */,
 				E544F56321BFAFC60038B2CA /* CIE ID.app */,
+				E526E9FB21E0C44F0098AE8A /* CIEIDBar.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -775,6 +823,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		E526E9FA21E0C44F0098AE8A /* CIEIDBar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E526EA0921E0C4500098AE8A /* Build configuration list for PBXNativeTarget "CIEIDBar" */;
+			buildPhases = (
+				E526E9F721E0C44F0098AE8A /* Sources */,
+				E526E9F821E0C44F0098AE8A /* Frameworks */,
+				E526E9F921E0C44F0098AE8A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CIEIDBar;
+			productName = CIEIDBar;
+			productReference = E526E9FB21E0C44F0098AE8A /* CIEIDBar.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E544F56221BFAFC60038B2CA /* CIE ID */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E544F57621BFAFC90038B2CA /* Build configuration list for PBXNativeTarget "CIE ID" */;
@@ -910,6 +975,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = IPZS;
 				TargetAttributes = {
+					E526E9FA21E0C44F0098AE8A = {
+						CreatedOnToolsVersion = 10.1;
+					};
 					E544F56221BFAFC60038B2CA = {
 						CreatedOnToolsVersion = 10.1;
 					};
@@ -969,11 +1037,22 @@
 				E570A77E2168B72600658AAF /* SbloccoPIN */,
 				E570A7AF2168C22800658AAF /* CIEToken */,
 				E544F56221BFAFC60038B2CA /* CIE ID */,
+				E526E9FA21E0C44F0098AE8A /* CIEIDBar */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E526E9F921E0C44F0098AE8A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E526EA0121E0C4500098AE8A /* Assets.xcassets in Resources */,
+				E526EA0421E0C4500098AE8A /* MainMenu.xib in Resources */,
+				E526EA1321E0CD3A0098AE8A /* MessageViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E544F56121BFAFC60038B2CA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1113,6 +1192,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E526E9F721E0C44F0098AE8A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E526EA0721E0C4500098AE8A /* main.m in Sources */,
+				E526E9FF21E0C44F0098AE8A /* AppDelegate.m in Sources */,
+				E526EA1221E0CD3A0098AE8A /* MessageViewController.m in Sources */,
+				E526EA0E21E0CA5E0098AE8A /* CIEMessageView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E544F55F21BFAFC60038B2CA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1236,6 +1326,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		E526EA0221E0C4500098AE8A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E526EA0321E0C4500098AE8A /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		E544F56D21BFAFC90038B2CA /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1271,6 +1369,47 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E526EA0A21E0C4500098AE8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CIEIDBar/CIEIDBar.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				INFOPLIST_FILE = CIEIDBar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CIEIDBar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E526EA0B21E0C4500098AE8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CIEIDBar/CIEIDBar.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				INFOPLIST_FILE = CIEIDBar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CIEIDBar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		E544F57421BFAFC90038B2CA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */;
@@ -1650,6 +1789,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E526EA0921E0C4500098AE8A /* Build configuration list for PBXNativeTarget "CIEIDBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E526EA0A21E0C4500098AE8A /* Debug */,
+				E526EA0B21E0C4500098AE8A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E544F57621BFAFC90038B2CA /* Build configuration list for PBXNativeTarget "CIE ID" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
