@@ -215,7 +215,7 @@ std::string GetCardDir()
     std::smatch match;
     std::regex_search(path, match, std::regex("^/Users/"));
     std::string suffix = match.suffix();
-    if(suffix.find("/") != std::string::npos && suffix.find("Library/Containers/it.ipzs.AbilitaCIE.CIEToken/Data") == std::string::npos)
+    if(suffix.find("/") != std::string::npos && suffix.find("Library/Containers/it.ipzs.CIE-ID.CIEToken/Data") == std::string::npos)
         throw 1;
     
     path.append("/.CIEPKI/");
@@ -253,7 +253,7 @@ bool CacheRemove(const char *PAN) {
         if(suffix.find("/") != std::string::npos)
             throw 1;
     
-    path.append("/Library/Containers/it.ipzs.AbilitaCIE.CIEToken/Data/.CIEPKI/");
+    path.append("/Library/Containers/it.ipzs.CIE-ID.CIEToken/Data/.CIEPKI/");
     path.append(PAN);
     path.append(".cache");
     
@@ -340,7 +340,7 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     if(suffix.find("/") != std::string::npos)
         throw 1;
     
-    path.append("/Library/Containers/it.ipzs.AbilitaCIE.CIEToken/Data/.CIEPKI/");
+    path.append("/Library/Containers/it.ipzs.CIE-ID.CIEToken/Data/.CIEPKI/");
     
     printf("CIETokenDriver Dir: %s\n", path.c_str());
     

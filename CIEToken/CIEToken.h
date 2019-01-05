@@ -13,7 +13,7 @@
 #include <dlfcn.h>
 
 // per abilitare il cryptotokendriver
-// sudo -u _securityagent pluginkit -a /Applications/AbilitaCIE.app/Contents/PlugIns/CIEToken.appex
+// sudo -u _securityagent pluginkit -a /Applications/CIE ID.app/Contents/PlugIns/CIEToken.appex
 
 static const TKTokenOperationConstraint CIEConstraintPIN = @"PIN";
 static const TKTokenOperationConstraint CIEConstraintPINAlways = @"PINAlways";

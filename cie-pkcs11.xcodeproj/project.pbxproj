@@ -31,7 +31,7 @@
 		E50A8A0E213BE121006A000D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50A8A0C213BE121006A000D /* AppKit.framework */; };
 		E50A8A10213BE4C6006A000D /* AbilitaCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E50A8A0F213BE4C6006A000D /* AbilitaCIE.cpp */; };
 		E50F9EF1217A27570083C821 /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = E50F9EF0217A27570083C821 /* help.html */; };
-		E51F431C2189A187007AAC10 /* CIEToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E570A7B02168C22800658AAF /* CIEToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E526E9F321E0BAFE0098AE8A /* CIEToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E570A7B02168C22800658AAF /* CIEToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E543F955215F6B1D0088CBC5 /* CryptoppUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E543F954215F6B1C0088CBC5 /* CryptoppUtils.cpp */; };
 		E543F957215F6B250088CBC5 /* CryptoppUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E543F956215F6B250088CBC5 /* CryptoppUtils.h */; };
 		E544F56721BFAFC60038B2CA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E544F56621BFAFC60038B2CA /* AppDelegate.m */; };
@@ -150,7 +150,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E51F431D2189A187007AAC10 /* PBXContainerItemProxy */ = {
+		E526E9F421E0BAFE0098AE8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E5BE7D8020FE84D200004389 /* Project object */;
 			proxyType = 1;
@@ -160,13 +160,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E51F431F2189A187007AAC10 /* Embed App Extensions */ = {
+		E526E9F621E0BAFF0098AE8A /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				E51F431C2189A187007AAC10 /* CIEToken.appex in Embed App Extensions */,
+				E526E9F321E0BAFE0098AE8A /* CIEToken.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -785,10 +785,12 @@
 				E544F56121BFAFC60038B2CA /* Resources */,
 				6869D0A90207445F94C0CEE8 /* [CP] Embed Pods Frameworks */,
 				2DC5A4E9D39903D59D4F28C3 /* [CP] Copy Pods Resources */,
+				E526E9F621E0BAFF0098AE8A /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E526E9F521E0BAFE0098AE8A /* PBXTargetDependency */,
 			);
 			name = "CIE ID";
 			productName = "CIE ID";
@@ -870,12 +872,10 @@
 				E59B65BA213C06B8007348D5 /* Sources */,
 				E59B65BB213C06B8007348D5 /* Frameworks */,
 				E59B65BC213C06B8007348D5 /* Resources */,
-				E51F431F2189A187007AAC10 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E51F431E2189A187007AAC10 /* PBXTargetDependency */,
 			);
 			name = AbilitaCIE;
 			productName = AbilitaCIE;
@@ -1228,10 +1228,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E51F431E2189A187007AAC10 /* PBXTargetDependency */ = {
+		E526E9F521E0BAFE0098AE8A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E570A7AF2168C22800658AAF /* CIEToken */;
-			targetProxy = E51F431D2189A187007AAC10 /* PBXContainerItemProxy */;
+			targetProxy = E526E9F421E0BAFE0098AE8A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1420,6 +1420,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CIEToken/CIEToken.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UV5M7CH7SB;
@@ -1429,7 +1430,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.AbilitaCIE.CIEToken;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID.CIEToken";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1439,6 +1440,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CIEToken/CIEToken.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = UV5M7CH7SB;
@@ -1448,7 +1450,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.AbilitaCIE.CIEToken;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID.CIEToken";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
