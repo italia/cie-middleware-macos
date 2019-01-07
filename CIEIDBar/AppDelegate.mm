@@ -8,10 +8,15 @@
 
 #import "AppDelegate.h"
 #include<stdio.h>
+#include<stdlib.h>
 #include<string.h>    //strlen
 #include<sys/socket.h>
 #include<arpa/inet.h>    //inet_addr
 #include<unistd.h>    //write
+
+#include "../cie-pkcs11/Crypto/CryptoUtil.h"
+
+using namespace CryptoPP;
 
 @interface AppDelegate ()
 @property (weak) IBOutlet NSMenu *statusMenu;
@@ -123,7 +128,8 @@ int socket_desc;
     int client_sock , c;
     long read_size;
     struct sockaddr_in server , client;
-    char szClientMessage[100];
+    char szEncryptedClientMessage[1000];
+    memset(szEncryptedClientMessage, 0, 1000);
     
     //Create socket
     socket_desc = socket(AF_INET , SOCK_STREAM , 0);
@@ -162,35 +168,57 @@ int socket_desc;
         puts("Connection accepted");
         
         //Receive a message from client
-        while( (read_size = recv(client_sock , szClientMessage , 100 , 0)) > 0 )
+        while( (read_size = recv(client_sock , szEncryptedClientMessage , 1000 , 0)) > 0 )
         {
-            NSLog(@"message received: %s", szClientMessage);
+            int messagelen;
+            int headerlen = sizeof(messagelen);
             
-            //Send the message back to client
-            write(client_sock , szClientMessage , strlen(szClientMessage));
+            messagelen = *((int*)szEncryptedClientMessage);
+            
+            std::string sCipherText(szEncryptedClientMessage + headerlen, messagelen);
+            std::string sMessage;
+            
+            decrypt(sCipherText, sMessage);
+            
+            NSLog(@"message received: %s", sMessage.c_str());
+            
+            const char* szClientMessage = sMessage.c_str();
             
             if(strstr(szClientMessage, "pinlocked") == szClientMessage)
             {
+                //Send the message back to client
+                write(client_sock , szClientMessage , strlen(szClientMessage));
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self pinLocked];
                 });
             }
             else if(strstr(szClientMessage, "pinwrong") == szClientMessage)
             {
-                char* szTok = strtok(szClientMessage, ":");
+                //Send the message back to client
+                write(client_sock , szClientMessage , strlen(szClientMessage));
+                
+                char* szTok = strtok((char*)szClientMessage, ":");
                 szTok = strtok(NULL, ":");
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self pinWrong: atoi(szTok)];
                 });
+                
             }
-            
             else if(strstr(szClientMessage, "cardnotregistered") == szClientMessage)
             {
-                char* szTok = strtok(szClientMessage, ":");
+                //Send the message back to client
+                write(client_sock , szClientMessage , strlen(szClientMessage));
+                
+                char* szTok = strtok((char*)szClientMessage, ":");
                 szTok = strtok(NULL, ":");
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self cardNotRegistered:[NSString stringWithUTF8String:szTok]];
                 });
+            }
+            else
+            {
+                NSLog(@"invalid message received: %s", sMessage.c_str());
             }
         }
         
@@ -214,6 +242,8 @@ int socket_desc;
     NSURL * helpFile = [[NSBundle mainBundle] URLForResource:@"help" withExtension:@"html"];
     [[NSWorkspace sharedWorkspace] openURL:helpFile];
 }
+
+
 
 
 @end

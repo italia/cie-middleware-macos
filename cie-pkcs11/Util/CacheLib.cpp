@@ -18,6 +18,15 @@
 #include <string>
 #include <regex>
 
+#include "../Cryptopp/modes.h"
+#include "../Cryptopp/aes.h"
+#include "../Cryptopp/filters.h"
+#include "../keys.h"
+#include "../Cryptopp/sha.h"
+
+using namespace CryptoPP;
+
+int decrypt(std::string& ciphertext, std::string& message);
 //#endif
 
 /// Questa implementazione della cache del PIN e del certificato è fornita solo a scopo dimostrativo. Questa versione
@@ -272,7 +281,14 @@ void CacheGetCertificate(const char *PAN, std::vector<uint8_t>&certificate)
         
         ByteDynArray data, Cert;
         data.load(sPath.c_str());
-        uint8_t *ptr = data.data();
+        
+        std::string ciphertext((char*)data.data(), data.size());
+        std::string plaintext;
+        
+        decrypt(ciphertext, plaintext);
+        
+        uint8_t *ptr = (uint8_t *)plaintext.c_str();
+        
         uint32_t len = *(uint32_t*)ptr; ptr += sizeof(uint32_t);
         // salto il PIN
         ptr += len;
@@ -298,7 +314,13 @@ void CacheGetPIN(const char *PAN, std::vector<uint8_t>&PIN) {
     if (file_exists(sPath.c_str())) {
         ByteDynArray data, ClearPIN;
         data.load(sPath.c_str());
-        uint8_t *ptr = data.data();
+        
+        std::string ciphertext((char*)data.data(), data.size());
+        std::string plaintext;
+        
+        decrypt(ciphertext, plaintext);
+        
+        uint8_t *ptr = (uint8_t *)plaintext.c_str();
         uint32_t len = *(uint32_t*)ptr; ptr += sizeof(uint32_t);
         ClearPIN.resize(len); ClearPIN.copy(ByteArray(ptr, len));
         
@@ -332,6 +354,36 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     ByteArray baCertificate(certificate, certificateSize);
     ByteArray baFirstPIN(FirstPIN, FirstPINSize);
     
+    uint32_t pinlen = (uint32_t)baFirstPIN.size();
+    uint32_t certlen = (uint32_t)baCertificate.size();
+    
+    byte key[ CryptoPP::AES::DEFAULT_KEYLENGTH ], iv[ CryptoPP::AES::BLOCKSIZE ];
+    memset( key, 0x00, CryptoPP::AES::DEFAULT_KEYLENGTH );
+    memset( iv, 0x00, CryptoPP::AES::BLOCKSIZE );
+    
+    std::string ciphertext;
+    std::string enckey = ENCRYPTION_KEY;
+    
+    byte digest[SHA1::DIGESTSIZE];
+    SHA1().CalculateDigest(digest, (byte*)enckey.c_str(), enckey.length());
+    memcpy(key, digest, CryptoPP::AES::DEFAULT_KEYLENGTH );
+    //
+    // Create Cipher Text
+    //
+    CryptoPP::AES::Encryption aesEncryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
+    CryptoPP::CBC_Mode_ExternalCipher::Encryption cbcEncryption( aesEncryption, iv );
+    
+    CryptoPP::StreamTransformationFilter stfEncryptor(cbcEncryption, new CryptoPP::StringSink( ciphertext ) );
+    stfEncryptor.Put( reinterpret_cast<const unsigned char*>(&pinlen), sizeof(pinlen));
+    stfEncryptor.Put( reinterpret_cast<const unsigned char*>( baFirstPIN.data() ), pinlen );
+    
+    stfEncryptor.Put( reinterpret_cast<const unsigned char*>(&certlen), sizeof(certlen));
+    stfEncryptor.Put( reinterpret_cast<const unsigned char*>( baCertificate.data() ), certlen );
+    
+    stfEncryptor.MessageEnd();
+    
+    
+    
     char* home = getenv("HOME");
     std::string path(home);
     std::smatch match;
@@ -353,23 +405,31 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     path.append(".cache");
             
     std::ofstream file(sPath.c_str(), std::ofstream::out | std::ofstream::binary);
-    std::ofstream fileForCIEToken(path.c_str(), std::ofstream::out | std::ofstream::binary);
-    
-    uint32_t len = (uint32_t)baFirstPIN.size();
-    file.write((char*)&len, sizeof(len));
-    file.write((char*)baFirstPIN.data(), len);
-    len = (uint32_t)baCertificate.size();
-    file.write((char*)&len, sizeof(len));
-    file.write((char*)baCertificate.data(), len);
+    file.write(ciphertext.c_str(), ciphertext.length());
     file.close();
     
-    len = (uint32_t)baFirstPIN.size();
-    fileForCIEToken.write((char*)&len, sizeof(len));
-    fileForCIEToken.write((char*)baFirstPIN.data(), len);
-    len = (uint32_t)baCertificate.size();
-    fileForCIEToken.write((char*)&len, sizeof(len));
-    fileForCIEToken.write((char*)baCertificate.data(), len);
+    std::ofstream fileForCIEToken(path.c_str(), std::ofstream::out | std::ofstream::binary);
+    fileForCIEToken.write(ciphertext.c_str(), ciphertext.length());
     fileForCIEToken.close();
+    
+    
+//    
+//    
+//    uint32_t len = (uint32_t)baFirstPIN.size();
+//    file.write((char*)&len, sizeof(len));
+//    file.write((char*)baFirstPIN.data(), len);
+//    len = (uint32_t)baCertificate.size();
+//    file.write((char*)&len, sizeof(len));
+//    file.write((char*)baCertificate.data(), len);
+//    file.close();
+//    
+//    len = (uint32_t)baFirstPIN.size();
+//    fileForCIEToken.write((char*)&len, sizeof(len));
+//    fileForCIEToken.write((char*)baFirstPIN.data(), len);
+//    len = (uint32_t)baCertificate.size();
+//    fileForCIEToken.write((char*)&len, sizeof(len));
+//    fileForCIEToken.write((char*)baCertificate.data(), len);
+//    fileForCIEToken.close();
 }
 
 #endif
