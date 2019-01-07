@@ -48,12 +48,6 @@ int socket_desc;
     
     _popover = [[NSPopover alloc] init];
     
-    MessageViewController* vc = MessageViewController.freshController;
-    vc.popover = _popover;
-    _messageLabel = vc.messageLabel;
-    
-    _popover.contentViewController = vc;
-    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [self startServer];
     });
@@ -94,20 +88,33 @@ int socket_desc;
 
 - (void) pinLocked
 {
-    _messageLabel.stringValue = @"La carta è bloccata. Aprire CIE ID e sbloccarla usando il PUK";
+    MessageViewController* vc = MessageViewController.freshController;
+    vc.popover = _popover;
+    _popover.contentViewController = vc;
     [self showPopover:self];
+    
+    vc.messageLabel.stringValue = @"La carta è bloccata. Aprire CIE ID e sbloccarla usando il PUK";
+    
 }
 
 - (void) pinWrong: (int) remainingTrials
 {
-    _messageLabel.stringValue = @"Il PIN digitato è errato";
+    MessageViewController* vc = MessageViewController.freshController;
+    vc.popover = _popover;
+    _popover.contentViewController = vc;
     [self showPopover:self];
+    
+    vc.messageLabel.stringValue = @"Il PIN digitato è errato";
 }
 
 - (void) cardNotRegistered: (NSString*) pan
 {
-    _messageLabel.stringValue = @"La carta non abbinata. Aprire CIE ID per abbinare la carta";
+    MessageViewController* vc = MessageViewController.freshController;
+    vc.popover = _popover;
+    _popover.contentViewController = vc;
     [self showPopover:self];
+    
+    vc.messageLabel.stringValue = @"La carta non è stata abbinata. Aprire CIE ID per abbinare la carta";
 }
 
 
@@ -123,6 +130,7 @@ int socket_desc;
     if (socket_desc == -1)
     {
         printf("Could not create socket");
+        return -1;
     }
     
     puts("Socket created");

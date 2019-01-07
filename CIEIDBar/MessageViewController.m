@@ -6,6 +6,7 @@
 //  Copyright © 2019 IPZS. All rights reserved.
 //
 
+
 #import "MessageViewController.h"
 
 @interface MessageViewController ()
@@ -28,6 +29,12 @@
     return vc;
 }
 - (IBAction)openCIEID:(id)sender {
+    NSTask *task = [[NSTask alloc] init];
+    
+    task.launchPath = @"/usr/bin/open";
+    task.arguments = @[@"-n", @"/Applications/CIE ID.app"];//, [NSString stringWithUTF8String:szPAN]];
+    
+    [task launch];
 }
 
 - (IBAction)close:(id)sender {
