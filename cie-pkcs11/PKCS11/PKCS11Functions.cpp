@@ -108,6 +108,7 @@ CK_FUNCTION_LIST pkcs11_function_list = {
 };
 #undef CK_PKCS11_FUNCTION_INFO
 
+
 __attribute__((constructor)) void DllMainAttach()
 {
     // code

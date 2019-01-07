@@ -7,8 +7,12 @@
 //
 
 #include <stdio.h>
-#include "AbilitaCIE.h"
 #include <Foundation/Foundation.h>
+
+#include<stdio.h>    //printf
+#include<string.h>    //strlen
+#include<sys/socket.h>    //socket
+#include<arpa/inet.h>    //inet_addr
 
 #include <AppKit/AppKit.h>
 
@@ -20,4 +24,75 @@ void showUI(const char* szPAN)
     task.arguments = @[@"-n", @"/Applications/CIE ID.app"];//, [NSString stringWithUTF8String:szPAN]];
 
     [task launch];
+}
+
+int sendMessage(const char* szCommand, const char* szParam)
+{
+    int sock;
+    struct sockaddr_in server;
+    char szMessage[100] , szServerReply[100];
+    
+    //Create socket
+    sock = socket(AF_INET , SOCK_STREAM , 0);
+    if (sock == -1)
+    {
+        printf("Could not create socket");
+    }
+    puts("Socket created");
+    
+    server.sin_addr.s_addr = inet_addr("127.0.0.1");
+    server.sin_family = AF_INET;
+    server.sin_port = htons( 88888 );
+    
+    //Connect to remote server
+    if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
+    {
+        perror("connect failed. Error");
+        return 1;
+    }
+    
+    puts("Connected\n");
+    
+    if(szParam)
+        sprintf(szMessage, "%s:%s", szCommand, szParam);
+    else
+        sprintf(szMessage, "%s", szCommand);
+    
+    //Send some data
+    if( send(sock , szMessage , strlen(szMessage) , 0) < 0)
+    {
+        puts("Send failed");
+        return 2;
+    }
+    
+    //Receive a reply from the server
+    if( recv(sock , szServerReply , 100 , 0) < 0)
+    {
+        puts("recv failed");
+        return 3;
+    }
+    
+    puts("Server reply :");
+    puts(szServerReply);
+    
+    close(sock);
+    return 0;
+}
+
+void notifyPINLocked()
+{
+    sendMessage("pinlocked", NULL);
+}
+
+void notifyPINWrong(int trials)
+{
+    char szParam[100];
+    sprintf(szParam, "%d", trials);
+    
+    sendMessage("pinwrong", szParam);
+}
+
+void notifyCardNotRegistered(const char* szPAN)
+{
+    sendMessage("cardnotregistered", szPAN);        
 }

@@ -38,6 +38,7 @@ void GetPublicKeyFromCert(CryptoPP::BufferedTransformation & certin,
                           CryptoPP::Integer &serial);
 
 void showUI(const char* szPAN);
+void notifyCardNotRegistered(const char* szPAN);
 
 IAS::IAS(CToken::TokenTransmitCallback transmit,ByteArray ATR)
 {
@@ -1200,7 +1201,8 @@ void IAS::GetCertificate(ByteDynArray &certificate,bool askEnable) {
                 
 		if (askEnable) {
             
-            showUI(PANStr.c_str());
+            notifyCardNotRegistered(PANStr.c_str());
+            //showUI(PANStr.c_str());
             
             return;
 		}

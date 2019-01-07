@@ -10,6 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol CIEPopoverProtocol
+
+- (void) showPopover: (NSObject*) sender;
+- (void) closePopover: (NSObject*) sender;
+
+@end
+
 @interface MessageViewController : NSViewController
 
 @property (weak) IBOutlet NSTextField *messageLabel;

@@ -15,6 +15,9 @@ extern CLog Log;
 using namespace CryptoPP;
 using namespace lcp;
 
+void notifyPINLocked();
+void notifyPINWrong(int trials);
+
 void GetCertInfo(CryptoPP::BufferedTransformation & certin,
                std::string & serial,
                CryptoPP::BufferedTransformation & issuer,
@@ -410,18 +413,26 @@ void CIEtemplateLogin(void *pTemplateData, CK_USER_TYPE userType, ByteArray &Pin
 
 		if (sw == 0x6983) {
 			if (userType == CKU_USER)
-				cie->ias.IconaSbloccoPIN();
-			throw p11_error(CKR_PIN_LOCKED);
+            {
+                notifyPINLocked();
+				//cie->ias.IconaSbloccoPIN();
+                throw p11_error(CKR_PIN_LOCKED);
+            }
 		}
 		if (sw >= 0x63C0 && sw <= 0x63CF) {
-			//*pcAttemptsRemaining = sw - 0x63C0;
+			int attemptsRemaining = sw - 0x63C0;
+            notifyPINWrong(attemptsRemaining);
 			throw p11_error(CKR_PIN_INCORRECT);
 		}
 		if (sw == 0x6700) {
+            notifyPINWrong(-1);
 			throw p11_error(CKR_PIN_INCORRECT);
 		}
 		if (sw == 0x6300)
+        {
+            notifyPINWrong(-1);
 			throw p11_error(CKR_PIN_INCORRECT);
+        }
 		if (sw != 0x9000) {
 			throw scard_error(sw);
 		}
