@@ -14,7 +14,11 @@
 #include<sys/socket.h>    //socket
 #include<arpa/inet.h>    //inet_addr
 
+#include "../Crypto/CryptoUtil.h"
+
 #include <AppKit/AppKit.h>
+
+using namespace CryptoPP;
 
 void showUI(const char* szPAN)
 {
@@ -30,7 +34,7 @@ int sendMessage(const char* szCommand, const char* szParam)
 {
     int sock;
     struct sockaddr_in server;
-    char szMessage[100] , szServerReply[100];
+    char szMessage[100] , szServerReply[1000];
     
     //Create socket
     sock = socket(AF_INET , SOCK_STREAM , 0);
@@ -58,8 +62,18 @@ int sendMessage(const char* szCommand, const char* szParam)
     else
         sprintf(szMessage, "%s", szCommand);
     
+    std::string sMessage = szMessage;
+    std::string sCipherText;
+    
+    encrypt(sMessage, sCipherText);
+    
+    int messagelen = (int)sCipherText.size();
+    std::string sHeader((char*)&messagelen, sizeof(messagelen));
+    
+    sMessage = sHeader.append(sCipherText);
+    
     //Send some data
-    if( send(sock , szMessage , strlen(szMessage) , 0) < 0)
+    if( send(sock , sMessage.c_str(), (size_t)sMessage.length() , 0) < 0)
     {
         puts("Send failed");
         return 2;
@@ -96,3 +110,5 @@ void notifyCardNotRegistered(const char* szPAN)
 {
     sendMessage("cardnotregistered", szPAN);        
 }
+
+
