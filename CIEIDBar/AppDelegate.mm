@@ -113,6 +113,9 @@ int socket_desc;
     [self showPopover:self];
     
     vc.messageLabel.stringValue = @"Il PIN digitato è errato";
+    
+    vc.cieidButton.hidden = YES;
+    vc.closeButton.frame = CGRectMake((vc.view.frame.size.width - vc.closeButton.frame.size.width) / 2, vc.closeButton.frame.origin.y, vc.closeButton.frame.size.width, vc.closeButton.frame.size.height);
 }
 
 - (void) cardNotRegistered: (NSString*) pan
