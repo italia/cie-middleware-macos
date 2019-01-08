@@ -3,8 +3,12 @@
 #
 # Author: Ugo Chirico [10/10/2018]
 
-echo -n "Registering CIECryptoTokenKit " > log.txt
+echo "Registering CIECryptoTokenKit " > ~/packagelog.txt
 
-exec sudo -u _securityagent pluginkit -a /Applications/CIE\ ID.app/Contents/PlugIns/CIEToken.appex
+sudo -u _securityagent pluginkit -a /Applications/CIE\ ID.app/Contents/PlugIns/CIEToken.appex
 
-exec sudo -u launchctl load /Library/LaunchAgents/it.ipzs.CIE-ID-Bar.plist
+echo -n "Registering CIECryptoTokenKit OK" > ~/packagelog.txt
+
+launchctl load /Library/LaunchAgents/it.ipzs.CIE-ID-Bar.plist
+
+echo "Loading Bar OK " > ~/packagelog.txt
