@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
     </dependencies>
     <objects>
@@ -19,7 +20,7 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu id="1cg-aG-lkh">
             <items>
-                <menuItem title="Quit" id="gTl-M5-Gs4" userLabel="Quit">
+                <menuItem title="Esci" id="gTl-M5-Gs4" userLabel="Quit">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="menuItemQuit:" target="Voe-Tx-rLC" id="abp-I1-D6r"/>
