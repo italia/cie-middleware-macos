@@ -219,7 +219,7 @@
 		E50F9EF0217A27570083C821 /* help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
 		E523656021E389B80037C684 /* keys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keys.h; sourceTree = "<group>"; };
 		E523656221E38D3B0037C684 /* CryptoUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptoUtil.h; sourceTree = "<group>"; };
-		E526E9FB21E0C44F0098AE8A /* CIEIDBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CIEIDBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E526E9FB21E0C44F0098AE8A /* CIE ID Bar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CIE ID Bar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E526E9FD21E0C44F0098AE8A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E526E9FE21E0C44F0098AE8A /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		E526EA0021E0C4500098AE8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -699,7 +699,7 @@
 				E570A77F2168B72600658AAF /* SbloccoPIN.app */,
 				E570A7B02168C22800658AAF /* CIEToken.appex */,
 				E544F56321BFAFC60038B2CA /* CIE ID.app */,
-				E526E9FB21E0C44F0098AE8A /* CIEIDBar.app */,
+				E526E9FB21E0C44F0098AE8A /* CIE ID Bar.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -828,9 +828,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		E526E9FA21E0C44F0098AE8A /* CIEIDBar */ = {
+		E526E9FA21E0C44F0098AE8A /* CIE ID Bar */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E526EA0921E0C4500098AE8A /* Build configuration list for PBXNativeTarget "CIEIDBar" */;
+			buildConfigurationList = E526EA0921E0C4500098AE8A /* Build configuration list for PBXNativeTarget "CIE ID Bar" */;
 			buildPhases = (
 				E526E9F721E0C44F0098AE8A /* Sources */,
 				E526E9F821E0C44F0098AE8A /* Frameworks */,
@@ -840,9 +840,9 @@
 			);
 			dependencies = (
 			);
-			name = CIEIDBar;
+			name = "CIE ID Bar";
 			productName = CIEIDBar;
-			productReference = E526E9FB21E0C44F0098AE8A /* CIEIDBar.app */;
+			productReference = E526E9FB21E0C44F0098AE8A /* CIE ID Bar.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E544F56221BFAFC60038B2CA /* CIE ID */ = {
@@ -1042,7 +1042,7 @@
 				E570A77E2168B72600658AAF /* SbloccoPIN */,
 				E570A7AF2168C22800658AAF /* CIEToken */,
 				E544F56221BFAFC60038B2CA /* CIE ID */,
-				E526E9FA21E0C44F0098AE8A /* CIEIDBar */,
+				E526E9FA21E0C44F0098AE8A /* CIE ID Bar */,
 			);
 		};
 /* End PBXProject section */
@@ -1382,10 +1382,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CIEIDBar;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID-Bar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1407,9 +1407,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CIEIDBar;
+				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID-Bar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1793,7 +1793,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E526EA0921E0C4500098AE8A /* Build configuration list for PBXNativeTarget "CIEIDBar" */ = {
+		E526EA0921E0C4500098AE8A /* Build configuration list for PBXNativeTarget "CIE ID Bar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E526EA0A21E0C4500098AE8A /* Debug */,

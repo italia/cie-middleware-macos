@@ -38,14 +38,17 @@ int socket_desc;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     
-    [[NSAppleEventManager sharedAppleEventManager] setEventHandler:self andSelector:@selector(getURL:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
+    if ([NSRunningApplication runningApplicationsWithBundleIdentifier: NSBundle.mainBundle.bundleIdentifier].count > 1)
+    {
+        [NSApplication.sharedApplication terminate:self];
+    }
     
     _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength: NSVariableStatusItemLength];
     
     NSImage* icon = [NSImage imageNamed:@"icona_minimize_01"];
     //icon.template = true; // best for dark mode
     _statusItem.image = icon;
-    //_statusItem.menu = _statusMenu;
+    _statusItem.menu = _statusMenu;
     
     NSButton* button = _statusItem.button;
     button.image = icon;
