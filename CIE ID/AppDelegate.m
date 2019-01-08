@@ -16,6 +16,11 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    
+    if ([NSRunningApplication runningApplicationsWithBundleIdentifier: NSBundle.mainBundle.bundleIdentifier].count > 1)
+    {
+        [NSApplication.sharedApplication terminate:self];
+    }
 }
 
 

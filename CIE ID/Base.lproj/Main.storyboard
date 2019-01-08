@@ -19,7 +19,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="CIE ID" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="Quit CIE ID" keyEquivalent="q" id="4sb-4s-VLi">
+                                        <menuItem title="Chiudi CIE ID" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
                                             </connections>
