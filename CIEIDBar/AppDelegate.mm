@@ -16,6 +16,8 @@
 
 #include "../cie-pkcs11/Crypto/CryptoUtil.h"
 
+#include "../cie-pkcs11/Util/UUCProperties.h"
+
 using namespace CryptoPP;
 
 @interface AppDelegate ()
@@ -30,6 +32,7 @@ using namespace CryptoPP;
 bool isRunning = false;
 int socket_desc;
 
+#define UPDATE_URL @"https://www.cartaidentita.interno.gov.it/cie.-middleware-macos.props"
 
 - (IBAction)menuItemQuit:(id)sender {
     [NSApplication.sharedApplication terminate:self];
@@ -58,6 +61,53 @@ int socket_desc;
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [self startServer];
+    });
+    
+    // start verifica presenza versione aggiornata
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:UPDATE_URL]];
+        if(data)
+        {
+            UUCByteArray baData((const BYTE*)data.bytes, data.length);
+            
+            UUCProperties props;
+            props.load(baData);
+            
+            const char* lastUpdate = props.getProperty("last-update", NULL);
+            const char* url = props.getProperty("url", NULL);
+            
+            if(lastUpdate)
+            {
+                NSString* storedlastupdate = [NSUserDefaults.standardUserDefaults objectForKey:@"last-update"];
+                
+                if(storedlastupdate)
+                {
+                    if([storedlastupdate compare:[NSString stringWithUTF8String:lastUpdate]] == NSOrderedDescending )
+                    {
+                        // nuova versione disponibile
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            MessageViewController* vc = MessageViewController.freshController;
+                            vc.popover = self.popover;
+                            self.popover.contentViewController = vc;
+                            [self showPopover:self];
+                            
+                            vc.messageLabel.stringValue = @"Una nuova versione è disponibile per l'installazione";
+                            vc.cieidButton.stringValue = @"Installa";
+                            vc.cieidButton.tag = 100;
+                            
+                            [NSUserDefaults.standardUserDefaults setObject:[NSString stringWithUTF8String:url] forKey:@"url"];
+                            [NSUserDefaults.standardUserDefaults synchronize];                            
+                        });
+                    }
+                }
+                else
+                {
+                    [NSUserDefaults.standardUserDefaults setObject:[NSString stringWithUTF8String:lastUpdate] forKey:@"last-update"];
+                    [NSUserDefaults.standardUserDefaults setObject:[NSString stringWithUTF8String:url] forKey:@"url"];
+                    [NSUserDefaults.standardUserDefaults synchronize];
+                }
+            }
+        }
     });
 }
 
@@ -89,9 +139,7 @@ int socket_desc;
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
     isRunning = false;
-    close(socket_desc);
-    
-//    [_daemon stop];
+    close(socket_desc);    
 }
 
 - (void) pinLocked
