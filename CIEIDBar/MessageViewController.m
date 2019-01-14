@@ -29,18 +29,28 @@
     return vc;
 }
 
-- (IBAction)openCIEID:(id)sender {
-    NSTask *task = [[NSTask alloc] init];
+- (IBAction)openCIEID:(NSButton*)sender {
     
-    task.launchPath = @"/usr/bin/open";
-    task.arguments = @[@"-n", @"/Applications/CIE ID.app"];//, [NSString stringWithUTF8String:szPAN]];
+    if(sender && sender.tag == 100)
+    {
+        NSString* url = [NSUserDefaults.standardUserDefaults objectForKey:@"url"];
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString: url]];
+    }
+    else
+    {
+        NSTask *task = [[NSTask alloc] init];
+        
+        task.launchPath = @"/usr/bin/open";
+        task.arguments = @[@"-n", @"/Applications/CIE ID.app"];//, [NSString stringWithUTF8String:szPAN]];
+        
+        [task launch];
+    }
     
-    [task launch];
+    [_popover performClose:sender];
 }
 
 - (IBAction)close:(id)sender {
     [_popover performClose:sender];
 }
 
- 
 @end
