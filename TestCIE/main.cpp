@@ -668,10 +668,7 @@ int main(int argc, char* argv[])
     
     g_nLogLevel = 5;
     
-    // carica il modulo specificato nelle properties
-    //const char* szCryptoki = g_confProps.getProperty("cryptoki", "cnscki.dll");
     const char* szCryptoki = "libcie-pkcs11.dylib";
-//    const char* szCryptoki = "libbit4xpki.dylib";
     std::cout << "Load Module " << szCryptoki <<  std::endl;
     
     void* hModule = dlopen(szCryptoki, RTLD_LOCAL | RTLD_LAZY);
