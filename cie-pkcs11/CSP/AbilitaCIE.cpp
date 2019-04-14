@@ -1,8 +1,15 @@
+//
+//  AbilitaCIE.cpp
+//  cie-pkcs11
+//
+//  Created by ugo chirico on 06/10/18. http://www.ugochirico.com
+//  Copyright © 2018 IPZS. All rights reserved.
+//
+
 #include "IAS.h"
 #include "../PKCS11/wintypes.h"
 #include "../PKCS11/PKCS11Functions.h"
 #include "../PKCS11/Slot.h"
-//#include "CSP.h"
 #include "../Util/ModuleInfo.h"
 #include "../Crypto/sha256.h"
 #include <functional>
