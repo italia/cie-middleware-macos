@@ -2,7 +2,7 @@
 //  AbilitaCIE.h
 //  cie-pkcs11
 //
-//  Created by ugo chirico on 02/09/18.
+//  Created by ugo chirico on 02/09/18. http://www.ugochirico.com
 //  Copyright © 2018 IPZS. All rights reserved.
 //
 #include "../PKCS11/cryptoki.h"
