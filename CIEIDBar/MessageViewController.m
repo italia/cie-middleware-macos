@@ -25,7 +25,7 @@
 + (MessageViewController*) freshController {
     
     MessageViewController* vc = (MessageViewController*)[[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
-    
+         
     return vc;
 }
 

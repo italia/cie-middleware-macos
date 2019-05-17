@@ -1,7 +1,12 @@
 #pragma once
 #include "../Crypto/SHA1.h"
+#include "../Crypto/sha256.h"
 #include "../Crypto/MD5.h"
 #include "cryptoki.h"
+//#pragma pack(1)
+//#include "pkcs11.h"
+//#pragma pack()
+
 #include <memory>
 
 namespace p11 {
@@ -20,12 +25,14 @@ namespace p11 {
 	class CDigest : public CMechanism
 	{
 	public:
+		ByteDynArray data;
+
 		CDigest(CK_MECHANISM_TYPE type, std::shared_ptr<CSession> Session);
 		virtual ~CDigest();
 
 		virtual void DigestInit() = 0;
 		virtual void DigestUpdate(ByteArray &Part) = 0;
-		virtual void DigestFinal(ByteDynArray &Digest) = 0;
+		virtual void DigestFinal(ByteArray &Digest) = 0;
 		virtual CK_ULONG DigestLength() = 0;
 		virtual ByteArray DigestInfo() = 0;
 		virtual ByteDynArray  DigestGetOperationState() = 0;
@@ -148,7 +155,7 @@ namespace p11 {
 		virtual void SignRecoverSetOperationState(ByteArray &OperationState);
 	};
 
-	class CEncrypt : public CMechanism
+	/*class CEncrypt : public CMechanism
 	{
 	public:
 		CK_OBJECT_HANDLE hEncryptKey;
@@ -176,9 +183,10 @@ namespace p11 {
 		ByteDynArray EncryptCompute(ByteArray &baPlainData);
 		ByteDynArray EncryptGetOperationState();
 		void EncryptSetOperationState(ByteArray &OperationState);
-	};
+	};*/
 
-	class CDecrypt : public CMechanism
+
+	/*class CDecrypt : public CMechanism
 	{
 		static uint8_t uninitializedCacheData;
 	public:
@@ -212,7 +220,7 @@ namespace p11 {
 		CK_ULONG DecryptLength();
 		ByteDynArray  DecryptGetOperationState();
 		void DecryptSetOperationState(ByteArray &OperationState);
-	};
+	};*/
 
 	class CDigestSHA : public CDigest
 	{
@@ -224,7 +232,24 @@ namespace p11 {
 
 		void DigestInit();
 		void DigestUpdate(ByteArray &Part);
-		void DigestFinal(ByteDynArray &Digest);
+		void DigestFinal(ByteArray &Digest);
+		CK_ULONG DigestLength();
+		ByteArray DigestInfo();
+		ByteDynArray  DigestGetOperationState();
+		void DigestSetOperationState(ByteArray &OperationState);
+	};
+
+	class CDigestSHA256 : public CDigest
+	{
+	public:
+		CDigestSHA256(std::shared_ptr<CSession> Session);
+		virtual ~CDigestSHA256();
+
+		CSHA256 sha256;
+
+		void DigestInit();
+		void DigestUpdate(ByteArray &Part);
+		void DigestFinal(ByteArray &Digest);
 		CK_ULONG DigestLength();
 		ByteArray DigestInfo();
 		ByteDynArray  DigestGetOperationState();
@@ -241,14 +266,14 @@ namespace p11 {
 
 		void DigestInit();
 		void DigestUpdate(ByteArray &Part);
-		void DigestFinal(ByteDynArray &Digest);
+		void DigestFinal(ByteArray &Digest);
 		CK_ULONG DigestLength();
 		ByteArray DigestInfo();
 		ByteDynArray  DigestGetOperationState();
 		void DigestSetOperationState(ByteArray &OperationState);
 	};
 
-	class CRSA_X509 : public CSignRSA, public CSignRecoverRSA, public CVerifyRSA, public CVerifyRecoverRSA, public CEncryptRSA, public CDecryptRSA
+	/*class CRSA_X509 : public CSignRSA, public CSignRecoverRSA, public CVerifyRSA, public CVerifyRecoverRSA, public CEncryptRSA, public CDecryptRSA
 	{
 	public:
 		CRSA_X509(std::shared_ptr<CSession> Session);
@@ -283,9 +308,9 @@ namespace p11 {
 		ByteDynArray DecryptFinal();
 		ByteDynArray DecryptRemovePadding(ByteArray &paddedData);
 
-	};
+	};*/
 
-	class CRSA_PKCS1 : public CSignRSA, public CSignRecoverRSA, public CVerifyRSA, public CVerifyRecoverRSA, public CEncryptRSA, public CDecryptRSA
+	class CRSA_PKCS1 : public CSignRSA, public CSignRecoverRSA, public CVerifyRSA, public CVerifyRecoverRSA/*, public CEncryptRSA, public CDecryptRSA*/
 	{
 	public:
 		CRSA_PKCS1(std::shared_ptr<CSession> Session);
@@ -293,8 +318,8 @@ namespace p11 {
 
 		ByteDynArray baVerifyBuffer;
 		ByteDynArray baSignBuffer;
-		ByteDynArray baEncryptBuffer;
-		ByteDynArray baDecryptBuffer;
+		/*ByteDynArray baEncryptBuffer;
+		ByteDynArray baDecryptBuffer;*/
 
 		void VerifyInit(CK_OBJECT_HANDLE PublicKey);
 		void VerifyUpdate(ByteArray &Part);
@@ -311,14 +336,14 @@ namespace p11 {
 		void SignRecoverInit(CK_OBJECT_HANDLE PrivateKey);
 		ByteDynArray SignRecover(ByteArray &baData);
 
-		void EncryptInit(CK_OBJECT_HANDLE PublicKey);
+		/*void EncryptInit(CK_OBJECT_HANDLE PublicKey);
 		ByteDynArray  EncryptUpdate(ByteArray &Data);
 		ByteDynArray  EncryptFinal();
 
 		void DecryptInit(CK_OBJECT_HANDLE PrivateKey);
 		ByteDynArray  DecryptUpdate(ByteArray &EncryptedData);
 		ByteDynArray DecryptFinal();
-		ByteDynArray DecryptRemovePadding(ByteArray &paddedData);
+		ByteDynArray DecryptRemovePadding(ByteArray &paddedData);*/
 	};
 
 	class CSignRSAwithDigest : public CSignRSA
@@ -368,6 +393,15 @@ namespace p11 {
 		virtual ~CRSAwithSHA1();
 
 		CDigestSHA sha1;
+	};
+
+	class CRSAwithSHA256 : public CSignRSAwithDigest, public CVerifyRSAwithDigest
+	{
+	public:
+		CRSAwithSHA256(std::shared_ptr<CSession> Session);
+		virtual ~CRSAwithSHA256();
+
+		CDigestSHA256 sha256;
 	};
 
 }
