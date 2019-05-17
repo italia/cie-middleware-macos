@@ -355,5 +355,69 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestCIE/main.cpp"
+            timestampString = "579796604.6248111"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "642"
+            endingLineNumber = "642"
+            landmarkName = "digest(CK_SESSION_HANDLE hSession, CK_MECHANISM_TYPE mechanism)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "cie-pkcs11/Util/UUCByteArray.cpp"
+            timestampString = "579796604.624871"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
+            landmarkName = "UUCByteArray::toHexString(int nSize)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "UUCByteArray::toHexString(int)"
+                  moduleName = "TestCIE"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ugos/Documents/Projects/cie-middleware-macos/cie-pkcs11/Util/UUCByteArray.cpp"
+                  timestampString = "579796604.9362659"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "303"
+                  endingLineNumber = "303"
+                  offsetFromSymbolStart = "19">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "UUCByteArray::toHexString(int)"
+                  moduleName = "libcie-pkcs11.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ugos/Documents/Projects/cie-middleware-macos/cie-pkcs11/Util/UUCByteArray.cpp"
+                  timestampString = "579796605.717557"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "303"
+                  endingLineNumber = "303"
+                  offsetFromSymbolStart = "19">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
