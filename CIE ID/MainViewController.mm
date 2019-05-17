@@ -231,6 +231,11 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)onDisabilita:(id)sender
 {
+    [self askRemove:@"Vuoi rimuovere la CIE attualmente abbinata?" withTitle:@"Rimozione CIE"];
+}
+
+- (void) disabilita
+{
     NSString* pan = [NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"];
     
     // check se abilitata ossia se cache presente
@@ -1093,6 +1098,28 @@ CK_RV completedCallback(string& PAN,
 {
     if(*contextInfo)
         exit(0);
+}
+
+- (void) askRemove: (NSString*) message withTitle: (NSString*) title
+{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"SI"];
+        [alert addButtonWithTitle:@"No"];
+        [alert setMessageText:title];
+        [alert setInformativeText:message];
+        [alert setAlertStyle:NSAlertStyleInformational];
+        
+        [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(askRemoveDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    });
+}
+
+
+- (void)askRemoveDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(bool*)contextInfo
+{
+    if(returnCode == NSAlertFirstButtonReturn)
+        [self disabilita];
 }
 
 
