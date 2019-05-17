@@ -320,7 +320,7 @@ const char* UUCByteArray::toHexString(int nSize)
 		for(unsigned int i = 0; i < nSize; i++)
 		{
 			snprintf(szDigit, 3, "%02X", m_pbtContent[i]);
-			strlcat(m_szHex, szDigit, 2);
+			strcat(m_szHex, szDigit);
 		}	
 
 		return m_szHex;
