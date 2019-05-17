@@ -1181,6 +1181,17 @@ bool IAS::IsEnrolled() {
 	return CacheExists(PANStr.c_str());
 }
 
+bool IAS::IsEnrolled(const char* szPAN) {
+    init_func
+    return CacheExists(szPAN);
+}
+
+
+bool IAS::Unenroll(const char* szPAN) {
+    init_func
+    return CacheRemove(szPAN);
+}
+
 bool IAS::Unenroll() {
     init_func
     std::string PANStr;

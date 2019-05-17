@@ -144,13 +144,24 @@ int socket_desc;
 
 - (void) pinLocked
 {
+    
     MessageViewController* vc = MessageViewController.freshController;
     vc.popover = _popover;
     _popover.contentViewController = vc;
     [self showPopover:self];
     
-    vc.messageLabel.stringValue = @"La carta è bloccata. Aprire CIE ID e sbloccarla usando il PUK";
+    BOOL processIsRunning = self.cieidIsRunning;
     
+    if(processIsRunning)
+    {
+        vc.messageLabel.stringValue = @"La carta è bloccata. Sbloccarla usando il PUK";
+        vc.cieidButton.hidden = YES;
+        vc.closeButton.frame = CGRectMake((vc.view.frame.size.width - vc.closeButton.frame.size.width) / 2, vc.closeButton.frame.origin.y, vc.closeButton.frame.size.width, vc.closeButton.frame.size.height);
+    }
+    else
+    {
+        vc.messageLabel.stringValue = @"La carta è bloccata. Aprire CIE ID e sbloccarla usando il PUK";
+    }
 }
 
 - (void) pinWrong: (int) remainingTrials
@@ -173,7 +184,16 @@ int socket_desc;
     _popover.contentViewController = vc;
     [self showPopover:self];
     
-    vc.messageLabel.stringValue = @"La carta non è stata abbinata. Aprire CIE ID per abbinare la carta";
+    BOOL processIsRunning = self.cieidIsRunning;
+    
+    if(processIsRunning)
+    {
+        vc.messageLabel.stringValue = @"La carta non è stata abbinata. Abbinare la carta";
+        vc.cieidButton.hidden = YES;
+        vc.closeButton.frame = CGRectMake((vc.view.frame.size.width - vc.closeButton.frame.size.width) / 2, vc.closeButton.frame.origin.y, vc.closeButton.frame.size.width, vc.closeButton.frame.size.height);
+    }
+    else
+        vc.messageLabel.stringValue = @"La carta non è stata abbinata. Aprire CIE ID per abbinare la carta";
 }
 
 
@@ -297,7 +317,10 @@ int socket_desc;
     [[NSWorkspace sharedWorkspace] openURL:helpFile];
 }
 
-
+- (bool) cieidIsRunning
+{
+    return [NSRunningApplication runningApplicationsWithBundleIdentifier: @"it.ipzs.CIE-ID"].count > 0;
+}
 
 
 @end

@@ -29,7 +29,7 @@ typedef CK_RV (*AbilitaCIEfn)(const char*  szPAN,
                               PROGRESS_CALLBACK progressCallBack,
                               COMPLETED_CALLBACK completedCallBack);
 
-typedef CK_RV (*VerificaCIEAbilitatafn)();
-typedef CK_RV (*DisabilitaCIEfn)();
+typedef CK_RV (*VerificaCIEAbilitatafn)(const char*  szPAN);
+typedef CK_RV (*DisabilitaCIEfn)(const char*  szPAN);
 
 

@@ -60,184 +60,45 @@ DWORD CardAuthenticateEx(IAS*       ias,
 
 extern "C" {
     CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack, COMPLETED_CALLBACK completedCallBack);
-    CK_RV CK_ENTRY VerificaCIEAbilitata();
-    CK_RV CK_ENTRY DisabilitaCIE();
+    CK_RV CK_ENTRY VerificaCIEAbilitata(const char*  szPAN);
+    CK_RV CK_ENTRY DisabilitaCIE(const char*  szPAN);
 }
 
-CK_RV CK_ENTRY VerificaCIEAbilitata()
+CK_RV CK_ENTRY VerificaCIEAbilitata(const char*  szPAN)
 {
-    DWORD len = 0;
-    
-    SCARDCONTEXT hSC;
-    
-    long nRet = SCardEstablishContext(SCARD_SCOPE_USER, nullptr, nullptr, &hSC);
-    if(nRet != SCARD_S_SUCCESS)
-        return CKR_DEVICE_ERROR;
-    
-    char* readers = NULL;
-    char* ATR = NULL;
-    if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
-        return CKR_TOKEN_NOT_PRESENT;
+    try {
+        if(IAS::IsEnrolled(szPAN))
+            return 1;
+        else
+            return 0;
     }
-    
-    if(len == 1)
-        return CKR_TOKEN_NOT_PRESENT;
-    
-    readers = (char*)malloc(len);
-    
-    if (SCardListReaders(hSC, nullptr, (char*)readers, &len) != SCARD_S_SUCCESS) {
-        free(readers);
-        return CKR_TOKEN_NOT_PRESENT;
-    }
-    
-    char *curreader = readers;
-    for (; curreader[0] != 0; curreader += strnlen(curreader, len) + 1)
+    catch(...)
     {
-        try
-        {
-            safeConnection conn(hSC, curreader, SCARD_SHARE_SHARED);
-            if (!conn.hCard)
-                continue;
-            
-            uint32_t atrLen = 40;
-            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
-                free(readers);
-                return CKR_DEVICE_ERROR;
-            }
-            
-            ATR = (char*)malloc(atrLen);
-            
-            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
-                free(readers);
-                free(ATR);
-                return CKR_DEVICE_ERROR;
-            }
-            
-            ByteArray atrBa((BYTE*)ATR, atrLen);
-            
-            IAS ias((CToken::TokenTransmitCallback)TokenTransmitCallback, atrBa);
-            ias.SetCardContext(&conn);
-            ias.SelectAID_IAS();
-            ias.ReadPAN();
-            
-            free(ATR);
-            free(readers);
-            
-            if(ias.IsEnrolled())
-                return 1;
-            else
-                return 0;
-        }
-        catch(...)
-        {
-            if(ATR)
-                free(ATR);
-            if(readers)
-                free(readers);
-            return CKR_GENERAL_ERROR;
-        }
+        return CKR_GENERAL_ERROR;
     }
-    
-    if(ATR)
-        free(ATR);
-    
-    if(readers)
-        free(readers);
     
     return CKR_TOKEN_NOT_PRESENT;
     
 }
 
-CK_RV CK_ENTRY DisabilitaCIE()
+CK_RV CK_ENTRY DisabilitaCIE(const char*  szPAN)
 {
-    DWORD len = 0;
-    
-    SCARDCONTEXT hSC;
-    
-    long nRet = SCardEstablishContext(SCARD_SCOPE_USER, nullptr, nullptr, &hSC);
-    if(nRet != SCARD_S_SUCCESS)
-        return CKR_DEVICE_ERROR;
-    
-    char* readers = NULL;
-    char* ATR = NULL;
-    
-    if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
-        return CKR_TOKEN_NOT_PRESENT;
-    }
-    
-    if(len == 1)
-        return CKR_TOKEN_NOT_PRESENT;
-    
-    readers = (char*)malloc(len);
-    
-    if (SCardListReaders(hSC, nullptr, (char*)readers, &len) != SCARD_S_SUCCESS) {
-        free(readers);
-        return CKR_TOKEN_NOT_PRESENT;
-    }
-    
-    char *curreader = readers;
-    for (; curreader[0] != 0; curreader += strnlen(curreader, len) + 1)
+    try
     {
-        try
+        if(IAS::IsEnrolled(szPAN))
         {
-            safeConnection conn(hSC, curreader, SCARD_SHARE_SHARED);
-            if (!conn.hCard)
-                continue;
-            
-            uint32_t atrLen = 0;
-            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
-                free(readers);
-                return CKR_DEVICE_ERROR;
-            }
-            
-            ATR = (char*)malloc(atrLen);
-            
-            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
-                free(readers);
-                free(ATR);
-                return CKR_DEVICE_ERROR;
-            }
-            
-            ByteArray atrBa((BYTE*)ATR, atrLen);
-            
-            IAS ias((CToken::TokenTransmitCallback)TokenTransmitCallback, atrBa);
-            
-            ias.SetCardContext(&conn);
-            
-            ias.token.Reset();
-            ias.SelectAID_IAS();
-            
-            ias.ReadPAN();
-            if(ias.IsEnrolled())
-            {
-                ias.Unenroll();
-                free(ATR);
-                free(readers);
-                return CKR_OK;
-            }
-            else
-            {
-                free(ATR);
-                free(readers);
-                return CKR_FUNCTION_FAILED;
-            }
+            IAS::Unenroll(szPAN);
+            return CKR_OK;
         }
-        catch(...)
+        else
         {
-            if(ATR)
-                free(ATR);
-            
-             free(readers);
-        
-            return CKR_GENERAL_ERROR;
+            return CKR_FUNCTION_FAILED;
         }
     }
-    
-    if(ATR)
-        free(ATR);
-    
-    free(readers);
-    
+    catch(...)
+    {
+        return CKR_GENERAL_ERROR;
+    }
     return CKR_TOKEN_NOT_PRESENT;
 }
 

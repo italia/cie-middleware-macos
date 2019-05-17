@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="14490.70"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -83,7 +83,7 @@
                                         <rect key="frame" x="0.0" y="290" width="200" height="50"/>
                                         <subviews>
                                             <button focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Ma-BO-83u">
-                                                <rect key="frame" x="10" y="-5" width="190" height="60"/>
+                                                <rect key="frame" x="10" y="10" width="190" height="30"/>
                                                 <buttonCell key="cell" type="squareTextured" title="Home" bezelStyle="texturedSquare" image="Risorsa 19" imagePosition="left" alignment="left" focusRingType="exterior" inset="2" id="grz-6Y-VtY">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -106,7 +106,7 @@
                                         <rect key="frame" x="0.0" y="232" width="200" height="50"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zw0-o0-VWc">
-                                                <rect key="frame" x="10" y="-5" width="190" height="60"/>
+                                                <rect key="frame" x="10" y="10" width="190" height="30"/>
                                                 <buttonCell key="cell" type="squareTextured" title="Cambia PIN" bezelStyle="texturedSquare" image="Risorsa 18" imagePosition="leading" alignment="left" inset="2" id="XP3-lM-Bl7">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -129,7 +129,7 @@
                                         <rect key="frame" x="0.0" y="174" width="200" height="50"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4sw-wd-jcx">
-                                                <rect key="frame" x="10" y="-5" width="190" height="60"/>
+                                                <rect key="frame" x="10" y="10" width="190" height="30"/>
                                                 <buttonCell key="cell" type="squareTextured" title="Sblocca Carta" bezelStyle="texturedSquare" image="Risorsa 17" imagePosition="leading" alignment="left" inset="2" id="2rQ-dm-hT1">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -152,7 +152,7 @@
                                         <rect key="frame" x="0.0" y="116" width="200" height="50"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s3d-nf-52P">
-                                                <rect key="frame" x="10" y="-5" width="190" height="60"/>
+                                                <rect key="frame" x="10" y="10" width="190" height="30"/>
                                                 <buttonCell key="cell" type="squareTextured" title="Tutorial" bezelStyle="texturedSquare" image="Risorsa 16" imagePosition="leading" alignment="left" inset="2" id="Ivh-9A-eyV">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -175,7 +175,7 @@
                                         <rect key="frame" x="0.0" y="58" width="200" height="50"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EHG-55-OLE">
-                                                <rect key="frame" x="10" y="-5" width="190" height="60"/>
+                                                <rect key="frame" x="10" y="10" width="190" height="30"/>
                                                 <buttonCell key="cell" type="squareTextured" title="Aiuto" bezelStyle="texturedSquare" image="Risorsa 15" imagePosition="leading" alignment="left" inset="2" id="r5G-lK-iuD">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -198,7 +198,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="50"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c5h-lq-Zc7">
-                                                <rect key="frame" x="10" y="-5" width="190" height="60"/>
+                                                <rect key="frame" x="10" y="10" width="190" height="30"/>
                                                 <buttonCell key="cell" type="squareTextured" title="Informazioni" bezelStyle="texturedSquare" image="Risorsa 14" imagePosition="leading" alignment="left" inset="2" id="2Pz-v6-4RI">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -297,7 +297,7 @@
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Phl-Lu-3h1" customClass="FlatButton" customModule="FlatButton">
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Phl-Lu-3h1">
                                                 <rect key="frame" x="220" y="23" width="110" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="bevel" title="Sblocca" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Er1-3v-SuR">
@@ -306,7 +306,13 @@
                                                     <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                            <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </buttonCell>
+                                                <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                         <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -438,7 +444,7 @@ DQ
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uqg-p4-pEb" customClass="FlatButton" customModule="FlatButton">
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uqg-p4-pEb">
                                                 <rect key="frame" x="220" y="23" width="110" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="bevel" title="Cambia PIN" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="2qs-u4-uer">
@@ -447,7 +453,13 @@ DQ
                                                     <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                            <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </buttonCell>
+                                                <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                         <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -635,13 +647,19 @@ trattalo con cautela.</string>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0QW-wr-CHb" customClass="FlatButton" customModule="FlatButton">
-                                                <rect key="frame" x="220" y="23" width="110" height="32"/>
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0QW-wr-CHb">
+                                                <rect key="frame" x="220" y="23" width="110" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <buttonCell key="cell" type="bevel" title="Abbina" bezelStyle="rounded" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="2vc-WY-mDF">
+                                                <buttonCell key="cell" type="squareTextured" title="Abbina" bezelStyle="texturedSquare" alignment="center" inset="2" id="2vc-WY-mDF">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                            <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </buttonCell>
+                                                <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                         <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -789,7 +807,7 @@ trattalo con cautela.</string>
                                                 </connections>
                                             </secureTextField>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Ua-WR-97w">
-                                                <rect key="frame" x="285" y="263" width="125" height="24"/>
+                                                <rect key="frame" x="275" y="263" width="145" height="24"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Inserisci il PIN" id="tk1-wZ-PGC">
                                                     <font key="font" metaFont="system" size="20"/>
@@ -864,7 +882,7 @@ trattalo con cautela.</string>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v6m-KX-59g" customClass="FlatButton" customModule="FlatButton">
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v6m-KX-59g">
                                                 <rect key="frame" x="220" y="23" width="110" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="bevel" title="Concludi" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="ZOU-z9-nzQ">
@@ -873,7 +891,13 @@ trattalo con cautela.</string>
                                                     <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                            <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </buttonCell>
+                                                <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                         <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -938,7 +962,7 @@ DQ
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-1Y-LJv" customClass="FlatButton" customModule="FlatButton">
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-1Y-LJv">
                                                 <rect key="frame" x="220" y="23" width="110" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="bevel" title="Rimuovi Carta" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Fnd-Zc-Uui">
@@ -947,7 +971,13 @@ DQ
                                                     <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                            <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </buttonCell>
+                                                <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                         <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -1992,12 +2022,12 @@ trattalo con cautela.</string>
     </scenes>
     <resources>
         <image name="Logo_Cie_ID_Windowed" width="156" height="154"/>
-        <image name="Risorsa 14" width="60" height="60"/>
-        <image name="Risorsa 15" width="60" height="60"/>
-        <image name="Risorsa 16" width="60" height="60"/>
-        <image name="Risorsa 17" width="60" height="60"/>
-        <image name="Risorsa 18" width="60" height="60"/>
-        <image name="Risorsa 19" width="60" height="60"/>
+        <image name="Risorsa 14" width="30" height="30"/>
+        <image name="Risorsa 15" width="30" height="30"/>
+        <image name="Risorsa 16" width="30" height="30"/>
+        <image name="Risorsa 17" width="30" height="30"/>
+        <image name="Risorsa 18" width="30" height="30"/>
+        <image name="Risorsa 19" width="30" height="30"/>
         <image name="flusso_intro_01" width="613" height="388"/>
         <image name="flusso_intro_02" width="651" height="373"/>
         <image name="icona_assistenza" width="141" height="39"/>

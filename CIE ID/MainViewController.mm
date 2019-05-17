@@ -202,24 +202,28 @@ CK_RV completedCallback(string& PAN,
         return false;
     }
     
-    CK_RV rv = pfnVerificaCIE();
-    
-    switch (rv) {
-        case CKR_OK:
-            return false;
-            break;
-            
-        case CKR_CANCEL:
-            return true;
-            break;
-            
-        case CKR_TOKEN_NOT_PRESENT:
-            [self showMessage:@"CIE non presente sul lettore" withTitle:@"Verifica CIE" exitAfter:false];
-            break;
-            
-        default:
-            [self showMessage:@"Errore nella verifica della CIE" withTitle:@"Verifica CIE" exitAfter:false];
-            break;
+    NSString* pan = [NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"];
+    if(pan)
+    {
+        CK_RV rv = pfnVerificaCIE([pan cStringUsingEncoding:NSUTF8StringEncoding]);
+        
+        switch (rv) {
+            case CKR_OK:
+                return false;
+                break;
+                
+            case CKR_CANCEL:
+                return true;
+                break;
+                
+            case CKR_TOKEN_NOT_PRESENT:
+                [self showMessage:@"CIE non presente sul lettore" withTitle:@"Verifica CIE" exitAfter:false];
+                break;
+                
+            default:
+                [self showMessage:@"Errore nella verifica della CIE" withTitle:@"Verifica CIE" exitAfter:false];
+                break;
+        }
     }
     
     return false;
@@ -227,6 +231,8 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)onDisabilita:(id)sender
 {
+    NSString* pan = [NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"];
+    
     // check se abilitata ossia se cache presente
     VerificaCIEAbilitatafn pfnVerificaCIE = (VerificaCIEAbilitatafn)dlsym(hModule, "VerificaCIEAbilitata");
     if(!pfnVerificaCIE)
@@ -236,7 +242,7 @@ CK_RV completedCallback(string& PAN,
         return;
     }
     
-    CK_RV rv = pfnVerificaCIE();
+    CK_RV rv = pfnVerificaCIE([pan cStringUsingEncoding:NSUTF8StringEncoding]);
     
     switch (rv) {
         case CKR_OK:
@@ -265,7 +271,7 @@ CK_RV completedCallback(string& PAN,
         return;
     }
     
-    rv = pfnDisabilitaCIE();
+    rv = pfnDisabilitaCIE([pan cStringUsingEncoding:NSUTF8StringEncoding]);
     
     switch (rv) {
         case CKR_OK:
@@ -419,7 +425,7 @@ CK_RV completedCallback(string& PAN,
                     break;
                     
                 case CKR_OK:
-                    [self showMessage:@"L'abilitazione della CIE è avvennuta con successo" withTitle:@"CIE Abilitata" exitAfter:NO];
+                    [self showMessage:@"L'abilitazione della CIE è avvennuta con successo. Allontanare la card dal lettore" withTitle:@"CIE Abilitata" exitAfter:NO];
                     [self showHomeThirdPage];
                     self.labelSerialNumber.stringValue = [NSString stringWithUTF8String:sPAN.c_str()];
                     self.labelCardHolder.stringValue = [NSString stringWithUTF8String:sName.c_str()];

@@ -509,9 +509,9 @@
 				E526E9FD21E0C44F0098AE8A /* AppDelegate.h */,
 				E526E9FE21E0C44F0098AE8A /* AppDelegate.mm */,
 				E526EA0021E0C4500098AE8A /* Assets.xcassets */,
-				E526EA0521E0C4500098AE8A /* Info.plist */,
 				E526EA0621E0C4500098AE8A /* main.m */,
 				E526EA0821E0C4500098AE8A /* CIEIDBar.entitlements */,
+				E526EA0521E0C4500098AE8A /* Info.plist */,
 				E526EA0F21E0CD3A0098AE8A /* MessageViewController.h */,
 				E526EA1021E0CD3A0098AE8A /* MessageViewController.m */,
 				E526EA1121E0CD3A0098AE8A /* MessageViewController.xib */,
@@ -897,8 +897,6 @@
 				E544F55F21BFAFC60038B2CA /* Sources */,
 				E544F56021BFAFC60038B2CA /* Frameworks */,
 				E544F56121BFAFC60038B2CA /* Resources */,
-				6869D0A90207445F94C0CEE8 /* [CP] Embed Pods Frameworks */,
-				2DC5A4E9D39903D59D4F28C3 /* [CP] Copy Pods Resources */,
 				E526E9F621E0BAFF0098AE8A /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -1004,7 +1002,6 @@
 				E5BE7D8420FE84D200004389 /* Sources */,
 				E5BE7D8520FE84D200004389 /* Frameworks */,
 				E5BE7D8620FE84D200004389 /* Headers */,
-				8A8865E07180174E58CCB0AD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1029,6 +1026,7 @@
 					};
 					E544F56221BFAFC60038B2CA = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 					E54F7D622167A2720026B16D = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -1154,21 +1152,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2DC5A4E9D39903D59D4F28C3 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		35A28E0C9D0794F2711E7E4B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1203,39 +1186,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6869D0A90207445F94C0CEE8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FlatButton/FlatButton.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlatButton.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8A8865E07180174E58CCB0AD /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1473,6 +1423,7 @@
 			baseConfigurationReference = 6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "CIE ID/CIE_ID.entitlements";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1493,6 +1444,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "CIE ID/CIE ID-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1501,6 +1455,7 @@
 			baseConfigurationReference = 2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "CIE ID/CIE_ID.entitlements";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1520,6 +1475,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "CIE ID/CIE ID-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
