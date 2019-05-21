@@ -258,9 +258,11 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             
             progressCallBack(85, "Memorizzazione in cache");
             
-            ias.SetCache((char*)IdServizi.data(), CertCIE, pinBa);
+            std::string sidServizi((char*)IdServizi.data(), IdServizi.size());
             
-            std::string span((char*)IdServizi.data());
+            ias.SetCache(sidServizi.c_str(), CertCIE, pinBa);
+            
+            std::string span(sidServizi.c_str());
             std::string name;
             std::string surname;
             
