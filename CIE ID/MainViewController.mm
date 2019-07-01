@@ -10,6 +10,7 @@
 
 // directive for PKCS#11
 #include "../cie-pkcs11/PKCS11/cryptoki.h"
+#import "PINNoticeViewController.h"
 
 #include <memory.h>
 #include <time.h>
@@ -593,10 +594,16 @@ CK_RV completedCallback(string& PAN,
                     
                 case CKR_OK:
                     [self showSbloccoOKPage];
-                    [self showMessage:@"Il PIN è stato sbloccato con successo" withTitle:@"Operazione completata" exitAfter:false];
+//                    [self showMessage:@"Il PIN è stato sbloccato con successo" withTitle:@"Operazione completata" exitAfter:false];
                     self.textFieldPUK.stringValue = @"";
                     self.textFieldNewPINSblocco.stringValue = @"";
                     self.textFieldConfirmPINSbloco.stringValue = @"";
+                    
+                    NSStoryboard* storyboard = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+                    NSViewController* viewController = [storyboard instantiateControllerWithIdentifier:@"PINNoticeViewController"];
+                    
+                    [self presentViewControllerAsModalWindow:viewController];
+                    
                     break;
             }
         });
@@ -765,12 +772,18 @@ CK_RV completedCallback(string& PAN,
                     break;
                     
                 case CKR_OK:
-                    [self showMessage:@"Il PIN è stato modificato con successo" withTitle:@"Operazione completata" exitAfter:false];
+//                    [self showMessage:@"Il PIN è stato modificato con successo" withTitle:@"Operazione completata" exitAfter:false];
                     self.textFieldPIN.stringValue = @"";
                     self.textFieldNewPIN.stringValue = @"";
                     self.textFieldConfirmPIN.stringValue = @"";
                     
                     [self showCambioPINOKPage];
+                    
+                    NSStoryboard* storyboard = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+                    NSViewController* viewController = [storyboard instantiateControllerWithIdentifier:@"PINNoticeViewController"];
+                    
+                    [self presentViewControllerAsModalWindow:viewController];
+                    
                     break;
             }
         });

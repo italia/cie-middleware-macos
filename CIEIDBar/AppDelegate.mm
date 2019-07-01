@@ -32,7 +32,7 @@ using namespace CryptoPP;
 bool isRunning = false;
 int socket_desc;
 
-#define UPDATE_URL @"https://www.cartaidentita.interno.gov.it/cie.-middleware-macos.props"
+#define UPDATE_URL @"https://www.cartaidentita.interno.gov.it/cie-middleware-macos.props"
 
 - (IBAction)menuItemQuit:(id)sender {
     [NSApplication.sharedApplication terminate:self];
@@ -102,9 +102,20 @@ int socket_desc;
                 }
                 else
                 {
-                    [NSUserDefaults.standardUserDefaults setObject:[NSString stringWithUTF8String:lastUpdate] forKey:@"last-update"];
-                    [NSUserDefaults.standardUserDefaults setObject:[NSString stringWithUTF8String:url] forKey:@"url"];
-                    [NSUserDefaults.standardUserDefaults synchronize];
+                    // nuova versione disponibile
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        MessageViewController* vc = MessageViewController.freshController;
+                        vc.popover = self.popover;
+                        self.popover.contentViewController = vc;
+                        [self showPopover:self];
+                        
+                        vc.messageLabel.stringValue = @"Una nuova versione è disponibile per l'installazione";
+                        vc.cieidButton.stringValue = @"Installa";
+                        vc.cieidButton.tag = 100;
+                        
+                        [NSUserDefaults.standardUserDefaults setObject:[NSString stringWithUTF8String:url] forKey:@"url"];
+                        [NSUserDefaults.standardUserDefaults synchronize];
+                    });
                 }
             }
         }
