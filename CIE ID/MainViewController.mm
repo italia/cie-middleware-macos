@@ -96,7 +96,7 @@ void* hModule;
 - (BOOL)control:(NSTextField *)textField textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
     if (commandSelector == @selector(deleteBackward:)){
-        NSLog(@"Backspace!!");
+        //NSLog(@"Backspace!!");
         
         if(textField.tag > 1)
         {
@@ -115,7 +115,7 @@ void* hModule;
         }
     }
     else if (commandSelector == @selector(insertNewline:)){
-        NSLog(@"newline!!");
+        //NSLog(@"newline!!");
         if(textField.tag == 8)
             [self abbina:textField];
     }
@@ -125,7 +125,7 @@ void* hModule;
 
 - (void)controlTextDidChange:(NSNotification *)notification {
     NSTextField *textField = [notification object];
-    NSLog(@"controlTextDidChange: stringValue == %@", [textField stringValue]);
+    
     if(textField.tag > 0)
     {
         if(textField.tag < 8)
@@ -144,7 +144,7 @@ void* hModule;
 CK_RV progressCallback(const int progress,
                        const char* szMessage)
 {
-    NSLog(@"%d %s", progress, szMessage);
+    
     
     dispatch_async(dispatch_get_main_queue(), ^{
         labelProgressPointer.stringValue = [NSString stringWithUTF8String:szMessage];
@@ -157,7 +157,6 @@ CK_RV progressCallback(const int progress,
 CK_RV progressCallbackCambioPIN(const int progress,
                        const char* szMessage)
 {
-    NSLog(@"%d %s", progress, szMessage);
     
     dispatch_async(dispatch_get_main_queue(), ^{
         labelProgressPointerCambioPIN.stringValue = [NSString stringWithUTF8String:szMessage];
@@ -171,7 +170,6 @@ CK_RV progressCallbackCambioPIN(const int progress,
 CK_RV progressCallbackSbloccoPIN(const int progress,
                        const char* szMessage)
 {
-    NSLog(@"%d %s", progress, szMessage);
     
     dispatch_async(dispatch_get_main_queue(), ^{
         labelProgressPointerSbloccoPIN.stringValue = [NSString stringWithUTF8String:szMessage];
@@ -184,7 +182,7 @@ CK_RV progressCallbackSbloccoPIN(const int progress,
 CK_RV completedCallback(string& PAN,
                         string& name)
 {
-    NSLog(@"%s %s", PAN.c_str(), name.c_str());
+    //NSLog(@"%s %s", PAN.c_str(), name.c_str());
     
     sPAN = PAN;
     sName = name;
