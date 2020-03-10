@@ -22,6 +22,10 @@ void closeSession(CK_SESSION_HANDLE hSession);
         
         self.smartCard = session.smartCard;
         self.APDUTemplate = nil;
+        self.PIN = nil;
+        self.PINByteOffset = 0;
+        
+        
     }
     
     return self;
@@ -30,10 +34,17 @@ void closeSession(CK_SESSION_HANDLE hSession);
 - (BOOL)finishWithError:(NSError * _Nullable __autoreleasing *)error
 {
     char szPIN[5];
+ 
+    if (*error != nil) {
+        *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationFailed userInfo:nil];
+        return false;
+    }
     
-    [[self.PIN dataUsingEncoding:NSUTF8StringEncoding] getBytes:szPIN length:5];
+    memset(szPIN, 0, 5);
     
-    CK_RV rv = g_pFuncList->C_Login(((CIETokenSession*)_session).hSession, CKU_USER, (CK_CHAR_PTR)szPIN, strlen(szPIN));
+    [[self.PIN dataUsingEncoding:NSUTF8StringEncoding] getBytes:szPIN length:4];
+    
+    CK_RV rv = g_pFuncList->C_Login(((CIETokenSession*)_session).hSession, CKU_USER, (CK_CHAR_PTR)szPIN, 4);
     if (rv != CKR_OK && rv != CKR_USER_ALREADY_LOGGED_IN)
     {
         if (error != nil) {
@@ -178,6 +189,7 @@ void closeSession(CK_SESSION_HANDLE hSession);
 //        }
 //    }
 
+    
     return signature;
 }
 
