@@ -204,7 +204,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "139"
             endingLineNumber = "139"
-            landmarkName = "@implementation AppDelegate"
+            landmarkName = "AppDelegate"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -331,7 +331,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "459E894E-F664-47D0-8FC1-E3DE58E5E1AF"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CIEIDBar/AppDelegate.mm"
@@ -782,6 +782,22 @@
             endingLineNumber = "395"
             landmarkName = "CacheSetData(PAN, certificate, certificateSize, FirstPIN, FirstPINSize)"
             landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "73941D28-C181-442B-8C33-52E7FFE2DAB3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CIEIDBar/AppDelegate.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "-applicationDidFinishLaunching:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

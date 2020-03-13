@@ -629,7 +629,7 @@ CK_RV completedCallback(string& PAN,
     
     if(![newpin isEqualToString:confirmpin])
     {
-        [self showMessage: @"I PIN non corrispondono" withTitle:@"PIN non corrispondenti" exitAfter:false];
+        [self showMessage: @"" withTitle:@"PIN non corrispondenti" exitAfter:false];
         return;
     }
     

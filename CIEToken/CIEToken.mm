@@ -72,7 +72,6 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         hModule = dlopen(szCryptoki, RTLD_LOCAL | RTLD_LAZY);
         if(!hModule)
         {
-    //        char* err = dlerror();
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
             [errorDetail setValue:@"Middleware not found" forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:@"CIEToken" code:100 userInfo:errorDetail];
@@ -129,9 +128,6 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
         return nil;
     }
-        
-//        if(g_nLogLevel > 1)
-//            std::cout << "  -> Chiede le info sul token inserito\n    - C_GetTokenInfo" << std::endl;
         
     CK_TOKEN_INFO tkInfo;
     
