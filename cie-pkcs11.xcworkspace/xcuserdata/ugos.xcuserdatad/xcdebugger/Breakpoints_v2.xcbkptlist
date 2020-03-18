@@ -652,7 +652,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "306"
             endingLineNumber = "306"
-            landmarkName = "-token:terminateSession:"
+            landmarkName = "-populateIdentityFromSmartCard:into:certificateData:certificateName:keyName:error:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
