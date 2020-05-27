@@ -242,6 +242,8 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             ias.ReadSerialeCIE(Serial);
             ByteArray serialData = Serial.left(9);
             
+            std::string st_serial((char*)serialData.data(), serialData.size());
+            
             hashSet[0xa2] = sha256.Digest(serialData);
             
             progressCallBack(55, "Lettura certificato");
@@ -253,7 +255,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             hashSet[0xa3] = sha256.Digest(certCIEData);
             
             ias.VerificaSOD(SOD, hashSet);
-
+            
             ByteArray pinBa((uint8_t*)szPIN, 4);
             
             progressCallBack(85, "Memorizzazione in cache");
@@ -316,7 +318,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             subjectEncoder.SkipAll();
             
             std::string fullname = name + " " + surname;
-            completedCallBack(span, fullname);
+            completedCallBack(span, fullname, st_serial);
 		}
         
 		if (!foundCIE) {

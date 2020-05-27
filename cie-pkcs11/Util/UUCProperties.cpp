@@ -117,15 +117,17 @@ long UUCProperties::load(const UUCByteArray& props)
 	char* szProps = (char*)props.getContent();
 	char* szLine	= strtok_r(szProps, "\r\n", &szSavePtr);
 	
-	while(szLine)
+	while(szLine && (szLine) < (szProps + props.getLength()))
 	{
 		if(szLine[0] != '#' && szLine[0] != '[')  // salta i commenti
 		{
 			szEqual = strstr(szLine, "=");
-			szEqual[0] = 0;
-			szName  = szLine;			
-			szValue = szEqual + 1;
-			putProperty(szName, szValue);
+            if (szEqual && strlen(szEqual) > 1){
+                szEqual[0] = 0;
+                szName  = szLine;
+                szValue = szEqual + 1;
+                putProperty(szName, szValue);
+            }
 			szLine = strtok_r(NULL, "\r\n", &szSavePtr);
 		}
 		else

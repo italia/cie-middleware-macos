@@ -4,6 +4,331 @@
    <FileRef
       location = "group:cie-pkcs11.xcodeproj">
    </FileRef>
+   <Group
+      location = "group:cie-pkcs11"
+      name = "cie-pkcs11">
+      <Group
+         location = "group:cie-pkcs11/UI"
+         name = "UI">
+         <FileRef
+            location = "group:cie-pkcs11/UI/AbilitaCIE.mm">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:cie-pkcs11/libcryptopp.a">
+      </FileRef>
+      <FileRef
+         location = "group:cie-pkcs11/Cryptopp">
+      </FileRef>
+      <Group
+         location = "group:cie-pkcs11/Crypto"
+         name = "Crypto">
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/AES.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/AES.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/ASNParser.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/ASNParser.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/Base64.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/Base64.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/DES3.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/DES3.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/MAC.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/MAC.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/MD5.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/MD5.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/RSA.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/RSA.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/SHA1.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/SHA1.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/SHA256.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/sha256.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/SHA512.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/sha512.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Crypto/CryptoUtil.h">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:cie-pkcs11/PCSC"
+         name = "PCSC">
+         <FileRef
+            location = "group:cie-pkcs11/PCSC/APDU.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PCSC/APDU.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PCSC/CardLocker.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PCSC/CardLocker.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PCSC/PCSC.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PCSC/PCSC.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PCSC/Token.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PCSC/Token.h">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:cie-pkcs11/CSP"
+         name = "CSP">
+         <FileRef
+            location = "group:cie-pkcs11/CSP/AbilitaCIE.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/CSP/AbilitaCIE.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/CSP/ExtAuthKey.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/CSP/IAS.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/CSP/IAS.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/CSP/PINManager.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/CSP/PINManager.h">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:cie-pkcs11/Util"
+         name = "Util">
+         <FileRef
+            location = "group:cie-pkcs11/Util/UUCByteArray.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UUCByteArray.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UUCHashtable.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UUCProperties.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UUCProperties.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UUCStringTable.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UUCStringTable.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UUCTextFileReader.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UUCTextFileReader.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UUCTextFileWriter.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UUCTextFileWriter.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/CryptoppUtils.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/CryptoppUtils.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/CacheLib.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/CacheLib.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/Array.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/Array.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/defines.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/funccallinfo.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/funccallinfo.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/IniSettings.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/IniSettings.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/log.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/log.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/ModuleInfo.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/ModuleInfo.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/SyncroEvent.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/SyncroEvent.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/SyncroMutex.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/SyncroMutex.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/TLV.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/TLV.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/util.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/util.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UtilException.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/Util/UtilException.h">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:cie-pkcs11/PKCS11"
+         name = "PKCS11">
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/wintypes.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/pkcs11.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/pkcs11f.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/pkcs11t.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/win32.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/CardContext.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/CardContext.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/CardTemplate.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/CardTemplate.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/CIEP11Template.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/CIEP11Template.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/initP11.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/InitP11.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/Mechanism.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/Mechanism.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/P11Object.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/P11Object.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/PKCS11Functions.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/PKCS11Functions.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/session.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/session.h">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/Slot.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:cie-pkcs11/PKCS11/Slot.h">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:cie-pkcs11/keys.h">
+      </FileRef>
+   </Group>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>

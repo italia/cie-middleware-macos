@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14810.12"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="14810.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="16096"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -46,7 +46,7 @@
                     <window key="window" title="CIE ID" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="196" y="240" width="482" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
@@ -58,7 +58,7 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="417" y="-205"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -949,9 +949,8 @@ DQ
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <view hidden="YES" focusRingType="none" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Hi-tR-7XT">
+                                    <view focusRingType="none" appearanceType="aqua" translatesAutoresizingMaskIntoConstraints="NO" id="5Hi-tR-7XT">
                                         <rect key="frame" x="0.0" y="0.0" width="550" height="510"/>
-                                        <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f5o-tI-wX5">
                                                 <rect key="frame" x="72" y="416" width="405" height="57"/>
@@ -999,38 +998,70 @@ DQ
                                                     <action selector="onDisabilita:" target="XfG-lQ-9wD" id="ESC-W5-9h5"/>
                                                 </connections>
                                             </button>
-                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jjs-gE-2SP">
-                                                <rect key="frame" x="30" y="150" width="190" height="190"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jjs-gE-2SP">
+                                                <rect key="frame" x="30" y="149" width="190" height="192"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="192" id="fPP-yJ-3Om"/>
+                                                    <constraint firstAttribute="width" constant="190" id="xto-66-QML"/>
+                                                </constraints>
                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icona_lettore_card_white" id="rCI-Wi-qtF"/>
                                             </imageView>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NxT-Wb-YRN">
-                                                <rect key="frame" x="240" y="280" width="234" height="24"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Numero carta" id="Nbq-k7-beG">
-                                                    <font key="font" metaFont="system" size="14"/>
-                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                            </textField>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IIj-YB-SQZ">
-                                                <rect key="frame" x="240" y="255" width="234" height="24"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Abbinamento in corso" id="7e5-eb-aOK">
-                                                    <font key="font" metaFont="system" size="20"/>
-                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                            </textField>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S5E-YH-vWh">
-                                                <rect key="frame" x="240" y="225" width="234" height="24"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Intestatario" id="gcw-UU-KCr">
-                                                    <font key="font" metaFont="system" size="14"/>
-                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                            </textField>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="qSz-5j-Rx8">
+                                                <rect key="frame" x="222" y="163" width="270" height="165"/>
+                                                <subviews>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NxT-Wb-YRN">
+                                                        <rect key="frame" x="18" y="121" width="234" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="24" id="PR3-rh-rmL"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Numero carta" id="Nbq-k7-beG">
+                                                            <font key="font" metaFont="menu" size="14"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IIj-YB-SQZ">
+                                                        <rect key="frame" x="18" y="104" width="234" height="23"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Abbinamento in corso" id="7e5-eb-aOK">
+                                                            <font key="font" metaFont="system" size="20"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S5E-YH-vWh">
+                                                        <rect key="frame" x="18" y="67" width="234" height="17"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Intestatario" id="gcw-UU-KCr">
+                                                            <font key="font" metaFont="menu" size="14"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BZs-1Z-CBF">
+                                                        <rect key="frame" x="18" y="44" width="234" height="23"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Abbinamento in corso" id="drg-45-Ckd">
+                                                            <font key="font" metaFont="system" size="20"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="NxT-Wb-YRN" firstAttribute="leading" secondItem="qSz-5j-Rx8" secondAttribute="leading" constant="20" id="8GD-G2-7ox"/>
+                                                    <constraint firstAttribute="width" constant="270" id="ASc-0p-2v7"/>
+                                                    <constraint firstItem="BZs-1Z-CBF" firstAttribute="leading" secondItem="qSz-5j-Rx8" secondAttribute="leading" constant="20" id="Dbb-5R-Etd"/>
+                                                    <constraint firstItem="IIj-YB-SQZ" firstAttribute="bottom" secondItem="S5E-YH-vWh" secondAttribute="top" constant="-20" id="Ksd-6t-Ca4"/>
+                                                    <constraint firstItem="NxT-Wb-YRN" firstAttribute="top" secondItem="qSz-5j-Rx8" secondAttribute="top" constant="20" id="SCX-cj-Pcd"/>
+                                                    <constraint firstItem="S5E-YH-vWh" firstAttribute="leading" secondItem="qSz-5j-Rx8" secondAttribute="leading" constant="20" id="TK4-J9-sAU"/>
+                                                    <constraint firstAttribute="height" constant="165" id="aIW-FS-rOe"/>
+                                                    <constraint firstAttribute="trailing" secondItem="IIj-YB-SQZ" secondAttribute="trailing" constant="20" id="bj0-8z-fDq"/>
+                                                    <constraint firstItem="NxT-Wb-YRN" firstAttribute="bottom" secondItem="IIj-YB-SQZ" secondAttribute="top" constant="6" id="h74-04-fJd"/>
+                                                    <constraint firstItem="IIj-YB-SQZ" firstAttribute="leading" secondItem="qSz-5j-Rx8" secondAttribute="leading" constant="20" id="knL-X3-R4k"/>
+                                                    <constraint firstAttribute="trailing" secondItem="BZs-1Z-CBF" secondAttribute="trailing" constant="20" id="l2D-k8-8kw"/>
+                                                    <constraint firstAttribute="trailing" secondItem="NxT-Wb-YRN" secondAttribute="trailing" constant="20" id="rk6-7Q-NPr"/>
+                                                    <constraint firstItem="S5E-YH-vWh" firstAttribute="bottom" secondItem="BZs-1Z-CBF" secondAttribute="top" id="vF8-K0-qP5"/>
+                                                    <constraint firstAttribute="trailing" secondItem="S5E-YH-vWh" secondAttribute="trailing" constant="20" id="z7U-jY-2BN"/>
+                                                </constraints>
+                                            </customView>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dLB-vK-mHF">
                                                 <rect key="frame" x="49" y="359" width="450" height="56"/>
                                                 <autoresizingMask key="autoresizingMask"/>
@@ -1040,16 +1071,14 @@ DQ
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BZs-1Z-CBF">
-                                                <rect key="frame" x="240" y="200" width="234" height="24"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Abbinamento in corso" id="drg-45-Ckd">
-                                                    <font key="font" metaFont="system" size="20"/>
-                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                            </textField>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="qSz-5j-Rx8" firstAttribute="leading" secondItem="jjs-gE-2SP" secondAttribute="trailing" constant="2" id="TdL-p5-0eR"/>
+                                            <constraint firstAttribute="width" constant="550" id="Z34-rj-wZu"/>
+                                            <constraint firstItem="qSz-5j-Rx8" firstAttribute="centerY" secondItem="jjs-gE-2SP" secondAttribute="centerY" id="ZJl-vg-enu"/>
+                                            <constraint firstItem="jjs-gE-2SP" firstAttribute="leading" secondItem="5Hi-tR-7XT" secondAttribute="leading" constant="30" id="aXM-rQ-73c"/>
+                                            <constraint firstItem="jjs-gE-2SP" firstAttribute="centerY" secondItem="5Hi-tR-7XT" secondAttribute="centerY" constant="10" id="qlX-pQ-dic"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
                                                 <color key="value" name="customViewColor"/>
@@ -1138,6 +1167,11 @@ DQ
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="5Hi-tR-7XT" firstAttribute="top" secondItem="6OI-bz-nRs" secondAttribute="top" id="CSJ-cG-Dv9"/>
+                                    <constraint firstAttribute="trailing" secondItem="5Hi-tR-7XT" secondAttribute="trailing" id="bcO-jc-h1j"/>
+                                    <constraint firstAttribute="bottom" secondItem="5Hi-tR-7XT" secondAttribute="bottom" id="fS2-Df-8JL"/>
+                                </constraints>
                             </customView>
                         </subviews>
                         <constraints>
@@ -1197,7 +1231,7 @@ DQ
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-664" y="749"/>
+            <point key="canvasLocation" x="-844" y="636"/>
         </scene>
         <!--Message View Controller-->
         <scene sceneID="xjY-LL-s5q">
@@ -1524,7 +1558,7 @@ trattalo con cautela.</string>
                             <rect key="frame" x="214" y="257" width="234" height="24"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Numero carta" id="46e-Ef-2t8">
-                                <font key="font" metaFont="system" size="14"/>
+                                <font key="font" metaFont="menu" size="14"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
@@ -1542,7 +1576,7 @@ trattalo con cautela.</string>
                             <rect key="frame" x="214" y="202" width="234" height="24"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Intestatario" id="14N-qK-xmp">
-                                <font key="font" metaFont="system" size="14"/>
+                                <font key="font" metaFont="menu" size="14"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
@@ -2018,7 +2052,7 @@ trattalo con cautela.</string>
                     </view>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="-263" y="692"/>
+            <point key="canvasLocation" x="25" y="1082"/>
         </scene>
         <!--Notice View Controller-->
         <scene sceneID="AMi-5w-03p">
@@ -2135,29 +2169,26 @@ DQ
         </scene>
     </scenes>
     <resources>
-        <image name="Logo_Cie_ID_Windowed" width="156" height="154"/>
+        <image name="Logo_Cie_ID_Windowed" width="155.5" height="154"/>
         <image name="Risorsa 14" width="30" height="30"/>
         <image name="Risorsa 15" width="30" height="30"/>
         <image name="Risorsa 16" width="30" height="30"/>
         <image name="Risorsa 17" width="30" height="30"/>
         <image name="Risorsa 18" width="30" height="30"/>
         <image name="Risorsa 19" width="30" height="30"/>
-        <image name="flusso_intro_01" width="613" height="388"/>
+        <image name="flusso_intro_01" width="612.5" height="388"/>
         <image name="flusso_intro_02" width="651" height="373"/>
-        <image name="icona_assistenza" width="141" height="39"/>
-        <image name="icona_lettore_card_white" width="192" height="192"/>
-        <image name="icona_sblocco_carta" width="116" height="39"/>
-        <image name="logo-cie" width="84" height="40"/>
+        <image name="icona_assistenza" width="140.5" height="38.5"/>
+        <image name="icona_lettore_card_white" width="191.5" height="191.5"/>
+        <image name="icona_sblocco_carta" width="116" height="38.5"/>
+        <image name="logo-cie" width="42" height="20"/>
         <image name="logoIPZS" width="99" height="40"/>
         <image name="logo_MinisteroInterno" width="130" height="40"/>
         <namedColor name="customDarkBackgroundColor">
             <color white="0.8059999942779541" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
         <namedColor name="customTextColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="customViewColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.061999998986721039" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
         <namedColor name="customViewColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

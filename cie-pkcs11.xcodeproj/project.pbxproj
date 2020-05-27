@@ -1382,7 +1382,7 @@
 				CODE_SIGN_ENTITLEMENTS = CIEIDBar/CIEIDBar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				INFOPLIST_FILE = CIEIDBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1407,7 +1407,7 @@
 				CODE_SIGN_ENTITLEMENTS = CIEIDBar/CIEIDBar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				INFOPLIST_FILE = CIEIDBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1434,7 +1434,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1445,6 +1445,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
@@ -1466,7 +1467,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1477,6 +1478,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1493,7 +1495,7 @@
 				CODE_SIGN_ENTITLEMENTS = CambioPIN/CambioPIN.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				INFOPLIST_FILE = CambioPIN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1511,7 +1513,7 @@
 				CODE_SIGN_ENTITLEMENTS = CambioPIN/CambioPIN.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				INFOPLIST_FILE = CambioPIN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1525,8 +1527,9 @@
 		E5707B3621383CCA0054CF16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1534,8 +1537,9 @@
 		E5707B3721383CCA0054CF16 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1547,7 +1551,7 @@
 				CODE_SIGN_ENTITLEMENTS = SbloccoPIN/SbloccoPIN.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				INFOPLIST_FILE = SbloccoPIN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1565,7 +1569,7 @@
 				CODE_SIGN_ENTITLEMENTS = SbloccoPIN/SbloccoPIN.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				INFOPLIST_FILE = SbloccoPIN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1580,10 +1584,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CIEToken/CIEToken.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1597,6 +1601,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID.CIEToken";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1605,10 +1610,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CIEToken/CIEToken.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				INFOPLIST_FILE = CIEToken/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1617,6 +1622,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID.CIEToken";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1628,7 +1634,7 @@
 				CODE_SIGN_ENTITLEMENTS = AbilitaCIE/AbilitaCIE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				INFOPLIST_FILE = AbilitaCIE/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1646,7 +1652,7 @@
 				CODE_SIGN_ENTITLEMENTS = AbilitaCIE/AbilitaCIE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				INFOPLIST_FILE = AbilitaCIE/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1772,16 +1778,22 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/cie-pkcs11",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"crypto\"",
+					"-l\"ssl\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1795,19 +1807,27 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = UV5M7CH7SB;
+				DEVELOPMENT_TEAM = T5X62FC78M;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"crypto\"",
+					"-l\"ssl\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				UNEXPORTED_SYMBOLS_FILE = "";
 				_FORTIFY_SOURCE = 2;
 			};
 			name = Release;

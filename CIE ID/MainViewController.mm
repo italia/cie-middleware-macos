@@ -39,6 +39,7 @@ NSProgressIndicator* progressIndicatorPointerSbloccoPIN;
 
 string sPAN;
 string sName;
+string sEfSeriale;
 
 void* hModule;
 
@@ -180,12 +181,16 @@ CK_RV progressCallbackSbloccoPIN(const int progress,
 }
 
 CK_RV completedCallback(string& PAN,
-                        string& name)
+                        string& name,
+                        string& ef_seriale)
 {
-    //NSLog(@"%s %s", PAN.c_str(), name.c_str());
+    
+    NSLog(@"CompletedCallback %s %s %s", PAN.c_str(), name.c_str(), ef_seriale.c_str());
+    
     
     sPAN = PAN;
     sName = name;
+    sEfSeriale = ef_seriale;
     
     return 0;
 }
@@ -201,7 +206,7 @@ CK_RV completedCallback(string& PAN,
         return false;
     }
     
-    NSString* pan = [NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"];
+    NSString* pan = [NSUserDefaults.standardUserDefaults objectForKey:@"PAN"];
     if(pan)
     {
         CK_RV rv = pfnVerificaCIE([pan cStringUsingEncoding:NSUTF8StringEncoding]);
@@ -285,6 +290,10 @@ CK_RV completedCallback(string& PAN,
             
             [NSUserDefaults.standardUserDefaults removeObjectForKey:@"serialnumber"];
             [NSUserDefaults.standardUserDefaults removeObjectForKey:@"cardholder"];
+            
+            if( [NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"])
+                [NSUserDefaults.standardUserDefaults removeObjectForKey:@"efSeriale"];
+            
             [NSUserDefaults.standardUserDefaults synchronize];
             
             [self showHomeFirstPage];
@@ -430,13 +439,23 @@ CK_RV completedCallback(string& PAN,
                     
                 case CKR_OK:
                     [self showMessage:@"L'abilitazione della CIE è avvennuta con successo. Allontanare la card dal lettore" withTitle:@"CIE Abilitata" exitAfter:NO];
-                    [self showHomeThirdPage];
-                    self.labelSerialNumber.stringValue = [NSString stringWithUTF8String:sPAN.c_str()];
+                    
+                    self.labelSerialNumber.stringValue = [NSString stringWithUTF8String:sEfSeriale.c_str()];
                     self.labelCardHolder.stringValue = [NSString stringWithUTF8String:sName.c_str()];
                     
-                    [NSUserDefaults.standardUserDefaults setObject:self.labelSerialNumber.stringValue forKey:@"serialnumber"];
+                    NSString *PAN =
+                    [[NSString alloc] initWithCString:sPAN.c_str()
+                                      encoding:NSMacOSRomanStringEncoding];
+                    
+                    //[NSUserDefaults.standardUserDefaults setObject:PAN forKey:@"PAN"];
+                    
+                    [NSUserDefaults.standardUserDefaults setObject:self.labelSerialNumber.stringValue forKey:@"efSeriale"];
+                    [NSUserDefaults.standardUserDefaults setObject:PAN forKey:@"serialnumber"];
                     [NSUserDefaults.standardUserDefaults setObject:self.labelCardHolder.stringValue forKey:@"cardholder"];
                     [NSUserDefaults.standardUserDefaults synchronize];
+                    
+                    
+                    [self showHomeThirdPage];
                     
                     break;
             }
@@ -788,6 +807,60 @@ CK_RV completedCallback(string& PAN,
     });
 }
 
+
+- (void) askRiabbina: (NSString*) message withTitle: (NSString*) title
+{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"SI"];
+        [alert addButtonWithTitle:@"No"];
+        [alert setMessageText:title];
+        [alert setInformativeText:message];
+        [alert setAlertStyle:NSAlertStyleInformational];
+        
+        [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(askRiabbinaDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    });
+}
+
+
+- (void)askRiabbinaDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(bool*)contextInfo
+{
+    if(returnCode == NSAlertFirstButtonReturn)
+    {
+            self.labelSerialNumber.stringValue = @"";
+            self.labelCardHolder.stringValue = @"";
+            
+            self.homeFirstPageView.hidden = NO;
+            self.homeSecondPageView.hidden = YES;
+            self.homeThirdPageView.hidden = YES;
+            self.homeFourthPageView.hidden = YES;
+            self.cambioPINPageView.hidden = YES;
+            self.cambioPINOKPageView.hidden = YES;
+            self.sbloccoPageView.hidden = YES;
+            self.sbloccoOKPageView.hidden = YES;
+            self.helpPageView.hidden = YES;
+            self.infoPageView.hidden = YES;
+            
+            for(int i = 1; i < 9; i++)
+            {
+                NSTextField* txtField = [self.view viewWithTag:i];
+                
+                txtField.stringValue = @"";
+            }
+            
+            NSTextField* txtField = [self.view viewWithTag:1];
+            [txtField selectText:nil];
+    }else{
+        self.labelSerialNumber.stringValue = @"Per visualizzarlo occorre\nrifare l'abbinamento";
+        
+        [self.labelSerialNumber sizeToFit];
+        self.labelCardHolder.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"];
+        
+        [self showHomeFourthPage];
+    }
+}
+
 - (void) showHomeFirstPage
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -799,9 +872,19 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         
-        if([NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"])
+        if((![NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"]) and [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"])
         {
-            self.labelSerialNumber.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"];
+            
+            self.labelCardHolder.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"];
+            
+            
+            self.labelSerialNumber.stringValue = @"Per visualizzarlo occorre\nrifare l'abbinamento";
+            
+            [self askRiabbina:@"E' necessario effettuare un nuovo abbinamento. Procedere?" withTitle:@"Abbinare nuovamente la CIE"];
+            
+        }else if([NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"])
+        {
+            self.labelSerialNumber.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"];
             self.labelCardHolder.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"];
             
             [self showHomeFourthPage];

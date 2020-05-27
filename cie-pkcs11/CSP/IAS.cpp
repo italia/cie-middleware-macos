@@ -1262,8 +1262,9 @@ void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
 	ttParser.Parse(ttData);
 	CASNTag &signedData = *ttParser.tags[0];
 	signedData.CheckTag(0x30);
-
+    
 	CASNTag &signerCert = temp2.Child(3, 0xA0).Child(0, 0x30);
+    
 	CASNTag &temp3 = temp2.Child(4, 0x31).Child(0, 0x30);
 	uint8_t val1 = 1;
 	temp3.Child(0, 02).Verify(VarToByteArray(val1));
@@ -1272,6 +1273,7 @@ void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
 	temp3.Child(2, 0x30).Child(0, 06).Verify(VarToByteArray(OID_SH256));
 
 	CASNTag &signerInfo = temp3.Child(3, 0xA0);
+    
 	uint8_t OID4[] = { 0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x09, 0x03 };
 	signerInfo.Child(0, 0x30).Child(0, 06).Verify(VarToByteArray(OID4));
 	uint8_t OID5[] = { 0x67, 0x81, 0x08, 0x01, 0x01, 0x01 };
@@ -1318,6 +1320,8 @@ void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
 //
 //    ByteArray pubKeyData(pbtPubKey, pbKey.CurrentSize());
     
+
+    
     ByteDynArray pubKeyData(pbKey.CurrentSize());
     pbKey.Get(pubKeyData.data(), pubKeyData.size());
     
@@ -1346,10 +1350,12 @@ void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
 	ByteArray signatureData = signature.content;
 
 	CRSA rsa(mod, exp);
-
+    
 	ByteDynArray decryptedSignature = rsa.RSA_PURE(signatureData);
 	decryptedSignature = decryptedSignature.mid(RemovePaddingBT1(decryptedSignature));
+    
 	ByteArray toSign = SOD.mid((int)signerInfo.tags[0]->startPos, (int)(signerInfo.tags[signerInfo.tags.size()- 1]->endPos - signerInfo.tags[0]->startPos));
+    
 	ByteDynArray digestSignature;
 	if (isSHA1) {
 		CSHA1 sha1;
@@ -1359,14 +1365,16 @@ void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
 	if (isSHA256) {
 		CSHA256 sha256;
 		decryptedSignature = decryptedSignature.mid(RemoveSha256(decryptedSignature));
-        ByteArray toSignBa = toSign.getASN1Tag(0x31);
-		digestSignature = sha256.Digest(toSignBa);
+
+        ByteDynArray toSignBa = toSign.getASN1Tag(0x31);
+        ByteArray ba(toSignBa.data(), toSignBa.size());
+        
+		digestSignature = sha256.Digest(ba);
+                
 	}
 	if (digestSignature!=decryptedSignature)
         printf("Firma del SOD non valida");
 //        throw logged_error("Firma del SOD non valida");
-
-	//log.Info("Verifica issuer");
 
     issuerName.Reparse();
     CASNParser issuerParser;
@@ -1381,19 +1389,6 @@ void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
 //        throw logged_error("Issuer name non corrispondente");
         printf("Issuer name non corrispondente");
     
-//    for (std::size_t i = 0; i < issuerName.tags.size(); i++) {
-//        CASNTag &certElem = *CertIssuer.tags[i]->tags[0];
-//        CASNTag &SODElem = *issuerName.tags[i]->tags[0];
-//        certElem.tags[0]->Verify(SODElem.tags[0]->content);
-//        certElem.tags[1]->Verify(SODElem.tags[1]->content);
-//    }
-
-//    ByteDynArray certSerial=ByteArray(certDS->pCertInfo->SerialNumber.pbData, certDS->pCertInfo->SerialNumber.cbData);
-//    if (certSerial.reverse() != signerCertSerialNumber.content)
-//        throw logged_error("Serial Number del certificato non corrispondente");
-
-	// ora verifico gli hash dei DG
-	//log.Info("Verifica hash DG");
 	uint8_t val0=0;
 	signedData.Child(0, 02).Verify(VarToByteArray(val0));
 	signedData.Child(1, 0x30).Child(0, 06).Verify(VarToByteArray(OID_SH256));
