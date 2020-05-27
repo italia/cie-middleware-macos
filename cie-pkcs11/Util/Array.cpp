@@ -214,7 +214,7 @@ ByteDynArray ByteArray::getASN1Tag(unsigned int tag) const {
 	putASN1Tag(tag, result);
     ByteArray input(result.mid(tl));
 	putASN1Length(size(), input);
-	result.mid(tl + ll).copy(*this);
+	result.mid(tl + ll).copy(*this);    
 	return result;
 }
 
