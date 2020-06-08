@@ -882,15 +882,17 @@ CK_RV completedCallback(string& PAN,
             
             [self askRiabbina:@"E' necessario effettuare un nuovo abbinamento. Procedere?" withTitle:@"Abbinare nuovamente la CIE"];
             
-        }else if([NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"])
+        }else if([NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"] and [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"])
         {
             self.labelSerialNumber.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"];
+            
             self.labelCardHolder.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"];
             
             [self showHomeFourthPage];
         }
         else
         {
+            
             self.labelSerialNumber.stringValue = @"";
             self.labelCardHolder.stringValue = @"";
             
@@ -916,6 +918,7 @@ CK_RV completedCallback(string& PAN,
             
             NSTextField* txtField = [self.view viewWithTag:1];
             [txtField selectText:nil];
+             
         }
         //    }
     });

@@ -66,6 +66,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 
 - (instancetype)initWithSmartCard:(TKSmartCard *)smartCard AID:(NSData *)AID tokenDriver:(CIETokenDriver *)tokenDriver error:(NSError **)error
 {
+    
     if(!hModule)
     {
         const char* szCryptoki = "libcie-pkcs11.dylib";
@@ -130,33 +131,82 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     }
         
     CK_TOKEN_INFO tkInfo;
+    CK_SLOT_INFO sInfo;
     
-    CK_RV rv = g_pFuncList->C_GetTokenInfo(pSlotList[0], &tkInfo);
-    if (rv != CKR_OK)
+    CK_ULONG i = 0;
+    CK_RV rv;
+    
+    // looks for requested slot name
+    for(i=0; i< ulCount; i++)
     {
-        free(pSlotList);
-        closePKCS11();
-        dlclose(hModule);
-        hModule = NULL;
+        // sInfo.slotDescriptionis space padded to his len
+        // should not be null termined, but we handle it as it was
+        size_t sLen = sizeof(sInfo.slotDescription);
+        char szDescription[sizeof(sInfo.slotDescription)+1] = {0};
+
+                   
+        rv = g_pFuncList->C_GetSlotInfo(pSlotList[i], &sInfo);
         
-        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-        [errorDetail setValue:@"Middleware's getSlotList fails'" forKey:NSLocalizedDescriptionKey];
-        *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
-        return nil;
+        memcpy(szDescription, sInfo.slotDescription, sizeof(sInfo.slotDescription));
+        sLen = MIN(sLen, strlen(szDescription));
+        sLen = MIN(sLen, strlen(smartCard.slot.name.fileSystemRepresentation) );
+        
+        // NOTE: slotDescription may be shorter than smartCard.slot.name
+        // compare using min len
+        if(rv == CKR_OK && memcmp(smartCard.slot.name.fileSystemRepresentation, szDescription, sLen ) == 0){
+             rv = g_pFuncList->C_GetTokenInfo(pSlotList[i], &tkInfo);
+             if (rv != CKR_OK)
+             {
+                 free(pSlotList);
+                 closePKCS11();
+                 dlclose(hModule);
+                 hModule = NULL;
+                 
+                 NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+                 [errorDetail setValue:@"Middleware's GetTokenInfo(1) fails'" forKey:NSLocalizedDescriptionKey];
+                 *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
+                 return nil;
+             }else{
+                break;
+            }
+        }
     }
+ 
+     if (i>= ulCount)
+     {
+        // slot not found, fallback to previous detect method
+        i=0;
+        CK_RV rv = g_pFuncList->C_GetTokenInfo(pSlotList[i], &tkInfo);
+        if (rv != CKR_OK)
+        {
+            free(pSlotList);
+            closePKCS11();
+            dlclose(hModule);
+            hModule = NULL;
+            
+            NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+            [errorDetail setValue:@"Middleware's GetTokenInfo(2) fails'" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
+            return nil;
+        }
+     }
     
     _loginRequired = tkInfo.flags & CKF_LOGIN_REQUIRED;
     
-    size_t len = strlen((char*)tkInfo.serialNumber);
+    // tkInfo.serialNumber is space padded to his len
+    // should not be null termined, but we handle it as it was
+    size_t len = sizeof(tkInfo.serialNumber);
+    char szSerial[sizeof(tkInfo.serialNumber)+1] = {0};
+    memcpy(szSerial, tkInfo.serialNumber, sizeof(tkInfo.serialNumber));
+    len = MIN(len, strlen(szSerial));
     
-    if(len > 16)
-        len = 16;
-    
-    NSData *tokenSerial = [NSData dataWithBytes:tkInfo.serialNumber length:len];
+    NSData *tokenSerial = [NSData dataWithBytes:szSerial length:len];
     NSString* serial = [[NSString alloc] initWithData:tokenSerial encoding:NSUTF8StringEncoding];
     NSString* instanceID = [@"CIE-" stringByAppendingString:serial];
+    // trim whitespaces
+    instanceID = [instanceID stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    _hSlot = pSlotList[0];
+    _hSlot = pSlotList[i];
     
     if(_hSession)
         closeSession(_hSession);

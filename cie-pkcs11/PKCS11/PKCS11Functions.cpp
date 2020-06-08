@@ -415,8 +415,6 @@ CK_RV CK_ENTRY C_OpenSession(CK_SLOT_ID slotID, CK_FLAGS flags, CK_VOID_PTR pApp
 		logParam(phSession)
 
 
-
-
 		if (!bP11Initialized)
 			throw p11_error(CKR_CRYPTOKI_NOT_INITIALIZED);
 
@@ -489,7 +487,7 @@ CK_RV CK_ENTRY C_GetTokenInfo(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
 	
 	return CKR_OK;
 	exit_p11_func
-	return CKR_GENERAL_ERROR;
+    return CKR_GENERAL_ERROR;
 }
 
 CK_RV CK_ENTRY C_CloseSession(CK_SESSION_HANDLE hSession)
