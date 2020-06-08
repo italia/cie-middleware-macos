@@ -319,6 +319,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             
             std::string fullname = name + " " + surname;
             completedCallBack(span, fullname, st_serial);
+            break;
 		}
         
 		if (!foundCIE) {
