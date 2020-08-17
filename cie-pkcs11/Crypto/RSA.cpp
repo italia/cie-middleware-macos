@@ -67,12 +67,22 @@ ByteDynArray CRSA::RSA_PURE(ByteArray &data)
 #else
 
 #include "../Cryptopp/rsa.h"
+#include "../Cryptopp/secblock.h"
+#include "../Cryptopp/pssr.h"
 
-CryptoPP::RSA::PublicKey publicKey;
+using CryptoPP::InvertibleRSAFunction;
+using CryptoPP::RSASS;
+using CryptoPP::RSA;
+using CryptoPP::SHA512;
+using CryptoPP::SecByteBlock;
+using CryptoPP::PSS;
+using CryptoPP::DecodingResult;
+using CryptoPP::byte;
 
 DWORD CRSA::GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, ByteDynArray &privexp) 
 {
-	init_func
+    
+#if 0
 	keyPriv = RSA_new();
 	auto BNpubexp = BN_new();
 	BN_set_word(BNpubexp, 65537);
@@ -87,49 +97,82 @@ DWORD CRSA::GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, 
     BN_clear_free(BNpubexp);
     
     return(S_OK);
-	exit_func
+    exit_func
     return(-1);
+#endif
+    
+    init_func
+    throw logged_error("Non supportato");
+	exit_func
 }
 
-ByteArray modulusBa;
-ByteArray exponentBa;
+//ByteArray modulusBa;
+//ByteArray exponentBa;
 
 CRSA::CRSA(ByteArray &mod,ByteArray &exp)
 {
+#if 0
     modulusBa = mod;
     exponentBa = exp;
     
-//    ByteDynArray modBa(mod.size() + 1);
-//    modBa.fill(0);
-//    modBa.rightcopy(mod);
-//
-//    ByteDynArray expBa(exp.size() + 1);
-//    expBa.fill(0);
-//    expBa.rightcopy(exp);
+    ByteDynArray modBa(mod.size() + 1);
+    modBa.fill(0);
+    modBa.rightcopy(mod);
     
+    ByteDynArray expBa(exp.size() + 1);
+    expBa.fill(0);
+    expBa.rightcopy(exp);
     
 	KeySize = mod.size();
 	keyPriv = RSA_new();
 	keyPriv->n = BN_bin2bn(mod.data(), (int)mod.size(), keyPriv->n);
-	keyPriv->d = BN_new(); 
+	keyPriv->d = BN_new();
 	keyPriv->e = BN_bin2bn(exp.data(), (int)exp.size(), keyPriv->e);
+#endif
+
+    CryptoPP::Integer n(mod.data(), mod.size()), e(exp.data(), exp.size());
+    pubKey.Initialize(n, e);
 }
 
 CRSA::~CRSA(void)
 {
-	if (keyPriv!=nullptr)
-		RSA_free(keyPriv);
+	//if (keyPriv!=nullptr)
+	//	RSA_free(keyPriv);
 }
 
 ByteDynArray CRSA::RSA_PURE(ByteArray &data)
 {
+    
+#if 0
     ByteDynArray resp(RSA_size(keyPriv));
     int SignSize = RSA_public_encrypt((int)data.size(), data.data(), resp.data(), keyPriv, RSA_NO_PADDING);
-
     ER_ASSERT(SignSize == KeySize, "Errore nella lunghezza dei dati per operazione RSA")
 
-//    printf("\nRSA resp1: %s\n", dumpHexData(resp).c_str());  // DEBUG
+      printf("\nRSA resp1: %s\n", dumpHexData(resp).c_str());  // DEBUG
     
     return resp;
+#endif
+    
+    CryptoPP::Integer m((const byte *)data.data(), data.size());
+    CryptoPP::Integer c = pubKey.ApplyFunction(m);
+
+    size_t len = c.MinEncodedSize();
+    if (len == 0xff)
+        len = 0x100;
+
+    ByteDynArray resp(len);
+
+    c.Encode((byte *)resp.data(), resp.size(), CryptoPP::Integer::UNSIGNED);
+
+    return resp;
 }
+
+bool CRSA::RSA_PSS(ByteArray &signatureData, ByteArray &toSign)
+{
+    RSASS<PSS, SHA512>::Verifier verifier(pubKey);
+    SecByteBlock signatureBlock((const byte*)signatureData.data(), signatureData.size());
+    
+    return verifier.VerifyMessage((const byte*)toSign.data(), toSign.size(), signatureBlock, signatureBlock.size());
+}
+
 #endif
