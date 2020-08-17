@@ -262,9 +262,12 @@ void IAS::SelectAID_CIE(bool SM) {
 uint8_t NXP_ATR[] = { 0x80, 0x31, 0x80, 0x65, 0x49, 0x54, 0x4E, 0x58, 0x50, 0x12, 0x0F, 0xFF, 0x82, 0x90 };
 uint8_t Gemalto_ATR[] = { 0x80, 0x31, 0x80, 0x65, 0xB0, 0x85, 0x04, 0x00, 0x11, 0x12, 0x0F, 0xFF, 0x82, 0x90, 0x00 };
 uint8_t Gemalto2_ATR[] = { 0x80, 0x31, 0x80, 0x65, 0xB0, 0x85, 0x03, 0x00, 0xEF, 0x12, 0x0F, 0xFF, 0x82, 0x90, 0x00 };
+uint8_t STM_ATR[] = {0x80, 0x66, 0x47, 0x50, 0x00, 0xB8, 0x00, 0x7F};
+
 ByteArray baNXP_ATR(NXP_ATR, sizeof(NXP_ATR));
 ByteArray baGemalto_ATR(Gemalto_ATR, sizeof(Gemalto_ATR));
 ByteArray baGemalto2_ATR(Gemalto2_ATR, sizeof(Gemalto2_ATR));
+ByteArray baSTM_ATR(STM_ATR, sizeof(STM_ATR));
 
 void IAS::ReadCIEType() {	
 	init_func
@@ -275,6 +278,8 @@ void IAS::ReadCIEType() {
 		type = CIE_Type::CIE_Gemalto;
 	else if (ATR.indexOf(baGemalto2_ATR, position))
 		type = CIE_Type::CIE_Gemalto;
+    else if (ATR.indexOf(baSTM_ATR, position))
+            type = CIE_Type::CIE_STM;
 	else
 		throw logged_error("CIE non riconosciuta");
 }
@@ -303,7 +308,7 @@ void IAS::SelectAID_IAS(bool SM) {
                 throw scard_error(sw);
         }
     }
-    else if (type == CIE_Type::CIE_Gemalto)
+    else if (type == CIE_Type::CIE_Gemalto || type == CIE_Type::CIE_STM)
     {
         uint8_t selectIAS[] = { 0x00, 0xa4, 0x04, 0x0c };
         if (SM)
@@ -979,7 +984,7 @@ void IAS::InitDHParam() {
 		dh_p = parser.tags[0]->tags[0]->tags[0]->tags[1]->content;
 		dh_q = parser.tags[0]->tags[0]->tags[0]->tags[2]->content;
 	}
-	else if (type == CIE_Type::CIE_NXP) {
+	else if (type == CIE_Type::CIE_NXP || type == CIE_Type::CIE_STM) {
 		uint8_t getDHDoup[] = { 00, 0xcb, 0x3f, 0xff };
 		uint8_t getDHDuopData_g[] = { 0x4D, 0x0A, 0x70, 0x08, 0xBF, 0xA1, 0x01, 0x04, 0xA3, 0x02, 0x97, 0x00 };
 
@@ -1018,13 +1023,13 @@ CASNTag *GetTag(CASNTagArray &tags, DWORD id) {
 void IAS::InitExtAuthKeyParam() {
 	init_func
 	ByteDynArray resp;
-
-	uint8_t getKeyDoup[] = { 00, 0xcb, 0x3f, 0xff };
-	uint8_t getKeyDuopData[] = { 0x4d, 0x0C, 0x70, 0x0A, 0xBF, 0xA0, CIE_KEY_ExtAuth_ID & 0x7f, 0x06, 0x7F, 0x49, 0x03, 0x5F, 0x20, 0x80 };
-	StatusWord sw;
-	if ((sw = SendAPDU(VarToByteArray(getKeyDoup), VarToByteArray(getKeyDuopData), resp)) != 0x9000)
-	throw scard_error(sw);
-
+        
+    uint8_t getKeyDoup[] = { 00, 0xcb, 0x3f, 0xff };
+    uint8_t getKeyDuopData[] = { 0x4d, 0x09, 0x70, 0x07, 0xBF, 0xA0, CIE_KEY_ExtAuth_ID & 0x7f, 0x03, 0x7F, 0x49, 0x80 };
+    StatusWord sw;
+    if ((sw = SendAPDU(VarToByteArray(getKeyDoup), VarToByteArray(getKeyDuopData), resp)) != 0x9000)
+    throw scard_error(sw);
+    
 	CASNParser parser;
 	parser.Parse(resp);
 
@@ -1232,6 +1237,220 @@ void IAS::GetCertificate(ByteDynArray &certificate,bool askEnable) {
     CAES enc(CardEncKey, CardEncIv);
     certificate = enc.Decode(ByteArray(certEncBuf.data(), certEncBuf.size()));
     Certificate = certificate;
+}
+
+uint8_t IAS::GetSODDigestAlg(ByteArray &SOD)
+{
+    CASNParser parser;
+    uint8_t OID_SHA512[] = { 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x03 };
+    uint8_t OID_SHA256[] = { 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01 };
+
+    parser.Parse(SOD);
+
+    std::string dump;
+    dumpHexData(SOD, dump);
+
+    CASNTag &SODTag = *parser.tags[0];
+
+    CASNTag &temp = SODTag.Child(0, 0x30);
+
+    CASNTag &temp2 = temp.Child(1, 0xA0).Child(0, 0x30);
+
+    auto &digestAlgo = temp2.Child(1, 0x31).Child(0, 0x30).Child(0, 6).content;
+
+    if (digestAlgo == VarToByteArray(OID_SHA256))
+    {
+        return 1;
+    }
+    else if (digestAlgo == VarToByteArray(OID_SHA512))
+    {
+        return 2;
+    }
+    else throw logged_error("Algoritmo di digest del SOD non supportato");;
+}
+
+void IAS::VerificaSODPSS(ByteArray &SOD, std::map<uint8_t, ByteDynArray> &hashSet)
+{
+    init_func
+    CASNParser parser;
+    parser.Parse(SOD);
+
+    std::string dump;
+    dumpHexData(SOD, dump);
+
+    CASNTag &SODTag = *parser.tags[0];
+
+    CASNTag &temp = SODTag.Child(0, 0x30);
+    
+    /* Verifica OID contentInfo */
+    uint8_t OID[] = { 0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x07, 0x02 };
+    temp.Child(0, 06).Verify(VarToByteArray(OID));
+
+    uint8_t val3 = 3;
+    CASNTag &temp2 = temp.Child(1, 0xA0).Child(0, 0x30);
+    temp2.Child(0, 2).Verify(VarToByteArray(val3));
+
+    uint8_t OID_SHA512[] = { 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x03 };
+    temp2.Child(1, 0x31).Child(0, 0x30).Child(0, 6).Verify(VarToByteArray(OID_SHA512));
+
+    uint8_t OID3[] = { 0x67, 0x81, 0x08, 0x01, 0x01, 0x01 };
+    temp2.Child(2, 0x30).Child(0, 06).Verify(VarToByteArray(OID3));
+
+    /* Prendo gli sha512 dei DG letti */
+    ByteArray ttData = temp2.Child(2, 0x30).Child(1, 0xA0).Child(0, 04).content;
+
+    CASNParser ttParser;
+    ttParser.Parse(ttData);
+    CASNTag &signedData = *ttParser.tags[0];
+    signedData.CheckTag(0x30);
+
+    /* Prendo il certificato del signer */
+    CASNTag &signerCert = temp2.Child(3, 0xA0).Child(0, 0x30);
+
+    CASNTag &temp3 = temp2.Child(4, 0x31).Child(0, 0x30);
+    uint8_t val1 = 1;
+    temp3.Child(0, 02).Verify(VarToByteArray(val1));
+
+    CASNTag &issuerName = temp3.Child(1, 0x30).Child(0, 0x30);
+    CASNTag &signerCertSerialNumber = temp3.Child(1, 0x30).Child(1, 02);
+
+    temp3.Child(2, 0x30).Child(0, 06).Verify(VarToByteArray(OID_SHA512));
+
+    CASNTag &signerInfo = temp3.Child(3, 0xA0);
+
+    uint8_t OID4[] = { 0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x09, 0x03 };
+    signerInfo.Child(0, 0x30).Child(0, 06).Verify(VarToByteArray(OID4));
+
+    uint8_t OID5[] = { 0x67, 0x81, 0x08, 0x01, 0x01, 0x01 };
+    signerInfo.Child(0, 0x30).Child(1, 0x31).Child(0, 06).Verify(VarToByteArray(OID5));
+
+    uint8_t OID6[] = { 0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x09, 0x04 };
+    signerInfo.Child(1, 0x30).Child(0, 06).Verify(VarToByteArray(OID6));
+
+    CASNTag &digest = temp3.Child(3, 0xA0).Child(1, 0x30).Child(1, 0x31).Child(0, 04);
+    ByteArray digest_ = SOD.mid((int)digest.startPos, (int)(digest.endPos - digest.startPos));
+
+    uint8_t OID_RSAPSS[] = { 0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x0A };
+    auto &signAlgo = temp3.Child(4, 0x30).Child(0, 06).content;
+    auto &digestAlgo = temp3.Child(4, 0x30).Child(1, 0x30).Child(0, 0xA0).Child(0, 0x30).Child(0, 06).content;
+    
+    if (digestAlgo != VarToByteArray(OID_SHA512))
+        throw logged_error("Algoritmo del digest della firma non valido");
+    if(signAlgo != VarToByteArray(OID_RSAPSS))
+        throw logged_error("Algoritmo di firma non valido");
+    
+    CSHA512 sha512;
+    ByteArray toHash = ttData.mid((int)signedData.startPos, (int)(signedData.endPos - signedData.startPos));
+    ByteDynArray calcDigest_ = sha512.Digest(toHash);
+    
+    if (calcDigest_ != digest.content)
+        throw logged_error("Digest del SOD non corrispondente ai dati");
+
+    CASNTag &signature = temp3.Child(5, 04);
+
+    ByteArray certRaw = SOD.mid((int)signerCert.startPos, (int)(signerCert.endPos - signerCert.startPos));
+
+    CryptoPP::ByteQueue certin;
+    certin.Put(certRaw.data(),certRaw.size());
+    CryptoPP::ByteQueue pbKey;
+    CryptoPP::ByteQueue issuer;
+    CryptoPP::Integer serial;
+    
+    GetPublicKeyFromCert(certin, pbKey, issuer, serial);
+    
+//    long size = pbKey.CurrentSize();
+//    BYTE* pbtPubKey = new BYTE[size];
+//    pbKey.Get(pbtPubKey, size);
+//
+//    ByteArray pubKeyData(pbtPubKey, pbKey.CurrentSize());
+      
+    ByteDynArray pubKeyData(pbKey.CurrentSize());
+    pbKey.Get(pubKeyData.data(), pubKeyData.size());
+    
+    CASNParser pubKeyParser;
+    pubKeyParser.Parse(pubKeyData);
+    CASNTag &pubKey = *pubKeyParser.tags[0]->tags[1];
+    
+    ByteArray content = pubKey.content;
+    
+    if(content.data()[0] == 0) // unsigned bits
+        content = content.mid(1);
+    
+    CASNParser pubKeyParser2;
+    pubKeyParser2.Parse(content);
+    CASNTag &pubKey2 = *pubKeyParser2.tags[0];
+    
+    CASNTag &modTag = pubKey2.Child(0, 02);
+    ByteArray mod = modTag.content;
+    while (mod[0] == 0)
+        mod = mod.mid(1);
+    CASNTag &expTag = pubKey2.Child(1, 02);
+    ByteArray exp = expTag.content;
+    while (exp[0] == 0)
+        exp = exp.mid(1);
+    
+    ByteArray signatureData = signature.content;
+    
+    CRSA rsa(mod, exp);
+
+    ByteArray toSign = SOD.mid((int)signerInfo.tags[0]->startPos, (int)(signerInfo.tags[signerInfo.tags.size() - 1]->endPos - signerInfo.tags[0]->startPos));
+    
+    ByteDynArray toSignBa = toSign.getASN1Tag(0x31);
+    ByteArray ba(toSignBa.data(), toSignBa.size());
+    
+    bool result = rsa.RSA_PSS(signatureData, ba);
+
+    if (!result)
+    {
+        throw logged_error("Firma del SOD non valida");
+    }
+
+    issuerName.Reparse();
+    CASNParser issuerParser;
+    
+    ByteDynArray issuerBa(issuer.CurrentSize());
+    issuer.Get(issuerBa.data(), issuerBa.size());
+    
+    issuerParser.Parse(issuerBa);
+    
+    CASNTag &CertIssuer = *issuerParser.tags[0];
+    if (issuerName.tags.size() != CertIssuer.tags.size())
+//        throw logged_error("Issuer name non corrispondente");
+        printf("Issuer name non corrispondente");
+    
+    uint8_t val = 1;
+    signedData.Child(0, 02).Verify(VarToByteArray(val));
+    signedData.Child(1, 0x30).Child(0, 06).Verify(VarToByteArray(OID_SHA512));
+    
+    CASNTag &hashTag = signedData.Child(2, 0x30);
+    for (std::size_t i = 0; i<hashTag.tags.size();i++) {
+        CASNTag &hashDG = *(hashTag.tags[i]);
+        CASNTag &dgNum = hashDG.CheckTag(0x30).Child(0, 02);
+        CASNTag &dgHash = hashDG.Child(1, 04);
+        uint8_t num = ByteArrayToVar(dgNum.content, BYTE);
+
+        if (hashSet.find(num) == hashSet.end() || hashSet[num].size() == 0)
+            throw logged_error(stdPrintf("Digest non trovato per il DG %02X", num));
+        
+        
+        if (hashSet[num] != dgHash.content)
+            throw logged_error(stdPrintf("Digest non corrispondente per il DG %02X", num));
+    }
+
+    /*if (CSCA != null && CSCA.Count > 0)
+    {
+        log.Info("Verifica catena CSCA");
+        X509CertChain chain = new X509CertChain(CSCA);
+        var certChain = chain.getPath(certDS);
+        if (certChain == null)
+            throw Exception("Il certificato di Document Signer non č valido");
+
+        var rootCert = certChain[0];
+        if (!new ByteArray(rootCert.SubjectName.RawData).IsEqual(rootCert.IssuerName.RawData))
+            throw Exception("Impossibile validare il certificato di Document Signer");
+    }
+    */
+    exit_func
 }
 
 void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
