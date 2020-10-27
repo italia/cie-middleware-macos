@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="CarouselView">
+            <connections>
+                <outlet property="backButton" destination="RdP-TU-VYs" id="kGR-OV-8b0"/>
+                <outlet property="leftCard" destination="lzB-Wd-sVC" id="UMF-cc-YJF"/>
+                <outlet property="mainCard" destination="pqv-Oe-kK9" id="r5V-4W-dpY"/>
+                <outlet property="multipleCardContainerView" destination="39B-Qm-UbP" id="h7j-by-Ma7"/>
+                <outlet property="nextButton" destination="28e-J6-ZOM" id="sgc-FK-eLE"/>
+                <outlet property="radioButtonsContainer" destination="Yba-UV-VB9" id="96H-TK-tfL"/>
+                <outlet property="rightCard" destination="sYR-yE-FuJ" id="gH7-yY-e7P"/>
+                <outlet property="singleCardContainerView" destination="gNV-hh-xTy" id="GyC-E8-V4x"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView wantsLayer="YES" id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="862" height="522"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gNV-hh-xTy">
+                    <rect key="frame" x="0.0" y="0.0" width="862" height="60"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="7Wl-3u-P41">
+                            <rect key="frame" x="281" y="0.0" width="300" height="60"/>
+                            <subviews>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="heO-v2-1ha">
+                                    <rect key="frame" x="150" y="0.0" width="150" height="60"/>
+                                    <subviews>
+                                        <button wantsLayer="YES" verticalHuggingPriority="750" id="lBv-mt-BPx">
+                                            <rect key="frame" x="18" y="19" width="116" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="bevel" title="Aggiungi carta" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="iKY-9Q-2Ni">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </buttonCell>
+                                            <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                    <color key="value" name="customViewColor"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                    <color key="value" name="customViewColor"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <integer key="value" value="0"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="addCardPressed:" target="-2" id="CX7-p8-ACb"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="150" id="5ra-hl-Acg"/>
+                                    </constraints>
+                                </customView>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="o53-wL-vpI">
+                                    <rect key="frame" x="0.0" y="0.0" width="150" height="60"/>
+                                    <subviews>
+                                        <button wantsLayer="YES" verticalHuggingPriority="750" id="sup-6g-GcF">
+                                            <rect key="frame" x="20" y="19" width="111" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="bevel" title="Rimuovi carta" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="zvG-tI-aaI">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </buttonCell>
+                                            <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                    <color key="value" name="customViewColor"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                    <color key="value" name="customViewColor"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <integer key="value" value="0"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="removeCardPressed:" target="-2" id="GZm-kP-omF"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="150" id="OpE-VJ-zsU"/>
+                                    </constraints>
+                                </customView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="heO-v2-1ha" secondAttribute="bottom" id="Aay-iM-t5z"/>
+                                <constraint firstItem="o53-wL-vpI" firstAttribute="top" secondItem="7Wl-3u-P41" secondAttribute="top" id="HvN-Tc-yfK"/>
+                                <constraint firstItem="heO-v2-1ha" firstAttribute="top" secondItem="7Wl-3u-P41" secondAttribute="top" id="QfU-oZ-898"/>
+                                <constraint firstItem="o53-wL-vpI" firstAttribute="leading" secondItem="7Wl-3u-P41" secondAttribute="leading" id="fnF-vr-7WN"/>
+                                <constraint firstAttribute="bottom" secondItem="o53-wL-vpI" secondAttribute="bottom" id="g7f-bn-jLJ"/>
+                                <constraint firstAttribute="trailing" secondItem="heO-v2-1ha" secondAttribute="trailing" id="k5R-Sy-cYf"/>
+                                <constraint firstItem="heO-v2-1ha" firstAttribute="leading" secondItem="o53-wL-vpI" secondAttribute="trailing" id="n6g-xr-EtQ"/>
+                                <constraint firstAttribute="width" constant="300" id="nH9-sF-Jfp"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="7Wl-3u-P41" secondAttribute="bottom" id="20y-E2-oD2"/>
+                        <constraint firstItem="7Wl-3u-P41" firstAttribute="centerX" secondItem="gNV-hh-xTy" secondAttribute="centerX" id="74m-hu-VSO"/>
+                        <constraint firstItem="7Wl-3u-P41" firstAttribute="top" secondItem="gNV-hh-xTy" secondAttribute="top" id="G7w-hI-uLF"/>
+                        <constraint firstAttribute="height" constant="60" id="JzN-eg-1hB"/>
+                        <constraint firstItem="7Wl-3u-P41" firstAttribute="centerY" secondItem="gNV-hh-xTy" secondAttribute="centerY" id="NQO-ag-axX"/>
+                    </constraints>
+                </customView>
+                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="39B-Qm-UbP">
+                    <rect key="frame" x="0.0" y="0.0" width="862" height="60"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="5UP-cG-ksY">
+                            <rect key="frame" x="8" y="0.0" width="846" height="60"/>
+                            <subviews>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="VXH-s8-d0C">
+                                    <rect key="frame" x="0.0" y="0.0" width="272" height="60"/>
+                                    <subviews>
+                                        <button wantsLayer="YES" verticalHuggingPriority="750" id="DFU-mO-K3S">
+                                            <rect key="frame" x="81" y="19" width="109" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="bevel" title="Rimuovi tutte" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="BHR-gp-iDq">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </buttonCell>
+                                            <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                    <color key="value" name="customViewColor"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                    <color key="value" name="customViewColor"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="removeAll:" target="-2" id="Wyc-s1-mMr"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </customView>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Jvh-5V-6DF">
+                                    <rect key="frame" x="574" y="0.0" width="272" height="60"/>
+                                    <subviews>
+                                        <button wantsLayer="YES" verticalHuggingPriority="750" id="5iI-1X-Foj">
+                                            <rect key="frame" x="78" y="19" width="116" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="bevel" title="Aggiungi carta" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="t6z-AN-K3S">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </buttonCell>
+                                            <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                    <color key="value" name="customViewColor"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                    <color key="value" name="customViewColor"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="addCardPressed:" target="-2" id="ScW-yT-HJI"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </customView>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="2rm-3P-Wak">
+                                    <rect key="frame" x="272" y="0.0" width="302" height="60"/>
+                                    <subviews>
+                                        <button wantsLayer="YES" verticalHuggingPriority="750" id="GQI-HK-VP8">
+                                            <rect key="frame" x="75" y="19" width="183" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="bevel" title="Rimuovi carta selezionata" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="TI8-Mm-hBe">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </buttonCell>
+                                            <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                    <color key="value" name="customViewColor"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                    <color key="value" name="customViewColor"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="removeCardPressed:" target="-2" id="9Ll-UO-nhp"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </customView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="Jvh-5V-6DF" firstAttribute="leading" secondItem="2rm-3P-Wak" secondAttribute="trailing" id="5Ou-i6-c5h"/>
+                                <constraint firstAttribute="trailing" secondItem="Jvh-5V-6DF" secondAttribute="trailing" id="6a5-sQ-tAM"/>
+                                <constraint firstItem="2rm-3P-Wak" firstAttribute="leading" secondItem="VXH-s8-d0C" secondAttribute="trailing" id="7mc-mg-Uhn"/>
+                                <constraint firstItem="2rm-3P-Wak" firstAttribute="top" secondItem="5UP-cG-ksY" secondAttribute="top" id="9mj-1E-3IN"/>
+                                <constraint firstItem="Jvh-5V-6DF" firstAttribute="top" secondItem="5UP-cG-ksY" secondAttribute="top" id="EZu-C2-9Mj"/>
+                                <constraint firstAttribute="bottom" secondItem="Jvh-5V-6DF" secondAttribute="bottom" id="PUU-9g-owa"/>
+                                <constraint firstAttribute="bottom" secondItem="VXH-s8-d0C" secondAttribute="bottom" id="hvC-Ui-2JX"/>
+                                <constraint firstItem="VXH-s8-d0C" firstAttribute="top" secondItem="5UP-cG-ksY" secondAttribute="top" id="iaM-Fm-acZ"/>
+                                <constraint firstItem="VXH-s8-d0C" firstAttribute="leading" secondItem="5UP-cG-ksY" secondAttribute="leading" id="lKl-mf-KuR"/>
+                                <constraint firstAttribute="bottom" secondItem="2rm-3P-Wak" secondAttribute="bottom" id="nTq-2i-Gav"/>
+                                <constraint firstItem="2rm-3P-Wak" firstAttribute="centerX" secondItem="5UP-cG-ksY" secondAttribute="centerX" id="ph6-hC-BsY"/>
+                                <constraint firstItem="2rm-3P-Wak" firstAttribute="width" secondItem="5UP-cG-ksY" secondAttribute="width" multiplier="1:3" constant="20" id="qng-gc-v2y"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="5UP-cG-ksY" firstAttribute="centerY" secondItem="39B-Qm-UbP" secondAttribute="centerY" id="BMV-zT-uhz"/>
+                        <constraint firstAttribute="trailing" secondItem="5UP-cG-ksY" secondAttribute="trailing" constant="8" id="J0h-NO-MrX"/>
+                        <constraint firstAttribute="height" constant="60" id="MuO-n6-9YW"/>
+                        <constraint firstAttribute="bottom" secondItem="5UP-cG-ksY" secondAttribute="bottom" id="eNT-3M-7sA"/>
+                        <constraint firstItem="5UP-cG-ksY" firstAttribute="leading" secondItem="39B-Qm-UbP" secondAttribute="leading" constant="8" id="p1t-cz-gyz"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="TOJ-r2-TWh">
+                    <rect key="frame" x="130" y="60" width="602" height="2"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="AFU-Pv-e1G"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                            <color key="value" name="customDarkBackgroundColor"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="4RL-MR-IBC" userLabel="leftView">
+                    <rect key="frame" x="8" y="62" width="15" height="460"/>
+                    <subviews>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="RdP-TU-VYs">
+                            <rect key="frame" x="0.0" y="260" width="15" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="mnY-jN-9xg"/>
+                                <constraint firstAttribute="width" constant="15" id="n65-TV-jkB"/>
+                            </constraints>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="back" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="RCs-Ea-HFY">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="backPressed:" target="-2" id="PPb-1b-QzK"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="RdP-TU-VYs" firstAttribute="leading" secondItem="4RL-MR-IBC" secondAttribute="leading" id="BVA-Z5-6ql"/>
+                        <constraint firstAttribute="width" constant="15" id="bDM-ax-ok5"/>
+                        <constraint firstItem="RdP-TU-VYs" firstAttribute="centerY" secondItem="4RL-MR-IBC" secondAttribute="centerY" constant="-50" id="ntu-eX-Thy"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="XRw-gZ-Xgp">
+                    <rect key="frame" x="839" y="62" width="15" height="460"/>
+                    <subviews>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="28e-J6-ZOM">
+                            <rect key="frame" x="0.0" y="260" width="15" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="DTm-PF-mGG"/>
+                                <constraint firstAttribute="width" constant="15" id="oSS-Yh-pLG"/>
+                            </constraints>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="forward_custom" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="beY-Gr-MVz">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="nextPressed:" target="-2" id="Mld-mX-3Xj"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="15" id="GPs-v9-IN9"/>
+                        <constraint firstItem="28e-J6-ZOM" firstAttribute="centerY" secondItem="XRw-gZ-Xgp" secondAttribute="centerY" constant="-50" id="P71-2W-bTF"/>
+                        <constraint firstAttribute="trailing" secondItem="28e-J6-ZOM" secondAttribute="trailing" id="PxD-DW-ssT"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="lzB-Wd-sVC" userLabel="leftCard" customClass="CarouselCard">
+                    <rect key="frame" x="48" y="220" width="180" height="234"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="180" id="9ks-YO-E2U"/>
+                        <constraint firstAttribute="height" constant="234" id="pll-pp-umI"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="sYR-yE-FuJ" userLabel="rightCard" customClass="CarouselCard">
+                    <rect key="frame" x="634" y="220" width="180" height="234"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="234" id="otO-ZH-DQg"/>
+                        <constraint firstAttribute="width" constant="180" id="y7c-x3-AoA"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="pqv-Oe-kK9" customClass="CarouselCard">
+                    <rect key="frame" x="331" y="182" width="200" height="260"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="1wh-bb-cif"/>
+                        <constraint firstAttribute="height" constant="260" id="hZH-oZ-pZJ"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="UzY-Ai-OEa">
+                    <rect key="frame" x="23" y="62" width="816" height="120"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Yba-UV-VB9">
+                            <rect key="frame" x="8" y="102" width="800" height="18"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="18" id="yXr-E6-EXN"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Yba-UV-VB9" secondAttribute="trailing" constant="8" id="PRg-Ka-yxs"/>
+                        <constraint firstItem="Yba-UV-VB9" firstAttribute="leading" secondItem="UzY-Ai-OEa" secondAttribute="leading" constant="8" id="UeJ-Rv-938"/>
+                        <constraint firstItem="Yba-UV-VB9" firstAttribute="top" secondItem="UzY-Ai-OEa" secondAttribute="top" id="a50-ZP-pa2"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="gNV-hh-xTy" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="00G-2e-aAm"/>
+                <constraint firstAttribute="trailing" secondItem="XRw-gZ-Xgp" secondAttribute="trailing" constant="8" id="8fr-Ov-zBA"/>
+                <constraint firstItem="TOJ-r2-TWh" firstAttribute="top" secondItem="UzY-Ai-OEa" secondAttribute="bottom" id="A9o-p9-HRS"/>
+                <constraint firstItem="UzY-Ai-OEa" firstAttribute="leading" secondItem="4RL-MR-IBC" secondAttribute="trailing" id="Jt7-T9-PnE"/>
+                <constraint firstItem="sYR-yE-FuJ" firstAttribute="centerY" secondItem="pqv-Oe-kK9" secondAttribute="centerY" constant="-25" id="MhP-tt-Vhy"/>
+                <constraint firstItem="gNV-hh-xTy" firstAttribute="top" secondItem="TOJ-r2-TWh" secondAttribute="bottom" id="Oo0-pS-7mu"/>
+                <constraint firstItem="4RL-MR-IBC" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="8" id="Rbk-l5-BMG"/>
+                <constraint firstAttribute="bottom" secondItem="gNV-hh-xTy" secondAttribute="bottom" id="Rbm-an-F98"/>
+                <constraint firstItem="4RL-MR-IBC" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="StD-xT-XSS"/>
+                <constraint firstItem="XRw-gZ-Xgp" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="UpL-Wi-S5b"/>
+                <constraint firstAttribute="trailing" secondItem="TOJ-r2-TWh" secondAttribute="trailing" constant="130" id="W9m-aU-NEx"/>
+                <constraint firstItem="TOJ-r2-TWh" firstAttribute="top" secondItem="XRw-gZ-Xgp" secondAttribute="bottom" id="Xhh-5L-JdN"/>
+                <constraint firstItem="39B-Qm-UbP" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="bmL-2C-vRL"/>
+                <constraint firstItem="pqv-Oe-kK9" firstAttribute="centerY" secondItem="4RL-MR-IBC" secondAttribute="centerY" constant="-20" id="ddm-3z-na1"/>
+                <constraint firstItem="pqv-Oe-kK9" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="eDc-CL-mgF"/>
+                <constraint firstAttribute="bottom" secondItem="39B-Qm-UbP" secondAttribute="bottom" id="eiT-F3-TzE"/>
+                <constraint firstItem="XRw-gZ-Xgp" firstAttribute="leading" secondItem="UzY-Ai-OEa" secondAttribute="trailing" id="f8L-ye-lrv"/>
+                <constraint firstItem="TOJ-r2-TWh" firstAttribute="top" secondItem="4RL-MR-IBC" secondAttribute="bottom" id="ko9-Ks-vQC"/>
+                <constraint firstAttribute="trailing" secondItem="gNV-hh-xTy" secondAttribute="trailing" id="mw1-xz-gTr"/>
+                <constraint firstItem="lzB-Wd-sVC" firstAttribute="leading" secondItem="4RL-MR-IBC" secondAttribute="trailing" constant="25" id="oqp-ti-1xg"/>
+                <constraint firstItem="UzY-Ai-OEa" firstAttribute="top" secondItem="pqv-Oe-kK9" secondAttribute="bottom" id="smh-Lb-RHH"/>
+                <constraint firstItem="TOJ-r2-TWh" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="130" id="uuZ-xz-Y0C"/>
+                <constraint firstItem="lzB-Wd-sVC" firstAttribute="centerY" secondItem="pqv-Oe-kK9" secondAttribute="centerY" constant="-25" id="wP0-cy-6kV"/>
+                <constraint firstAttribute="trailing" secondItem="39B-Qm-UbP" secondAttribute="trailing" id="xzC-d0-5lr"/>
+                <constraint firstItem="XRw-gZ-Xgp" firstAttribute="leading" secondItem="sYR-yE-FuJ" secondAttribute="trailing" constant="25" id="zwe-Ei-b4t"/>
+            </constraints>
+            <point key="canvasLocation" x="-102" y="-190"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="back" width="10" height="18"/>
+        <image name="forward_custom" width="10" height="18"/>
+        <namedColor name="customDarkBackgroundColor">
+            <color white="0.8059999942779541" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
+        <namedColor name="customViewColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

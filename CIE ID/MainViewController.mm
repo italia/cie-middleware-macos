@@ -11,6 +11,8 @@
 // directive for PKCS#11
 #include "../cie-pkcs11/PKCS11/cryptoki.h"
 #import "PINNoticeViewController.h"
+#import "CieList.h"
+#import "Cie.h"
 
 #include <memory.h>
 #include <time.h>
@@ -20,11 +22,23 @@
 #include "../cie-pkcs11/CSP/AbilitaCIE.h"
 #include "../cie-pkcs11/CSP/PINManager.h"
 
+#define CARD_ALREADY_ENABLED        0x000000F0
+
 using namespace std;
 
 typedef CK_RV (*C_GETFUNCTIONLIST)(CK_FUNCTION_LIST_PTR_PTR ppFunctionList);
 CK_FUNCTION_LIST_PTR g_pFuncList;
 
+@interface MainViewController() <CarouselViewDelegate> {
+    Cie *removingCie;
+}
+
+@property (weak) IBOutlet NSLayoutConstraint *abbinaButtonWhenAnnullaVisible;
+
+@property (weak) IBOutlet NSLayoutConstraint *abbinaButtonWhenAnnullaInvisible;
+@property (weak) IBOutlet NSView *mainCustomView;
+
+@end
 
 @implementation MainViewController
 
@@ -41,11 +55,26 @@ string sPAN;
 string sName;
 string sEfSeriale;
 
+CieList *cieList;
+
 void* hModule;
 
 - (void) viewDidLoad
 {
     [super viewDidLoad];
+
+    [self addSubviewToMainCustomView:_homeFirstPageView];
+    [self addSubviewToMainCustomView:_homeSecondPageView];
+    [self addSubviewToMainCustomView:_homeThirdPageView];
+    [self addSubviewToMainCustomView:_homeFourthPageView];
+    [self addSubviewToMainCustomView:_cambioPINPageView];
+    [self addSubviewToMainCustomView:_cambioPINOKPageView];
+    [self addSubviewToMainCustomView:_sbloccoPageView];
+    [self addSubviewToMainCustomView:_sbloccoOKPageView];
+    [self addSubviewToMainCustomView:_helpPageView];
+    [self addSubviewToMainCustomView:_infoPageView];
+    
+    [self updateViewConstraints];
     
     const char* szCryptoki = "libcie-pkcs11.dylib";
     
@@ -66,6 +95,19 @@ void* hModule;
     
     labelProgressPointerSbloccoPIN = _labelProgressSbloccoPIN;
     progressIndicatorPointerSbloccoPIN = _progressIndicatorSbloccoPIN;
+    
+    self.carouselView.delegate = self;
+}
+
+- (void) addSubviewToMainCustomView:(NSView *)view {
+    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.mainCustomView addSubview:view];
+    
+    [self.mainCustomView addConstraint:[NSLayoutConstraint constraintWithItem:self.mainCustomView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+    [self.mainCustomView addConstraint:[NSLayoutConstraint constraintWithItem:self.mainCustomView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+    [self.mainCustomView addConstraint:[NSLayoutConstraint constraintWithItem:self.mainCustomView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeTrailing multiplier:1 constant:0]];
+    [self.mainCustomView addConstraint:[NSLayoutConstraint constraintWithItem:self.mainCustomView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeLeading multiplier:1 constant:0]];
+    
 }
 
 - (void) viewDidAppear
@@ -76,6 +118,7 @@ void* hModule;
 
     [self showHomeFirstPage];
     
+    [self updateAbbinaAndAnnullaLayout];
     
     if(![NSUserDefaults.standardUserDefaults objectForKey:@"dontShowIntro"])
     {
@@ -233,14 +276,35 @@ CK_RV completedCallback(string& PAN,
     return false;
 }
 
-- (IBAction)onDisabilita:(id)sender
-{
-    [self askRemove:@"Vuoi rimuovere la CIE attualmente abbinata?" withTitle:@"Rimozione CIE"];
+- (IBAction)onAggiungiCie:(id)sender {
+    
+    self.homeFirstPageView.hidden = NO;
+    self.homeSecondPageView.hidden = YES;
+    self.homeThirdPageView.hidden = YES;
+    self.homeFourthPageView.hidden = YES;
+    self.cambioPINPageView.hidden = YES;
+    self.cambioPINOKPageView.hidden = YES;
+    self.sbloccoPageView.hidden = YES;
+    self.sbloccoOKPageView.hidden = YES;
+    self.helpPageView.hidden = YES;
+    self.infoPageView.hidden = YES;
+    
+    for(int i = 1; i < 9; i++)
+    {
+        NSTextField* txtField = [self.view viewWithTag:i];
+        
+        txtField.stringValue = @"";
+    }
+    
+    NSTextField* txtField = [self.view viewWithTag:1];
+    [txtField selectText:nil];
 }
 
 - (void) disabilita
 {
-    NSString* pan = [NSUserDefaults.standardUserDefaults objectForKey:@"serialnumber"];
+
+    NSString* pan = [removingCie getPan];
+    removingCie = nil;
     
     // check se abilitata ossia se cache presente
     VerificaCIEAbilitatafn pfnVerificaCIE = (VerificaCIEAbilitatafn)dlsym(hModule, "VerificaCIEAbilitata");
@@ -255,9 +319,12 @@ CK_RV completedCallback(string& PAN,
     
     switch (rv) {
         case CKR_OK:
+            /*
             [self showMessage:@"CIE non abilitata" withTitle:@"Verifica CIE" exitAfter:false];
             return;
+            */
             break;
+            
             
         case CKR_CANCEL:
             break;
@@ -284,21 +351,18 @@ CK_RV completedCallback(string& PAN,
     
     switch (rv) {
         case CKR_OK:
+        {
             [self showMessage:@"CIE disabilitata con successo" withTitle:@"CIE disabilitata" exitAfter:NO];
-            self.labelSerialNumber.stringValue = @"";
-            self.labelCardHolder.stringValue = @"";
-            
-            [NSUserDefaults.standardUserDefaults removeObjectForKey:@"serialnumber"];
-            [NSUserDefaults.standardUserDefaults removeObjectForKey:@"cardholder"];
-            
-            if( [NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"])
-                [NSUserDefaults.standardUserDefaults removeObjectForKey:@"efSeriale"];
-            
+
+            [cieList removeCie:pan];
+            [self.carouselView configureWithCards:[[cieList getDictionary] allValues]];
+
+            [NSUserDefaults.standardUserDefaults setObject:[cieList getData] forKey:@"cieDictionary"];
             [NSUserDefaults.standardUserDefaults synchronize];
-            
+                        
             [self showHomeFirstPage];
             break;
-            
+        }
         case CKR_TOKEN_NOT_PRESENT:
             [self showMessage:@"CIE non presente sul lettore" withTitle:@"Abilitazione CIE" exitAfter:false];
             break;
@@ -339,6 +403,11 @@ CK_RV completedCallback(string& PAN,
     [self showInfoPage];
 }
 
+- (IBAction)annulla:(id)sender {
+    [self showHomeFourthPage];
+}
+
+
 - (IBAction)abbina:(id)sender
 {
     NSString* pin = @"";
@@ -371,10 +440,13 @@ CK_RV completedCallback(string& PAN,
         return;
     }
     
+        
+    [self showHomeSecondPage];
+          
     [((NSControl*)sender) setEnabled:NO];
     
     dispatch_async(dispatch_get_global_queue(0,0), ^{
-        
+
         AbilitaCIEfn pfnAbilitaCIE = (AbilitaCIEfn)dlsym(hModule, "AbilitaCIE");
         if(!pfnAbilitaCIE)
         {
@@ -395,8 +467,6 @@ CK_RV completedCallback(string& PAN,
         }
         
         int attempts = -1;
-        
-        [self showHomeSecondPage];
         
         long ret = pfnAbilitaCIE(szPAN, [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback, &completedCallback);
         
@@ -436,24 +506,27 @@ CK_RV completedCallback(string& PAN,
                     [self showMessage:@"Errore inaspettato durante la comunicazione con la smart card" withTitle:@"Errore inaspettato" exitAfter:false];
                     [self showHomeFirstPage];
                     break;
+                case CARD_ALREADY_ENABLED:
+                    
+                    [self showMessage: @"CIE già abilitata" withTitle:@"CIE già abilitata" exitAfter:NO];
+                    [self showHomeFirstPage];
+                    
+                    break;
                     
                 case CKR_OK:
                     [self showMessage:@"L'abilitazione della CIE è avvennuta con successo. Allontanare la card dal lettore" withTitle:@"CIE Abilitata" exitAfter:NO];
+
+                    NSString *PAN = [[NSString alloc] initWithCString:sPAN.c_str() encoding:NSUTF8StringEncoding];
                     
-                    self.labelSerialNumber.stringValue = [NSString stringWithUTF8String:sEfSeriale.c_str()];
-                    self.labelCardHolder.stringValue = [NSString stringWithUTF8String:sName.c_str()];
+                    NSString *serialNumber = [[NSString alloc] initWithCString:sEfSeriale.c_str() encoding:NSUTF8StringEncoding];
                     
-                    NSString *PAN =
-                    [[NSString alloc] initWithCString:sPAN.c_str()
-                                      encoding:NSMacOSRomanStringEncoding];
+                    NSString *name = [[NSString alloc] initWithCString:sName.c_str() encoding:NSUTF8StringEncoding];
+
+                    Cie *cie = [[Cie alloc] init:name serial:serialNumber pan:PAN];
+                    [cieList addCie:PAN owner:cie];
                     
-                    //[NSUserDefaults.standardUserDefaults setObject:PAN forKey:@"PAN"];
-                    
-                    [NSUserDefaults.standardUserDefaults setObject:self.labelSerialNumber.stringValue forKey:@"efSeriale"];
-                    [NSUserDefaults.standardUserDefaults setObject:PAN forKey:@"serialnumber"];
-                    [NSUserDefaults.standardUserDefaults setObject:self.labelCardHolder.stringValue forKey:@"cardholder"];
+                    [NSUserDefaults.standardUserDefaults setObject:[cieList getData] forKey:@"cieDictionary"];
                     [NSUserDefaults.standardUserDefaults synchronize];
-                    
                     
                     [self showHomeThirdPage];
                     
@@ -828,9 +901,6 @@ CK_RV completedCallback(string& PAN,
 {
     if(returnCode == NSAlertFirstButtonReturn)
     {
-            self.labelSerialNumber.stringValue = @"";
-            self.labelCardHolder.stringValue = @"";
-            
             self.homeFirstPageView.hidden = NO;
             self.homeSecondPageView.hidden = YES;
             self.homeThirdPageView.hidden = YES;
@@ -852,10 +922,6 @@ CK_RV completedCallback(string& PAN,
             NSTextField* txtField = [self.view viewWithTag:1];
             [txtField selectText:nil];
     }else{
-        self.labelSerialNumber.stringValue = @"Per visualizzarlo occorre\nrifare l'abbinamento";
-        
-        [self.labelSerialNumber sizeToFit];
-        self.labelCardHolder.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"];
         
         [self showHomeFourthPage];
     }
@@ -863,7 +929,11 @@ CK_RV completedCallback(string& PAN,
 
 - (void) showHomeFirstPage
 {
+    //[NSUserDefaults.standardUserDefaults removeObjectForKey:@"cieDictionary"];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self updateAbbinaAndAnnullaLayout];
         
         self.homeButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
         self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
@@ -871,33 +941,59 @@ CK_RV completedCallback(string& PAN,
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+                        
         
-        if((![NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"]) and [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"])
+        if((![NSUserDefaults.standardUserDefaults objectForKey:@"cieDictionary"]))
         {
-            
-            self.labelCardHolder.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"];
-            
-            
-            self.labelSerialNumber.stringValue = @"Per visualizzarlo occorre\nrifare l'abbinamento";
-            
-            [self askRiabbina:@"E' necessario effettuare un nuovo abbinamento. Procedere?" withTitle:@"Abbinare nuovamente la CIE"];
-            
-        }else if([NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"] and [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"])
+            cieList = [CieList new];
+        }else
         {
-            self.labelSerialNumber.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"];
+            NSData *cieData = [NSUserDefaults.standardUserDefaults objectForKey:@"cieDictionary"];
             
-            self.labelCardHolder.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"];
+            cieList = [[CieList alloc] init:cieData];
+            NSDictionary *cieDict = [cieList getDictionary];
             
+            NSLog(@"Dizionario %@", cieDict);
+            
+        }
+        
+        if([NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"])
+        {
+            NSString* name = [NSUserDefaults.standardUserDefaults stringForKey:@"cardholder"];
+            NSString* PAN = [NSUserDefaults.standardUserDefaults stringForKey:@"serialnumber"];
+            NSString* serialNumber = [NSUserDefaults.standardUserDefaults stringForKey:@"efSeriale"];
+            
+            Cie *cie = [[Cie alloc] init:name serial:serialNumber pan:PAN];
+            
+            [cieList addCie:PAN owner:cie];
+            
+            [NSUserDefaults.standardUserDefaults setObject:[cieList getData] forKey:@"cieDictionary"];
+            [NSUserDefaults.standardUserDefaults removeObjectForKey:@"cardholder"];
+            [NSUserDefaults.standardUserDefaults removeObjectForKey:@"serialnumber"];
+            [NSUserDefaults.standardUserDefaults removeObjectForKey:@"efSeriale"];
+            
+            [NSUserDefaults.standardUserDefaults synchronize];
+            
+        }
+        
+        [self.carouselView configureWithCards:[[cieList getDictionary] allValues]];
+
+        if ([[cieList getDictionary] count] > 0){
             [self showHomeFourthPage];
         }
+        /*
+        else if((![NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"]) and [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"])
+        {
+            [self askRiabbina:@"E' necessario effettuare un nuovo abbinamento. Procedere?" withTitle:@"Abbinare nuovamente la CIE"];
+            
+        }
+        else if([NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"] and [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"])
+        {
+            [self showHomeFourthPage];
+        }
+         */
         else
         {
-            
-            self.labelSerialNumber.stringValue = @"";
-            self.labelCardHolder.stringValue = @"";
-            
-            //    if(self.homeFirstPageView.hidden)
-            //    {
             self.homeFirstPageView.hidden = NO;
             self.homeSecondPageView.hidden = YES;
             self.homeThirdPageView.hidden = YES;
@@ -906,8 +1002,6 @@ CK_RV completedCallback(string& PAN,
             self.cambioPINOKPageView.hidden = YES;
             self.sbloccoPageView.hidden = YES;
             self.sbloccoOKPageView.hidden = YES;
-            self.helpPageView.hidden = YES;
-            self.infoPageView.hidden = YES;
             
             for(int i = 1; i < 9; i++)
             {
@@ -918,9 +1012,7 @@ CK_RV completedCallback(string& PAN,
             
             NSTextField* txtField = [self.view viewWithTag:1];
             [txtField selectText:nil];
-             
         }
-        //    }
     });
 }
 
@@ -972,6 +1064,8 @@ CK_RV completedCallback(string& PAN,
 
 - (void) showHomeFourthPage
 {
+    [self.carouselView configureWithCards:[[cieList getDictionary] allValues]];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         self.homeButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
@@ -981,6 +1075,8 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         
+        [self updateAbbinaAndAnnullaLayout];
+
         self.homeFirstPageView.hidden = YES;
         self.homeSecondPageView.hidden = YES;
         self.homeThirdPageView.hidden = YES;
@@ -989,6 +1085,8 @@ CK_RV completedCallback(string& PAN,
         self.cambioPINOKPageView.hidden = YES;
         self.helpPageView.hidden = YES;
         self.infoPageView.hidden = YES;
+        self.sbloccoPageView.hidden = YES;
+        self.sbloccoOKPageView.hidden = YES;
     });
 }
 
@@ -1194,10 +1292,28 @@ CK_RV completedCallback(string& PAN,
 - (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(bool*)contextInfo
 {
     if(*contextInfo)
-        exit(0);
+    {
+       NSLog(@"alert did end with status %ld", (long)returnCode);
+    }
 }
 
 - (void) askRemove: (NSString*) message withTitle: (NSString*) title
+{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"Ok"];
+        [alert addButtonWithTitle:@"Annulla"];
+        [alert setMessageText:title];
+        [alert setInformativeText:message];
+
+        [alert setAlertStyle:NSAlertStyleInformational];
+        
+        [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(askRemoveDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    });
+}
+
+- (void) askRemoveAll: (NSString*) message withTitle: (NSString*) title
 {
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -1206,12 +1322,25 @@ CK_RV completedCallback(string& PAN,
         [alert addButtonWithTitle:@"No"];
         [alert setMessageText:title];
         [alert setInformativeText:message];
+
         [alert setAlertStyle:NSAlertStyleInformational];
         
-        [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(askRemoveDidEnd:returnCode:contextInfo:) contextInfo:nil];
+        [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(askRemoveAllDidEnd:returnCode:contextInfo:) contextInfo:nil];
     });
 }
 
+- (void)askRemoveAllDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(bool*)contextInfo{
+
+    if(returnCode == NSAlertFirstButtonReturn) {
+        NSArray *cieArr = [[cieList getDictionary] allValues];
+        
+        for (Cie *cie in cieArr) {
+            removingCie = cie;
+            [self disabilita];
+        }
+    }
+
+}
 
 - (void)askRemoveDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(bool*)contextInfo
 {
@@ -1219,5 +1348,55 @@ CK_RV completedCallback(string& PAN,
         [self disabilita];
 }
 
+- (void) updateAbbinaAndAnnullaLayout {
+    if( [[cieList getDictionary] count] >= 1)
+    {
+        self.btnAnnulla.hidden = NO;
+        self.abbinaButtonWhenAnnullaVisible.priority = NSLayoutPriorityDefaultHigh;
+        self.abbinaButtonWhenAnnullaInvisible.priority = NSLayoutPriorityDefaultLow;
+        
+    }else
+    {
+        self.btnAnnulla.hidden = YES;
+        self.abbinaButtonWhenAnnullaVisible.priority = NSLayoutPriorityDefaultLow;
+        self.abbinaButtonWhenAnnullaInvisible.priority = NSLayoutPriorityDefaultHigh;
+    }
+    
+    [self updateViewConstraints];
+}
+
+#pragma mark - CarouselViewDelegate
+
+- (void)shouldAddCard {
+    self.homeFirstPageView.hidden = NO;
+    self.homeSecondPageView.hidden = YES;
+    self.homeThirdPageView.hidden = YES;
+    self.homeFourthPageView.hidden = YES;
+    self.cambioPINPageView.hidden = YES;
+    self.cambioPINOKPageView.hidden = YES;
+    self.sbloccoPageView.hidden = YES;
+    self.sbloccoOKPageView.hidden = YES;
+    self.helpPageView.hidden = YES;
+    self.infoPageView.hidden = YES;
+    
+    for(int i = 1; i < 9; i++)
+    {
+        NSTextField* txtField = [self.view viewWithTag:i];
+        
+        txtField.stringValue = @"";
+    }
+    
+    NSTextField* txtField = [self.view viewWithTag:1];
+    [txtField selectText:nil];
+}
+
+- (void)shouldRemoveAllCards {
+    [self askRemoveAll:@"Vuoi rimuovere tutte le CIE attualmente abbinate?" withTitle:@"Rimozione CIE"];
+}
+
+- (void)shouldRemoveCard:(nonnull Cie *)card {
+    removingCie = card;
+    [self askRemove:[NSString stringWithFormat:@"Stai rimuovendo la Carta di Identità di %@ dal sistema, per utilizzarla nuovamente dovrai ripetere l'abbinamento.", [card getName]] withTitle:@"Rimozione CIE"];
+}
 
 @end
