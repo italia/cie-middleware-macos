@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="CarouselCard">
+            <connections>
+                <outlet property="cardBottomDistance" destination="H8U-Dn-z2X" id="xvF-dX-yW4"/>
+                <outlet property="cardImageHeight" destination="3JC-rD-Z52" id="M2n-hS-o7R"/>
+                <outlet property="cardImageView" destination="fmF-ws-g4O" id="mr1-Wp-hSo"/>
+                <outlet property="fieldsDistance" destination="fij-eP-MVp" id="dh5-zw-LAL"/>
+                <outlet property="intestatarioLabel" destination="Whc-hx-uLQ" id="6JI-MA-NOO"/>
+                <outlet property="intestatarioLabelHeight" destination="Qaz-9H-Zh4" id="Uwg-K7-hkO"/>
+                <outlet property="intestatarioValue" destination="XUc-Zb-WFv" id="kV5-ct-I8V"/>
+                <outlet property="intestatarioValueHeight" destination="AMh-RK-eh2" id="0tK-3x-j7M"/>
+                <outlet property="leading1" destination="inv-hd-gY7" id="p65-y1-wtj"/>
+                <outlet property="leading2" destination="zZt-i4-rN5" id="voz-fT-BT5"/>
+                <outlet property="leading3" destination="wIw-z8-tcH" id="Icg-vQ-Nfc"/>
+                <outlet property="leading4" destination="U1E-Pl-nzb" id="vJe-cX-ahG"/>
+                <outlet property="numeroCartaLabel" destination="EzT-cF-hjH" id="twa-5I-GrW"/>
+                <outlet property="numeroCartaLabelHeight" destination="Xpu-jr-ebu" id="tgd-3f-AT6"/>
+                <outlet property="numeroCartaValue" destination="YNg-CI-5vv" id="iDL-u5-nGI"/>
+                <outlet property="numeroCartaValueHeight" destination="UbU-7j-c9B" id="AB6-G4-Nnf"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="512" height="300"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fmF-ws-g4O">
+                    <rect key="frame" x="0.0" y="170" width="512" height="130"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="130" id="3JC-rD-Z52"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="cie" id="RrM-NG-7BX"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EzT-cF-hjH">
+                    <rect key="frame" x="28" y="142" width="94" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="Xpu-jr-ebu"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Numero carta:" id="b1E-eg-LTf">
+                        <font key="font" size="14" name="HelveticaNeue"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="YNg-CI-5vv">
+                    <rect key="frame" x="28" y="117" width="478" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="UbU-7j-c9B"/>
+                    </constraints>
+                    <textFieldCell key="cell" selectable="YES" title="Multiline LabelMultiline LabelMultiline LabelMultiline LabelMultiline LabelMultiline Label" usesSingleLineMode="YES" id="YtK-Cl-v3T">
+                        <font key="font" metaFont="system" size="19"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Whc-hx-uLQ">
+                    <rect key="frame" x="28" y="89" width="78" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="Qaz-9H-Zh4"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Intestatario:" id="tJo-eL-4pK">
+                        <font key="font" size="14" name="HelveticaNeue"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XUc-Zb-WFv">
+                    <rect key="frame" x="28" y="39" width="478" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="AMh-RK-eh2"/>
+                    </constraints>
+                    <textFieldCell key="cell" selectable="YES" title="Multiline LabelMultiline LabelMultiline Label" id="6iO-GA-Ukl">
+                        <font key="font" metaFont="system" size="19"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="fmF-ws-g4O" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="FYj-ki-lgT"/>
+                <constraint firstItem="EzT-cF-hjH" firstAttribute="top" secondItem="fmF-ws-g4O" secondAttribute="bottom" constant="8" id="H8U-Dn-z2X"/>
+                <constraint firstItem="fmF-ws-g4O" firstAttribute="width" secondItem="c22-O7-iKe" secondAttribute="width" id="KOG-Ym-63X"/>
+                <constraint firstItem="XUc-Zb-WFv" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="U1E-Pl-nzb"/>
+                <constraint firstItem="YNg-CI-5vv" firstAttribute="top" secondItem="EzT-cF-hjH" secondAttribute="bottom" id="WLx-nI-7HX"/>
+                <constraint firstItem="fmF-ws-g4O" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="cJ8-5U-pxb"/>
+                <constraint firstItem="XUc-Zb-WFv" firstAttribute="top" secondItem="Whc-hx-uLQ" secondAttribute="bottom" id="ezT-f2-abw"/>
+                <constraint firstItem="Whc-hx-uLQ" firstAttribute="top" secondItem="YNg-CI-5vv" secondAttribute="bottom" constant="8" id="fij-eP-MVp"/>
+                <constraint firstItem="EzT-cF-hjH" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="inv-hd-gY7"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YNg-CI-5vv" secondAttribute="trailing" constant="8" id="koP-iu-IWh"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="XUc-Zb-WFv" secondAttribute="trailing" constant="8" id="uhV-sT-MUn"/>
+                <constraint firstItem="Whc-hx-uLQ" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="wIw-z8-tcH"/>
+                <constraint firstItem="YNg-CI-5vv" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="zZt-i4-rN5"/>
+            </constraints>
+            <point key="canvasLocation" x="-379" y="-45"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="cie" width="256" height="162"/>
+    </resources>
+</document>
