@@ -10,13 +10,16 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CarouselView">
             <connections>
+                <outlet property="aaa" destination="bjQ-ib-zXq" id="y0y-il-2nO"/>
                 <outlet property="backButton" destination="RdP-TU-VYs" id="kGR-OV-8b0"/>
                 <outlet property="leftCard" destination="lzB-Wd-sVC" id="UMF-cc-YJF"/>
                 <outlet property="mainCard" destination="pqv-Oe-kK9" id="r5V-4W-dpY"/>
                 <outlet property="multipleCardContainerView" destination="39B-Qm-UbP" id="h7j-by-Ma7"/>
                 <outlet property="nextButton" destination="28e-J6-ZOM" id="sgc-FK-eLE"/>
+                <outlet property="progressIndicator" destination="bjQ-ib-zXq" id="Dzt-w7-OuK"/>
                 <outlet property="radioButtonsContainer" destination="Yba-UV-VB9" id="96H-TK-tfL"/>
                 <outlet property="rightCard" destination="sYR-yE-FuJ" id="gH7-yY-e7P"/>
+                <outlet property="selectCIEView" destination="vIe-nL-aOs" id="7iS-4U-HT1"/>
                 <outlet property="singleCardContainerView" destination="gNV-hh-xTy" id="GyC-E8-V4x"/>
             </connections>
         </customObject>
@@ -38,7 +41,7 @@
                                         <button wantsLayer="YES" verticalHuggingPriority="750" id="lBv-mt-BPx">
                                             <rect key="frame" x="18" y="19" width="116" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="bevel" title="Aggiungi carta" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="iKY-9Q-2Ni">
+                                            <buttonCell key="cell" type="bevel" title="Aggiungi carta" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="iKY-9Q-2Ni">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -83,7 +86,7 @@ DQ
                                         <button wantsLayer="YES" verticalHuggingPriority="750" id="sup-6g-GcF">
                                             <rect key="frame" x="20" y="19" width="111" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="bevel" title="Rimuovi carta" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="zvG-tI-aaI">
+                                            <buttonCell key="cell" type="bevel" title="Rimuovi carta" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="zvG-tI-aaI">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -143,6 +146,59 @@ DQ
                         <constraint firstItem="7Wl-3u-P41" firstAttribute="centerY" secondItem="gNV-hh-xTy" secondAttribute="centerY" id="NQO-ag-axX"/>
                     </constraints>
                 </customView>
+                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vIe-nL-aOs">
+                    <rect key="frame" x="0.0" y="0.0" width="862" height="60"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="bxp-SV-csl">
+                            <rect key="frame" x="280" y="0.0" width="302" height="60"/>
+                            <subviews>
+                                <button wantsLayer="YES" verticalHuggingPriority="750" id="fwO-EI-2Mm">
+                                    <rect key="frame" x="75" y="19" width="183" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <buttonCell key="cell" type="bevel" title="Seleziona CIE" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="ni7-Qp-pTW">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </buttonCell>
+                                    <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                            <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                            <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                            <color key="value" name="customViewColor"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                            <color key="value" name="customViewColor"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="selectCie:" target="-2" id="m4s-tk-N7J"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="302" id="VN8-FJ-MiN"/>
+                                <constraint firstAttribute="height" constant="60" id="oTI-ZH-unb"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="bxp-SV-csl" firstAttribute="centerX" secondItem="vIe-nL-aOs" secondAttribute="centerX" id="ag3-tM-O9Z"/>
+                        <constraint firstItem="bxp-SV-csl" firstAttribute="centerY" secondItem="vIe-nL-aOs" secondAttribute="centerY" id="o22-Gg-pea"/>
+                        <constraint firstAttribute="height" constant="60" id="qnY-kj-7uy"/>
+                    </constraints>
+                </customView>
                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="39B-Qm-UbP">
                     <rect key="frame" x="0.0" y="0.0" width="862" height="60"/>
                     <subviews>
@@ -155,7 +211,7 @@ DQ
                                         <button wantsLayer="YES" verticalHuggingPriority="750" id="DFU-mO-K3S">
                                             <rect key="frame" x="81" y="19" width="109" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="bevel" title="Rimuovi tutte" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="BHR-gp-iDq">
+                                            <buttonCell key="cell" type="bevel" title="Rimuovi tutte" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="BHR-gp-iDq">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -194,7 +250,7 @@ DQ
                                         <button wantsLayer="YES" verticalHuggingPriority="750" id="5iI-1X-Foj">
                                             <rect key="frame" x="78" y="19" width="116" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="bevel" title="Aggiungi carta" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="t6z-AN-K3S">
+                                            <buttonCell key="cell" type="bevel" title="Aggiungi carta" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="t6z-AN-K3S">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -233,7 +289,7 @@ DQ
                                         <button wantsLayer="YES" verticalHuggingPriority="750" id="GQI-HK-VP8">
                                             <rect key="frame" x="75" y="19" width="183" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="bevel" title="Rimuovi carta selezionata" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="TI8-Mm-hBe">
+                                            <buttonCell key="cell" type="bevel" title="Rimuovi carta selezionata" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="TI8-Mm-hBe">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -351,27 +407,30 @@ DQ
                         <constraint firstAttribute="trailing" secondItem="28e-J6-ZOM" secondAttribute="trailing" id="PxD-DW-ssT"/>
                     </constraints>
                 </customView>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="lzB-Wd-sVC" userLabel="leftCard" customClass="CarouselCard">
+                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lzB-Wd-sVC" userLabel="leftCard" customClass="CarouselCard">
                     <rect key="frame" x="48" y="220" width="180" height="234"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="180" id="9ks-YO-E2U"/>
                         <constraint firstAttribute="height" constant="234" id="pll-pp-umI"/>
                     </constraints>
                 </customView>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="sYR-yE-FuJ" userLabel="rightCard" customClass="CarouselCard">
+                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sYR-yE-FuJ" userLabel="rightCard" customClass="CarouselCard">
                     <rect key="frame" x="634" y="220" width="180" height="234"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="234" id="otO-ZH-DQg"/>
                         <constraint firstAttribute="width" constant="180" id="y7c-x3-AoA"/>
                     </constraints>
                 </customView>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="pqv-Oe-kK9" customClass="CarouselCard">
+                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pqv-Oe-kK9" customClass="CarouselCard">
                     <rect key="frame" x="331" y="182" width="200" height="260"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="1wh-bb-cif"/>
                         <constraint firstAttribute="height" constant="260" id="hZH-oZ-pZJ"/>
                     </constraints>
                 </customView>
+                <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="bjQ-ib-zXq">
+                    <rect key="frame" x="423" y="304" width="16" height="16"/>
+                </progressIndicator>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="UzY-Ai-OEa">
                     <rect key="frame" x="23" y="62" width="816" height="120"/>
                     <subviews>
@@ -391,13 +450,17 @@ DQ
             </subviews>
             <constraints>
                 <constraint firstItem="gNV-hh-xTy" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="00G-2e-aAm"/>
+                <constraint firstItem="bjQ-ib-zXq" firstAttribute="centerX" secondItem="pqv-Oe-kK9" secondAttribute="centerX" id="3mU-Sv-aei"/>
+                <constraint firstItem="vIe-nL-aOs" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="5p7-0k-puf"/>
                 <constraint firstAttribute="trailing" secondItem="XRw-gZ-Xgp" secondAttribute="trailing" constant="8" id="8fr-Ov-zBA"/>
                 <constraint firstItem="TOJ-r2-TWh" firstAttribute="top" secondItem="UzY-Ai-OEa" secondAttribute="bottom" id="A9o-p9-HRS"/>
+                <constraint firstAttribute="trailing" secondItem="vIe-nL-aOs" secondAttribute="trailing" id="DGN-Fq-Qxd"/>
                 <constraint firstItem="UzY-Ai-OEa" firstAttribute="leading" secondItem="4RL-MR-IBC" secondAttribute="trailing" id="Jt7-T9-PnE"/>
                 <constraint firstItem="sYR-yE-FuJ" firstAttribute="centerY" secondItem="pqv-Oe-kK9" secondAttribute="centerY" constant="-25" id="MhP-tt-Vhy"/>
                 <constraint firstItem="gNV-hh-xTy" firstAttribute="top" secondItem="TOJ-r2-TWh" secondAttribute="bottom" id="Oo0-pS-7mu"/>
                 <constraint firstItem="4RL-MR-IBC" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="8" id="Rbk-l5-BMG"/>
                 <constraint firstAttribute="bottom" secondItem="gNV-hh-xTy" secondAttribute="bottom" id="Rbm-an-F98"/>
+                <constraint firstItem="bjQ-ib-zXq" firstAttribute="centerY" secondItem="pqv-Oe-kK9" secondAttribute="centerY" id="Rmh-sV-p8c"/>
                 <constraint firstItem="4RL-MR-IBC" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="StD-xT-XSS"/>
                 <constraint firstItem="XRw-gZ-Xgp" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="UpL-Wi-S5b"/>
                 <constraint firstAttribute="trailing" secondItem="TOJ-r2-TWh" secondAttribute="trailing" constant="130" id="W9m-aU-NEx"/>
@@ -412,6 +475,7 @@ DQ
                 <constraint firstItem="lzB-Wd-sVC" firstAttribute="leading" secondItem="4RL-MR-IBC" secondAttribute="trailing" constant="25" id="oqp-ti-1xg"/>
                 <constraint firstItem="UzY-Ai-OEa" firstAttribute="top" secondItem="pqv-Oe-kK9" secondAttribute="bottom" id="smh-Lb-RHH"/>
                 <constraint firstItem="TOJ-r2-TWh" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="130" id="uuZ-xz-Y0C"/>
+                <constraint firstAttribute="bottom" secondItem="vIe-nL-aOs" secondAttribute="bottom" id="w18-D7-yPg"/>
                 <constraint firstItem="lzB-Wd-sVC" firstAttribute="centerY" secondItem="pqv-Oe-kK9" secondAttribute="centerY" constant="-25" id="wP0-cy-6kV"/>
                 <constraint firstAttribute="trailing" secondItem="39B-Qm-UbP" secondAttribute="trailing" id="xzC-d0-5lr"/>
                 <constraint firstItem="XRw-gZ-Xgp" firstAttribute="leading" secondItem="sYR-yE-FuJ" secondAttribute="trailing" constant="25" id="zwe-Ei-b4t"/>

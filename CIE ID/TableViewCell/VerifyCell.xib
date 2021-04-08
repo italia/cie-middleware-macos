@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <tableCellView id="ove-ra-2Wu" customClass="VerifyCell" customModule="CIE_ID" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="434" height="86"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0ql-qd-unZ">
+                    <rect key="frame" x="8" y="19" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="48" id="Yat-n7-bZN"/>
+                        <constraint firstAttribute="height" constant="48" id="yuq-RF-CDx"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="KK5-xE-fdU"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vuh-Za-XcF">
+                    <rect key="frame" x="62" y="35" width="366" height="16"/>
+                    <textFieldCell key="cell" title="LabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabel" id="iB8-30-R8L">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="vuh-Za-XcF" secondAttribute="bottom" constant="2" id="4Vk-Id-u0d"/>
+                <constraint firstItem="0ql-qd-unZ" firstAttribute="leading" secondItem="ove-ra-2Wu" secondAttribute="leading" constant="8" id="Lvl-mu-zRm"/>
+                <constraint firstItem="vuh-Za-XcF" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ove-ra-2Wu" secondAttribute="top" constant="2" id="ON9-29-JPp"/>
+                <constraint firstItem="vuh-Za-XcF" firstAttribute="centerY" secondItem="ove-ra-2Wu" secondAttribute="centerY" id="YzY-yw-gbq"/>
+                <constraint firstItem="vuh-Za-XcF" firstAttribute="leading" secondItem="0ql-qd-unZ" secondAttribute="trailing" constant="8" id="exn-dt-0Zb"/>
+                <constraint firstItem="0ql-qd-unZ" firstAttribute="centerY" secondItem="ove-ra-2Wu" secondAttribute="centerY" id="uPQ-ou-Cty"/>
+                <constraint firstAttribute="trailing" secondItem="vuh-Za-XcF" secondAttribute="trailing" constant="8" id="v93-Ou-wOx"/>
+            </constraints>
+            <connections>
+                <outlet property="imageIcon" destination="0ql-qd-unZ" id="new-00-Fmu"/>
+                <outlet property="lblText" destination="vuh-Za-XcF" id="FQq-53-p27"/>
+            </connections>
+            <point key="canvasLocation" x="173.5" y="87.5"/>
+        </tableCellView>
+    </objects>
+</document>

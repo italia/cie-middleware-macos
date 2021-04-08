@@ -16,9 +16,9 @@
 #include "../Crypto/sha256.h"
 #include <functional>
 #include "../Crypto/ASNParser.h"
-#include "../PCSC/PCSC.h"
+//#include "../PCSC/PCSC.h"
 #include <string>
-#include "AbilitaCIE.h"
+//#include "AbilitaCIE.h"
 #include <string>
 #include "../Cryptopp/misc.h"
 

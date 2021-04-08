@@ -2,8 +2,6 @@
 //  Cie.m
 //  CIE ID
 //
-//  Created by Pierluigi De Gregorio on 21/09/2020.
-//  Copyright © 2020 IPZS. All rights reserved.
 //
 
 #import "Cie.h"
@@ -13,6 +11,7 @@
 @property (strong, nonatomic) NSString* name;
 @property (strong, nonatomic) NSString* serialNumber;
 @property (strong, nonatomic) NSString* pan;
+@property BOOL customSign;
 
 @end
 
@@ -23,7 +22,7 @@
     self.serialNumber = serialNumner;
     self.name = name;
     self.pan = pan;
-    
+    self.customSign = false;
     return self;
 }
 
@@ -45,17 +44,38 @@
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeObject:self.serialNumber forKey:@"serialNumber"];
     [coder encodeObject:self.pan forKey:@"pan"];
+    [coder encodeBool:self.customSign forKey:@"customSign"];
 }
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)coder {
     self.name = [coder decodeObjectForKey:@"name"];
     self.serialNumber = [coder decodeObjectForKey:@"serialNumber"];
     self.pan = [coder decodeObjectForKey:@"pan"];
+    
+    if([coder containsValueForKey:@"customSign"])
+    {
+        self.customSign = [coder decodeBoolForKey:@"customSign"];
+    }else
+    {
+        self.customSign = false;
+    }
+    
     return self;
 }
 
 -(NSString *)description{
     return [NSString stringWithFormat:@"name = %@; serial = %@", _name, _serialNumber];
+}
+
+
+-(BOOL) getCustomSign
+{
+    return self.customSign;
+}
+
+-(void)customSignSet: (BOOL)setValue
+{
+    self.customSign = setValue;
 }
 
 @end

@@ -15,22 +15,21 @@
 #include "../Crypto/sha512.h"
 #include <functional>
 #include "../Crypto/ASNParser.h"
-#include "../PCSC/PCSC.h"
 #include <string>
 #include "AbilitaCIE.h"
 #include <string>
 #include "../Cryptopp/misc.h"
-
 #include "../Crypto/ASNParser.h"
 #include <stdio.h>
 #include "../Crypto/AES.h"
 #include "../Cryptopp/cryptlib.h"
 #include "../Cryptopp/asn.h"
 #include "../Util/CryptoppUtils.h"
+#include "../Sign/CIEVerify.h"
 
 #define ROLE_USER                   1
 #define ROLE_ADMIN                  2
-#define CARD_ALREADY_ENABLED        0x000000F0;
+#define CARD_ALREADY_ENABLED        0x000000F0
 
 OID OID_SURNAME = ((OID(2) += 5) += 4) += 4;
 

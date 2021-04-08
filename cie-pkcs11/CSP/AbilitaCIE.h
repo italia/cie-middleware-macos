@@ -6,6 +6,8 @@
 //  Copyright © 2018 IPZS. All rights reserved.
 //
 #include "../PKCS11/cryptoki.h"
+#include "CIEVerify.h"
+#include "../PCSC/PCSC.h"
 #include <string>
 
 #define SCARD_ATTR_VALUE(Class, Tag) ((((uint32_t)(Class)) << 16) | ((uint32_t)(Tag)))
@@ -19,10 +21,12 @@ typedef CK_CALLBACK_FUNCTION(CK_RV, PROGRESS_CALLBACK)(
                                                const int progress,
                                                const char* szMessage);
 
+
 typedef CK_CALLBACK_FUNCTION(CK_RV, COMPLETED_CALLBACK)(
                                                         std::string& pan,
                                                         std::string& name,
                                                         std::string& ef_cie);
+
 
 typedef CK_RV (*AbilitaCIEfn)(const char*  szPAN,
                               const char*  szPIN,
@@ -33,4 +37,4 @@ typedef CK_RV (*AbilitaCIEfn)(const char*  szPAN,
 typedef CK_RV (*VerificaCIEAbilitatafn)(const char*  szPAN);
 typedef CK_RV (*DisabilitaCIEfn)(const char*  szPAN);
 
-
+int TokenTransmitCallback(safeConnection *data, uint8_t *apdu, DWORD apduSize, uint8_t *resp, DWORD *respSize);

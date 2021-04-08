@@ -6,6 +6,8 @@
 
 #import "CarouselView.h"
 #import "CarouselCard.h"
+#import "ChangeView.h"
+#import "MainViewController.h"
 
 #define RADIO_BUTTON_LEADING 5
 #define RADIO_BUTTON_WIDTH 22
@@ -22,12 +24,13 @@
 
 @property (weak) IBOutlet NSView *singleCardContainerView;
 @property (weak) IBOutlet NSView *multipleCardContainerView;
+@property (weak) IBOutlet NSView *selectCIEView;
 @property (weak) IBOutlet NSButton *nextButton;
 @property (weak) IBOutlet NSButton *backButton;
-
 @property (weak) IBOutlet CarouselCard *leftCard;
 @property (weak) IBOutlet CarouselCard *rightCard;
 @property (weak) IBOutlet CarouselCard *mainCard;
+@property (weak) IBOutlet NSProgressIndicator *progressIndicator;
 
 @property (weak) IBOutlet NSView *radioButtonsContainer;
 
@@ -57,6 +60,8 @@
     [_rightCard setupWithSizeMode:CarouselCardSizeModeSmall];
     [_mainCard setupWithSizeMode:CarouselCardSizeModeRegular];
     //[_mainCard setNameLabelOnOneLine];
+    
+    [_progressIndicator startAnimation:nil];
     
     [_leftCard setAlphaValue:0.5];
     [_rightCard setAlphaValue:0.5];
@@ -91,6 +96,7 @@
             __strong __typeof__(weakSelf) strongSelf = weakSelf;
             [strongSelf.singleCardContainerView setHidden:YES];
             [strongSelf.multipleCardContainerView setHidden:YES];
+            [strongSelf.selectCIEView setHidden:YES];
             [strongSelf.backButton setHidden:YES];
             [strongSelf.nextButton setHidden:YES];
             [strongSelf.rightCard setHidden:YES];
@@ -104,6 +110,7 @@
             __strong __typeof__(weakSelf) strongSelf = weakSelf;
             [strongSelf.singleCardContainerView setHidden:YES];
             [strongSelf.multipleCardContainerView setHidden:NO];
+            [strongSelf.selectCIEView setHidden:YES];
             [strongSelf.backButton setHidden:NO];
             [strongSelf.nextButton setHidden:NO];
 
@@ -121,6 +128,7 @@
             __strong __typeof__(weakSelf) strongSelf = weakSelf;
             [strongSelf.singleCardContainerView setHidden:NO];
             [strongSelf.multipleCardContainerView setHidden:YES];
+            [strongSelf.selectCIEView setHidden:YES];
             [strongSelf.backButton setHidden:YES];
             [strongSelf.nextButton setHidden:YES];
             [strongSelf.rightCard setHidden:YES];
@@ -138,6 +146,13 @@
         [self updateCards];
     }
     
+}
+
+- (void) changeButtonViews
+{
+    [self.selectCIEView setHidden:NO];
+    [self.singleCardContainerView setHidden:YES];
+    [self.multipleCardContainerView setHidden:YES];
 }
 
 - (Cie *) getSelectedCard {
@@ -171,6 +186,30 @@
             [self.delegate shouldRemoveAllCards];
         }
     }
+}
+
+- (IBAction)selectCie:(id)sender {
+    
+    Cie* selectedCard = [self getSelectedCard];
+    ChangeView *cG = [ChangeView getInstance];
+    
+    NSTextField* lblCustomSign = (NSTextField*)[[cG getView:SELECT_FILE_PAGE] viewWithTag:40];
+    NSTextField* lblDefaultSign = (NSTextField*)[[cG getView:SELECT_FILE_PAGE] viewWithTag:20];
+    NSButton* btnPersonalizza = (NSButton*)[[cG getView:SELECT_FILE_PAGE] viewWithTag:30];
+    if([selectedCard getCustomSign])
+    {
+        
+        [lblCustomSign setHidden:NO];
+        [lblDefaultSign setHidden:YES];
+        
+    }else{
+        [btnPersonalizza setTitle:@"Personalizza"];
+        [lblCustomSign setHidden:YES];
+        [lblDefaultSign setHidden:NO];
+    }
+    
+    [cG showSubView:SELECT_FILE_PAGE];
+    
 }
 
 - (IBAction)backPressed:(id)sender {
@@ -326,6 +365,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         __strong __typeof__(weakSelf) strongSelf = weakSelf;
 
+        [strongSelf.mainCard setHidden:NO];
+
         if ([strongSelf->cards count] == 2) {
             if (strongSelf->index == 0) {
                 [strongSelf.rightCard setHidden:NO];
@@ -341,6 +382,8 @@
                 [strongSelf.nextButton setEnabled:NO];
             }
         }
+        
+        [strongSelf.progressIndicator setHidden:YES];
     });
 }
 
