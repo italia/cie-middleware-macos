@@ -1,4 +1,8 @@
+#ifndef PCSC_h
+#define PCSC_h
+
 #ifdef WIN32
+
 #include <winscard.h>
 #else
 #include <PCSC/winscard.h>
@@ -43,3 +47,4 @@ public:
 	readerMonitor(void(*readerEvent)(std::string &reader, bool insert, void* appData), void* appData);
 	~readerMonitor();
 };
+#endif //PCSC_H

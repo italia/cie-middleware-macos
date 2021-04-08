@@ -1,9 +1,8 @@
 #pragma once
 
 #include <stdlib.h>
-#include "defines.h"
 #include <string>
-#include "wintypes.h"
+#include "definitions.h"
 
 #ifndef OutputDebugString
 #define OutputDebugString printf

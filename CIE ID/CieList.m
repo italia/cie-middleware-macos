@@ -2,8 +2,6 @@
 //  CieList.m
 //  Dictionary_Class_Example
 //
-//  Created by Pierluigi De Gregorio on 21/09/2020.
-//  Copyright © 2020 Pierluigi De Gregorio. All rights reserved.
 //
 
 #import "CieList.h"
@@ -42,7 +40,7 @@
 -(void)addCie:(NSString*) pan owner:(Cie*) cie
 {
     [self.dictionary setObject:cie forKey:pan];
-    
+        
     NSLog(@"Dictionary after add: %@", [self.dictionary description]);
 }
 

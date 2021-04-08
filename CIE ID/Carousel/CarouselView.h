@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) configureWithCards:(NSArray <Cie *> * _Nonnull)cardList;
 
+- (void) changeButtonViews;
+
 - (Cie *) getSelectedCard;
 
 @end
