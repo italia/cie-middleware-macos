@@ -577,7 +577,7 @@ CK_RV completedCallback(string& PAN,
 - (IBAction)home:(id)sender
 {
     _lblFirmaHome.stringValue = @"CIE ID";
-    _lblSubFirmaHome.stringValue = @"Carta di Identità Elettrinica abbinata correttamente";
+    _lblSubFirmaHome.stringValue = @"Carta di Identità Elettronica abbinata correttamente";
     [self showHomeFirstPage];
 }
 
