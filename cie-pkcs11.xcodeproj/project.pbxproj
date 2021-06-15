@@ -7,8 +7,47 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0883C2E4251C94290054055E /* CarouselView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0883C2DE251C94290054055E /* CarouselView.m */; };
+		0883C2E5251C94290054055E /* CarouselCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0883C2DF251C94290054055E /* CarouselCard.xib */; };
+		0883C2E6251C94290054055E /* CarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0883C2E1251C94290054055E /* CarouselView.xib */; };
+		0883C2E7251C94290054055E /* CarouselCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0883C2E2251C94290054055E /* CarouselCard.m */; };
 		461398B8C02047C25F03D065 /* Pods_CIE_ID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */; };
-		5CA6E27FF73910B2FFB64484 /* libPods-cie-pkcs11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */; };
+		7649F44225DE65E500A33DAC /* FirmaConCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7649F44025DE65E500A33DAC /* FirmaConCIE.cpp */; };
+		7649F44325DE65E500A33DAC /* FirmaConCIE.h in Headers */ = {isa = PBXBuildFile; fileRef = 7649F44125DE65E500A33DAC /* FirmaConCIE.h */; };
+		7649F45625DE6B9700A33DAC /* VerificaConCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7649F45425DE6B9700A33DAC /* VerificaConCIE.cpp */; };
+		7649F45725DE6B9700A33DAC /* VerificaConCIE.h in Headers */ = {isa = PBXBuildFile; fileRef = 7649F45525DE6B9700A33DAC /* VerificaConCIE.h */; };
+		7649F46A25DEA69100A33DAC /* VerifyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7649F46925DEA69100A33DAC /* VerifyCell.xib */; };
+		7649F47425DEA6D200A33DAC /* VerifyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7649F47325DEA6D200A33DAC /* VerifyCell.swift */; };
+		7649F47E25DEB30100A33DAC /* VerifyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7649F47D25DEB30100A33DAC /* VerifyItem.swift */; };
+		764F7C4725C3224F0021B789 /* disigonsdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 764F7C3F25C3224F0021B789 /* disigonsdk.h */; };
+		764F7C4825C3224F0021B789 /* CIESign.h in Headers */ = {isa = PBXBuildFile; fileRef = 764F7C4025C3224F0021B789 /* CIESign.h */; };
+		764F7C4925C3224F0021B789 /* CIEEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 764F7C4125C3224F0021B789 /* CIEEngine.h */; };
+		764F7C4A25C3224F0021B789 /* CIEVerify.h in Headers */ = {isa = PBXBuildFile; fileRef = 764F7C4225C3224F0021B789 /* CIEVerify.h */; };
+		764F7C4B25C3224F0021B789 /* CIEVerify.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 764F7C4325C3224F0021B789 /* CIEVerify.cpp */; };
+		764F7C4C25C3224F0021B789 /* libcie_sign_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 764F7C4425C3224F0021B789 /* libcie_sign_sdk.a */; };
+		764F7C4D25C3224F0021B789 /* CIESign.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 764F7C4525C3224F0021B789 /* CIESign.cpp */; };
+		764F7C4E25C3224F0021B789 /* definitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 764F7C4625C3224F0021B789 /* definitions.h */; };
+		7663CDD92518DF6A00FDC547 /* CieList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7663CDD82518DF6A00FDC547 /* CieList.m */; };
+		7663CDDC2518F09E00FDC547 /* Cie.m in Sources */ = {isa = PBXBuildFile; fileRef = 7663CDDB2518F09E00FDC547 /* Cie.m */; };
+		7677F14825D3FB9700A9A8F6 /* DropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7677F14725D3FB9700A9A8F6 /* DropView.swift */; };
+		7677F1EA25D4777300A9A8F6 /* ChangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7677F1E925D4777300A9A8F6 /* ChangeView.m */; };
+		768BE8D725D5356900D62B77 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768BE8D625D5356900D62B77 /* BorderedView.swift */; };
+		768BE8F325D5671000D62B77 /* PdfPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768BE8F225D5671000D62B77 /* PdfPreview.swift */; };
+		768BE8FD25D5684B00D62B77 /* MovableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768BE8FC25D5684B00D62B77 /* MovableImageView.swift */; };
+		76A52D9225C4427F004A0086 /* libPods-cie-pkcs11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */; };
+		76F67E1025DD2A70002AB48D /* Allura-Regular.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76F67E0E25DD29B8002AB48D /* Allura-Regular.ttf */; };
+		77A9C3C426049A5D00317B90 /* AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A9C3C326049A5D00317B90 /* AES.m */; };
+		77A9C3D72604AE4000317B90 /* ProxyInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A9C3D62604AE4000317B90 /* ProxyInfoManager.m */; };
+		77BAE799261EFAC800592607 /* libbz2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE798261EFAB500592607 /* libbz2.a */; };
+		77BAE79B261EFADD00592607 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE79A261EFAD400592607 /* libcurl.a */; };
+		77BAE79D261EFAED00592607 /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE79C261EFAEA00592607 /* libexpat.a */; };
+		77BAE79F261EFB1700592607 /* libfontconfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE79E261EFB1500592607 /* libfontconfig.a */; };
+		77BAE7A1261EFB2400592607 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE7A0261EFB2100592607 /* libfreetype.a */; };
+		77BAE7A3261EFB3100592607 /* libiconv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE7A2261EFB2F00592607 /* libiconv.a */; };
+		77BAE7A5261EFB3D00592607 /* libpng16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE7A4261EFB3A00592607 /* libpng16.a */; };
+		77BAE7A7261EFB4E00592607 /* libpodofo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE7A6261EFB4B00592607 /* libpodofo.a */; };
+		77BAE7A9261EFB5800592607 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE7A8261EFB5600592607 /* libxml2.a */; };
+		77BAE7AB261EFB6100592607 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE7AA261EFB6000592607 /* libz.a */; };
 		E504202C2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png in Resources */ = {isa = PBXBuildFile; fileRef = E504202B2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png */; };
 		E504202D2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png in Resources */ = {isa = PBXBuildFile; fileRef = E504202B2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png */; };
 		E504202E2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png in Resources */ = {isa = PBXBuildFile; fileRef = E504202B2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png */; };
@@ -186,6 +225,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		76F67E0F25DD2A3C002AB48D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Fonts;
+			dstSubfolderSpec = 7;
+			files = (
+				76F67E1025DD2A70002AB48D /* Allura-Regular.ttf in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E526E9F621E0BAFF0098AE8A /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -209,10 +258,73 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0883C2DE251C94290054055E /* CarouselView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarouselView.m; sourceTree = "<group>"; };
+		0883C2DF251C94290054055E /* CarouselCard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarouselCard.xib; sourceTree = "<group>"; };
+		0883C2E0251C94290054055E /* CarouselView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselView.h; sourceTree = "<group>"; };
+		0883C2E1251C94290054055E /* CarouselView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarouselView.xib; sourceTree = "<group>"; };
+		0883C2E2251C94290054055E /* CarouselCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarouselCard.m; sourceTree = "<group>"; };
+		0883C2E3251C94290054055E /* CarouselCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselCard.h; sourceTree = "<group>"; };
 		228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cie-pkcs11.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.release.xcconfig"; sourceTree = "<group>"; };
 		438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.release.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.release.xcconfig"; sourceTree = "<group>"; };
 		6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.debug.xcconfig"; sourceTree = "<group>"; };
+		7649F44025DE65E500A33DAC /* FirmaConCIE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FirmaConCIE.cpp; sourceTree = "<group>"; };
+		7649F44125DE65E500A33DAC /* FirmaConCIE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirmaConCIE.h; sourceTree = "<group>"; };
+		7649F45425DE6B9700A33DAC /* VerificaConCIE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VerificaConCIE.cpp; sourceTree = "<group>"; };
+		7649F45525DE6B9700A33DAC /* VerificaConCIE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VerificaConCIE.h; sourceTree = "<group>"; };
+		7649F46925DEA69100A33DAC /* VerifyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VerifyCell.xib; sourceTree = "<group>"; };
+		7649F47325DEA6D200A33DAC /* VerifyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCell.swift; sourceTree = "<group>"; };
+		7649F47D25DEB30100A33DAC /* VerifyItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyItem.swift; sourceTree = "<group>"; };
+		764F7C3425C31E030021B789 /* libcie_sign_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcie_sign_sdk.a; path = "cie-pkcs11/Sign/libcie_sign_sdk.a"; sourceTree = "<group>"; };
+		764F7C3F25C3224F0021B789 /* disigonsdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = disigonsdk.h; sourceTree = "<group>"; };
+		764F7C4025C3224F0021B789 /* CIESign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIESign.h; sourceTree = "<group>"; };
+		764F7C4125C3224F0021B789 /* CIEEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIEEngine.h; sourceTree = "<group>"; };
+		764F7C4225C3224F0021B789 /* CIEVerify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIEVerify.h; sourceTree = "<group>"; };
+		764F7C4325C3224F0021B789 /* CIEVerify.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CIEVerify.cpp; sourceTree = "<group>"; };
+		764F7C4425C3224F0021B789 /* libcie_sign_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcie_sign_sdk.a; sourceTree = "<group>"; };
+		764F7C4525C3224F0021B789 /* CIESign.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CIESign.cpp; sourceTree = "<group>"; };
+		764F7C4625C3224F0021B789 /* definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = definitions.h; sourceTree = "<group>"; };
+		7663CDD72518DF6A00FDC547 /* CieList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CieList.h; sourceTree = "<group>"; };
+		7663CDD82518DF6A00FDC547 /* CieList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CieList.m; sourceTree = "<group>"; };
+		7663CDDA2518F07900FDC547 /* Cie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cie.h; sourceTree = "<group>"; };
+		7663CDDB2518F09E00FDC547 /* Cie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cie.m; sourceTree = "<group>"; };
+		7677F14725D3FB9700A9A8F6 /* DropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropView.swift; sourceTree = "<group>"; };
+		7677F17725D43EC200A9A8F6 /* CIE ID-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CIE ID-Bridging-Header.h"; path = "/Users/piero/Desktop/Bit4id/IPZS/cie-middleware-macos/CIE ID/CIE ID-Bridging-Header.h"; sourceTree = "<absolute>"; };
+		7677F1E925D4777300A9A8F6 /* ChangeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeView.m; sourceTree = "<group>"; };
+		7677F1F325D4778D00A9A8F6 /* ChangeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangeView.h; sourceTree = "<group>"; };
+		768BE8D625D5356900D62B77 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
+		768BE8F225D5671000D62B77 /* PdfPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfPreview.swift; sourceTree = "<group>"; };
+		768BE8FC25D5684B00D62B77 /* MovableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovableImageView.swift; sourceTree = "<group>"; };
+		76A52C9025C40BDE004A0086 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = "cie-pkcs11/dependencies/libcurl.a"; sourceTree = "<group>"; };
+		76A52C9125C40BDE004A0086 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "cie-pkcs11/dependencies/libcrypto.a"; sourceTree = "<group>"; };
+		76A52C9225C40BDE004A0086 /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = "cie-pkcs11/dependencies/libxml2.a"; sourceTree = "<group>"; };
+		76A52C9325C40BDF004A0086 /* libpodofo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpodofo.a; path = "cie-pkcs11/dependencies/libpodofo.a"; sourceTree = "<group>"; };
+		76A52C9425C40BDF004A0086 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "cie-pkcs11/dependencies/libssl.a"; sourceTree = "<group>"; };
+		76A52CA225C40C56004A0086 /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = "cie-pkcs11/dependencies/libpng16.a"; sourceTree = "<group>"; };
+		76A52CA325C40C56004A0086 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = "cie-pkcs11/dependencies/libfreetype.a"; sourceTree = "<group>"; };
+		76A52CA425C40C56004A0086 /* libbz2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbz2.a; path = "cie-pkcs11/dependencies/libbz2.a"; sourceTree = "<group>"; };
+		76A52CA525C40C56004A0086 /* libfontconfig.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfontconfig.a; path = "cie-pkcs11/dependencies/libfontconfig.a"; sourceTree = "<group>"; };
+		76A52CB225C410CC004A0086 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = "cie-pkcs11/dependencies/libz.a"; sourceTree = "<group>"; };
+		76A52CBC25C41141004A0086 /* libcharset.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcharset.a; path = "cie-pkcs11/dependencies/libcharset.a"; sourceTree = "<group>"; };
+		76A52CBD25C41141004A0086 /* libiconv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libiconv.a; path = "cie-pkcs11/dependencies/libiconv.a"; sourceTree = "<group>"; };
+		76A52D1425C422F5004A0086 /* libexpat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libexpat.a; path = "cie-pkcs11/dependencies/libexpat.a"; sourceTree = "<group>"; };
+		76F67E0E25DD29B8002AB48D /* Allura-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Allura-Regular.ttf"; sourceTree = "<group>"; };
+		77A9C3C326049A5D00317B90 /* AES.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AES.m; sourceTree = "<group>"; };
+		77A9C3CD26049A6B00317B90 /* AES.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AES.h; sourceTree = "<group>"; };
+		77A9C3D62604AE4000317B90 /* ProxyInfoManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProxyInfoManager.m; sourceTree = "<group>"; };
+		77A9C3E02604AE5000317B90 /* ProxyInfoManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProxyInfoManager.h; sourceTree = "<group>"; };
+		77AFDA6626380557002E418E /* libcrypto2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto2.a; path = cie_sign_sdk/Dependencies/libcrypto2.a; sourceTree = "<group>"; };
+		77AFDA93263807D8002E418E /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = cie_sign_sdk/Dependencies/openssl/libssl.a; sourceTree = "<group>"; };
+		77BAE798261EFAB500592607 /* libbz2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbz2.a; path = cie_sign_sdk/Dependencies/bzip2/libbz2.a; sourceTree = "<group>"; };
+		77BAE79A261EFAD400592607 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = cie_sign_sdk/Dependencies/libcurl/libcurl.a; sourceTree = "<group>"; };
+		77BAE79C261EFAEA00592607 /* libexpat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libexpat.a; path = cie_sign_sdk/Dependencies/expat/libexpat.a; sourceTree = "<group>"; };
+		77BAE79E261EFB1500592607 /* libfontconfig.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfontconfig.a; path = cie_sign_sdk/Dependencies/fontconfig/libfontconfig.a; sourceTree = "<group>"; };
+		77BAE7A0261EFB2100592607 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = cie_sign_sdk/Dependencies/freetype/libfreetype.a; sourceTree = "<group>"; };
+		77BAE7A2261EFB2F00592607 /* libiconv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libiconv.a; path = cie_sign_sdk/Dependencies/libiconv/libiconv.a; sourceTree = "<group>"; };
+		77BAE7A4261EFB3A00592607 /* libpng16.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng16.a; path = cie_sign_sdk/Dependencies/libpng/libpng16.a; sourceTree = "<group>"; };
+		77BAE7A6261EFB4B00592607 /* libpodofo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpodofo.a; path = cie_sign_sdk/Dependencies/podofo/libpodofo.a; sourceTree = "<group>"; };
+		77BAE7A8261EFB5600592607 /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = cie_sign_sdk/Dependencies/libxml2/libxml2.a; sourceTree = "<group>"; };
+		77BAE7AA261EFB6000592607 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = cie_sign_sdk/Dependencies/zlib/libz.a; sourceTree = "<group>"; };
 		79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.debug.xcconfig"; sourceTree = "<group>"; };
 		DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIE_ID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E504202B2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CIE-LOGO-REGISTRATO.png"; sourceTree = "<group>"; };
@@ -464,17 +576,73 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E50A8A0D213BE121006A000D /* Cocoa.framework in Frameworks */,
-				E50A8A0E213BE121006A000D /* AppKit.framework in Frameworks */,
+				764F7C4C25C3224F0021B789 /* libcie_sign_sdk.a in Frameworks */,
+				77BAE79F261EFB1700592607 /* libfontconfig.a in Frameworks */,
+				77BAE7A9261EFB5800592607 /* libxml2.a in Frameworks */,
+				77BAE79D261EFAED00592607 /* libexpat.a in Frameworks */,
 				E54EF4302100D91200E2EADD /* libcryptopp.a in Frameworks */,
+				77BAE79B261EFADD00592607 /* libcurl.a in Frameworks */,
+				77BAE7AB261EFB6100592607 /* libz.a in Frameworks */,
+				77BAE7A1261EFB2400592607 /* libfreetype.a in Frameworks */,
+				77BAE7A7261EFB4E00592607 /* libpodofo.a in Frameworks */,
+				76A52D9225C4427F004A0086 /* libPods-cie-pkcs11.a in Frameworks */,
+				77BAE799261EFAC800592607 /* libbz2.a in Frameworks */,
+				E50A8A0D213BE121006A000D /* Cocoa.framework in Frameworks */,
+				77BAE7A5261EFB3D00592607 /* libpng16.a in Frameworks */,
+				E50A8A0E213BE121006A000D /* AppKit.framework in Frameworks */,
 				E5BE7DC820FE8A9A00004389 /* PCSC.framework in Frameworks */,
-				5CA6E27FF73910B2FFB64484 /* libPods-cie-pkcs11.a in Frameworks */,
+				77BAE7A3261EFB3100592607 /* libiconv.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0883C2DD251C940E0054055E /* Carousel */ = {
+			isa = PBXGroup;
+			children = (
+				0883C2E3251C94290054055E /* CarouselCard.h */,
+				0883C2E2251C94290054055E /* CarouselCard.m */,
+				0883C2DF251C94290054055E /* CarouselCard.xib */,
+				0883C2E0251C94290054055E /* CarouselView.h */,
+				0883C2DE251C94290054055E /* CarouselView.m */,
+				0883C2E1251C94290054055E /* CarouselView.xib */,
+			);
+			path = Carousel;
+			sourceTree = "<group>";
+		};
+		7649F46825DEA64400A33DAC /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				7649F46925DEA69100A33DAC /* VerifyCell.xib */,
+				7649F47325DEA6D200A33DAC /* VerifyCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		764F7C3E25C3224F0021B789 /* Sign */ = {
+			isa = PBXGroup;
+			children = (
+				764F7C3F25C3224F0021B789 /* disigonsdk.h */,
+				764F7C4025C3224F0021B789 /* CIESign.h */,
+				764F7C4125C3224F0021B789 /* CIEEngine.h */,
+				764F7C4225C3224F0021B789 /* CIEVerify.h */,
+				764F7C4325C3224F0021B789 /* CIEVerify.cpp */,
+				764F7C4425C3224F0021B789 /* libcie_sign_sdk.a */,
+				764F7C4525C3224F0021B789 /* CIESign.cpp */,
+				764F7C4625C3224F0021B789 /* definitions.h */,
+			);
+			path = Sign;
+			sourceTree = "<group>";
+		};
+		76F67E0D25DD295D002AB48D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				76F67E0E25DD29B8002AB48D /* Allura-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		B7FB7DAC107919BD2BEDD28E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -525,6 +693,11 @@
 		E544F56421BFAFC60038B2CA /* CIE ID */ = {
 			isa = PBXGroup;
 			children = (
+				7649F46825DEA64400A33DAC /* TableViewCell */,
+				76F67E0D25DD295D002AB48D /* Fonts */,
+				0883C2DD251C940E0054055E /* Carousel */,
+				7663CDD72518DF6A00FDC547 /* CieList.h */,
+				7663CDD82518DF6A00FDC547 /* CieList.m */,
 				E544F56521BFAFC60038B2CA /* AppDelegate.h */,
 				E544F56621BFAFC60038B2CA /* AppDelegate.m */,
 				E544F56B21BFAFC90038B2CA /* Assets.xcassets */,
@@ -538,6 +711,20 @@
 				E59DCCDE21C3BB7300CE4790 /* IntroViewController.m */,
 				E5A6019422CA91CD0003B79E /* PINNoticeViewController.h */,
 				E5A6019522CA91CD0003B79E /* PINNoticeViewController.m */,
+				7663CDDA2518F07900FDC547 /* Cie.h */,
+				7663CDDB2518F09E00FDC547 /* Cie.m */,
+				7677F14725D3FB9700A9A8F6 /* DropView.swift */,
+				7677F17725D43EC200A9A8F6 /* CIE ID-Bridging-Header.h */,
+				7677F1E925D4777300A9A8F6 /* ChangeView.m */,
+				7677F1F325D4778D00A9A8F6 /* ChangeView.h */,
+				768BE8D625D5356900D62B77 /* BorderedView.swift */,
+				768BE8F225D5671000D62B77 /* PdfPreview.swift */,
+				768BE8FC25D5684B00D62B77 /* MovableImageView.swift */,
+				7649F47D25DEB30100A33DAC /* VerifyItem.swift */,
+				77A9C3C326049A5D00317B90 /* AES.m */,
+				77A9C3CD26049A6B00317B90 /* AES.h */,
+				77A9C3D62604AE4000317B90 /* ProxyInfoManager.m */,
+				77A9C3E02604AE5000317B90 /* ProxyInfoManager.h */,
 			);
 			path = "CIE ID";
 			sourceTree = "<group>";
@@ -613,6 +800,10 @@
 				E5659047211875760039865C /* IAS.h */,
 				E570A7762168986B00658AAF /* PINManager.cpp */,
 				E570A7772168986B00658AAF /* PINManager.h */,
+				7649F44025DE65E500A33DAC /* FirmaConCIE.cpp */,
+				7649F44125DE65E500A33DAC /* FirmaConCIE.h */,
+				7649F45425DE6B9700A33DAC /* VerificaConCIE.cpp */,
+				7649F45525DE6B9700A33DAC /* VerificaConCIE.h */,
 			);
 			path = CSP;
 			sourceTree = "<group>";
@@ -750,6 +941,7 @@
 		E5BE7D8A20FE84D200004389 /* cie-pkcs11 */ = {
 			isa = PBXGroup;
 			children = (
+				764F7C3E25C3224F0021B789 /* Sign */,
 				E50A89E2213BD72A006A000D /* UI */,
 				E54EF42F2100D91200E2EADD /* libcryptopp.a */,
 				E54EF4312100D99500E2EADD /* Cryptopp */,
@@ -796,6 +988,32 @@
 		E5BE7DC620FE8A9A00004389 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77AFDA93263807D8002E418E /* libssl.a */,
+				77AFDA6626380557002E418E /* libcrypto2.a */,
+				77BAE7AA261EFB6000592607 /* libz.a */,
+				77BAE7A8261EFB5600592607 /* libxml2.a */,
+				77BAE7A6261EFB4B00592607 /* libpodofo.a */,
+				77BAE7A4261EFB3A00592607 /* libpng16.a */,
+				77BAE7A2261EFB2F00592607 /* libiconv.a */,
+				77BAE7A0261EFB2100592607 /* libfreetype.a */,
+				77BAE79E261EFB1500592607 /* libfontconfig.a */,
+				77BAE79C261EFAEA00592607 /* libexpat.a */,
+				77BAE79A261EFAD400592607 /* libcurl.a */,
+				77BAE798261EFAB500592607 /* libbz2.a */,
+				76A52D1425C422F5004A0086 /* libexpat.a */,
+				76A52CBC25C41141004A0086 /* libcharset.a */,
+				76A52CBD25C41141004A0086 /* libiconv.a */,
+				76A52CB225C410CC004A0086 /* libz.a */,
+				76A52CA425C40C56004A0086 /* libbz2.a */,
+				76A52CA525C40C56004A0086 /* libfontconfig.a */,
+				76A52CA325C40C56004A0086 /* libfreetype.a */,
+				76A52CA225C40C56004A0086 /* libpng16.a */,
+				76A52C9125C40BDE004A0086 /* libcrypto.a */,
+				76A52C9025C40BDE004A0086 /* libcurl.a */,
+				76A52C9325C40BDF004A0086 /* libpodofo.a */,
+				76A52C9425C40BDF004A0086 /* libssl.a */,
+				76A52C9225C40BDE004A0086 /* libxml2.a */,
+				764F7C3425C31E030021B789 /* libcie_sign_sdk.a */,
 				E58222FB21DCFC3600A6B6F0 /* libxpc.tbd */,
 				E58222EF21CAABF600A6B6F0 /* WebKit.framework */,
 				E50A8A0C213BE121006A000D /* AppKit.framework */,
@@ -819,8 +1037,10 @@
 				E5087AC2216610D4007063E6 /* UUCTextFileWriter.h in Headers */,
 				E587E1CC21ECA3BE0088B28D /* UUCStringTable.h in Headers */,
 				E565907E211875950039865C /* RSA.h in Headers */,
+				764F7C4E25C3224F0021B789 /* definitions.h in Headers */,
 				E5BE7DC320FE86DC00004389 /* win32.h in Headers */,
 				E5BE7DBA20FE853800004389 /* Slot.h in Headers */,
+				764F7C4825C3224F0021B789 /* CIESign.h in Headers */,
 				E5087ABA216610D4007063E6 /* UUCHashtable.hpp in Headers */,
 				E565905B211875830039865C /* Token.h in Headers */,
 				E5BE7DC520FE883300004389 /* wintypes.h in Headers */,
@@ -841,9 +1061,12 @@
 				E5BE7DAC20FE853800004389 /* CardTemplate.h in Headers */,
 				E570A7792168986B00658AAF /* PINManager.h in Headers */,
 				E5659020211864470039865C /* Array.h in Headers */,
+				764F7C4925C3224F0021B789 /* CIEEngine.h in Headers */,
 				E5BE7DB220FE853800004389 /* Mechanism.h in Headers */,
 				E5659074211875950039865C /* ASNParser.h in Headers */,
 				E5BE7DC020FE858600004389 /* pkcs11.h in Headers */,
+				7649F44325DE65E500A33DAC /* FirmaConCIE.h in Headers */,
+				7649F45725DE6B9700A33DAC /* VerificaConCIE.h in Headers */,
 				E5659043211864470039865C /* UtilException.h in Headers */,
 				E587E1C421ECA3BE0088B28D /* UUCTextFileReader.h in Headers */,
 				E5BE7DB020FE853800004389 /* InitP11.h in Headers */,
@@ -861,6 +1084,7 @@
 				E523656321E38D3B0037C684 /* CryptoUtil.h in Headers */,
 				E5659037211864470039865C /* SyncroEvent.h in Headers */,
 				E565907A211875950039865C /* MAC.h in Headers */,
+				764F7C4A25C3224F0021B789 /* CIEVerify.h in Headers */,
 				E50A8A08213BE019006A000D /* AbilitaCIE.h in Headers */,
 				E5659080211875950039865C /* SHA1.h in Headers */,
 				E5659035211864470039865C /* ModuleInfo.h in Headers */,
@@ -869,6 +1093,7 @@
 				E5659031211864470039865C /* IniSettings.h in Headers */,
 				E5659057211875830039865C /* CardLocker.h in Headers */,
 				E565907C211875950039865C /* MD5.h in Headers */,
+				764F7C4725C3224F0021B789 /* disigonsdk.h in Headers */,
 				E565904A211875760039865C /* IAS.h in Headers */,
 				E5BE7DB820FE853800004389 /* session.h in Headers */,
 			);
@@ -903,6 +1128,7 @@
 				E544F56021BFAFC60038B2CA /* Frameworks */,
 				E544F56121BFAFC60038B2CA /* Resources */,
 				E526E9F621E0BAFF0098AE8A /* Embed App Extensions */,
+				76F67E0F25DD2A3C002AB48D /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1111,6 +1337,9 @@
 			files = (
 				E544F56C21BFAFC90038B2CA /* Assets.xcassets in Resources */,
 				E544F56F21BFAFC90038B2CA /* Main.storyboard in Resources */,
+				0883C2E6251C94290054055E /* CarouselView.xib in Resources */,
+				0883C2E5251C94290054055E /* CarouselCard.xib in Resources */,
+				7649F46A25DEA69100A33DAC /* VerifyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1216,10 +1445,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				E544F57221BFAFC90038B2CA /* main.m in Sources */,
+				768BE8F325D5671000D62B77 /* PdfPreview.swift in Sources */,
+				7663CDD92518DF6A00FDC547 /* CieList.m in Sources */,
+				77A9C3C426049A5D00317B90 /* AES.m in Sources */,
+				768BE8FD25D5684B00D62B77 /* MovableImageView.swift in Sources */,
+				0883C2E4251C94290054055E /* CarouselView.m in Sources */,
 				E5A6019622CA91CD0003B79E /* PINNoticeViewController.m in Sources */,
 				E544F56721BFAFC60038B2CA /* AppDelegate.m in Sources */,
 				E544F57921BFB06A0038B2CA /* MainViewController.mm in Sources */,
+				7663CDDC2518F09E00FDC547 /* Cie.m in Sources */,
+				768BE8D725D5356900D62B77 /* BorderedView.swift in Sources */,
 				E59DCCDF21C3BB7300CE4790 /* IntroViewController.m in Sources */,
+				77A9C3D72604AE4000317B90 /* ProxyInfoManager.m in Sources */,
+				0883C2E7251C94290054055E /* CarouselCard.m in Sources */,
+				7649F47425DEA6D200A33DAC /* VerifyCell.swift in Sources */,
+				7677F14825D3FB9700A9A8F6 /* DropView.swift in Sources */,
+				7677F1EA25D4777300A9A8F6 /* ChangeView.m in Sources */,
+				7649F47E25DEB30100A33DAC /* VerifyItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1279,6 +1521,7 @@
 				E587E1CA21ECA3BE0088B28D /* UUCProperties.cpp in Sources */,
 				E5087ABF216610D4007063E6 /* UUCProperties.cpp in Sources */,
 				E587E1C221ECA3BE0088B28D /* UUCTextFileReader.cpp in Sources */,
+				7649F44225DE65E500A33DAC /* FirmaConCIE.cpp in Sources */,
 				E5659049211875760039865C /* IAS.cpp in Sources */,
 				E5BE7DB520FE853800004389 /* PKCS11Functions.cpp in Sources */,
 				E5659058211875830039865C /* PCSC.cpp in Sources */,
@@ -1298,6 +1541,7 @@
 				E565901F211864470039865C /* Array.cpp in Sources */,
 				E5087AC1216610D4007063E6 /* UUCTextFileWriter.cpp in Sources */,
 				E5659075211875950039865C /* Base64.cpp in Sources */,
+				764F7C4D25C3224F0021B789 /* CIESign.cpp in Sources */,
 				E5BE7DAF20FE853800004389 /* initP11.cpp in Sources */,
 				E565902E211864470039865C /* funccallinfo.cpp in Sources */,
 				E587E1C821ECA3BE0088B28D /* UUCStringTable.cpp in Sources */,
@@ -1311,6 +1555,7 @@
 				E565907F211875950039865C /* SHA1.cpp in Sources */,
 				E5659040211864470039865C /* util.cpp in Sources */,
 				E5087AC0216610D4007063E6 /* UUCTextFileReader.cpp in Sources */,
+				764F7C4B25C3224F0021B789 /* CIEVerify.cpp in Sources */,
 				E5659030211864470039865C /* IniSettings.cpp in Sources */,
 				E5BE7DAD20FE853800004389 /* CIEP11Template.cpp in Sources */,
 				E5659083211875950039865C /* SHA512.cpp in Sources */,
@@ -1326,6 +1571,7 @@
 				E5BE7DB920FE853800004389 /* Slot.cpp in Sources */,
 				E50A8A0A213BE053006A000D /* AbilitaCIE.mm in Sources */,
 				E5659038211864470039865C /* SyncroMutex.cpp in Sources */,
+				7649F45625DE6B9700A33DAC /* VerificaConCIE.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1382,7 +1628,7 @@
 				CODE_SIGN_ENTITLEMENTS = CIEIDBar/CIEIDBar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = CIEIDBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1393,7 +1639,7 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID-Bar";
@@ -1408,7 +1654,7 @@
 				CODE_SIGN_ENTITLEMENTS = CIEIDBar/CIEIDBar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = CIEIDBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1419,7 +1665,7 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID-Bar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1433,10 +1679,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "CIE ID/CIE_ID.entitlements";
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1446,8 +1692,8 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.3.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MARKETING_VERSION = 1.4.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
@@ -1466,10 +1712,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "CIE ID/CIE_ID.entitlements";
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1479,8 +1725,8 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.3.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MARKETING_VERSION = 1.4.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1497,7 +1743,7 @@
 				CODE_SIGN_ENTITLEMENTS = CambioPIN/CambioPIN.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = CambioPIN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1515,7 +1761,7 @@
 				CODE_SIGN_ENTITLEMENTS = CambioPIN/CambioPIN.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = CambioPIN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1531,7 +1777,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1541,7 +1787,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1553,7 +1799,7 @@
 				CODE_SIGN_ENTITLEMENTS = SbloccoPIN/SbloccoPIN.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = SbloccoPIN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1571,7 +1817,7 @@
 				CODE_SIGN_ENTITLEMENTS = SbloccoPIN/SbloccoPIN.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = SbloccoPIN/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1589,7 +1835,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1601,6 +1847,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID.CIEToken";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1615,13 +1862,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = CIEToken/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID.CIEToken";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1636,7 +1884,7 @@
 				CODE_SIGN_ENTITLEMENTS = AbilitaCIE/AbilitaCIE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = AbilitaCIE/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1654,7 +1902,7 @@
 				CODE_SIGN_ENTITLEMENTS = AbilitaCIE/AbilitaCIE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = AbilitaCIE/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1780,22 +2028,38 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/cie-pkcs11",
+					"$(PROJECT_DIR)/cie-pkcs11/Sign",
+					"$(PROJECT_DIR)/cie-pkcs11/dependencies",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/bzip2",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/libcurl",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/expat",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/fontconfig",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/freetype",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/libiconv",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/libpng",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/podofo",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/libxml2",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/zlib",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/openssl",
 				);
+				NEW_SETTING = "";
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
-					"$(inherited)",
 					"-ObjC",
-					"-l\"crypto\"",
 					"-l\"ssl\"",
+					"-l\"crypto2\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1809,23 +2073,39 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = T5X62FC78M;
+				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/cie-pkcs11",
+					"$(PROJECT_DIR)/cie-pkcs11/Sign",
+					"$(PROJECT_DIR)/cie-pkcs11/dependencies",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/bzip2",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/libcurl",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/expat",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/fontconfig",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/freetype",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/libiconv",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/libpng",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/podofo",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/libxml2",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/zlib",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies",
+					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/openssl",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
+				NEW_SETTING = "";
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
-					"$(inherited)",
 					"-ObjC",
-					"-l\"crypto\"",
 					"-l\"ssl\"",
+					"-l\"crypto2\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
