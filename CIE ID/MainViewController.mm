@@ -85,6 +85,7 @@ CK_FUNCTION_LIST_PTR g_pFuncList;
 @property (weak) IBOutlet NSButton *cbMostraPsw;
 @property (weak) IBOutlet NSButton *btnSalvaProxy;
 @property (weak) IBOutlet NSButton *btnModificaProxy;
+@property (weak) IBOutlet NSButton *btnEstrai;
 
 
 @property (weak) IBOutlet NSLayoutConstraint *abbinaButtonWhenAnnullaVisible;
@@ -2099,19 +2100,19 @@ CK_RV completedCallback(string& PAN,
     
     NSSavePanel *panel = [NSSavePanel savePanel];
     NSString* fileName = [filePath lastPathComponent];
-    NSString *saveFileName = [NSString stringWithFormat:@"%@%@",[fileName stringByDeletingPathExtension], @"-signed"];
     [panel setMessage:@"Scegliere dove salvare il file firmato"]; // Message inside modal window
     [panel setExtensionHidden:NO];
     [panel setCanCreateDirectories:YES];
     [panel setTitle:@"Salva file firmato"];
     [panel setAllowsOtherFileTypes:NO];
-    [panel setNameFieldStringValue:saveFileName];
 
     if(operation == FIRMA_PADES)
     {
         [panel setAllowedFileTypes:[[NSArray alloc] initWithObjects:@"pdf", nil]];
+        NSString *saveFileName = [NSString stringWithFormat:@"%@%@",[fileName stringByDeletingPathExtension], @"-signed"];
+        [panel setNameFieldStringValue:saveFileName];
         [panel beginWithCompletionHandler:^(NSInteger result) {
-            
+
             if (result == NSModalResponseOK)
             {
                 
@@ -2138,7 +2139,10 @@ CK_RV completedCallback(string& PAN,
             }
         }];
     }else{
-        [panel setAllowedFileTypes:[[NSArray alloc] initWithObjects:@"p7m", nil]];
+        NSString *saveFileName = [NSString stringWithFormat:@"%@%@%@",[fileName stringByReplacingOccurrencesOfString:@".p7m" withString:@""], @"-signed", @".p7m"];
+        NSLog(@"File out: %@", saveFileName);
+        [panel setNameFieldStringValue:saveFileName];
+        //[panel setAllowedFileTypes:[[NSArray alloc] initWithObjects:@"p7m", nil]];
         [panel beginWithCompletionHandler:^(NSInteger result) {
             if (result == NSModalResponseOK)
             {
@@ -2188,12 +2192,12 @@ CK_RV completedCallback(string& PAN,
             switch(ret)
             {
                 case CKR_TOKEN_NOT_RECOGNIZED:
-                    [self showMessage:@"CIE non presente sul lettore" withTitle:@"Abilitazione CIE" exitAfter:false];
+                    [self showMessage:@"CIE non presente sul lettore" withTitle:@"Firma con CIE" exitAfter:false];
                     [self showFirmaPinView];
                     break;
                     
                 case CKR_TOKEN_NOT_PRESENT:
-                    [self showMessage:@"CIE non presente sul lettore" withTitle:@"Abilitazione CIE" exitAfter:false];
+                    [self showMessage:@"CIE non presente sul lettore" withTitle:@"Firma con CIE"  exitAfter:false];
                     [self showFirmaPinView];
                     break;
                 case CKR_PIN_INCORRECT:
@@ -2534,6 +2538,13 @@ CK_RV completedCallback(string& PAN,
                     [self.tbVerificaInfo reloadData];
                     self->_lblSottoscrittori.stringValue = [NSString stringWithFormat:@"Numero di sottoscrittori: %d",n_sign];
                     ChangeView *cG = [ChangeView getInstance];
+                    
+                    if([[filePath pathExtension] isEqualToString: @"p7m"])
+                    {
+                        _btnEstrai.enabled = YES;
+                    }else{
+                        _btnEstrai.enabled = NO;
+                    }
                     [cG showSubView:VERIFICA_PAGE];
                 });
             }
@@ -2655,6 +2666,51 @@ CK_RV completedCallback(string& PAN,
         [_txtPassword setHidden:FALSE];
         [_plainPassword setHidden:TRUE];
     }
+}
+- (IBAction)btnEstraiClick:(id)sender {
+    
+    estraiP7mfn pfnEstraiP7m = (estraiP7mfn)dlsym(hModule, "estraiP7m");
+    
+    if(!pfnEstraiP7m)
+    {
+        dlclose(hModule);
+        [self showMessage: @"Funzione estraiP7m non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:NO];
+        return;
+    }
+    
+    NSSavePanel *panel = [NSSavePanel savePanel];
+    NSString* fileName = [[[filePath lastPathComponent] stringByDeletingPathExtension]stringByReplacingOccurrencesOfString:@"-signed" withString:@""];
+    
+    NSLog(@"Nome file originale: %@", fileName);
+    
+    NSString *saveFileName = fileName;
+    [panel setMessage:@"Scegliere dove salvare il file estratto"]; // Message inside modal window
+    [panel setExtensionHidden:NO];
+    [panel setCanCreateDirectories:YES];
+    [panel setTitle:@"Salva file estratto"];
+    [panel setAllowsOtherFileTypes:NO];
+    [panel setNameFieldStringValue:saveFileName];
+
+    
+    NSString* fileExtension = [fileName pathExtension];
+    [panel setAllowedFileTypes:[[NSArray alloc] initWithObjects:fileExtension, nil]];
+    
+    [panel beginWithCompletionHandler:^(NSInteger result) {
+        
+        if (result == NSModalResponseOK)
+        {
+            NSString *outPath = [[panel URL] path];
+            NSLog(@"Path file estratto: %@", outPath);
+            
+            long res = pfnEstraiP7m([filePath UTF8String], [outPath UTF8String]);
+            if(res == 0)
+            {
+                [self showMessage: @"File estratto correttamente" withTitle:@"Estrazione file completata" exitAfter:false];
+            }else{
+                [self showMessage: @"Impossibile estrarre il file" withTitle:@"Estrazione file completata" exitAfter:false];
+            }
+        }
+    }];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
