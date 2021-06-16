@@ -21,7 +21,16 @@ uint16_t CIESign::sign(const char* inFilePath, const char* type, const char* pin
 	try
 	{
 		ctx = disigon_sign_init();
-		
+
+        /*
+		ret = disigon_set(DISIGON_OPT_LOG_FILE, (void*)"F:\\Projects\\IPZS\\TestFirmaCIE\\log.txt");
+
+		ret = disigon_set(DISIGON_OPT_LOG_LEVEL, (void*)LOG_TYPE_DEBUG);
+		if (ret != 0)
+		{
+			throw ret;
+		}
+*/
 		ret = disigon_sign_set(ctx, DISIGON_OPT_IAS_INSTANCE, (IAS*)(this->ias));
 		if (ret != 0)
 		{
