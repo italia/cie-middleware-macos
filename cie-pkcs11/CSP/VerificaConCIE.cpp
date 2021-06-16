@@ -11,7 +11,9 @@
 
 extern "C" {
     CK_RV CK_ENTRY verificaConCIE(const char* inFilePath, verifyInfos_t* vInfos, const char* proxyAddress, int proxyPort, const char* usrPass);
+    CK_RV CK_ENTRY estraiP7m(const char* inFilePath, const char* outFilePath);
 }
+
 
 CK_RV CK_ENTRY verificaConCIE(const char* inFilePath, verifyInfos_t* vInfos, const char* proxyAddress, int proxyPort, const char* usrPass)
 {
@@ -43,4 +45,14 @@ CK_RV CK_ENTRY verificaConCIE(const char* inFilePath, verifyInfos_t* vInfos, con
         printf("Errore nella verifica: %lu\n", verifyResult.nErrorCode);
         return verifyResult.nErrorCode;
     }
+}
+
+CK_RV CK_ENTRY estraiP7m(const char* inFilePath, const char* outFilePath) {
+
+    CIEVerify* verifier = new CIEVerify();
+
+    long res = verifier->get_file_from_p7m(inFilePath, outFilePath);
+
+    return res;
+
 }

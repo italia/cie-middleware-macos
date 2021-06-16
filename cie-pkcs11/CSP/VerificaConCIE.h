@@ -15,4 +15,7 @@
 //typedef CK_RV (*verificaConCIEfn)(const char* inFilePath, verifyInfos_t* vInfos);
 typedef CK_RV (*verificaConCIEfn)(const char* inFilePath, verifyInfos_t* vInfos, const char* proxyAddress, int proxyPort, const char* usrPass);
 
+typedef CK_RV (*estraiP7mfn)(const char* inFilePath, const char* outFilePath);
+
+
 #endif /* VerificaConCIE_h */
