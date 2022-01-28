@@ -1,6 +1,7 @@
 #pragma once
 
 #include "funccallinfo.h"
+#include "../LOGGER/Logger.h"
 
 #define StatusWord uint16_t
 
@@ -50,15 +51,17 @@
 #define CARD_OK_SECOND_TRIAL			0x9001
 #define ERR_CARD_OVERFLOW_UNDERFLOW		0x9850
 
+using namespace CieIDLogger;
+
 #define logParam(p)
 #define logParamBuf(p,l)
 #define logParamBufHide(p,l)
 
 #define init_func \
-  	CFuncCallInfo info(__FUNCTION__ ,Log);
+
 
 #define exit_func
 
 #define ER_ASSERT(a,b) \
 	if (!(a)) \
-		throw logged_error(stdPrintf("Eccezione nel file %s, linea %i: %s",__FILE__,__LINE__,b));
+		throw logged_error(stdPrintf("File exception %s, linea %i: %s",__FILE__,__LINE__,b));

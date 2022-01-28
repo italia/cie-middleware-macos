@@ -3,6 +3,9 @@
 //  CIE ID
 //
 
+//  Copyright © 2021 IPZS. All rights reserved.
+//
+
 #import <Foundation/Foundation.h>
 #import "ProxyInfoManager.h"
 #import <CommonCrypto/CommonDigest.h>

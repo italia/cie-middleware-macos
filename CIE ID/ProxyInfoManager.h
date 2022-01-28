@@ -2,6 +2,8 @@
 //  ProxyInfoManager.h
 //  cie-pkcs11
 //
+
+//  Copyright © 2021 IPZS. All rights reserved.
 //
 
 #ifndef ProxyInfoManager_h

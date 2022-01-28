@@ -12,6 +12,7 @@
 		0883C2E6251C94290054055E /* CarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0883C2E1251C94290054055E /* CarouselView.xib */; };
 		0883C2E7251C94290054055E /* CarouselCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0883C2E2251C94290054055E /* CarouselCard.m */; };
 		461398B8C02047C25F03D065 /* Pods_CIE_ID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */; };
+		6089967E276BCACE00E5CB32 /* AppLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6089967D276BCACE00E5CB32 /* AppLogger.m */; };
 		7649F44225DE65E500A33DAC /* FirmaConCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7649F44025DE65E500A33DAC /* FirmaConCIE.cpp */; };
 		7649F44325DE65E500A33DAC /* FirmaConCIE.h in Headers */ = {isa = PBXBuildFile; fileRef = 7649F44125DE65E500A33DAC /* FirmaConCIE.h */; };
 		7649F45625DE6B9700A33DAC /* VerificaConCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7649F45425DE6B9700A33DAC /* VerificaConCIE.cpp */; };
@@ -36,6 +37,11 @@
 		768BE8FD25D5684B00D62B77 /* MovableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768BE8FC25D5684B00D62B77 /* MovableImageView.swift */; };
 		76A52D9225C4427F004A0086 /* libPods-cie-pkcs11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */; };
 		76F67E1025DD2A70002AB48D /* Allura-Regular.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76F67E0E25DD29B8002AB48D /* Allura-Regular.ttf */; };
+		771B2231276A39E7001F1690 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7757E5B82767851200644F3B /* Logger.cpp */; };
+		7757E5BB2767851200644F3B /* Logger.h in Headers */ = {isa = PBXBuildFile; fileRef = 7757E5B92767851200644F3B /* Logger.h */; };
+		7757E5BF2768A01E00644F3B /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7757E5B82767851200644F3B /* Logger.cpp */; };
+		7757E5C02769F9BA00644F3B /* log.h in Headers */ = {isa = PBXBuildFile; fileRef = E565900E211864470039865C /* log.h */; };
+		7757E5C12769F9BD00644F3B /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565900D211864470039865C /* log.cpp */; };
 		77A9C3C426049A5D00317B90 /* AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A9C3C326049A5D00317B90 /* AES.m */; };
 		77A9C3D72604AE4000317B90 /* ProxyInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A9C3D62604AE4000317B90 /* ProxyInfoManager.m */; };
 		77BAE799261EFAC800592607 /* libbz2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE798261EFAB500592607 /* libbz2.a */; };
@@ -102,8 +108,6 @@
 		E565902F211864470039865C /* funccallinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = E565900A211864470039865C /* funccallinfo.h */; };
 		E5659030211864470039865C /* IniSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565900B211864470039865C /* IniSettings.cpp */; };
 		E5659031211864470039865C /* IniSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = E565900C211864470039865C /* IniSettings.h */; };
-		E5659032211864470039865C /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565900D211864470039865C /* log.cpp */; };
-		E5659033211864470039865C /* log.h in Headers */ = {isa = PBXBuildFile; fileRef = E565900E211864470039865C /* log.h */; };
 		E5659034211864470039865C /* ModuleInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565900F211864470039865C /* ModuleInfo.cpp */; };
 		E5659035211864470039865C /* ModuleInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659010211864470039865C /* ModuleInfo.h */; };
 		E5659036211864470039865C /* SyncroEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5659011211864470039865C /* SyncroEvent.cpp */; };
@@ -267,6 +271,8 @@
 		228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cie-pkcs11.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.release.xcconfig"; sourceTree = "<group>"; };
 		438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.release.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.release.xcconfig"; sourceTree = "<group>"; };
+		6089967C276BCACE00E5CB32 /* AppLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppLogger.h; sourceTree = "<group>"; };
+		6089967D276BCACE00E5CB32 /* AppLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppLogger.m; sourceTree = "<group>"; };
 		6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.debug.xcconfig"; sourceTree = "<group>"; };
 		7649F44025DE65E500A33DAC /* FirmaConCIE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FirmaConCIE.cpp; sourceTree = "<group>"; };
 		7649F44125DE65E500A33DAC /* FirmaConCIE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirmaConCIE.h; sourceTree = "<group>"; };
@@ -289,7 +295,7 @@
 		7663CDDA2518F07900FDC547 /* Cie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cie.h; sourceTree = "<group>"; };
 		7663CDDB2518F09E00FDC547 /* Cie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Cie.m; sourceTree = "<group>"; };
 		7677F14725D3FB9700A9A8F6 /* DropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropView.swift; sourceTree = "<group>"; };
-		7677F17725D43EC200A9A8F6 /* CIE ID-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CIE ID-Bridging-Header.h"; path = "/Users/piero/Desktop/Bit4id/IPZS/cie-middleware-macos/CIE ID/CIE ID-Bridging-Header.h"; sourceTree = "<absolute>"; };
+		7677F17725D43EC200A9A8F6 /* CIE ID-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CIE ID-Bridging-Header.h"; sourceTree = "<group>"; };
 		7677F1E925D4777300A9A8F6 /* ChangeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeView.m; sourceTree = "<group>"; };
 		7677F1F325D4778D00A9A8F6 /* ChangeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangeView.h; sourceTree = "<group>"; };
 		768BE8D625D5356900D62B77 /* BorderedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedView.swift; sourceTree = "<group>"; };
@@ -309,6 +315,8 @@
 		76A52CBD25C41141004A0086 /* libiconv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libiconv.a; path = "cie-pkcs11/dependencies/libiconv.a"; sourceTree = "<group>"; };
 		76A52D1425C422F5004A0086 /* libexpat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libexpat.a; path = "cie-pkcs11/dependencies/libexpat.a"; sourceTree = "<group>"; };
 		76F67E0E25DD29B8002AB48D /* Allura-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Allura-Regular.ttf"; sourceTree = "<group>"; };
+		7757E5B82767851200644F3B /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		7757E5B92767851200644F3B /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		77A9C3C326049A5D00317B90 /* AES.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AES.m; sourceTree = "<group>"; };
 		77A9C3CD26049A6B00317B90 /* AES.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AES.h; sourceTree = "<group>"; };
 		77A9C3D62604AE4000317B90 /* ProxyInfoManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProxyInfoManager.m; sourceTree = "<group>"; };
@@ -643,6 +651,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		7757E5B62767851200644F3B /* LOGGER */ = {
+			isa = PBXGroup;
+			children = (
+				7757E5B82767851200644F3B /* Logger.cpp */,
+				7757E5B92767851200644F3B /* Logger.h */,
+			);
+			path = LOGGER;
+			sourceTree = "<group>";
+		};
 		B7FB7DAC107919BD2BEDD28E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -725,6 +742,8 @@
 				77A9C3CD26049A6B00317B90 /* AES.h */,
 				77A9C3D62604AE4000317B90 /* ProxyInfoManager.m */,
 				77A9C3E02604AE5000317B90 /* ProxyInfoManager.h */,
+				6089967C276BCACE00E5CB32 /* AppLogger.h */,
+				6089967D276BCACE00E5CB32 /* AppLogger.m */,
 			);
 			path = "CIE ID";
 			sourceTree = "<group>";
@@ -941,6 +960,7 @@
 		E5BE7D8A20FE84D200004389 /* cie-pkcs11 */ = {
 			isa = PBXGroup;
 			children = (
+				7757E5B62767851200644F3B /* LOGGER */,
 				764F7C3E25C3224F0021B789 /* Sign */,
 				E50A89E2213BD72A006A000D /* UI */,
 				E54EF42F2100D91200E2EADD /* libcryptopp.a */,
@@ -1051,6 +1071,7 @@
 				E5BE7DAA20FE853800004389 /* CardContext.h in Headers */,
 				E5659072211875950039865C /* AES.h in Headers */,
 				E5BE7DB420FE853800004389 /* P11Object.h in Headers */,
+				7757E5BB2767851200644F3B /* Logger.h in Headers */,
 				E5659039211864470039865C /* SyncroMutex.h in Headers */,
 				E565902D211864470039865C /* defines.h in Headers */,
 				E5087ABE216610D4007063E6 /* UUCStringTable.h in Headers */,
@@ -1083,12 +1104,12 @@
 				E55BE03B2136CD0300E5F396 /* CacheLib.h in Headers */,
 				E523656321E38D3B0037C684 /* CryptoUtil.h in Headers */,
 				E5659037211864470039865C /* SyncroEvent.h in Headers */,
+				7757E5C02769F9BA00644F3B /* log.h in Headers */,
 				E565907A211875950039865C /* MAC.h in Headers */,
 				764F7C4A25C3224F0021B789 /* CIEVerify.h in Headers */,
 				E50A8A08213BE019006A000D /* AbilitaCIE.h in Headers */,
 				E5659080211875950039865C /* SHA1.h in Headers */,
 				E5659035211864470039865C /* ModuleInfo.h in Headers */,
-				E5659033211864470039865C /* log.h in Headers */,
 				E5659082211875950039865C /* sha256.h in Headers */,
 				E5659031211864470039865C /* IniSettings.h in Headers */,
 				E5659057211875830039865C /* CardLocker.h in Headers */,
@@ -1453,6 +1474,7 @@
 				E5A6019622CA91CD0003B79E /* PINNoticeViewController.m in Sources */,
 				E544F56721BFAFC60038B2CA /* AppDelegate.m in Sources */,
 				E544F57921BFB06A0038B2CA /* MainViewController.mm in Sources */,
+				6089967E276BCACE00E5CB32 /* AppLogger.m in Sources */,
 				7663CDDC2518F09E00FDC547 /* Cie.m in Sources */,
 				768BE8D725D5356900D62B77 /* BorderedView.swift in Sources */,
 				E59DCCDF21C3BB7300CE4790 /* IntroViewController.m in Sources */,
@@ -1501,6 +1523,7 @@
 				E570A7B52168C22800658AAF /* CIEToken.mm in Sources */,
 				E570A7B92168C22800658AAF /* CIETokenSession.mm in Sources */,
 				E570A7B72168C22800658AAF /* CIETokenDriver.m in Sources */,
+				771B2231276A39E7001F1690 /* Logger.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1525,13 +1548,13 @@
 				E5659049211875760039865C /* IAS.cpp in Sources */,
 				E5BE7DB520FE853800004389 /* PKCS11Functions.cpp in Sources */,
 				E5659058211875830039865C /* PCSC.cpp in Sources */,
-				E5659032211864470039865C /* log.cpp in Sources */,
 				E5659054211875830039865C /* APDU.cpp in Sources */,
 				E5659071211875950039865C /* AES.cpp in Sources */,
 				E570A7782168986B00658AAF /* PINManager.cpp in Sources */,
 				E565907D211875950039865C /* RSA.cpp in Sources */,
 				E5BE7DB320FE853800004389 /* P11Object.cpp in Sources */,
 				E5659048211875760039865C /* ExtAuthKey.cpp in Sources */,
+				7757E5C12769F9BD00644F3B /* log.cpp in Sources */,
 				E50A8A10213BE4C6006A000D /* AbilitaCIE.cpp in Sources */,
 				E565903E211864470039865C /* TLV.cpp in Sources */,
 				E587E1BF21ECA3BE0088B28D /* UUCByteArray.cpp in Sources */,
@@ -1559,6 +1582,7 @@
 				E5659030211864470039865C /* IniSettings.cpp in Sources */,
 				E5BE7DAD20FE853800004389 /* CIEP11Template.cpp in Sources */,
 				E5659083211875950039865C /* SHA512.cpp in Sources */,
+				7757E5BF2768A01E00644F3B /* Logger.cpp in Sources */,
 				E5087AB7216610D4007063E6 /* UUCStringTable.cpp in Sources */,
 				E587E1C521ECA3BE0088B28D /* UUCTextFileWriter.cpp in Sources */,
 				E5659056211875830039865C /* CardLocker.cpp in Sources */,
@@ -1629,6 +1653,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
+				EXCLUDED_ARCHS = arm64;
 				INFOPLIST_FILE = CIEIDBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1655,6 +1680,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
+				EXCLUDED_ARCHS = arm64;
 				INFOPLIST_FILE = CIEIDBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1693,7 +1719,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
@@ -1726,7 +1752,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1836,6 +1862,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1863,6 +1890,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
+				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = CIEToken/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1950,6 +1978,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2008,6 +2037,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2040,7 +2070,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/cie-pkcs11",
 					"$(PROJECT_DIR)/cie-pkcs11/Sign",
-					"$(PROJECT_DIR)/cie-pkcs11/dependencies",
 					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/bzip2",
 					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/libcurl",
 					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/expat",
@@ -2058,8 +2087,8 @@
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-ObjC",
-					"-l\"ssl\"",
-					"-l\"crypto2\"",
+					"-lssl",
+					"-lcrypto2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2085,7 +2114,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/cie-pkcs11",
 					"$(PROJECT_DIR)/cie-pkcs11/Sign",
-					"$(PROJECT_DIR)/cie-pkcs11/dependencies",
 					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/bzip2",
 					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/libcurl",
 					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/expat",
@@ -2104,8 +2132,8 @@
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-ObjC",
-					"-l\"ssl\"",
-					"-l\"crypto2\"",
+					"-lssl",
+					"-lcrypto2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

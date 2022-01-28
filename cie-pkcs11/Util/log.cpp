@@ -1,4 +1,4 @@
-
+#if 0
 #include "util.h"
 #include "ModuleInfo.h"
 #include <vector>
@@ -352,7 +352,7 @@ void CLog::writeBinData(BYTE *data, size_t datalen) {
     lf = fopen(logPath.c_str(), "a+t");
 #endif
 	if (lf) {
-		if (datalen>100) datalen=100;
+		//if (datalen>100) datalen=100;
 		for (size_t i=0;i<datalen;i++)
 			fprintf(lf, "%02x ", data[i]);
 		fprintf(lf, "\n");
@@ -367,4 +367,4 @@ void CLog::writeModuleInfo() {
 	module.init(mainModule);
 	write("Applicazione chiamante: %s",module.szModuleName.c_str());
 }
-
+#endif

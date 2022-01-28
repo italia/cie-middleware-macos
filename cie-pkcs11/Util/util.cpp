@@ -6,8 +6,6 @@
 #include <iomanip>
 #include <sstream>
 
-extern CLog Log;
-
 static char *szCompiledFile=__FILE__;
 
 DWORD ERR_ATTRIBUTE_IS_SENSITIVE = 0x40000008;
@@ -179,8 +177,7 @@ std::string dumpHexData(ByteArray data)
 void Debug(ByteArray ba) {
 	std::string out;
 	dumpHexData(ba,out);
-	OutputDebugString(out.c_str());
-	OutputDebugString("\n");
+	LOG_DEBUG(out.c_str());
 }
 
 std::string dumpHexDataLowerCase(ByteArray data, std::string& dump)

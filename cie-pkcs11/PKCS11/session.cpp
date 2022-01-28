@@ -7,7 +7,7 @@
 
 static char *szCompiledFile = __FILE__;
 
-extern CLog Log;
+//extern CLog Log;
 
 namespace {
 	template<class T>

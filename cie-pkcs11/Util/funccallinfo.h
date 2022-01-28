@@ -6,9 +6,9 @@
 class  CFuncCallInfo {
 	const char *fName;
 	unsigned int LogNum;
-	CLog &log;
+	//CLog &log;
 public:
-	CFuncCallInfo(const char *name,CLog &logInfo);
+	//CFuncCallInfo(const char *name,CLog &logInfo);
 	~CFuncCallInfo();
 
 	const char *FunctionName();

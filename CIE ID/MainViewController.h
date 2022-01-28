@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
+#import "AppLogger.h"
 #import "CarouselView.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -72,6 +73,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @property (weak) IBOutlet CarouselView *carouselView;
+
+@property (weak) IBOutlet NSButton *rbLoggingAppNone;
+@property (weak) IBOutlet NSButton *rbLoggingAppError;
+@property (weak) IBOutlet NSButton *rbLoggingAppInfo;
+@property (weak) IBOutlet NSButton *rbLoggingAppDebug;
+@property (weak) IBOutlet NSButton *rbLoggingLibNone;
+@property (weak) IBOutlet NSButton *rbLoggingLibError;
+@property (weak) IBOutlet NSButton *rbLoggingLibInfo;
+@property (weak) IBOutlet NSButton *rbLoggingLibDebug;
+
+@property AppLogLevel logLevelApp;
+@property AppLogLevel logLevelLib;
+
+- (void)LoadLogConfigFromFile;
+- (void)setLogConfigToLevels:(struct logLevels)levels;
+- (void)saveCurrentLogConfigToFile;
+- (void)saveLogConfigToFileWithLevels:(struct logLevels)levels;
 
 @end
 

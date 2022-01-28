@@ -27,9 +27,13 @@
 #include "../Util/CryptoppUtils.h"
 #include "../Sign/CIEVerify.h"
 
+#include "../LOGGER/Logger.h"
+
 #define ROLE_USER                   1
 #define ROLE_ADMIN                  2
 #define CARD_ALREADY_ENABLED        0x000000F0
+
+using namespace CieIDLogger;
 
 OID OID_SURNAME = ((OID(2) += 5) += 4) += 4;
 
@@ -89,10 +93,12 @@ CK_RV CK_ENTRY DisabilitaCIE(const char*  szPAN)
         if(IAS::IsEnrolled(szPAN))
         {
             IAS::Unenroll(szPAN);
+            LOG_INFO("DisabilitaCIE - CIE number %s removed", szPAN);
             return CKR_OK;
         }
         else
         {
+            LOG_ERROR("DisabilitaCIE - Unable to remove CIE number %s, CIE is not enrolled", szPAN);
             return CKR_FUNCTION_FAILED;
         }
     }
@@ -103,10 +109,15 @@ CK_RV CK_ENTRY DisabilitaCIE(const char*  szPAN)
     return CKR_TOKEN_NOT_PRESENT;
 }
 
+
 CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts, PROGRESS_CALLBACK progressCallBack, COMPLETED_CALLBACK completedCallBack)
 {
     char* readers = NULL;
     char* ATR = NULL;
+
+    LOG_INFO("***** Starting AbbinaCIE *****");
+    LOG_DEBUG("szPAN:%s, pin len : %d", szPAN, strlen(szPIN));
+    
 	try
     {
 		std::map<uint8_t, ByteDynArray> hashSet;
@@ -117,14 +128,19 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
 		ByteDynArray IdServizi;
 		
 		SCARDCONTEXT hSC;
-
+        
+        LOG_INFO("AbbinaCIE - Connecting to CIE...");
         progressCallBack(1, "Connessione alla CIE");
         
 		long nRet = SCardEstablishContext(SCARD_SCOPE_USER, nullptr, nullptr, &hSC);
-        if(nRet != SCARD_S_SUCCESS)
+        if(nRet != SCARD_S_SUCCESS){
+            LOG_ERROR("AbbinaCIE - SCardEstablishContext error: %d", nRet);
             return CKR_DEVICE_ERROR;
+        }
         
-        if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
+        nRet = SCardListReaders(hSC, nullptr, NULL, &len);
+        if (nRet != SCARD_S_SUCCESS) {
+            LOG_ERROR("AbbinaCIE - SCardListReaders error: %d. Len: %d", nRet, len);
             return CKR_TOKEN_NOT_PRESENT;
         }
         
@@ -133,12 +149,15 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
         
         readers = (char*)malloc(len);
         
-        if (SCardListReaders(hSC, nullptr, (char*)readers, &len) != SCARD_S_SUCCESS) {
+        nRet = SCardListReaders(hSC, nullptr, (char*)readers, &len);
+        if (nRet != SCARD_S_SUCCESS) {
+            LOG_ERROR("AbbinaCIE - SCardListReaders error: %d", nRet);
             free(readers);
             return CKR_TOKEN_NOT_PRESENT;
         }
 
         progressCallBack(5, "CIE Connessa");
+        LOG_INFO("AbbinaCIE - CIE Connected");
         
 		char *curreader = readers;
 		bool foundCIE = false;
@@ -149,14 +168,25 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
                 continue;
 
             uint32_t atrLen = 40;
-            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+            nRet = SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen);
+            if(nRet != SCARD_S_SUCCESS) {
+                LOG_ERROR("AbbinaCIE - SCardGetAttrib error, %d\n", nRet);
                 free(readers);
                 return CKR_DEVICE_ERROR;
             }
             
+#if 0
+            myLog.writePure("ATR:\n");
+            for(int i = 0; i< atrLen; i++){
+                myLog.writePure("%02x ", ATR[i]);
+            }
+            myLog.writePure("\n");
+#endif
             ATR = (char*)malloc(atrLen);
             
-            if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
+            nRet = SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen);
+            if(nRet != SCARD_S_SUCCESS) {
+                LOG_ERROR("AbbinaCIE - SCardGetAttrib error, %d\n", nRet);
                 free(readers);
                 free(ATR);
                 return CKR_DEVICE_ERROR;
@@ -164,8 +194,12 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             
             ByteArray atrBa((BYTE*)ATR, atrLen);
             
+            LOG_DEBUG("AbbinaCIE - CIE ATR:");
+            LOG_BUFFER(atrBa.data(), atrBa.size());
+            
             progressCallBack(10, "Verifica carta esistente");
             
+            LOG_DEBUG("AbbinaCIE - Checking if card has been activated yet...");
             IAS ias((CToken::TokenTransmitCallback)TokenTransmitCallback, atrBa);
             ias.SetCardContext(&conn);
             
@@ -186,11 +220,13 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             
             if (ias.IsEnrolled())
             {
+                LOG_ERROR("AbbinaCIE - CIE already enabled. Serial number: %s\n", IdServizi.data());
                 return CARD_ALREADY_ENABLED;
             }
 
             progressCallBack(15, "Lettura dati dalla CIE");
-
+            LOG_INFO("AbbinaCIE - Reading data from CIE...");
+            
             ByteArray serviziData(IdServizi.left(12));
 
             ByteDynArray SOD;
@@ -216,20 +252,24 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             progressCallBack(20, "Autenticazione...");
             
             DWORD rs = CardAuthenticateEx(&ias, ROLE_USER, FULL_PIN, (BYTE*)szPIN, (DWORD)strnlen(szPIN, sizeof(szPIN)), nullptr, 0, attempts);
+            
             if (rs == SCARD_W_WRONG_CHV)
             {
+                LOG_ERROR("AbbinaCIE - CardAuthenticateEx Wrong Pin");
                 free(ATR);
                 free(readers);
                 return CKR_PIN_INCORRECT;
             }
             else if (rs == SCARD_W_CHV_BLOCKED)
             {
+                LOG_ERROR("AbbinaCIE - CardAuthenticateEx Pin locked");
                 free(ATR);
                 free(readers);
                 return CKR_PIN_LOCKED;
             }
             else if (rs != SCARD_S_SUCCESS)
             {
+                LOG_ERROR("AbbinaCIE - CardAuthenticateEx Generic error, res:%d", rs);
                 free(ATR);
                 free(readers);
                 return CKR_GENERAL_ERROR;
@@ -245,11 +285,13 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             std::string st_serial((char*)serialData.data(), serialData.size());
             
             progressCallBack(55, "Lettura certificato");
+            LOG_INFO("AbbinaCIE - Reading certificate...");
             
             ByteDynArray CertCIE;
             ias.ReadCertCIE(CertCIE);
             ByteArray certCIEData = CertCIE.left(GetASN1DataLenght(CertCIE));
             
+            LOG_INFO("AbbinaCIE - Verifying SOD, digest algorithm: %s", (digest == 1) ? "RSA/SHA256" : "RSA-PSS/SHA512");
             if (digest == 1)
             {
                 CSHA256 sha256;
@@ -277,6 +319,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             ByteArray pinBa((uint8_t*)szPIN, 4);
             
             progressCallBack(85, "Memorizzazione in cache");
+            LOG_INFO("AbbinaCIE - Saving certificate in cache...");
             
             std::string sidServizi((char*)IdServizi.data(), IdServizi.size());
             
@@ -341,6 +384,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
 		}
         
 		if (!foundCIE) {
+            LOG_ERROR("AbbinaCIE - No CIE available");
             free(ATR);
             free(readers);
             return CKR_TOKEN_NOT_RECOGNIZED;
@@ -349,7 +393,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
 
 	}
 	catch (std::exception &ex) {
-		OutputDebugString(ex.what());
+        LOG_ERROR("AbbinaCIE - Exception %s ", ex.what());
         if(ATR)
             free(ATR);
         
@@ -363,7 +407,9 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
     
     free(readers);
     
+    LOG_INFO("AbbinaCIE - CIE paired successfully");
     progressCallBack(100, "");
+    LOG_INFO("***** AbbinaCIE Ended *****");
     
     return SCARD_S_SUCCESS;
 }
@@ -379,18 +425,24 @@ DWORD CardAuthenticateEx(IAS*       ias,
                          DWORD*      pcbSessionPin,
                          int*      pcAttemptsRemaining) {
     
+    LOG_INFO("***** Starting CardAuthenticateEx *****");
+    LOG_DEBUG("Pin id: %d, dwFlags: %d, cbPinData: %d, pbSessionPin: %s, pcAttemptsRemaining: %d", PinId, dwFlags, cbPinData, pcbSessionPin, *pcAttemptsRemaining);
+
+    LOG_INFO("CardAuthenticateEx - Selecting IAS and CIE AID");
+    
     ias->SelectAID_IAS();
     ias->SelectAID_CIE();
     
     
     // leggo i parametri di dominio DH e della chiave di extauth
+    LOG_INFO("CardAuthenticateEx - Reading DH parameters");
     ias->InitDHParam();
     
     ByteDynArray dappData;
     ias->ReadDappPubKey(dappData);
     
     ias->InitExtAuthKeyParam();
-    
+    LOG_INFO("CardAuthenticateEx - Performing DH Exchange");
     
     ias->DHKeyExchange();
     
@@ -400,7 +452,7 @@ DWORD CardAuthenticateEx(IAS*       ias,
     // verifica PIN
     StatusWord sw;
     if (PinId == ROLE_USER) {
-        
+        LOG_INFO("CardAuthenticateEx - Verifying PIN");
         ByteDynArray PIN;
         if ((dwFlags & FULL_PIN) != FULL_PIN)
             ias->GetFirstPIN(PIN);
@@ -408,35 +460,49 @@ DWORD CardAuthenticateEx(IAS*       ias,
         sw = ias->VerifyPIN(PIN);
     }
     else if (PinId == ROLE_ADMIN) {
+        LOG_INFO("CardAuthenticateEx - Verifying PUK");
         ByteArray pinBa(pbPinData, cbPinData);
         sw = ias->VerifyPUK(pinBa);
     }
-    else
+    else{
+        LOG_ERROR("CardAuthenticateEx - Invalid parameter: wrong PinId value");
         return SCARD_E_INVALID_PARAMETER;
+    }
     
     if (sw == 0x6983) {
-        if (PinId == ROLE_USER)
-            ias->IconaSbloccoPIN();
+        //if (PinId == ROLE_USER)
+        //    ias->IconaSbloccoPIN();
+        LOG_ERROR("CardAuthenticateEx - Pin locked");
         return SCARD_W_CHV_BLOCKED;
     }
     if (sw >= 0x63C0 && sw <= 0x63CF) {
-        if (pcAttemptsRemaining!=nullptr)
+        if (pcAttemptsRemaining != nullptr)
             *pcAttemptsRemaining = sw - 0x63C0;
+        LOG_ERROR("CardAuthenticateEx - Wrong Pin");
         return SCARD_W_WRONG_CHV;
     }
     if (sw == 0x6700) {
+        LOG_ERROR("CardAuthenticateEx - Wrong Pin");
         return SCARD_W_WRONG_CHV;
     }
-    if (sw == 0x6300)
+    if (sw == 0x6300) {
+        LOG_ERROR("CardAuthenticateEx - Wrong Pin");
         return SCARD_W_WRONG_CHV;
+    }
     if (sw != 0x9000) {
-        throw scard_error(sw);
+        LOG_ERROR("CarduAuthenticateEx - Smart Card error: 0x%04X", sw);
     }
-    
+
+    LOG_INFO("***** CardAuthenticateEx Ended *****");
     return SCARD_S_SUCCESS;
+
 }
 
 int TokenTransmitCallback(safeConnection *conn, BYTE *apdu, DWORD apduSize, BYTE *resp, DWORD *respSize) {
+    LOG_DEBUG("TokenTransmitCallback - Apdu:");
+    LOG_BUFFER(apdu, apduSize);
+
+    
     if (apduSize == 2) {
         WORD code = *(WORD*)apdu;
         if (code == 0xfffd) {
@@ -450,7 +516,7 @@ int TokenTransmitCallback(safeConnection *conn, BYTE *apdu, DWORD apduSize, BYTE
         }
         else if (code == 0xfffe) {
             DWORD protocol = 0;
-            ODS("UNPOWER CARD");
+            LOG_INFO("TokenTransmitCallback - Unpowering Card");
             auto ris = SCardReconnect(conn->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_UNPOWER_CARD, &protocol);
             
             
@@ -471,34 +537,42 @@ int TokenTransmitCallback(safeConnection *conn, BYTE *apdu, DWORD apduSize, BYTE
                 resp[0] = 0x90;
                 resp[1] = 0x00;
             }
-            ODS("RESET CARD");
+            LOG_INFO("TokenTransmitCallback - Resetting Card");
             return ris;
         }
     }
     //ODS(String().printf("APDU: %s\n", dumpHexData(ByteArray(apdu, apduSize), String()).lock()).lock());
     auto ris = SCardTransmit(conn->hCard, SCARD_PCI_T1, apdu, apduSize, NULL, resp, respSize);
-    if(ris == SCARD_W_RESET_CARD || ris == SCARD_W_UNPOWERED_CARD)
+    
+    LOG_DEBUG("TokenTransmitCallback - Smart card response:");
+    LOG_BUFFER(resp, *respSize);
+
+    if (ris == SCARD_W_RESET_CARD || ris == SCARD_W_UNPOWERED_CARD)
     {
-        ODS("card resetted");
+        LOG_INFO("TokenTransmitCallback - Card Reset done");
         DWORD protocol = 0;
         ris = SCardReconnect(conn->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_LEAVE_CARD, &protocol);
         if (ris != SCARD_S_SUCCESS)
-            ODS("Errore reconnect");
+        {
+            LOG_ERROR("TokenTransmitCallback - ScardReconnect error: %d");
+        }
         else
+        {
             ris = SCardTransmit(conn->hCard, SCARD_PCI_T1, apdu, apduSize, NULL, resp, respSize);
+
+            LOG_DEBUG("TokenTransmitCallback - Smart card response:");
+            LOG_BUFFER(resp, *respSize);
+        }
     }
-    
+
     if (ris != SCARD_S_SUCCESS) {
-        ODS("Errore trasmissione APDU");
+        LOG_ERROR("TokenTransmitCallback - SCardTransmit error: %d", ris);
     }
-    
-    //else
-    //ODS(String().printf("RESP: %s\n", dumpHexData(ByteArray(resp, *respSize), String()).lock()).lock());
-    
+
+
     return ris;
+
 }
-
-
 
 std::vector<word32> fromObjectIdentifier(std::string sObjId)
 {

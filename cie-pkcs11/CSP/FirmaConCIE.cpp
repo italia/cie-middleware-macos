@@ -2,10 +2,6 @@
 //  FirmaConCIE.cpp
 //  cie-pkcs11
 //
-//  Created by Pierluigi De Gregorio on 18/02/21.
-//  Copyright © 2021 IPZS. All rights reserved.
-//
-
 #include "FirmaConCIE.h"
 #include "IAS.h"
 #include "../PKCS11/wintypes.h"
@@ -27,7 +23,8 @@ extern "C" {
 CK_RV CK_ENTRY firmaConCIE(const char* inFilePath, const char* type, const char* pin, const char* pan, int page, float x, float y, float w, float h, const char* imagePathFile, const char* outFilePath, PROGRESS_CALLBACK progressCallBack, SIGN_COMPLETED_CALLBACK completedCallBack)
 {
 
-    printf("page: %d, x: %f, y: %f, w: %f, h: %f", page, x, y, w, h);
+    LOG_INFO("****** Starting firmaConCIE ******");
+    LOG_DEBUG("firmaConCIE - page: %d, x: %f, y: %f, w: %f, h: %f", page, x, y, w, h);
 
     char* readers = NULL;
     char* ATR = NULL;
@@ -42,13 +39,15 @@ CK_RV CK_ENTRY firmaConCIE(const char* inFilePath, const char* type, const char*
         SCARDCONTEXT hSC;
 
         long nRet = SCardEstablishContext(SCARD_SCOPE_USER, nullptr, nullptr, &hSC);
-        if (nRet != SCARD_S_SUCCESS)
+        if (nRet != SCARD_S_SUCCESS){
+            LOG_ERROR("firmaConCIE - List readers error: %d\n", nRet);
             return CKR_DEVICE_ERROR;
+        }
+        LOG_INFO("firmaConCIE - Establish Context ok\n");
 
-        OutputDebugString("Establish Context ok\n");
-
-        if (SCardListReaders(hSC, nullptr, NULL, &len) != SCARD_S_SUCCESS) {
-            OutputDebugString("List readers ko\n");
+        nRet = SCardListReaders(hSC, nullptr, NULL, &len);
+        if ( nRet!= SCARD_S_SUCCESS) {
+            LOG_ERROR("firmaConCIE - List readers error: %d\n", nRet);
             return CKR_TOKEN_NOT_PRESENT;
         }
 
@@ -138,7 +137,7 @@ CK_RV CK_ENTRY firmaConCIE(const char* inFilePath, const char* type, const char*
             
             progressCallBack(100, "");
             
-            OutputDebugString("CieSign ret: %d", ret);
+            LOG_INFO("firmaConCIE - completed, res: %d", ret);
 
             free(ias);
             free(cieSign);
@@ -154,14 +153,14 @@ CK_RV CK_ENTRY firmaConCIE(const char* inFilePath, const char* type, const char*
         }
     }
     catch (std::exception &ex) {
-        OutputDebugString(ex.what());
+        LOG_ERROR(ex.what());
         if (ATR)
             free(ATR);
-        OutputDebugString("Eccezione: %s", ex.what());
+        LOG_ERROR("firmaConCIE - Eccezione: %s", ex.what());
         if (readers)
             free(readers);
 
-        OutputDebugString("General error\n");
+        LOG_ERROR("firmaConCIE - General error\n");
         return CKR_GENERAL_ERROR;
     }
 

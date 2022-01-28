@@ -2,9 +2,6 @@
 #include "DES3.h"
 #include "../Cryptopp/misc.h"
 
-extern CLog Log;
-
-
 
 #ifdef WIN32
 static char *szCompiledFile = __FILE__;
