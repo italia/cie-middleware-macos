@@ -2,9 +2,6 @@
 //  VerificaConCIE.cpp
 //  cie-pkcs11
 //
-//  Created by Pierluigi De Gregorio on 18/02/21.
-//  Copyright © 2021 IPZS. All rights reserved.
-//
 
 #include "VerificaConCIE.h"
 #include "../PKCS11/PKCS11Functions.h"
@@ -42,7 +39,7 @@ CK_RV CK_ENTRY verificaConCIE(const char* inFilePath, verifyInfos_t* vInfos, con
         return 0;
     }else
     {
-        printf("Errore nella verifica: %lu\n", verifyResult.nErrorCode);
+        LOG_ERROR("verificaConCIE - Errore nella verifica: %lu\n", verifyResult.nErrorCode);
         return verifyResult.nErrorCode;
     }
 }

@@ -2,7 +2,6 @@
 //  VerifyItem.swift
 //  CIE ID
 //
-//
 
 import Foundation
 

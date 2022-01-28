@@ -22,8 +22,9 @@
 
 #include "../Cryptopp/misc.h"
 #include "../Util/UUCByteArray.h"
+#include "../LOGGER/Logger.h"
 
-CLog Log;
+using namespace CieIDLogger;
 
 // flag: P11 inizializzato
 bool bP11Initialized=false;
@@ -71,7 +72,7 @@ BOOL APIENTRY DllMainP11( HANDLE hModule,
 		std::string configPath;
 		configPath = moduleInfo.szModulePath + moduleInfo.szModuleName + ".ini";
 		initLog(configPath.c_str(), __DATE__ " " __TIME__);
-		Log.initModule("PKCS11", __DATE__ " " __TIME__);
+		
 		p11::InitP11(configPath.c_str());
 
 	}
@@ -79,7 +80,7 @@ BOOL APIENTRY DllMainP11( HANDLE hModule,
 	if (ul_reason_for_call==DLL_PROCESS_DETACH && bModuleInit) {
 
 		if (bP11Initialized) {
-			Log.write("%s","Forzatura C_Finalize");
+			LOG_INFO("[PKCS11] DllMainP11 - Forzatura C_Finalize");
 			C_Finalize(NULL);
 			bP11Initialized = false;
 		}
@@ -115,16 +116,15 @@ __attribute__((constructor)) void DllMainAttach()
     // code
     bModuleInit=true;
     std::string configPath = "/usr/local/lib/ciepki.ini";
-    initLog("CIEPKC11", configPath.c_str(), __DATE__ " " __TIME__);
     p11::InitP11(configPath.c_str());
 }
 
 __attribute__((destructor)) void DllMainDetach()
 {
-    Log.write("%s","DllMainDetach");
+    LOG_INFO("[PKCS11] DllMainDetach");
     
     if (bP11Initialized) {
-        Log.write("%s","Forzatura C_Finalize");
+        LOG_INFO("[PKCS11] DllMainDetach - Forzatura C_Finalize");
         C_Finalize(NULL);
         bP11Initialized = false;
         
@@ -136,7 +136,7 @@ __attribute__((destructor)) void DllMainDetach()
         }
         catch(...)
         {
-            printf("event set error");
+            LOG_ERROR("[PKCS11] DllMainDetach - event set error");
         }
     }
     
@@ -149,7 +149,8 @@ __attribute__((destructor)) void DllMainDetach()
 
 void WriteAttributes(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
 {
-    Log.write("Attributes: %x", ulCount);
+    LOG_INFO("[PKCS11] WriteAttributes - Attributes: %x", ulCount);
+    
     for(unsigned int i = 0; i < ulCount; i++)
     {
         if(pTemplate[i].pValue)
@@ -157,26 +158,26 @@ void WriteAttributes(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
             switch(pTemplate[i].type)
             {
                 case CKA_CLASS:
-                    Log.writePure("%d) type=%x (%s), value=%x, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), *(CK_OBJECT_CLASS_PTR)(pTemplate[i].pValue), pTemplate[i].ulValueLen);
+                    LOG_DEBUG("[PKCS11] WriteAttributes - %d) type=%x (%s), value=%x, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), *(CK_OBJECT_CLASS_PTR)(pTemplate[i].pValue), pTemplate[i].ulValueLen);
                     break;
                     
                 case CKA_TOKEN:
                 case CKA_PRIVATE:
                 case CKA_MODIFIABLE:
-                    Log.writePure("%d) type=%x (%s), value=%x, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), *(CK_BBOOL*)(pTemplate[i].pValue), pTemplate[i].ulValueLen);
+                    LOG_DEBUG("[PKCS11] WriteAttributes - %d) type=%x (%s), value=%x, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), *(CK_BBOOL*)(pTemplate[i].pValue), pTemplate[i].ulValueLen);
                     break;
                     
                 case CKA_LABEL:
                 case CKA_OBJECT_ID:
-                    Log.writePure("%d) type=%x (%s), value=%s, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), (char*)(pTemplate[i].pValue), pTemplate[i].ulValueLen);
+                    LOG_DEBUG("[PKCS11] WriteAttributes - %d) type=%x (%s), value=%s, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), (char*)(pTemplate[i].pValue), pTemplate[i].ulValueLen);
                     break;
             
                 case CKA_VALUE:
-                    Log.writePure("%d) type=%x (%s), value=%s, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), UUCByteArray((BYTE*)pTemplate[i].pValue, pTemplate[i].ulValueLen).toHexString(), pTemplate[i].ulValueLen);
+                    LOG_DEBUG("[PKCS11] WriteAttributes - %d) type=%x (%s), value=%s, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), UUCByteArray((BYTE*)pTemplate[i].pValue, pTemplate[i].ulValueLen).toHexString(), pTemplate[i].ulValueLen);
                     break;
                     
                 default:
-                    Log.writePure("%d) type=%x (%s), value=%p, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), pTemplate[i].pValue, pTemplate[i].ulValueLen);
+                    LOG_DEBUG("[PKCS11] WriteAttributes - %d) type=%x (%s), value=%p, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), pTemplate[i].pValue, pTemplate[i].ulValueLen);
                     break;
             }
         }
@@ -185,22 +186,22 @@ void WriteAttributes(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
             switch(pTemplate[i].type)
             {
             case CKA_CLASS:
-                Log.writePure("%d) type=%x (%s), value=NULL, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), pTemplate[i].ulValueLen);
+                LOG_DEBUG("[PKCS11] WriteAttributes - %d) type=%x (%s), value=NULL, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), pTemplate[i].ulValueLen);
                 break;
                 
             case CKA_TOKEN:
             case CKA_PRIVATE:
             case CKA_MODIFIABLE:
-                Log.writePure("%d) type=%x (%s), value=NULL, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), pTemplate[i].ulValueLen);
+                LOG_DEBUG("[PKCS11] WriteAttributes - %d) type=%x (%s), value=NULL, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), pTemplate[i].ulValueLen);
                 break;
                 
             case CKA_LABEL:
             case CKA_OBJECT_ID:
-                Log.writePure("%d) type=%x (%s), value=NULL, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), pTemplate[i].ulValueLen);
+                LOG_DEBUG("[PKCS11] WriteAttributes - %d) type=%x (%s), value=NULL, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), pTemplate[i].ulValueLen);
                 break;
                 
             default:
-                Log.writePure("%d) type=%x (%s), value=NULL, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), pTemplate[i].ulValueLen);
+                LOG_DEBUG("[PKCS11] WriteAttributes - %d) type=%x (%s), value=NULL, len=%x", i + 1, pTemplate[i].type, getAttributeName(pTemplate[i].type), pTemplate[i].ulValueLen);
                 break;
             }
         }
@@ -209,9 +210,9 @@ void WriteAttributes(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
 
 void WriteMechanism(CK_MECHANISM_PTR pMechanism)
 {
-    Log.write("Mechanism : %x", pMechanism->mechanism);
-    Log.write("Parameter: %x", pMechanism->pParameter);
-    Log.write("Parameter len: %x", pMechanism->ulParameterLen);
+    LOG_DEBUG("[PKCS11] WriteMechanism - Mechanism : %x", pMechanism->mechanism);
+    LOG_DEBUG("[PKCS11] WriteMechanism - Parameter: %x", pMechanism->pParameter);
+    LOG_DEBUG("[PKCS11] WriteMechanism - Parameter len: %x", pMechanism->ulParameterLen);
 }
 
 // funzione CheckMechanismParam
@@ -356,7 +357,7 @@ CK_RV CK_ENTRY C_Initialize(CK_VOID_PTR pReserved)
 
 	CSlot::InitSlotList();
 
-	Log.write("C_Initialize ok");
+	LOG_INFO("[PKCS11] C_Initialize success");
 
 	return CKR_OK;
 	exit_p11_func
@@ -403,60 +404,67 @@ CK_RV CK_ENTRY C_Finalize(CK_VOID_PTR pReserved)
 
 CK_RV CK_ENTRY C_OpenSession(CK_SLOT_ID slotID, CK_FLAGS flags, CK_VOID_PTR pApplication, CK_NOTIFY notify, CK_SESSION_HANDLE_PTR phSession)
 {
-	init_p11_func
-	std::unique_lock<std::mutex> lock(p11Mutex);
+    init_p11_func
+    std::unique_lock<std::mutex> lock(p11Mutex);
 
-//	checkOutPtr(phSession)
+//    checkOutPtr(phSession)
 
-		logParam(slotID)
-		logParam(flags)
-		logParam(pApplication)
-		logParam(notify)
-		logParam(phSession)
+        logParam(slotID)
+        logParam(flags)
+        logParam(pApplication)
+        logParam(notify)
+        logParam(phSession)
 
 
-		if (!bP11Initialized)
-			throw p11_error(CKR_CRYPTOKI_NOT_INITIALIZED);
+    if (!bP11Initialized){
+        LOG_ERROR("[PKCS11] C_OpenSession - CKR_CRYPTOKI_NOT_INITIALIZED");
+        throw p11_error(CKR_CRYPTOKI_NOT_INITIALIZED);
+    }
 
-	if (!(flags & CKF_SERIAL_SESSION))
-		throw p11_error(CKR_SESSION_PARALLEL_NOT_SUPPORTED);
+    if (!(flags & CKF_SERIAL_SESSION))
+    {
+        LOG_ERROR("[PKCS11] C_OpenSession - CKF_SERIAL_SESSION");
+        throw p11_error(CKR_SESSION_PARALLEL_NOT_SUPPORTED);
+    }
 
-	std::shared_ptr<CSlot> pSlot = CSlot::GetSlotFromID(slotID);
-	if (pSlot == nullptr)
-		throw p11_error(CKR_SLOT_ID_INVALID);
-	
-	auto pSession = std::unique_ptr<CSession>(new CSession());
-	pSession->pSlot=pSlot;
-	pSession->flags=flags;
-	pSession->notify=notify;
-	pSession->pApplication=pApplication;
+    std::shared_ptr<CSlot> pSlot = CSlot::GetSlotFromID(slotID);
+    if (pSlot == nullptr){
+        LOG_ERROR("[PKCS11] C_OpenSession - CKR_SLOT_ID_INVALID");
+        throw p11_error(CKR_SLOT_ID_INVALID);
+    }
+    
+    auto pSession = std::unique_ptr<CSession>(new CSession());
+    pSession->pSlot=pSlot;
+    pSession->flags=flags;
+    pSession->notify=notify;
+    pSession->pApplication=pApplication;
 
-	if ((flags & CKF_RW_SESSION)==0) {
-		// se una sessione RO devo
-		// verificare che non ci siano sessioni SO RW
-		if (pSession->ExistsSO_RW())
-			throw p11_error(CKR_SESSION_READ_WRITE_SO_EXISTS);
-	}
+    if ((flags & CKF_RW_SESSION)==0) {
+        // se una sessione RO devo
+        // verificare che non ci siano sessioni SO RW
+        if (pSession->ExistsSO_RW()){
+            LOG_ERROR("[PKCS11] C_OpenSession -  CKR_SESSION_READ_WRITE_SO_EXISTS");
+            throw p11_error(CKR_SESSION_READ_WRITE_SO_EXISTS);
+        }
+            
+    }
 
-	pSlot->Init();
-	
-	pSession->slotID=slotID;
+    pSlot->Init();
+    
+    pSession->slotID=slotID;
 
 // aggiungo la sessione all'elenco globale
-	*phSession = CSession::AddSession(std::move(pSession));
+    *phSession = CSession::AddSession(std::move(pSession));
 
-	if (Log.Enabled) {
-		Log.writePure("Sessione: %i",*phSession);
-		Log.writePure("Lettore: %s",pSlot->szName.c_str());
-		Log.writePure("CardManager: %s",pSlot->pTemplate->szName.c_str());
-		std::string szModel;
-		pSlot->pTemplate->FunctionList.templateGetModel(*pSlot,szModel);
-		Log.writePure("Tipo Carta: %s",szModel.c_str());
-	}
+    LOG_INFO("[PKCS11] C_OpenSession - Sessione: %i",*phSession);
+    LOG_INFO("[PKCS11] C_OpenSession - Lettore: %s",pSlot->szName.c_str());
+    LOG_INFO("[PKCS11] C_OpenSession - CardManager: %s",pSlot->pTemplate->szName.c_str());
+    std::string szModel;
+    pSlot->pTemplate->FunctionList.templateGetModel(*pSlot,szModel);
 
-	return CKR_OK;
-	exit_p11_func
-		return CKR_GENERAL_ERROR;
+    return CKR_OK;
+    exit_p11_func
+        return CKR_GENERAL_ERROR;
 }
 
 CK_RV CK_ENTRY C_GetTokenInfo(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
@@ -556,6 +564,9 @@ CK_RV CK_ENTRY C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 		throw p11_error(CKR_ARGUMENTS_BAD);
 
 	pSlot->GetInfo(pInfo);
+    
+    LOG_DEBUG("[PKCS11] C_GetSlotInfo - slotDescription: %s", pInfo->slotDescription);
+    //LOG_DEBUG("[PKCS11] C_GetSlotInfo - manufacturerID: %s", pInfo->manufacturerID);
 	
 	return CKR_OK;
 	exit_p11_func
@@ -914,7 +925,7 @@ CK_RV CK_ENTRY C_FindObjects(CK_SESSION_HANDLE hSession,CK_OBJECT_HANDLE_PTR phO
 	
 	pSession->FindObjects(phObject, ulMaxObjectCount, pulObjectCount);
     
-    Log.write("Objects found: %d", *pulObjectCount);
+    LOG_DEBUG("[PKCS11] C_FindObjects - Objects found: %d", *pulObjectCount);
     
 	return CKR_OK;
 	exit_p11_func
@@ -996,7 +1007,7 @@ CK_RV CK_ENTRY C_GetAttributeValue(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
 	if (pSession==nullptr)
 		throw p11_error(CKR_SESSION_HANDLE_INVALID);
 
-    Log.write("In template");
+    LOG_DEBUG("[PKCS11] C_GetAttributeValue - In template");
     WriteAttributes(pTemplate, ulCount);
     
 	CK_RV rv = pSession->GetAttributeValue(hObject, pTemplate, ulCount);
@@ -1008,10 +1019,10 @@ CK_RV CK_ENTRY C_GetAttributeValue(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
 //        }
 //    }
     
-    Log.write("Out template");
+    LOG_DEBUG("[PKCS11] C_GetAttributeValue - Out template");
     WriteAttributes(pTemplate, ulCount);
     
-    Log.writePure("return %x", rv);
+    LOG_DEBUG("[PKCS11] C_GetAttributeValue - return %x", rv);
     
 	return rv;
     
@@ -2103,7 +2114,7 @@ CK_RV CK_ENTRY C_SetOperationState(CK_SESSION_HANDLE hSession,CK_BYTE_PTR pOpera
 #define unsupported \
 { \
 	init_p11_func \
-	Log.write("%s","Funzione non supportata!!"); \
+	LOG_ERROR("%s","Funzione non supportata!!"); \
 	throw p11_error(CKR_FUNCTION_NOT_SUPPORTED); \
 	exit_p11_func \
 	return CKR_FUNCTION_NOT_SUPPORTED; \

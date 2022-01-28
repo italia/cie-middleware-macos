@@ -2,9 +2,6 @@
 #include "MAC.h"
 #include "../Cryptopp/hmac.h"
 
-extern CLog Log;
-
-
 
 #ifdef WIN32
 

@@ -1,3 +1,4 @@
+#if 0
 #pragma once
 
 #include <stdlib.h>
@@ -40,3 +41,4 @@ public:
 };
 
 void initLog(const char *moduleName, const char *iniFile,const char *version);
+#endif

@@ -5,8 +5,6 @@
 #include <vector>
 #include "../Cryptopp/misc.h"
 
-extern CLog Log;
-
 static char *szCompiledFile=__FILE__;
 
 CToken::CToken()

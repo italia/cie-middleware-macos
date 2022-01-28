@@ -9,6 +9,7 @@ extern unsigned int GlobalDepth;
 extern bool GlobalParam;
 char szEmpty[]={NULL};
 
+#if 0
 CFuncCallInfo::CFuncCallInfo(const char *name, CLog &logInfo) : log(logInfo) {
 	fName = name;
 	//OutputDebugString(fName);
@@ -26,6 +27,7 @@ CFuncCallInfo::CFuncCallInfo(const char *name, CLog &logInfo) : log(logInfo) {
 	callQueue = std::unique_ptr<CFuncCallInfoList>(new CFuncCallInfoList(this));
 	callQueue->next = std::unique_ptr<CFuncCallInfoList>(head);
 }
+#endif
 
 CFuncCallInfo::~CFuncCallInfo() {
 	//OutputDebugString(stdPrintf("OUT %s", fName).c_str());
@@ -40,7 +42,6 @@ CFuncCallInfo::~CFuncCallInfo() {
 	}
 	else {
 		callQueue = nullptr;
-		OutputDebugString("Errore nella sequenza delle funzioni");
 	}
 }
 

@@ -145,7 +145,7 @@ uint16_t CIESign::sign(const char* inFilePath, const char* type, const char* pin
 		}
 	}
 	catch (long err) {
-		OutputDebugString("CIESign::sign error %d", err);
+		LOG_DEBUG("CIESign::sign error %d", err);
 	}
 
 	if (ctx)

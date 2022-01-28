@@ -2,7 +2,7 @@
 #include "Array.h"
 #include "ASNParser.h"
 
-extern CLog Log;
+//extern CLog Log;
 
 #define BitValue(a,b) ((a>>b) & 1)
 

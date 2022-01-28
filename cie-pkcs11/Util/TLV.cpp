@@ -1,8 +1,6 @@
 
 #include "TLV.h"
 
-extern CLog Log;
-
 CTLV::CTLV(ByteArray &data)
 {
 	init_func

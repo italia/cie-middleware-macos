@@ -2,9 +2,6 @@
 #include "P11Object.h"
 #include "CardTemplate.h"
 
-extern CLog Log;
-
-
 namespace p11 {
 
 CP11Object::CP11Object(CK_OBJECT_CLASS objClass,void *TemplateData)
