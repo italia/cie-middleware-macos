@@ -1,9 +1,6 @@
 // TestCIE.cpp : Questo file contiene la funzione 'main', in cui inizia e termina l'esecuzione del programma.
 //
 /*
- *  Copyright (c) 2000-2018 by Ugo Chirico - http://www.ugochirico.com
- *  All Rights Reserved
- *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -762,7 +759,6 @@ int main(int argc, char* argv[])
 {
 	std::cout << "----------------------------------------------" << std::endl;
 	std::cout << "- Benvenuti nella Console di test del PKCS#11" << std::endl;
-	std::cout << "- Copyright (c) 2006-2019 by Ugo Chirico\n- http://www.ugochirico.com\n- All right reserved" << std::endl;
 	std::cout << "----------------------------------------------" << std::endl;
 
 	g_nLogLevel = 5;

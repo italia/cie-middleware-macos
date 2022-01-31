@@ -1,6 +1,4 @@
 /* UUCTextFile.h: interface for the UUCTextFile class.
- *  Copyright (c) 2000-2018 by Ugo Chirico - http://www.ugochirico.com
- *  All Rights Reserved
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
