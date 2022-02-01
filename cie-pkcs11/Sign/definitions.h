@@ -2,8 +2,6 @@
  *            utiltypes.h
  *
  *  Fri Nov 17 01:15:58 2006
- *  Copyright  2006  Ugo Chirico
- *  Email
  ****************************************************************************/
 
 #ifndef __DEFINITIONSTYPES_H
