@@ -13,7 +13,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
- 
+
 
 #ifndef _ASN1EXCEPTION_H
 #define _ASN1EXCEPTION_H
@@ -24,11 +24,11 @@ public:
 	CASN1Exception(const char* lpszMsg)
 		: m_lpszMsg(lpszMsg)
 	{
-		
+
 	};
 
 	virtual ~CASN1Exception(){};
-		
+
 	virtual bool GetErrorMessage(char* lpszError, UINT nMaxError)
 	{
 		if(nMaxError < strlen(m_lpszMsg))
@@ -50,9 +50,9 @@ public:
 	CASN1ParsingException()
 		: CASN1Exception("Bad ASN1Object parsed")
 	{};
-		
+
 	virtual ~CASN1ParsingException(){};
-	
+
 };
 
 
@@ -62,7 +62,7 @@ public:
 	CASN1ObjectNotFoundException(const char* lpszClass)
 		:CASN1Exception(lpszClass)
 	{};
-		
+
 	virtual ~CASN1ObjectNotFoundException(){};
 };
 
@@ -72,7 +72,7 @@ public:
 	CASN1BadObjectIdException(const char* strClass)
 		: CASN1Exception(strClass)
 	{};
-		
+
 	virtual ~CASN1BadObjectIdException(){};
 };
 
@@ -91,7 +91,7 @@ public:
 	CBadContentTypeException()
 		: CASN1Exception("Bad Content Type")
 	{};
-		
+
 	virtual ~CBadContentTypeException(){};
 };
 

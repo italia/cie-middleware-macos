@@ -14,27 +14,27 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
- 
+
 #pragma once
 #include <stdio.h>
 #include "UUCByteArray.h"
 
-class UUCBufferedReader  
+class UUCBufferedReader
 {
 public:
 	unsigned int getPosition();
 	void setPosition(unsigned int index);
-	//UUCBufferedReader(const char* szFilePath);	
+	//UUCBufferedReader(const char* szFilePath);
 	UUCBufferedReader(const UUCByteArray& buffer);
 	UUCBufferedReader(const BYTE* pbtBuffer, int len);
-	
+
 	virtual ~UUCBufferedReader();
 
 	unsigned int read(BYTE* pbtBuffer, unsigned int  nLen);
 	unsigned int read(UUCByteArray& byteArray);
 
 	void mark();
-	void reset();	
+	void reset();
 	void releaseMark();
 
 private:

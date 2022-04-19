@@ -69,6 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property IBOutlet NSView* helpButtonView;
 @property IBOutlet NSView* infoButtonView;
 @property IBOutlet NSView* firmaElettronicaButtonView;
+@property IBOutlet NSView* verificaFirmaButtonView;
 @property IBOutlet NSView* impostazioniButtonView;
 
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "../PCSC/Token.h"
+#include "../CSP/ATR.h"
 
 #include <map>
 
@@ -18,14 +19,6 @@
 extern bool switchDesktop;
 extern BOOL CheckOneInstance(char *nome);
 extern ByteArray baExtAuth_PrivExp;
-
-enum CIE_Type {
-	CIE_Unknown,
-	CIE_Gemalto,
-	CIE_NXP,
-	CIE_STM,
-	CIE_STM2
-};
 
 enum CIE_DF {
 	DF_Root,
@@ -106,8 +99,8 @@ public:
 	void SetCache(const char *PAN, ByteArray &certificate, ByteArray &FirstPIN);
 	bool IsEnrolled();
     bool Unenroll();
-    static bool IsEnrolled(const char *szPAN);
-    static bool Unenroll(const char *szPAN);
+    static bool IsEnrolled(const char *PAN);
+    static bool Unenroll(const char *PAN);
 	void IconaSbloccoPIN();
 
     uint8_t GetSODDigestAlg(ByteArray &SOD);
@@ -123,6 +116,5 @@ public:
 	bool ActiveSM;
 	CIE_DF ActiveDF;
 
-	
-};
 
+};
