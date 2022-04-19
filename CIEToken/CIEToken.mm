@@ -8,8 +8,10 @@
 
 #import "CIEToken.h"
 #import <string>
+#include "../cie-pkcs11/LOGGER/Logger.h"
 
 using namespace std;
+using namespace CieIDLogger;
 
 typedef CK_RV (*C_GETFUNCTIONLIST)(CK_FUNCTION_LIST_PTR_PTR ppFunctionList);
 CK_FUNCTION_LIST_PTR g_pFuncList = NULL;
@@ -66,22 +68,26 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 
 - (instancetype)initWithSmartCard:(TKSmartCard *)smartCard AID:(NSData *)AID tokenDriver:(CIETokenDriver *)tokenDriver error:(NSError **)error
 {
-    
+    LOG_INFO("[CTK] initWithSmartCard");
+    LOG_INFO("[CTK] initWithSmartCard - smartCard slot name: %s", smartCard.slot.name.fileSystemRepresentation);
+
     if(!hModule)
     {
         const char* szCryptoki = "libcie-pkcs11.dylib";
         hModule = dlopen(szCryptoki, RTLD_LOCAL | RTLD_LAZY);
         if(!hModule)
         {
+            LOG_ERROR("[CTK] initWithSmartCard - Middleware library not found");
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
             [errorDetail setValue:@"Middleware not found" forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:@"CIEToken" code:100 userInfo:errorDetail];
             return nil;
         }
-    
+
         C_GETFUNCTIONLIST pfnGetFunctionList=(C_GETFUNCTIONLIST)dlsym(hModule, "C_GetFunctionList");
         if(!pfnGetFunctionList)
         {
+            LOG_ERROR("[CTK] initWithSmartCard - Middleware functions list not found");
             dlclose(hModule);
             hModule = NULL;
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
@@ -89,10 +95,11 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
             *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
             return nil;
         }
-        
+
         CK_RV rv = pfnGetFunctionList(&g_pFuncList);
         if(rv != CKR_OK)
         {
+            LOG_ERROR("[CTK] initWithSmartCard - Middleware functions list fails");
             dlclose(hModule);
             hModule = NULL;
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
@@ -100,12 +107,13 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
             *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
             return nil;
         }
-        
+
         _hSession = NULL;
     }
-    
+
     if(!initPKCS11())
     {
+        LOG_ERROR("[CTK] initWithSmartCard - Middleware's PKCS11 init fails");
         dlclose(hModule);
         hModule = NULL;
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
@@ -113,14 +121,15 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
         return nil;
     }
-        
+
     CK_ULONG ulCount = 0;
     CK_SLOT_ID_PTR pSlotList = getSlotList(true, &ulCount);
     if(!pSlotList || ulCount == 0)
     {
+        LOG_ERROR("[CTK] initWithSmartCard - Middleware's getSlotList fails");
         if(pSlotList)
             free(pSlotList);
-        
+
         closePKCS11();
         dlclose(hModule);
         hModule = NULL;
@@ -129,13 +138,13 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
         return nil;
     }
-        
+
     CK_TOKEN_INFO tkInfo;
     CK_SLOT_INFO sInfo;
-    
+
     CK_ULONG i = 0;
     CK_RV rv;
-    
+
     // looks for requested slot name
     for(i=0; i< ulCount; i++)
     {
@@ -144,24 +153,26 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         size_t sLen = sizeof(sInfo.slotDescription);
         char szDescription[sizeof(sInfo.slotDescription)+1] = {0};
 
-                   
+
         rv = g_pFuncList->C_GetSlotInfo(pSlotList[i], &sInfo);
-        
+
         memcpy(szDescription, sInfo.slotDescription, sizeof(sInfo.slotDescription));
         sLen = MIN(sLen, strlen(szDescription));
         sLen = MIN(sLen, strlen(smartCard.slot.name.fileSystemRepresentation) );
-        
+
         // NOTE: slotDescription may be shorter than smartCard.slot.name
         // compare using min len
         if(rv == CKR_OK && memcmp(smartCard.slot.name.fileSystemRepresentation, szDescription, sLen ) == 0){
              rv = g_pFuncList->C_GetTokenInfo(pSlotList[i], &tkInfo);
+             //LOG_DEBUG("[CTK] initWithSmartCard - pSlotList[%d]: %s", i, pSlotList[i]);
              if (rv != CKR_OK)
              {
+                 LOG_ERROR("[CTK] initWithSmartCard - Middleware's GetTokenInfo(1) fails");
                  free(pSlotList);
                  closePKCS11();
                  dlclose(hModule);
                  hModule = NULL;
-                 
+
                  NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
                  [errorDetail setValue:@"Middleware's GetTokenInfo(1) fails'" forKey:NSLocalizedDescriptionKey];
                  *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
@@ -171,7 +182,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
             }
         }
     }
- 
+
      if (i>= ulCount)
      {
         // slot not found, fallback to previous detect method
@@ -179,40 +190,43 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         CK_RV rv = g_pFuncList->C_GetTokenInfo(pSlotList[i], &tkInfo);
         if (rv != CKR_OK)
         {
+            LOG_ERROR("[CTK] initWithSmartCard - Middleware's GetTokenInfo(2) fails");
             free(pSlotList);
             closePKCS11();
             dlclose(hModule);
             hModule = NULL;
-            
+
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
             [errorDetail setValue:@"Middleware's GetTokenInfo(2) fails'" forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
             return nil;
         }
      }
-    
+
     _loginRequired = tkInfo.flags & CKF_LOGIN_REQUIRED;
-    
+
     // tkInfo.serialNumber is space padded to his len
     // should not be null termined, but we handle it as it was
     size_t len = sizeof(tkInfo.serialNumber);
     char szSerial[sizeof(tkInfo.serialNumber)+1] = {0};
     memcpy(szSerial, tkInfo.serialNumber, sizeof(tkInfo.serialNumber));
     len = MIN(len, strlen(szSerial));
-    
+
     NSData *tokenSerial = [NSData dataWithBytes:szSerial length:len];
     NSString* serial = [[NSString alloc] initWithData:tokenSerial encoding:NSUTF8StringEncoding];
     NSString* instanceID = [@"CIE-" stringByAppendingString:serial];
+
     // trim whitespaces
     instanceID = [instanceID stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    
+    LOG_INFO("[CTK] initWithSmartcard - token ID: %s", [instanceID UTF8String]);
+
     _hSlot = pSlotList[i];
-    
+
     if(_hSession)
         closeSession(_hSession);
-    
+
     _hSession = NULL;
-    
+
     _hSession = openSession(_hSlot);
     if(!_hSession)
     {
@@ -220,23 +234,23 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         closePKCS11();
         dlclose(hModule);
         hModule = NULL;
-        
+
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware openSession fails'" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
         return nil;
     }
-    
+
     free(pSlotList);
 
     CK_OBJECT_HANDLE phObject[1];
     CK_ULONG ulObjCount = 1;
-    
+
     CK_OBJECT_CLASS ckClass = CKO_CERTIFICATE;
-    
+
     CK_ATTRIBUTE template_ck[] = {
         {CKA_CLASS, &ckClass, sizeof(ckClass)}};
-    
+
     if(!findObject(_hSession, template_ck, 1, phObject, &ulObjCount) || ulObjCount == 0)
     {
         closeSession(_hSession);
@@ -244,20 +258,21 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         dlclose(hModule);
         hModule = NULL;
         _hSession = NULL;
-        
+
+        LOG_ERROR("[CTK] Middleware's findObject fails");
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware's findObject fails'" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
         return nil;
     }
-    
+
     // Get Cert Data
     CK_ATTRIBUTE    attr[]      = {
         {CKA_VALUE, NULL, 0},
     };
-    
+
     CK_OBJECT_HANDLE hObject = *phObject;
-    
+
     rv = g_pFuncList->C_GetAttributeValue(_hSession, hObject, attr, 1);
     if (rv != CKR_OK)
     {
@@ -266,15 +281,16 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         dlclose(hModule);
         hModule = NULL;
         _hSession = NULL;
-        
+
+        LOG_ERROR("[CTK] Middleware C_GetAttributeValue fails");
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware C_GetAttributeValue fails'" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
         return nil;
     }
-        
+
     attr[0].pValue = malloc(attr[0].ulValueLen);
-    
+
     rv = g_pFuncList->C_GetAttributeValue(_hSession, hObject, attr, 1);
     if (rv != CKR_OK)
     {
@@ -283,25 +299,26 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         dlclose(hModule);
         hModule = NULL;
         _hSession = NULL;
-        
+
+        LOG_ERROR("[CTK] Middleware C_GetAttributeValue fails");
         free(attr[0].pValue);
         NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
         [errorDetail setValue:@"Middleware C_GetAttributeValue fails'" forKey:NSLocalizedDescriptionKey];
         *error = [NSError errorWithDomain:@"CIEToken" code:101 userInfo:errorDetail];
         return nil;
     }
-    
+
     NSData* certData = [NSData dataWithBytes:attr[0].pValue length:attr[0].ulValueLen];
 
     free(attr[0].pValue);
-    
+
     if (self = [super initWithSmartCard:smartCard AID:AID instanceID:instanceID tokenDriver:tokenDriver]) {
-        
+
         NSMutableArray<TKTokenKeychainItem *> *items = [NSMutableArray array];
-        
+
         NSString *certificateName = @"CIE0";
         NSString *keyName = @"CIE0_KEY";
-        
+
         if (![self populateIdentityFromSmartCard:smartCard into:items certificateData:certData certificateName:certificateName keyName:keyName error:error])
         {
             closeSession(_hSession);
@@ -311,17 +328,17 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
             _hSession = NULL;
             return nil;
         }
-        
+
         [self.keychainContents fillWithItems:items];
     }
-    
+
     return self;
 }
 
 ///
 /*!
  @discussion Terminates previously created token, should release all resources associated with it.
- 
+
  si è deciso di commentarlo perchè sembra non essere mai chiamato dal SO
 */
 - (void)tokenDriver:(TKTokenDriver *)driver terminateToken:(TKToken *)token
@@ -338,13 +355,13 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 }
 
 - (TKTokenSession *)token:(TKToken *)token createSessionWithError:(NSError **)error {
-    
+
     CIETokenSession* tokenSession = [[CIETokenSession alloc] initWithToken:self];
     tokenSession.hSession = _hSession;
     tokenSession.hSlot = self.hSlot;
-    
+
     return tokenSession;
-    
+
 }
 
 - (void)token:(TKToken *)token terminateSession:(TKTokenSession *)session
@@ -362,36 +379,36 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         }
         return NO;
     }
-    
+
     TKTokenObjectID certificateID = certificateName;
-    
+
     TKTokenKeychainCertificate *certificateItem = [[TKTokenKeychainCertificate alloc] initWithCertificate:(__bridge SecCertificateRef)certificate objectID:certificateID];
     if (certificateItem == nil) {
         return NO;
     }
     [certificateItem setName:certificateName];
-    
+
     // Create key item.
     TKTokenKeychainKey *keyItem = [[CIETokenKeychainKey alloc] initWithCertificate:(__bridge SecCertificateRef)certificate objectID:keyName certificateID:certificateItem.objectID];
     if (keyItem == nil) {
         return NO;
     }
-    
+
     [keyItem setName:keyName];
-    
+
     NSMutableDictionary<NSNumber *, TKTokenOperationConstraint> *constraints = [NSMutableDictionary dictionary];
     keyItem.canSign = true;
     keyItem.suitableForLogin = false;
     keyItem.canDecrypt = false;
     keyItem.canPerformKeyExchange = false;
-    
+
     TKTokenOperationConstraint constraint = CIEConstraintPINAlways;//alwaysAuthenticate ? CIEConstraintPINAlways : CIEConstraintPIN;
     constraints[@(TKTokenOperationSignData)] = constraint;
-    
+
     keyItem.constraints = constraints;
     [items addObject:certificateItem];
     [items addObject:keyItem];
-    
+
     return YES;
 }
 
@@ -400,7 +417,7 @@ bool initPKCS11()
     // Inizializza
 //    if(g_nLogLevel > 1)
 //        std::cout << "  -> Inizializza la libreria\n    - C_Initialize" << std::endl;
-    
+
     CK_C_INITIALIZE_ARGS* pInitArgs = NULL_PTR;
     CK_RV rv = g_pFuncList->C_Initialize(pInitArgs);
     if(rv == CKR_CRYPTOKI_ALREADY_INITIALIZED)
@@ -408,16 +425,16 @@ bool initPKCS11()
         closePKCS11();
         rv = g_pFuncList->C_Initialize(pInitArgs);
     }
-    
+
     if(rv != CKR_OK)
     {
 //        error(rv);
         return false;
     }
-    
+
 //    if(g_nLogLevel > 1)
 //        std::cout << "  -- Inizializzazione completata " << std::endl;
-    
+
     return true;
 }
 
@@ -437,20 +454,21 @@ void closePKCS11()
 CK_SLOT_ID_PTR getSlotList(bool bPresent, CK_ULONG* pulCount)
 {
     // carica gli slot disponibili
-    
+
 //    if(g_nLogLevel > 1)
 //        std::cout << "  -> Chiede la lista degli slot disponibili\n    - C_GetSlotList\n    - C_GetSlotInfo" << std::endl;
 //
     CK_SLOT_ID_PTR pSlotList;
-    
+
     // riceve la lista degli slot disponibili
     CK_RV rv = g_pFuncList->C_GetSlotList(bPresent, NULL_PTR, pulCount);
     if (rv != CKR_OK)
     {
 //        error(rv);
+        LOG_ERROR("[CTK] getSlotList - error: %d", rv);
         return NULL_PTR;
     }
-    
+
     if (*pulCount > 0)
     {
 //        if(g_nLogLevel > 2)
@@ -461,10 +479,12 @@ CK_SLOT_ID_PTR getSlotList(bool bPresent, CK_ULONG* pulCount)
         if (rv != CKR_OK)
         {
 //            error(rv);
+            LOG_ERROR("[CTK] getSlotList - error: %d", rv);
             free(pSlotList);
             return NULL_PTR;
         }
-        
+
+        LOG_DEBUG("[CTK] getSlotList - bPresent: %d, bSlotList: %d", bPresent, *pSlotList);
         return pSlotList;
     }
     else
@@ -472,7 +492,7 @@ CK_SLOT_ID_PTR getSlotList(bool bPresent, CK_ULONG* pulCount)
 //        std::cout << "  -> Nessuno Slot disponibile " << std::endl;
         return NULL_PTR;
     }
-    
+
 //    if(g_nLogLevel > 1)
 //        std::cout << "  -- Richiesta completata " << std::endl;
 }
@@ -482,15 +502,16 @@ CK_SESSION_HANDLE openSession(CK_SLOT_ID slotid)
 //    if(g_nLogLevel > 1)
 //        std::cout << "  -> Apre una sessione con lo slot " << slotid << " - C_OpenSession" << std::endl;
 //
-    
+
     CK_SESSION_HANDLE hSession;
     CK_RV rv = g_pFuncList->C_OpenSession(slotid, CKF_RW_SESSION | CKF_SERIAL_SESSION, NULL, NULL, &hSession);
     if (rv != CKR_OK)
     {
 //        error(rv);
+        LOG_ERROR("[CTK] openSession - cannot open session, err: %d", rv);
         return NULL_PTR;
     }
-    
+
 //    if(g_nLogLevel > 1)
 //        std::cout << "  -- Sessione aperta: " << hSession << std::endl;
 //
@@ -502,14 +523,15 @@ void closeSession(CK_SESSION_HANDLE hSession)
     //    if(g_nLogLevel > 1)
     //        std::cout << "  -> Apre una sessione con lo slot " << slotid << " - C_OpenSession" << std::endl;
     //
-    
+
     CK_RV rv = g_pFuncList->C_CloseSession(hSession);
     if (rv != CKR_OK)
     {
         //        error(rv);
+        LOG_ERROR("[CTK] closeSession - cannot close session, err: %d", rv);
         return;
     }
-    
+
     //    if(g_nLogLevel > 1)
     //        std::cout << "  -- Sessione aperta: " << hSession << std::endl;
     //
@@ -521,7 +543,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 //        std::cout << "  -> Ricerca di oggetti \n    - C_FindObjectsInit\n    - C_FindObjects\n    - C_FindObjectsFinal" << std::endl;
 //
     CK_RV rv;
-    
+
     rv = g_pFuncList->C_FindObjectsInit(hSession, pAttributes, ulCount);
     if (rv != CKR_OK)
     {
@@ -529,10 +551,10 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 //        error(rv);
         return false;
     }
-    
+
 //    if(g_nLogLevel > 2)
 //        std::cout << "      - C_FindObjectsInit OK" << std::endl;
-    
+
     rv = g_pFuncList->C_FindObjects(hSession, pObjects, *pulObjCount, pulObjCount);
     if (rv != CKR_OK)
     {
@@ -541,10 +563,10 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         g_pFuncList->C_FindObjectsFinal(hSession);
         return false;
     }
-    
+
 //    if(g_nLogLevel > 2)
 //        std::cout << "      - C_FindObjects OK. Objects found: " << *pulObjCount << std::endl;
-    
+
     rv = g_pFuncList->C_FindObjectsFinal(hSession);
     if (rv != CKR_OK)
     {
@@ -553,10 +575,10 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
         g_pFuncList->C_FindObjectsFinal(hSession);
         return false;
     }
-    
+
 //    if(g_nLogLevel > 1)
 //        std::cout << "      - C_FindObjectsFinal OK" << std::endl;
-    
+
     return true;
 }
 

@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include "UUCByteArray.h"
 
-class UUCTextFileReader 
+class UUCTextFileReader
 {
 public:
 	UUCTextFileReader(const char* szFilePath);

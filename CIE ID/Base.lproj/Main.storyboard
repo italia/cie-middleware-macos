@@ -70,10 +70,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="l8f-Nc-4rb">
-                                <rect key="frame" x="0.0" y="360" width="155" height="210"/>
+                                <rect key="frame" x="0.0" y="400" width="155" height="170"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WAT-68-kg6">
-                                        <rect key="frame" x="28" y="55" width="100" height="100"/>
+                                        <rect key="frame" x="28" y="35" width="100" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="EDe-Y9-DpG"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="PC3-et-5sc"/>
@@ -89,13 +89,13 @@
                                 </constraints>
                             </customView>
                             <stackView distribution="fillEqually" orientation="vertical" alignment="leading" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JIa-Hw-XSf">
-                                <rect key="frame" x="0.0" y="20" width="155" height="340"/>
+                                <rect key="frame" x="0.0" y="20" width="155" height="380"/>
                                 <subviews>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="fvc-Lr-Yuk">
-                                        <rect key="frame" x="0.0" y="299" width="155" height="41"/>
+                                        <rect key="frame" x="0.0" y="340" width="155" height="40"/>
                                         <subviews>
                                             <button focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ma-BO-83u">
-                                                <rect key="frame" x="10" y="5" width="190" height="30"/>
+                                                <rect key="frame" x="10" y="4" width="190" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="squareTextured" title="  Home" bezelStyle="texturedSquare" image="Risorsa 19" imagePosition="left" alignment="left" focusRingType="exterior" inset="2" id="grz-6Y-VtY">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -109,10 +109,10 @@
                                         </subviews>
                                     </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="nSP-6F-JnT" userLabel="FirmaElettronica View">
-                                        <rect key="frame" x="0.0" y="257" width="155" height="40"/>
+                                        <rect key="frame" x="0.0" y="297" width="155" height="41"/>
                                         <subviews>
                                             <button focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Si6-kt-v6v">
-                                                <rect key="frame" x="10" y="3" width="190" height="30"/>
+                                                <rect key="frame" x="10" y="4" width="190" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="squareTextured" title="  Firma Elettronica" bezelStyle="texturedSquare" image="firma_gray " imagePosition="left" alignment="left" focusRingType="exterior" inset="2" id="1YJ-TQ-QNZ">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -125,8 +125,25 @@
                                             </button>
                                         </subviews>
                                     </customView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ndh-GR-KHK" userLabel="VerificaFirma View">
+                                        <rect key="frame" x="0.0" y="255" width="155" height="40"/>
+                                        <subviews>
+                                            <button focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nw7-c0-Nwv">
+                                                <rect key="frame" x="10" y="3" width="190" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="squareTextured" title="  Verifica Firma" bezelStyle="texturedSquare" image="firma_gray " imagePosition="left" alignment="left" focusRingType="exterior" inset="2" id="bhd-WN-Vu0">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                    <connections>
+                                                        <action selector="verificaFirma:" target="XfG-lQ-9wD" id="8aK-sN-4AF"/>
+                                                    </connections>
+                                                </buttonCell>
+                                                <color key="contentTintColor" name="leftTextColor"/>
+                                            </button>
+                                        </subviews>
+                                    </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="lrL-iW-R0U">
-                                        <rect key="frame" x="0.0" y="214" width="155" height="41"/>
+                                        <rect key="frame" x="0.0" y="212" width="155" height="41"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zw0-o0-VWc">
                                                 <rect key="frame" x="10" y="5" width="190" height="30"/>
@@ -143,10 +160,10 @@
                                         </subviews>
                                     </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="CJp-ds-vmS">
-                                        <rect key="frame" x="0.0" y="171" width="155" height="41"/>
+                                        <rect key="frame" x="0.0" y="170" width="155" height="40"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4sw-wd-jcx">
-                                                <rect key="frame" x="10" y="5" width="190" height="30"/>
+                                                <rect key="frame" x="10" y="4" width="190" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="squareTextured" title="  Sblocca Carta" bezelStyle="texturedSquare" image="Risorsa 17" imagePosition="leading" alignment="left" inset="2" id="2rQ-dm-hT1">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -160,7 +177,7 @@
                                         </subviews>
                                     </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="aoW-Zr-NId">
-                                        <rect key="frame" x="0.0" y="128" width="155" height="41"/>
+                                        <rect key="frame" x="0.0" y="127" width="155" height="41"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s3d-nf-52P">
                                                 <rect key="frame" x="10" y="5" width="190" height="30"/>
@@ -177,7 +194,7 @@
                                         </subviews>
                                     </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="N1v-fW-RP4">
-                                        <rect key="frame" x="0.0" y="86" width="155" height="40"/>
+                                        <rect key="frame" x="0.0" y="85" width="155" height="40"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EHG-55-OLE">
                                                 <rect key="frame" x="10" y="4" width="190" height="30"/>
@@ -194,7 +211,7 @@
                                         </subviews>
                                     </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="V6m-k1-rj5">
-                                        <rect key="frame" x="0.0" y="43" width="155" height="41"/>
+                                        <rect key="frame" x="0.0" y="42" width="155" height="41"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c5h-lq-Zc7">
                                                 <rect key="frame" x="10" y="5" width="190" height="30"/>
@@ -211,10 +228,10 @@
                                         </subviews>
                                     </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="65O-Z4-IXq" userLabel="Impostazioni View">
-                                        <rect key="frame" x="0.0" y="0.0" width="155" height="41"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="155" height="40"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qgJ-Ft-qmt">
-                                                <rect key="frame" x="10" y="5" width="190" height="30"/>
+                                                <rect key="frame" x="10" y="4" width="190" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="squareTextured" title="  Impostazioni" bezelStyle="texturedSquare" image="settings_icon" imagePosition="left" alignment="left" inset="2" id="Hlb-8w-faI">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -229,7 +246,7 @@
                                     </customView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="340" id="GtP-LP-woL"/>
+                                    <constraint firstAttribute="height" constant="380" id="GtP-LP-woL"/>
                                     <constraint firstAttribute="width" constant="155" id="uxA-MS-CmM"/>
                                 </constraints>
                                 <visibilityPriorities>
@@ -241,8 +258,10 @@
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
+                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
@@ -291,6 +310,7 @@
                         <outlet property="btnPersonalizza" destination="f5J-jt-oEu" id="rer-cH-CMw"/>
                         <outlet property="btnProseguiFirmaOp" destination="c12-y9-3mW" id="PoT-9G-aQ8"/>
                         <outlet property="btnSalvaProxy" destination="yGt-bn-tAH" id="7VD-nf-2w8"/>
+                        <outlet property="btnVerificaFirma" destination="Nw7-c0-Nwv" id="YUx-0I-GhF"/>
                         <outlet property="cambioPINButtonView" destination="lrL-iW-R0U" id="xaW-Ke-Qi1"/>
                         <outlet property="cambioPINOKPageView" destination="gbY-3C-V3N" id="xZV-6g-SgL"/>
                         <outlet property="cambioPINPageView" destination="Qux-KY-phF" id="XzU-be-vxC"/>
@@ -299,6 +319,7 @@
                         <outlet property="cbMostraPsw" destination="jDo-KO-WPc" id="OTm-PI-lBY"/>
                         <outlet property="cvInsertPin" destination="WtP-No-p2l" id="kVb-fD-nWv"/>
                         <outlet property="filePathSignOp" destination="tkc-yT-lxO" id="UM5-1F-WLy"/>
+                        <outlet property="fileSelectionSignatureBlockView" destination="uLO-QA-fHp" id="JQS-69-q3B"/>
                         <outlet property="firmaElettronicaButtonView" destination="nSP-6F-JnT" id="Aem-7E-Rrv"/>
                         <outlet property="firmaOperationView" destination="byt-ls-7Vz" id="35Z-97-N1g"/>
                         <outlet property="firmaPinView" destination="1Ms-t5-6Dr" id="HPK-3L-kdO"/>
@@ -376,6 +397,7 @@
                         <outlet property="txtPorta" destination="cR3-kg-FJ7" id="wLH-mm-sDa"/>
                         <outlet property="txtProxyAddr" destination="erT-fv-xyh" id="oaX-gd-WoH"/>
                         <outlet property="txtUsername" destination="4UF-Ln-42c" id="kVB-FZ-KbX"/>
+                        <outlet property="verificaFirmaButtonView" destination="Ndh-GR-KHK" id="Far-Fi-Eyr"/>
                         <outlet property="verificaView" destination="n3W-BK-gm8" id="pWN-fg-CsX"/>
                         <outlet property="viewFirmaSelectOp" destination="lax-5E-YUO" id="XXi-wE-zMc"/>
                     </connections>

@@ -2,6 +2,8 @@
 //  FirmaConCIE.cpp
 //  cie-pkcs11
 //
+//
+
 #include "FirmaConCIE.h"
 #include "IAS.h"
 #include "../PKCS11/wintypes.h"
@@ -74,27 +76,27 @@ CK_RV CK_ENTRY firmaConCIE(const char* inFilePath, const char* type, const char*
                 free(readers);
                 return CKR_DEVICE_ERROR;
             }
-            
+
             ATR = (char*)malloc(atrLen);
-            
+
             if(SCardGetAttrib(conn.hCard, SCARD_ATTR_ATR_STRING, (uint8_t*)ATR, &atrLen) != SCARD_S_SUCCESS) {
                 free(readers);
                 free(ATR);
                 return CKR_DEVICE_ERROR;
             }
-            
+
             ByteArray atrBa((BYTE*)ATR, atrLen);
 
             progressCallBack(20, "");
 
             IAS* ias = new IAS((CToken::TokenTransmitCallback)TokenTransmitCallback, atrBa);
             ias->SetCardContext(&conn);
-            
+
             foundCIE = false;
             ias->token.Reset();
             ias->SelectAID_IAS();
             ias->ReadPAN();
-            
+
             foundCIE = true;
             ByteDynArray IntAuth;
             ias->SelectAID_CIE();
@@ -110,13 +112,13 @@ CK_RV CK_ENTRY firmaConCIE(const char* inFilePath, const char* type, const char*
             {
                 return CARD_PAN_MISMATCH;
             }
-            
+
             ByteDynArray FullPIN;
             ByteArray LastPIN = ByteArray((uint8_t*)pin, strlen(pin));
             ias->GetFirstPIN(FullPIN);
             FullPIN.append(LastPIN);
             ias->token.Reset();
-            
+
             progressCallBack(40, "");
 
             char fullPinCStr[9];
@@ -133,10 +135,10 @@ CK_RV CK_ENTRY firmaConCIE(const char* inFilePath, const char* type, const char*
             {
                 return CKR_PIN_LOCKED;
             }
-            
-            
+
+
             progressCallBack(100, "");
-            
+
             LOG_INFO("firmaConCIE - completed, res: %d", ret);
 
             free(ias);
@@ -144,12 +146,12 @@ CK_RV CK_ENTRY firmaConCIE(const char* inFilePath, const char* type, const char*
 
             completedCallBack(ret);
         }
-        
+
         if (!foundCIE) {
             free(ATR);
             free(readers);
             return CKR_TOKEN_NOT_RECOGNIZED;
-            
+
         }
     }
     catch (std::exception &ex) {

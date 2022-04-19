@@ -2,6 +2,7 @@
 //  VerificaConCIE.cpp
 //  cie-pkcs11
 //
+//
 
 #include "VerificaConCIE.h"
 #include "../PKCS11/PKCS11Functions.h"
@@ -18,11 +19,11 @@ CK_RV CK_ENTRY verificaConCIE(const char* inFilePath, verifyInfos_t* vInfos, con
     CIEVerify* verifier = new CIEVerify();
 
     verifier->verify(inFilePath, (VERIFY_RESULT*)&verifyResult, proxyAddress, proxyPort, usrPass);
-    
+
     if (verifyResult.nErrorCode == 0)
     {
         vInfos->n_infos = verifyResult.verifyInfo.pSignerInfos->nCount;
-        
+
         for(int i = 0; i < vInfos->n_infos; i++)
         {
             SIGNER_INFO tmpSignerInfo = (verifyResult.verifyInfo.pSignerInfos->pSignerInfo)[i];// +(index * sizeof(SIGNER_INFO)));
@@ -35,7 +36,7 @@ CK_RV CK_ENTRY verificaConCIE(const char* inFilePath, verifyInfos_t* vInfos, con
             vInfos->infos[i].isCertValid = (tmpSignerInfo.bitmask & VERIFIED_CERT_GOOD) == VERIFIED_CERT_GOOD;
             vInfos->infos[i].isSignValid = (tmpSignerInfo.bitmask & VERIFIED_SIGNATURE) == VERIFIED_SIGNATURE;
         }
-        
+
         return 0;
     }else
     {
