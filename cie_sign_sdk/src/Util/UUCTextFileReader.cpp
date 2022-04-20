@@ -82,12 +82,12 @@ long UUCTextFileReader::readLine(UUCByteArray& line)
 	while((fread(szLine, 1, 1, m_pf) > 0) && (szLine[0] != '\n') )
 	{
 		i++;
-		line.append(szLine[0]);		
+		line.append(szLine[0]);
 	}
-		
+
 	if(i > 0)
 	{
-		line.append((BYTE)0);		
+		line.append((BYTE)0);
 		return 0;
 	}
 	else if((i == 0) && szLine[0] == '\n')
@@ -96,8 +96,8 @@ long UUCTextFileReader::readLine(UUCByteArray& line)
 	}
 	else
 	{
-		return -1;			
-	}	
+		return -1;
+	}
 }
 
 long UUCTextFileReader::readLine(char* szLine, unsigned long nLen) // throw (long)
@@ -109,10 +109,10 @@ long UUCTextFileReader::readLine(char* szLine, unsigned long nLen) // throw (lon
 		if(i == nLen)
 		{
 			//SetLastError(ERROR_MORE_DATA);
-			throw (long)ERROR_MORE_DATA;					
+			throw (long)ERROR_MORE_DATA;
 		}
 	}
-		
+
 	if(i > 0)
 	{
 		szLine[i] = 0;
@@ -124,7 +124,6 @@ long UUCTextFileReader::readLine(char* szLine, unsigned long nLen) // throw (lon
 	}
 	else
 	{
-		return -1;			
+		return -1;
 	}
 }
-

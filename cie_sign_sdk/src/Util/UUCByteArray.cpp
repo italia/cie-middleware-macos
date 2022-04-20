@@ -13,7 +13,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
- 
+
 #include "UUCByteArray.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -27,16 +27,16 @@
 
 UUCByteArray::UUCByteArray(const BYTE* pbtContent, const unsigned long unLen)
 : m_szHex(NULL)
-{	
+{
 	m_unLen = unLen;
-	
+
 	if(m_unLen > 0)
 	{
-		m_nCapacity = m_unLen;	
-		m_pbtContent = (BYTE*)malloc(m_nCapacity);	
+		m_nCapacity = m_unLen;
+		m_pbtContent = (BYTE*)malloc(m_nCapacity);
 		if(m_pbtContent == NULL)
 			throw -5L;
-		
+
 		memcpy(m_pbtContent, pbtContent, m_unLen);
 	}
 	else
@@ -46,34 +46,34 @@ UUCByteArray::UUCByteArray(const BYTE* pbtContent, const unsigned long unLen)
 		m_pbtContent = (BYTE*)malloc(m_nCapacity);
 		if(m_pbtContent == NULL)
 			throw -5L;
-		
-	}	
+
+	}
 }
 
 UUCByteArray::UUCByteArray(const UUCByteArray& blob)
 : m_szHex(NULL)
 {
 	m_unLen = blob.getLength();
-	
+
 	if(m_unLen > 0)
 	{
-		m_nCapacity = m_unLen;	
+		m_nCapacity = m_unLen;
 		//m_pbtContent = (BYTE*)GlobalAlloc(GPTR, m_nCapacity);
 		m_pbtContent = (BYTE*)malloc(m_nCapacity);
 		if(m_pbtContent == NULL)
 			throw -5L;
-		
+
 		memcpy(m_pbtContent, blob.getContent(), m_unLen);
 	}
 	else
 	{
 		m_unLen = 0;
 		m_nCapacity = DEFAULT_CAPACITY;
-		//m_pbtContent = (BYTE*)GlobalAlloc(GPTR, m_nCapacity);	
+		//m_pbtContent = (BYTE*)GlobalAlloc(GPTR, m_nCapacity);
 		m_pbtContent = (BYTE*)malloc(m_nCapacity);
 		if(m_pbtContent == NULL)
 			throw -5L;
-		
+
 	}
 }
 
@@ -81,16 +81,16 @@ UUCByteArray::UUCByteArray(const char* szHexString)
 : m_szHex(NULL)
 {
 	m_unLen = (strlen(szHexString)/2);
-	m_nCapacity = m_unLen;	
-	//m_pbtContent = (BYTE*)GlobalAlloc(GPTR, m_nCapacity);	
+	m_nCapacity = m_unLen;
+	//m_pbtContent = (BYTE*)GlobalAlloc(GPTR, m_nCapacity);
 	m_pbtContent = (BYTE*)malloc(m_nCapacity);
 	if(m_pbtContent == NULL)
 		throw -5L;
-	
+
 	for(unsigned int i = 0; i < m_unLen; i++)
 	{
 		m_pbtContent[i] = atox((char*)szHexString + (i * 2));
-	}	
+	}
 }
 
 UUCByteArray::UUCByteArray(const unsigned long nLen)
@@ -98,12 +98,12 @@ UUCByteArray::UUCByteArray(const unsigned long nLen)
 {
 	//m_unLen = nLen;
 	m_unLen = 0;
-	m_nCapacity = nLen;	
-	//m_pbtContent = (BYTE*)GlobalAlloc(GPTR, m_nCapacity);	
+	m_nCapacity = nLen;
+	//m_pbtContent = (BYTE*)GlobalAlloc(GPTR, m_nCapacity);
 	m_pbtContent = (BYTE*)malloc(m_nCapacity);
 	if(m_pbtContent == NULL)
 		throw -5L;
-	
+
 }
 
 UUCByteArray::UUCByteArray()
@@ -115,7 +115,7 @@ UUCByteArray::UUCByteArray()
 	m_pbtContent = (BYTE*)malloc(m_nCapacity);
 	if(m_pbtContent == NULL)
 		throw -5L;
-	
+
 }
 
 UUCByteArray::~UUCByteArray()
@@ -129,20 +129,20 @@ UUCByteArray::~UUCByteArray()
 long UUCByteArray::load(const char* szHexString)
 {
 	m_unLen = (strlen(szHexString)/2);
-	
+
 	//GlobalFree(m_pbtContent);
 	free(m_pbtContent);
-	m_nCapacity = m_unLen;	
+	m_nCapacity = m_unLen;
 	//m_pbtContent = (BYTE*)GlobalAlloc(GPTR, m_nCapacity);
 	m_pbtContent = (BYTE*)malloc(m_nCapacity);
     if(m_pbtContent == NULL)
         return ERROR_UNABLE_TO_ALLOCATE;
-        
+
 	for(unsigned int i = 0; i < m_unLen; i++)
 	{
 		m_pbtContent[i] = atox((char*)szHexString + (i * 2));
 	}
-    
+
     return S_OK;
 }
 
@@ -209,14 +209,14 @@ long UUCByteArray::append(const BYTE btVal)
         BYTE* buffer = (BYTE*)realloc(m_pbtContent, m_nCapacity);
         if(buffer == NULL)
             return ERROR_UNABLE_TO_ALLOCATE;
-        
+
         m_pbtContent = buffer;
 	}
-		
+
 	m_pbtContent[m_unLen] = btVal;
 
 	m_unLen++;
-    
+
     return S_OK;
 }
 
@@ -228,16 +228,16 @@ long UUCByteArray::append(const BYTE* pbtVal, const unsigned long nLen)
         BYTE* buffer = (BYTE*)realloc(m_pbtContent, m_nCapacity);
         if(buffer == NULL)
             return ERROR_UNABLE_TO_ALLOCATE;
-        
+
         m_pbtContent = buffer;
 	}
 
 	for(unsigned int i = 0; i < nLen; i++)
 	{
 		m_pbtContent[m_unLen] = pbtVal[i];
-		m_unLen++;		
+		m_unLen++;
 	}
-    
+
     return S_OK;
 }
 
@@ -263,7 +263,7 @@ void UUCByteArray::toHexString(char* szHexString) const
 		{
 			sprintf(szDigit, "%02X", m_pbtContent[i]);
 			strcat(szHexString, szDigit);
-		}	
+		}
 	}
 	catch(...)
 	{
@@ -277,7 +277,7 @@ long UUCByteArray::reverse()
 	BYTE* pbtContent = (BYTE*)malloc(m_unLen);
     if(pbtContent == NULL)
         return ERROR_UNABLE_TO_ALLOCATE;
-    
+
 	for(int i = 0; i < m_unLen; i++)
 	{
 		pbtContent[i] = m_pbtContent[m_unLen - i - 1];
@@ -286,16 +286,16 @@ long UUCByteArray::reverse()
 	memcpy(m_pbtContent, pbtContent, m_unLen);
 
 	free(pbtContent);
-    
+
     return S_OK;
 }
 
-const char* UUCByteArray::toHexString() 
+const char* UUCByteArray::toHexString()
 {
 	return toHexString(0);
 }
 
-const char* UUCByteArray::toHexString(int nSize) 
+const char* UUCByteArray::toHexString(int nSize)
 {
 	if(m_szHex)
 	{
@@ -307,8 +307,8 @@ const char* UUCByteArray::toHexString(int nSize)
 	{
 		nSize = (int)m_unLen;
 	}
-	
-	m_szHex = new char[(nSize + 1) * 2];	
+
+	m_szHex = new char[(nSize + 1) * 2];
 
 	try
 	{
@@ -318,7 +318,7 @@ const char* UUCByteArray::toHexString(int nSize)
 		{
 			snprintf(szDigit, 3, "%02X", m_pbtContent[i]);
 			strncat(m_szHex, szDigit, 2);
-		}	
+		}
 
 		return m_szHex;
 	}
@@ -329,13 +329,13 @@ const char* UUCByteArray::toHexString(int nSize)
 		throw -3L;
 	}
 
-	
+
 }
 
 int atox(const char* szVal)
 {
     int nVal = 0;
-    
+
     if(szVal[1] >='0' && szVal[1] <= '9')
     {
         nVal = szVal[1] - '0';
@@ -352,8 +352,8 @@ int atox(const char* szVal)
     {
         throw(-1);
     }
-    
-    
+
+
     if(szVal[0] >='0' && szVal[0] <= '9')
     {
         nVal += (szVal[0] - '0') * 16;
@@ -370,6 +370,6 @@ int atox(const char* szVal)
     {
         throw(-1);
     }
-    
+
     return nVal;
 }

@@ -25,12 +25,12 @@
 #include "UUCStringTable.h"
 #include <stdio.h>
 
-class UUCProperties  
+class UUCProperties
 {
-public:	
+public:
 	UUCProperties();
 	UUCProperties(const UUCProperties& defaults);
-	
+
 	virtual ~UUCProperties();
 
 	long load(const char* szFilePath);
@@ -52,7 +52,7 @@ public:
 	int size() const;
 
 protected:
-	UUCStringTable* m_pStringTable;	
+	UUCStringTable* m_pStringTable;
 
 	bool m_bAllocated;
 };

@@ -252,4 +252,3 @@ void CASNParser::Parse(ByteArray &data, CASNTagArray &tags, size_t  startseq)
 		tags.emplace_back(std::move(tag));
 	}
 }
-

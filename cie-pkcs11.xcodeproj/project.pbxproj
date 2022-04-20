@@ -44,6 +44,8 @@
 		7757E5C12769F9BD00644F3B /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565900D211864470039865C /* log.cpp */; };
 		77A9C3C426049A5D00317B90 /* AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A9C3C326049A5D00317B90 /* AES.m */; };
 		77A9C3D72604AE4000317B90 /* ProxyInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A9C3D62604AE4000317B90 /* ProxyInfoManager.m */; };
+		77B8373927F1ABF500F761FF /* ATR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B8373727F1ABF500F761FF /* ATR.cpp */; };
+		77B8373B27F1AD6C00F761FF /* ATR.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 77B8373827F1ABF500F761FF /* ATR.hpp */; };
 		77BAE799261EFAC800592607 /* libbz2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE798261EFAB500592607 /* libbz2.a */; };
 		77BAE79B261EFADD00592607 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE79A261EFAD400592607 /* libcurl.a */; };
 		77BAE79D261EFAED00592607 /* libexpat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BAE79C261EFAEA00592607 /* libexpat.a */; };
@@ -315,6 +317,7 @@
 		76A52CBD25C41141004A0086 /* libiconv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libiconv.a; path = "cie-pkcs11/dependencies/libiconv.a"; sourceTree = "<group>"; };
 		76A52D1425C422F5004A0086 /* libexpat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libexpat.a; path = "cie-pkcs11/dependencies/libexpat.a"; sourceTree = "<group>"; };
 		76F67E0E25DD29B8002AB48D /* Allura-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Allura-Regular.ttf"; sourceTree = "<group>"; };
+		7757E5B72767851200644F3B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		7757E5B82767851200644F3B /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		7757E5B92767851200644F3B /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		77A9C3C326049A5D00317B90 /* AES.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AES.m; sourceTree = "<group>"; };
@@ -323,6 +326,8 @@
 		77A9C3E02604AE5000317B90 /* ProxyInfoManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProxyInfoManager.h; sourceTree = "<group>"; };
 		77AFDA6626380557002E418E /* libcrypto2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto2.a; path = cie_sign_sdk/Dependencies/libcrypto2.a; sourceTree = "<group>"; };
 		77AFDA93263807D8002E418E /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = cie_sign_sdk/Dependencies/openssl/libssl.a; sourceTree = "<group>"; };
+		77B8373727F1ABF500F761FF /* ATR.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ATR.cpp; sourceTree = "<group>"; };
+		77B8373827F1ABF500F761FF /* ATR.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ATR.hpp; sourceTree = "<group>"; };
 		77BAE798261EFAB500592607 /* libbz2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbz2.a; path = cie_sign_sdk/Dependencies/bzip2/libbz2.a; sourceTree = "<group>"; };
 		77BAE79A261EFAD400592607 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = cie_sign_sdk/Dependencies/libcurl/libcurl.a; sourceTree = "<group>"; };
 		77BAE79C261EFAEA00592607 /* libexpat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libexpat.a; path = cie_sign_sdk/Dependencies/expat/libexpat.a; sourceTree = "<group>"; };
@@ -654,6 +659,7 @@
 		7757E5B62767851200644F3B /* LOGGER */ = {
 			isa = PBXGroup;
 			children = (
+				7757E5B72767851200644F3B /* LICENSE */,
 				7757E5B82767851200644F3B /* Logger.cpp */,
 				7757E5B92767851200644F3B /* Logger.h */,
 			);
@@ -823,6 +829,8 @@
 				7649F44125DE65E500A33DAC /* FirmaConCIE.h */,
 				7649F45425DE6B9700A33DAC /* VerificaConCIE.cpp */,
 				7649F45525DE6B9700A33DAC /* VerificaConCIE.h */,
+				77B8373727F1ABF500F761FF /* ATR.cpp */,
+				77B8373827F1ABF500F761FF /* ATR.hpp */,
 			);
 			path = CSP;
 			sourceTree = "<group>";
@@ -1095,6 +1103,7 @@
 				E543F957215F6B250088CBC5 /* CryptoppUtils.h in Headers */,
 				E5BE7DBE20FE858600004389 /* pkcs11f.h in Headers */,
 				E587E1C121ECA3BE0088B28D /* UUCHashtable.hpp in Headers */,
+				77B8373B27F1AD6C00F761FF /* ATR.hpp in Headers */,
 				E587E1BE21ECA3BE0088B28D /* UUCByteArray.h in Headers */,
 				E5BE7DBF20FE858600004389 /* pkcs11t.h in Headers */,
 				E565903F211864470039865C /* TLV.h in Headers */,
@@ -1556,6 +1565,7 @@
 				E5659048211875760039865C /* ExtAuthKey.cpp in Sources */,
 				7757E5C12769F9BD00644F3B /* log.cpp in Sources */,
 				E50A8A10213BE4C6006A000D /* AbilitaCIE.cpp in Sources */,
+				77B8373927F1ABF500F761FF /* ATR.cpp in Sources */,
 				E565903E211864470039865C /* TLV.cpp in Sources */,
 				E587E1BF21ECA3BE0088B28D /* UUCByteArray.cpp in Sources */,
 				E5659079211875950039865C /* MAC.cpp in Sources */,

@@ -32,7 +32,7 @@
 #define ERROR_INVALID_DATA 0xE1
 #define ERROR_UNABLE_TO_ALLOCATE  0xE2
 
-#ifndef BYTE 
+#ifndef BYTE
 #define BYTE unsigned char
 #endif
 #define S_OK  0
@@ -41,7 +41,7 @@
 
 #ifndef LOWORD
 	#define LOWORD(l) l & 0xFFFF
-	#define HIWORD(l) (l >> 16) & 0xFFFF 
+	#define HIWORD(l) (l >> 16) & 0xFFFF
 #endif
 
 #ifndef LOBYTE
@@ -58,7 +58,7 @@
 	#ifndef LONG
 		#define LONG long
 	#endif
-	#ifndef LPCTSTR 
+	#ifndef LPCTSTR
 		#define LPCTSTR const char*
 	#endif
 
