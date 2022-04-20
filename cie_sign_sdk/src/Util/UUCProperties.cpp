@@ -49,7 +49,7 @@ UUCProperties::UUCProperties(const UUCProperties& defaults)
 }
 
 UUCProperties::~UUCProperties()
-{	
+{
 	if(m_bAllocated)
 		SAFEDELETE(m_pStringTable);
 
@@ -64,7 +64,7 @@ long UUCProperties::load(const char* szFilePath)
 
 		char* szName;
 		char* szValue;
-		
+
 		long nEOF = -1;
 
 		UUCByteArray line;
@@ -80,7 +80,7 @@ long UUCProperties::load(const char* szFilePath)
 			{
 				szName  = strtok_r(szLine, "=", &szSavePtr);
 				szValue = strtok_r(NULL, "\n", &szSavePtr);
-				putProperty(szName, szValue);			
+				putProperty(szName, szValue);
 			}
 
 			line.removeAll();
@@ -113,7 +113,7 @@ long UUCProperties::load(const UUCByteArray& props)
     char* szSavePtr;
 	char* szProps = (char*)props.getContent();
 	char* szLine	= strtok_r(szProps, "\r\n", &szSavePtr);
-	
+
 	while(szLine && (szLine) < (szProps + props.getLength()))
 	{
 		if(szLine[0] != '#' && szLine[0] != '[')  // salta i commenti
@@ -136,7 +136,7 @@ long UUCProperties::load(const UUCByteArray& props)
 
 	return 0;
 }
-	
+
 long UUCProperties::save(const char* szFilePath, const char* szHeader) const
 {
 	char* szLine;
@@ -145,7 +145,7 @@ long UUCProperties::save(const char* szFilePath, const char* szHeader) const
 	{
 		UUCTextFileWriter textFileWriter(szFilePath);
 
-		if (szHeader != NULL) 
+		if (szHeader != NULL)
 		{
             size_t l = strlen(szHeader) + 3;
 			szLine = new char[l];
@@ -157,7 +157,7 @@ long UUCProperties::save(const char* szFilePath, const char* szHeader) const
 		time_t ltime;
 		TZSET();
 		time( &ltime );
-		
+
 		szLine = new char[255];
 		snprintf(szLine, 255, "#%s", ctime( &ltime ) );
 		textFileWriter.writeLine(szLine);
@@ -168,17 +168,17 @@ long UUCProperties::save(const char* szFilePath, const char* szHeader) const
 		char* szValue;
 
 		POS p = m_pStringTable->getFirstPosition();
-		
+
 		while(p != NULL)
 		{
-			p = m_pStringTable->getNextEntry(p, szName, szValue);		
-				
+			p = m_pStringTable->getNextEntry(p, szName, szValue);
+
             size_t l  = strlen(szName) + strlen(szValue) + 2;
 			szLine = new char[l];
 			snprintf(szLine, l, "%s=%s", szName, szValue);
 			textFileWriter.writeLine(szLine);
 			delete[] szLine;
-		}				
+		}
 	}
 	catch(long nErr)
 	{
@@ -202,7 +202,7 @@ long UUCProperties::save(UUCByteArray& props, const char* szHeader) const
 
 	try
 	{
-		if (szHeader != NULL) 
+		if (szHeader != NULL)
 		{
             size_t l = strlen(szHeader) + 4;
 			szLine = new char[l];
@@ -214,7 +214,7 @@ long UUCProperties::save(UUCByteArray& props, const char* szHeader) const
 		time_t ltime;
 		TZSET();
 		time( &ltime );
-		
+
 		szLine = new char[255];
 		snprintf(szLine, 255, "#%s\r\n", ctime( &ltime ) );
 		props.append((BYTE*)szLine, (int)strlen(szLine));
@@ -225,17 +225,17 @@ long UUCProperties::save(UUCByteArray& props, const char* szHeader) const
 		char* szValue;
 
 		POS p = m_pStringTable->getFirstPosition();
-		
+
 		while(p != NULL)
 		{
-			p = m_pStringTable->getNextEntry(p, szName, szValue);		
-				
+			p = m_pStringTable->getNextEntry(p, szName, szValue);
+
             size_t l = strlen(szName) + strlen(szValue) + 2 + 3;
 			szLine = new char[l];
 			snprintf(szLine, l, "%s=%s\r\n", szName, szValue);
 			props.append((BYTE*)szLine, (int)strlen(szLine));
 			delete[] szLine;
-		}				
+		}
 	}
 	catch(long nErr)
 	{
@@ -255,7 +255,7 @@ long UUCProperties::save(UUCByteArray& props, const char* szHeader) const
 
 int UUCProperties::getIntProperty(const char* szName, int nDefaultValue /*= NULL*/) const
 {
-    
+
     const char* szVal = getProperty(szName, NULL);
     if(szVal)
         return atoi(szVal);
@@ -277,10 +277,10 @@ const char* UUCProperties::getProperty(const char* szName, const char* szDefault
 		return szDefaultValue;
 	}
 }
-	
+
 void UUCProperties::putProperty(const char* szName, const char* szValue)
-{	
-	m_pStringTable->put((char*)szName, (char*)szValue);	
+{
+	m_pStringTable->put((char*)szName, (char*)szValue);
 }
 
 UUCStringTable* UUCProperties::getPropertyTable() const

@@ -2,6 +2,7 @@
 #include "Slot.h"
 #include "PKCS11Functions.h"
 #include "../PCSC/Token.h"
+#include "../CSP/ATR.h"
 
 #include "CardTemplate.h"
 #include "../Util/util.h"
@@ -15,20 +16,6 @@ extern std::mutex p11Mutex;
 extern auto_reset_event p11slotEvent;
 extern bool bP11Terminate;
 extern bool bP11Initialized;
-
-extern uint8_t NXP_ATR[];
-extern uint8_t Gemalto_ATR[];
-extern uint8_t Gemalto2_ATR[];
-extern uint8_t STM_ATR[];
-extern uint8_t STM2_ATR[];
-
-
-extern ByteArray baNXP_ATR;
-extern ByteArray baGemalto_ATR;
-extern ByteArray baGemalto2_ATR;
-extern ByteArray baSTM_ATR;
-extern ByteArray baSTM2_ATR;
-extern ByteArray baSTM3_ATR;
 
 namespace p11 {
 
@@ -135,11 +122,11 @@ namespace p11 {
 					if ((state[i].dwCurrentState & SCARD_STATE_PRESENT) &&
 						((state[i].dwEventState & SCARD_STATE_EMPTY) ||
 						(state[i].dwEventState & SCARD_STATE_UNAVAILABLE))) {
-						// una carta è stata estratta!!
+						// una carta ï¿½ stata estratta!!
 						// sincronizzo sul mutex principale p11
 						// le funzioni attualmente in esecuzione che vanno sulla
 						// carta falliranno miseramente, ma se levi la carta
-						// mentre sto firmado mica è colpa mia!
+						// mentre sto firmado mica ï¿½ colpa mia!
 
 						std::unique_lock<std::mutex> lock(p11Mutex);
 
@@ -151,7 +138,7 @@ namespace p11 {
 					if (((state[i].dwCurrentState & SCARD_STATE_UNAVAILABLE) ||
 						(state[i].dwCurrentState & SCARD_STATE_EMPTY)) &&
 						(state[i].dwEventState & SCARD_STATE_PRESENT)) {
-						// una carta è stata inserita!!
+						// una carta ï¿½ stata inserita!!
 						std::unique_lock<std::mutex> lock(p11Mutex);
 
 						slot[i]->lastEvent = SE_Inserted;
@@ -192,7 +179,7 @@ namespace p11 {
 //        } catch (...) {
 //            printf("erase error");
 //        }
-		
+
 		pSlot->Final();
 	}
 
@@ -227,7 +214,7 @@ namespace p11 {
 		if (Thread.joinable())
 			Thread.join();
 
-		// TODO: verificare se è il caso di usare un thread con join a tempo
+		// TODO: verificare se ï¿½ il caso di usare un thread con join a tempo
 
 		/*while (i<5) {
 			if (Thread.join(1000)==OK)
@@ -250,8 +237,8 @@ namespace p11 {
 	void CSlot::InitSlotList()
 	{
 		// la InitSlotList deve aggiornare la liste degli slot;
-		// cioè, deve aggiungere gli slot che non c'erano prima e
-		// cancellare quelli che non ci sono più
+		// cioï¿½, deve aggiungere gli slot che non c'erano prima e
+		// cancellare quelli che non ci sono piï¿½
 		init_func
 			bool bMapChanged = false;
 		DWORD readersLen = 0;
@@ -278,7 +265,7 @@ namespace p11 {
 			if (!bP11Initialized)
 				return;
 
-			// vediamo questo slot c'era già prima
+			// vediamo questo slot c'era giï¿½ prima
 			LOG_INFO("InitSlotList - reader:%s", szReaderName);
 			std::shared_ptr<CSlot> pSlot = GetSlotFromReaderName(szReaderName);
 			if (pSlot == nullptr) {
@@ -373,7 +360,7 @@ namespace p11 {
 		CryptoPP::memcpy_s(pInfo->slotDescription, 64, szName.c_str(), SDLen);
 
 		memset(pInfo->manufacturerID, 0, 32);
-		// non so esattamente perchè, ma nella R1 il manufacturerID sono i primi 32 dello slotDescription
+		// non so esattamente perchï¿½, ma nella R1 il manufacturerID sono i primi 32 dello slotDescription
 		size_t MIDLen = min(32, szName.size());
         CryptoPP::memcpy_s(pInfo->manufacturerID, 32, szName.c_str(), MIDLen);
 
@@ -398,28 +385,25 @@ namespace p11 {
 		CryptoPP::memcpy_s((char*)pInfo->label, 32, pTemplate->szName.c_str(), min(pTemplate->szName.length(), sizeof(pInfo->label)));
 		memset(pInfo->manufacturerID, ' ', sizeof(pInfo->manufacturerID));
 
+		LOG_DEBUG("[PKCS11] GetTokenInfo - CIE ATR:");
+
+		LOG_BUFFER(baATR.data(), baATR.size());
+
+
+		LOG_DEBUG("[PKCS11] GetTokenInfo - CIE ATR:");
+		LOG_BUFFER(baATR.data(), baATR.size());
+
 		std::string manifacturer;
-		size_t position;
-		if (baATR.indexOf(baNXP_ATR, position))
-			manifacturer = "NXP";
-		else if ((baATR.indexOf(baGemalto_ATR, position)) ||
-			(baATR.indexOf(baGemalto2_ATR, position)))
-			manifacturer = "Gemalto";
-        else if ((baATR.indexOf(baSTM_ATR, position)))
-            manifacturer = "STM";
-        else if ((baATR.indexOf(baSTM2_ATR, position)))
-            manifacturer = "STM2";
-        else if ((baATR.indexOf(baSTM3_ATR, position)))
-            manifacturer = "STM3";
-		else
-			throw p11_error(CKR_TOKEN_NOT_RECOGNIZED);
 
-		CryptoPP::memcpy_s((char*)pInfo->manufacturerID, 32, manifacturer.c_str(), manifacturer.size());
+		std::vector<uint8_t> atr_vector(baATR.data(), baATR.data() + baATR.size());
+		manifacturer = get_manufacturer(atr_vector);
 
-		if (baSerial.isEmpty() || pSerialTemplate != pTemplate) {
-			pSerialTemplate = pTemplate;
-			baSerial = pTemplate->FunctionList.templateGetSerial(*this);
+		if (manifacturer.size() == 0){
+			throw p11_error(CKR_TOKEN_NOT_RECOGNIZED, "CIE not recognized");
 		}
+
+		LOG_INFO("[PKCS11] GetTokenInfo - CIE Detected: %s", manifacturer.c_str());
+
 
 		std::string model;
 		pTemplate->FunctionList.templateGetModel(*this, model);
@@ -517,7 +501,7 @@ namespace p11 {
 				}
 				else it++;
 			}
-			// dwSessionCount dovrebbe essere già a 0...
+			// dwSessionCount dovrebbe essere giï¿½ a 0...
 			// ma per sicurezza lo setto a manina
 
 			User = CKU_NOBODY;
@@ -681,7 +665,7 @@ namespace p11 {
 #define SCARD_CLASS_ICC_STATE       9   /**< ICC State specific definitions */
 #define SCARD_ATTR_ATR_STRING SCARD_ATTR_VALUE(SCARD_CLASS_ICC_STATE, 0x0303) /**< Answer to reset (ATR) string. */
 
-    
+
 	ByteDynArray CSlot::GetATR()
 	{
 		init_func

@@ -13,13 +13,13 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
- 
+
 #pragma once
 #include "definitions.h"
 
 #define ERR_INDEX_OUT_OF_BOUND    0xC0001001L
 
-class UUCByteArray  
+class UUCByteArray
 {
 public:
 	UUCByteArray(const BYTE* pbtContent, const unsigned long unLen);
@@ -34,7 +34,7 @@ public:
 
 	const BYTE* getContent() const;
 	unsigned long getLength() const;
-	
+
 	long reverse();
 	long append(const BYTE btVal);
 	long append(const BYTE* pbtVal, const unsigned long nLen);
@@ -45,7 +45,7 @@ public:
 	BYTE operator [] (const unsigned int index) const;// throw(long);
 	void remove(const unsigned int index);// throw(long);
 	void removeAll();
-	//void toHexString(char* szHex) const;	
+	//void toHexString(char* szHex) const;
 	const char* toHexString();
 	const char* toHexString(int nSize);
 

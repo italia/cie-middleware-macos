@@ -70,6 +70,8 @@ CK_RV progressCallback(const int progress,
     return 0;
 }
 
+CK_RV 
+
 CK_RV completedCallback(string& PAN,
                         string& name)
 {

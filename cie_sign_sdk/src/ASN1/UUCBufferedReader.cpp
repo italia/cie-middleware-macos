@@ -41,7 +41,7 @@ UUCBufferedReader::UUCBufferedReader(const char* lpszFilePath)
 	m_pnStack   = (unsigned int*)realloc(NULL, MAX_STACK_SIZE * sizeof(unsigned int));
 	m_nStackSize = MAX_STACK_SIZE;
 	m_nTop		= -1;
-	
+
 	readNext();
 }
 */
@@ -49,13 +49,13 @@ UUCBufferedReader::UUCBufferedReader(const UUCByteArray& buffer)
 {
 	m_pbtBuffer = (BYTE*)buffer.getContent();
 	m_nBufLen	= buffer.getLength();
-	
-	m_nBufPos	= 0;	
+
+	m_nBufPos	= 0;
 	m_nIndex	= 0;
 	m_bEOF		= true;
 	m_pnStack   = (unsigned int*)realloc(NULL, MAX_STACK_SIZE * sizeof(unsigned int));
 	m_nStackSize = MAX_STACK_SIZE;
-	m_nTop		= -1;	
+	m_nTop		= -1;
 }
 
 UUCBufferedReader::UUCBufferedReader(const BYTE* pbtBuffer, int len)
@@ -63,13 +63,13 @@ UUCBufferedReader::UUCBufferedReader(const BYTE* pbtBuffer, int len)
 {
 	m_pbtBuffer = (BYTE*)pbtBuffer;
 	m_nBufLen	= len;
-	
-	m_nBufPos	= 0;	
+
+	m_nBufPos	= 0;
 	m_nIndex	= 0;
 	m_bEOF		= true;
 	m_pnStack   = (unsigned int*)realloc(NULL, MAX_STACK_SIZE * sizeof(unsigned int));
 	m_nStackSize = MAX_STACK_SIZE;
-	m_nTop		= -1;	
+	m_nTop		= -1;
 }
 
 
@@ -80,7 +80,7 @@ UUCBufferedReader::~UUCBufferedReader()
 	try
 	{
 		//if(m_pbtBuffer)
-		//	free(m_pbtBuffer);	
+		//	free(m_pbtBuffer);
 
 		free(m_pnStack);
 	}
@@ -102,7 +102,7 @@ unsigned int UUCBufferedReader::readNext()
 		m_nBufPos += nRead;
 		if(m_bEOF)
 			fclose(m_pf);
-	}		
+	}
 
 	return nRead;
 }
@@ -110,7 +110,7 @@ unsigned int UUCBufferedReader::readNext()
 
 unsigned int UUCBufferedReader::read(BYTE* pbtBuffer, unsigned int nLen)
 {
-	int nRead = 0;	
+	int nRead = 0;
 	if(m_nIndex + nLen > m_nBufLen)
 	{
 		if(!m_bEOF)
@@ -119,20 +119,20 @@ unsigned int UUCBufferedReader::read(BYTE* pbtBuffer, unsigned int nLen)
 			return read(pbtBuffer, nLen);
 		}
 		else
-		{			
+		{
 //			if(m_pByteArray)
 //			{
 				//memcpy(pbtBuffer, m_pByteArray->getContent() + m_nIndex, (m_nBufLen - m_nIndex));
 //			}
-//			else 
+//			else
 //			{
-				memcpy(pbtBuffer, m_pbtBuffer + m_nIndex, (m_nBufLen - m_nIndex));	
+				memcpy(pbtBuffer, m_pbtBuffer + m_nIndex, (m_nBufLen - m_nIndex));
 //			}
 
-						
-			nRead = (m_nBufLen - m_nIndex);			
+
+			nRead = (m_nBufLen - m_nIndex);
 			m_nIndex += nRead;
-		}						
+		}
 	}
 	else
 	{
@@ -140,17 +140,17 @@ unsigned int UUCBufferedReader::read(BYTE* pbtBuffer, unsigned int nLen)
 //		{
 			//memcpy(pbtBuffer, m_pByteArray->getContent() + m_nIndex, nLen);
 //		}
-//		else 
+//		else
 //		{
 			memcpy(pbtBuffer, m_pbtBuffer + m_nIndex, nLen);
 //		}
-		
-		
-		nRead = nLen; 
+
+
+		nRead = nLen;
 		m_nIndex += nRead;
 	}
 
-	return nRead;		
+	return nRead;
 }
 
 unsigned int UUCBufferedReader::read(UUCByteArray& byteArray)
@@ -185,7 +185,7 @@ void UUCBufferedReader::mark()
 void UUCBufferedReader::releaseMark()
 {
 	if(m_nTop > 0)
-	{		
+	{
 		m_nTop--;
 	}
 }

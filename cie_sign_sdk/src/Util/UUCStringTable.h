@@ -23,7 +23,7 @@
 #endif // _MSC_VER > 1000
 #include "UUCHashtable.hpp"
 
-class UUCStringTable : public UUCHashtable<char*, char*>  
+class UUCStringTable : public UUCHashtable<char*, char*>
 {
 public:
 	void remove();
@@ -36,7 +36,7 @@ public:
 	virtual bool remove(char* const& szKey);
 
 	static unsigned long getHash(const char* szKey);
-	
+
 	// destructor
 	virtual ~UUCStringTable();
 

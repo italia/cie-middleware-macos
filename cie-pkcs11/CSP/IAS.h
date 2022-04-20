@@ -1,5 +1,6 @@
 #pragma once
 #include "../PCSC/Token.h"
+#include "../CSP/ATR.h"
 
 #include <map>
 
@@ -18,15 +19,6 @@
 extern bool switchDesktop;
 extern BOOL CheckOneInstance(char *nome);
 extern ByteArray baExtAuth_PrivExp;
-
-enum CIE_Type {
-	CIE_Unknown,
-	CIE_Gemalto,
-	CIE_NXP,
-    CIE_STM,
-    CIE_STM2,
-    CIE_STM3
-};
 
 enum CIE_DF {
 	DF_Root,
@@ -124,6 +116,5 @@ public:
 	bool ActiveSM;
 	CIE_DF ActiveDF;
 
-	
-};
 
+};
