@@ -91,6 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setLogConfigToLevels:(struct logLevels)levels;
 - (void)saveCurrentLogConfigToFile;
 - (void)saveLogConfigToFileWithLevels:(struct logLevels)levels;
+- (void)chooseSignOrVerifyFileOperation:(NSString*)_filePath;
 
 @end
 

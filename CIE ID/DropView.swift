@@ -15,8 +15,8 @@ class DropView: NSView {
 
         self.wantsLayer = true
         self.layer?.backgroundColor = NSColor.white.cgColor
-        
-    
+
+
         self.wantsLayer = true
         self.needsLayout = true
         self.needsDisplay = true
@@ -24,16 +24,16 @@ class DropView: NSView {
 
         registerForDraggedTypes([NSPasteboard.PasteboardType.URL, NSPasteboard.PasteboardType.fileURL])
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         // Drawing code here.
-        
+
         // dash customization parameters
         let dashHeight: CGFloat = 3
         let dashLength: CGFloat = 10
         let dashColor: NSColor = .gray
-        
+
         // setup the context
         let currentContext = NSGraphicsContext.current!.cgContext
         currentContext.setLineWidth(dashHeight)
@@ -43,27 +43,27 @@ class DropView: NSView {
         // draw the dashed path
         currentContext.addRect(bounds.insetBy(dx: dashHeight, dy: dashHeight))
         currentContext.strokePath()
-        
+
     }
 
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
-        
+
         self.layer?.backgroundColor = NSColor.lightGray.cgColor
         return .copy
-        
+
     }
 
-    
+
     fileprivate func checkExtension(_ drag: NSDraggingInfo) -> Bool {
         guard let board = drag.draggingPasteboard.propertyList(forType: NSPasteboard.PasteboardType(rawValue: "NSFilenamesPboardType")) as? NSArray,
               let path = board[0] as? String
         else { return false }
 
         var suffix = URL(fileURLWithPath: path).pathExtension
-        
-        
+
+
         return true;
-        
+
     }
 
     override func draggingExited(_ sender: NSDraggingInfo?) {
@@ -82,18 +82,19 @@ class DropView: NSView {
         else { return false }
 
         self.filePath = path
-        
+
         self.goToSelectOpPage(path: path)
         return true
     }
-    
+
     func goToSelectOpPage(path:String)
     {
         let cV = ChangeView.getInstance().getView(viewIndex.SELECT_OP_PAGE) as NSView
-        
+
         let text = cV.viewWithTag(1) as! NSTextField
         text.stringValue = path
-        
-        ChangeView.getInstance().showSubView(viewIndex.SELECT_OP_PAGE)
+
+        let mainViewController = self.window?.contentViewController as? MainViewController
+        mainViewController?.chooseSignOrVerifyFileOperation(path)
     }
 }
