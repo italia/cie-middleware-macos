@@ -1739,19 +1739,24 @@ CK_RV completedCallback(string& PAN,
         NSURL *url = (NSURL *)selectedFile[0];
         path = [url path];
         filePath = path;
-        [logger debug:[NSString stringWithFormat:@"%@ was selected", selectedFile[0]]];
-        ChangeView *cG = [ChangeView getInstance];
-        NSView* cV = [cG getView:SELECT_OP_PAGE];
-        NSTextField* lblPath = [cV viewWithTag:1];
-        lblPath.stringValue = filePath;
-        if (operation == VERIFY) {
-            // go to verify
-            [self btnVerificaOp:nil];
-            // [cG showSubView:SELECT_OP_PAGE];
-        } else {
-            // [cG showSubView:SELECT_OP_PAGE];
-            [self btnFirmaOp:nil];
-        }
+        [self chooseSignOrVerifyFileOperation:path];
+    }
+}
+
+- (void)chooseSignOrVerifyFileOperation:(NSString*)_filePath {
+    [logger info:@"chooseSignOrVerifyFileOperation: - Inizia funzione"];
+    [logger info:[NSString stringWithFormat:@"%@ was selected", _filePath]];
+    ChangeView *cG = [ChangeView getInstance];
+    NSView* cV = [cG getView:SELECT_OP_PAGE];
+    NSTextField* lblPath = [cV viewWithTag:1];
+    lblPath.stringValue = _filePath;
+    if (operation == VERIFY) {
+        // go to verify
+        [self btnVerificaOp:nil];
+        // [cG showSubView:SELECT_OP_PAGE];
+    } else {
+        // [cG showSubView:SELECT_OP_PAGE];
+        [self btnFirmaOp:nil];
     }
 }
 
