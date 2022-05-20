@@ -914,7 +914,7 @@ StatusWord IAS::SendAPDU_SM(ByteArray head, ByteArray data, ByteDynArray &resp, 
 		// attenzione:
 		// in alcuni casi la carta ritorna 61xx fra un comando e l'altro in chaining. Questo è un grosso problema, perchè
 		// la get response sembra che faccia saltare il chaining. Forse è una questione di driver del lettore?
-		// Per daesso l'ho osservato solo su una virtual machine Win7 con il lettore in sharing con l'host
+		// Per adesso l'ho osservato solo su una virtual machine Win7 con il lettore in sharing con l'host
 
 //        size_t ds = data.size();
 		size_t i = 0;
@@ -1486,7 +1486,7 @@ void IAS::VerificaSODPSS(ByteArray &SOD, std::map<uint8_t, ByteDynArray> &hashSe
         X509CertChain chain = new X509CertChain(CSCA);
         var certChain = chain.getPath(certDS);
         if (certChain == null)
-            throw Exception("Il certificato di Document Signer non č valido");
+            throw Exception("Il certificato di Document Signer non è valido");
 
         var rootCert = certChain[0];
         if (!new ByteArray(rootCert.SubjectName.RawData).IsEqual(rootCert.IssuerName.RawData))
