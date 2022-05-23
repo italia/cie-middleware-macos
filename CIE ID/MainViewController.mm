@@ -20,6 +20,7 @@
 
 // directive for PKCS#11
 #include "../cie-pkcs11/PKCS11/cryptoki.h"
+#include <iostream>
 #include <memory.h>
 #include <time.h>
 #include <dlfcn.h>
@@ -226,13 +227,18 @@ AppLogger *logger;
     }
 
     [self updateViewConstraints];
-    const char* szCryptoki = "libcie-pkcs11.dylib";
+    const char* szCryptoki = "/usr/local/lib/libcie-pkcs11.dylib";
     hModule = dlopen(szCryptoki, RTLD_LAZY);
+    printf("Info: call dlopen('%s')\n", szCryptoki);
 
     if (!hModule) {
+        printf("Error: dlopen() returned '%s'\n", dlerror());
+        [logger error:[NSString stringWithFormat:@"Error: dlopen() returned '%@'", [NSString stringWithUTF8String:dlerror()]]];
         [self showMessage:@"Middleware non trovato" withTitle:@"Errore inaspettato" exitAfter:true];
         exit(1);
     }
+
+    [logger info:@"middleware loaded"];
 
     _labelProgress.stringValue = @"";
     labelProgressPointer = _labelProgress;

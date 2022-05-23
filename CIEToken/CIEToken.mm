@@ -73,7 +73,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 
     if(!hModule)
     {
-        const char* szCryptoki = "libcie-pkcs11.dylib";
+        const char* szCryptoki = "/usr/local/lib/libcie-pkcs11.dylib";
         hModule = dlopen(szCryptoki, RTLD_LOCAL | RTLD_LAZY);
         if(!hModule)
         {
