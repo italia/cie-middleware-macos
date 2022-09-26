@@ -1649,6 +1649,7 @@ CK_RV completedCallback(string& PAN,
 
 - (void)showMessage:(NSString*)message withTitle:(NSString*)title exitAfter:(bool)exitAfter {
     [logger info:@"showMessage:withTitle:exitAfter: - Inizia funzione"];
+    [logger info:[NSString stringWithFormat:@"message: %@", message]];
     __block bool exit = exitAfter;
     dispatch_async(dispatch_get_main_queue(), ^ {
         NSAlert *alert = [[NSAlert alloc] init];
