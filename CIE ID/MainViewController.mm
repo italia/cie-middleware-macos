@@ -20,7 +20,6 @@
 
 // directive for PKCS#11
 #include "../cie-pkcs11/PKCS11/cryptoki.h"
-#include <iostream>
 #include <memory.h>
 #include <time.h>
 #include <dlfcn.h>
@@ -227,18 +226,13 @@ AppLogger *logger;
     }
 
     [self updateViewConstraints];
-    const char* szCryptoki = "/usr/local/lib/libcie-pkcs11.dylib";
+    const char* szCryptoki = "libcie-pkcs11.dylib";
     hModule = dlopen(szCryptoki, RTLD_LAZY);
-    printf("Info: call dlopen('%s')\n", szCryptoki);
 
     if (!hModule) {
-        printf("Error: dlopen() returned '%s'\n", dlerror());
-        [logger error:[NSString stringWithFormat:@"Error: dlopen() returned '%@'", [NSString stringWithUTF8String:dlerror()]]];
         [self showMessage:@"Middleware non trovato" withTitle:@"Errore inaspettato" exitAfter:true];
         exit(1);
     }
-
-    [logger info:@"middleware loaded"];
 
     _labelProgress.stringValue = @"";
     labelProgressPointer = _labelProgress;
@@ -696,7 +690,7 @@ CK_RV completedCallback(string& PAN,
                     break;
 
                 case CKR_OK:
-                    [self showMessage:@"L'abilitazione della CIE è avvennuta con successo. Allontanare la card dal lettore" withTitle:@"CIE Abilitata" exitAfter:NO];
+                    [self showMessage:@"L'abilitazione della CIE è avvenuta con successo. Allontanare la card dal lettore" withTitle:@"CIE Abilitata" exitAfter:NO];
                     NSString *PAN = [[NSString alloc] initWithCString:sPAN.c_str() encoding:NSUTF8StringEncoding];
                     NSString *serialNumber = [[NSString alloc] initWithCString:sEfSeriale.c_str() encoding:NSUTF8StringEncoding];
                     NSString *name = [[NSString alloc] initWithCString:sName.c_str() encoding:NSUTF8StringEncoding];
@@ -877,7 +871,7 @@ CK_RV completedCallback(string& PAN,
     }
 
     if ([newpin isEqualToString:pin]) {
-        [self showMessage:@"Il vecchio e nuovo PIN non possoo essere uguali" withTitle:@"PIN identici" exitAfter:false];
+        [self showMessage:@"Il vecchio e nuovo PIN non possono essere uguali" withTitle:@"PIN identici" exitAfter:false];
         return;
     }
 
@@ -1649,7 +1643,6 @@ CK_RV completedCallback(string& PAN,
 
 - (void)showMessage:(NSString*)message withTitle:(NSString*)title exitAfter:(bool)exitAfter {
     [logger info:@"showMessage:withTitle:exitAfter: - Inizia funzione"];
-    [logger info:[NSString stringWithFormat:@"message: %@", message]];
     __block bool exit = exitAfter;
     dispatch_async(dispatch_get_main_queue(), ^ {
         NSAlert *alert = [[NSAlert alloc] init];
@@ -2266,15 +2259,19 @@ CK_RV completedCallback(string& PAN,
     dispatch_async(dispatch_get_global_queue(0, 0), ^ {
 
         verificaConCIEfn pfnVerificaConCie = (verificaConCIEfn)dlsym(hModule, "verificaConCIE");
+        getVerifyInfofn pfnGetVerifyInfo = (getVerifyInfofn)dlsym(hModule, "getVerifyInfo");
 
         if (!pfnVerificaConCie) {
             dlclose(hModule);
             [self showMessage:@"Funzione verificaConCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:NO];
             return;
         }
-
-        //verifyInfo_t verifyInfos[512];
-        verifyInfos_t vInfos;
+        
+        if (!pfnGetVerifyInfo) {
+            dlclose(hModule);
+            [self showMessage:@"Funzione getVerifyInfo non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:NO];
+            return;
+        }
 
         NSString* proxyAddress = nil;
         NSString* credentials = nil;
@@ -2298,99 +2295,91 @@ CK_RV completedCallback(string& PAN,
 
         [logger debug:[NSString stringWithFormat:@"Verifica con CIE - Url: %@, Port: %d", proxyAddress, proxyPort]];
 
-        long ret = pfnVerificaConCie([inPath UTF8String], &vInfos, [proxyAddress UTF8String], proxyPort, [credentials UTF8String]);
+        long ret = pfnVerificaConCie([inPath UTF8String], [proxyAddress UTF8String], proxyPort, [credentials UTF8String]);
 
-        if (ret == 0) {
-            if (vInfos.n_infos == 0) {
-                dispatch_async(dispatch_get_main_queue(), ^ {
-                    [sender setEnabled:YES];
-                });
-                [self showMessage:@"Il file selezionato non contiene firme" withTitle:@"Verifica completata" exitAfter:false];
-                ChangeView *cG = [ChangeView getInstance];
-                [cG showSubView:SELECT_FILE_PAGE];
-            } else {
-                int n_sign = vInfos.n_infos;
-                verifyItems = [NSMutableArray new];
+        if (ret != 0 && ret != DISIGON_ERROR_INVALID_FILE) {
+            verifyItems = [NSMutableArray new];
+            
+            for (int i = 0; i < ret; i++) {
+                verifyInfo_t info;
+                CK_RV res = pfnGetVerifyInfo(i, info);
+                
+                NSString *name = [NSString stringWithFormat:@"%s %s\n%s", info.name, info.surname, info.cn];
+                VerifyItem *nameItem = [[VerifyItem alloc] initWithImage:[NSImage imageNamed:@"user"] value:name];
+                NSString * signingTime = [[NSString alloc] initWithCString:info.signingTime encoding:NSUTF8StringEncoding];
 
-                for (int i = 0; i < vInfos.n_infos; i++) {
-                    verifyInfo_t info = vInfos.infos[i];
-                    NSString *name = [NSString stringWithFormat:@"%s %s\n%s", info.name, info.surname, info.cn];
-                    VerifyItem *nameItem = [[VerifyItem alloc] initWithImage:[NSImage imageNamed:@"user"] value:name];
-                    NSString * signingTime = [[NSString alloc] initWithCString:info.signingTime encoding:NSUTF8StringEncoding];
-
-                    if (strcmp(info.signingTime, "") == 0) {
-                        signingTime = @"Attributo Signing Time non presente";
-                    } else {
-                        //YYMMGGHHmmSS
-                        NSDateFormatter *objDateFormatter = [[NSDateFormatter alloc] init];
-                        [objDateFormatter setDateFormat:@"yyMMddHHmmss"];
-                        NSDate *date  = [objDateFormatter dateFromString:[signingTime substringToIndex:(signingTime.length - 1)]];
-                        [objDateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
-                        signingTime = [objDateFormatter stringFromDate:date];
-                    }
-
-                    VerifyItem *signingTimeItem = [[VerifyItem alloc] initWithImage:[NSImage imageNamed:@"calendar"] value:signingTime];
-                    NSString * signValidity = @"La firma non è valida";
-                    NSImage *signValidityImg = [NSImage imageNamed:@"orange_checkbox"];
-
-                    if (info.isSignValid) {
-                        signValidity = @"La firma è valida";
-                        signValidityImg = [NSImage imageNamed:@"green_checkbox"];
-                    }
-
-                    VerifyItem *signValidtyItem = [[VerifyItem alloc] initWithImage:signValidityImg value:signValidity];
-                    NSString * certValidity = @"Il certificato non è valido";
-                    NSImage * certValidityImg = [NSImage imageNamed:@"orange_checkbox"];
-
-                    if (info.isCertValid) {
-                        certValidity = @"Il certificato è valido";
-                        certValidityImg = [NSImage imageNamed:@"green_checkbox"];
-                    }
-
-                    VerifyItem *certValidityItem = [[VerifyItem alloc] initWithImage:certValidityImg value:certValidity];
-                    NSString * certStatus = @"Servizio di revoca non raggiungibile";
-                    NSImage * certStatusImg = [NSImage imageNamed:@"orange_checkbox"];
-
-                    switch (info.CertRevocStatus) {
-                        case REVOCATION_STATUS_GOOD:
-                            certStatus = @"Il certificato non è stato revocato";
-                            certStatusImg = [NSImage imageNamed:@"green_checkbox"];
-                            break;
-
-                        case REVOCATION_STATUS_REVOKED:
-                            certStatus = @"Il certificato è stato revocato";
-                            break;
-
-                        case REVOCATION_STATUS_SUSPENDED:
-                            certStatus = @"Il certificato è stato sospeso";
-                            break;
-
-                        case REVOCATION_STATUS_UNKNOWN:
-                            certValidityItem.value = @"Certificato non verificato";
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                    VerifyItem *certStatusItem = [[VerifyItem alloc] initWithImage:certStatusImg value:certStatus];
-                    NSString *cadn = [[NSString alloc] initWithCString:info.cadn encoding:NSUTF8StringEncoding];
-                    NSImage *cadnImg = [NSImage imageNamed:@"medal"];
-                    VerifyItem *cadnItem = [[VerifyItem alloc] initWithImage:cadnImg value:cadn];
-                    //[cadnItem setEnlarge:true];
-                    cadnItem.enlarge = true;
-                    [verifyItems addObject:nameItem];
-                    [verifyItems addObject:signingTimeItem];
-                    [verifyItems addObject:signValidtyItem];
-                    [verifyItems addObject:certValidityItem];
-                    [verifyItems addObject:certStatusItem];
-                    [verifyItems addObject:cadnItem];
+                if (strcmp(info.signingTime, "") == 0) {
+                    signingTime = @"Attributo Signing Time non presente";
+                } else {
+                    //YYMMGGHHmmSS
+                    NSDateFormatter *objDateFormatter = [[NSDateFormatter alloc] init];
+                    [objDateFormatter setDateFormat:@"yyMMddHHmmss"];
+                    NSDate *date  = [objDateFormatter dateFromString:[signingTime substringToIndex:(signingTime.length - 1)]];
+                    [objDateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+                    signingTime = [objDateFormatter stringFromDate:date];
                 }
+
+                VerifyItem *signingTimeItem = [[VerifyItem alloc] initWithImage:[NSImage imageNamed:@"calendar"] value:signingTime];
+                NSString * signValidity = @"La firma non è valida";
+                NSImage *signValidityImg = [NSImage imageNamed:@"orange_checkbox"];
+
+                if (info.isSignValid) {
+                    signValidity = @"La firma è valida";
+                    signValidityImg = [NSImage imageNamed:@"green_checkbox"];
+                }
+
+                VerifyItem *signValidtyItem = [[VerifyItem alloc] initWithImage:signValidityImg value:signValidity];
+                NSString * certValidity = @"Il certificato non è valido";
+                NSImage * certValidityImg = [NSImage imageNamed:@"orange_checkbox"];
+
+                if (info.isCertValid) {
+                    certValidity = @"Il certificato è valido";
+                    certValidityImg = [NSImage imageNamed:@"green_checkbox"];
+                }
+
+                VerifyItem *certValidityItem = [[VerifyItem alloc] initWithImage:certValidityImg value:certValidity];
+                NSString * certStatus = @"Servizio di revoca non raggiungibile";
+                NSImage * certStatusImg = [NSImage imageNamed:@"orange_checkbox"];
+
+                switch (info.CertRevocStatus) {
+                    case REVOCATION_STATUS_GOOD:
+                        certStatus = @"Il certificato non è stato revocato";
+                        certStatusImg = [NSImage imageNamed:@"green_checkbox"];
+                        break;
+
+                    case REVOCATION_STATUS_REVOKED:
+                        certStatus = @"Il certificato è stato revocato";
+                        break;
+
+                    case REVOCATION_STATUS_SUSPENDED:
+                        certStatus = @"Il certificato è stato sospeso";
+                        break;
+
+                    case REVOCATION_STATUS_UNKNOWN:
+                        certValidityItem.value = @"Certificato non verificato";
+                        break;
+
+                    default:
+                        break;
+                }
+
+                VerifyItem *certStatusItem = [[VerifyItem alloc] initWithImage:certStatusImg value:certStatus];
+                NSString *cadn = [[NSString alloc] initWithCString:info.cadn encoding:NSUTF8StringEncoding];
+                NSImage *cadnImg = [NSImage imageNamed:@"medal"];
+                VerifyItem *cadnItem = [[VerifyItem alloc] initWithImage:cadnImg value:cadn];
+                //[cadnItem setEnlarge:true];
+                cadnItem.enlarge = true;
+                [verifyItems addObject:nameItem];
+                [verifyItems addObject:signingTimeItem];
+                [verifyItems addObject:signValidtyItem];
+                [verifyItems addObject:certValidityItem];
+                [verifyItems addObject:certStatusItem];
+                [verifyItems addObject:cadnItem];
 
                 dispatch_async(dispatch_get_main_queue(), ^ {
                     [sender setEnabled:YES];
                     [self.tbVerificaInfo reloadData];
-                    self->_lblSottoscrittori.stringValue = [NSString stringWithFormat:@"Numero di sottoscrittori: %d", n_sign];
+                    self->_lblSottoscrittori.stringValue = [NSString stringWithFormat:@"Numero di sottoscrittori: %d", ret];
                     ChangeView *cG = [ChangeView getInstance];
 
                     if ([[filePath pathExtension] isEqualToString:@"p7m"]) {
@@ -2406,6 +2395,13 @@ CK_RV completedCallback(string& PAN,
                 [sender setEnabled:YES];
             });
             [self showMessage:@"Il file selezionato non è un file valido. E' possibile verificare solo file con estensione .p7m o.pdf" withTitle:@"Errore nella verifica" exitAfter:false];
+            ChangeView *cG = [ChangeView getInstance];
+            [cG showSubView:SELECT_FILE_PAGE];
+        } else if (ret == 0) {
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                [sender setEnabled:YES];
+            });
+            [self showMessage:@"Il file selezionato non contiene firme" withTitle:@"Verifica completata" exitAfter:false];
             ChangeView *cG = [ChangeView getInstance];
             [cG showSubView:SELECT_FILE_PAGE];
         } else {

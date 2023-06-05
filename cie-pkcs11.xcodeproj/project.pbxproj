@@ -12,6 +12,8 @@
 		0883C2E6251C94290054055E /* CarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0883C2E1251C94290054055E /* CarouselView.xib */; };
 		0883C2E7251C94290054055E /* CarouselCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0883C2E2251C94290054055E /* CarouselCard.m */; };
 		461398B8C02047C25F03D065 /* Pods_CIE_ID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */; };
+		52FE2BD82A164C3100A210C0 /* TestCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52FE2BD52A164C3100A210C0 /* TestCIE.cpp */; };
+		52FE2BD92A164C3100A210C0 /* UUCByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52FE2BD62A164C3100A210C0 /* UUCByteArray.cpp */; };
 		6089967E276BCACE00E5CB32 /* AppLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6089967D276BCACE00E5CB32 /* AppLogger.m */; };
 		7649F44225DE65E500A33DAC /* FirmaConCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7649F44025DE65E500A33DAC /* FirmaConCIE.cpp */; };
 		7649F44325DE65E500A33DAC /* FirmaConCIE.h in Headers */ = {isa = PBXBuildFile; fileRef = 7649F44125DE65E500A33DAC /* FirmaConCIE.h */; };
@@ -71,7 +73,6 @@
 		E5087AC0216610D4007063E6 /* UUCTextFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5087AB4216610D3007063E6 /* UUCTextFileReader.cpp */; };
 		E5087AC1216610D4007063E6 /* UUCTextFileWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5087AB5216610D3007063E6 /* UUCTextFileWriter.cpp */; };
 		E5087AC2216610D4007063E6 /* UUCTextFileWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = E5087AB6216610D4007063E6 /* UUCTextFileWriter.h */; };
-		E5087AC621661B74007063E6 /* UUCByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5087AAD216610D2007063E6 /* UUCByteArray.cpp */; };
 		E50A8A08213BE019006A000D /* AbilitaCIE.h in Headers */ = {isa = PBXBuildFile; fileRef = E50A8A07213BE018006A000D /* AbilitaCIE.h */; };
 		E50A8A0A213BE053006A000D /* AbilitaCIE.mm in Sources */ = {isa = PBXBuildFile; fileRef = E50A8A09213BE053006A000D /* AbilitaCIE.mm */; };
 		E50A8A0D213BE121006A000D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50A8A0B213BE121006A000D /* Cocoa.framework */; };
@@ -153,7 +154,6 @@
 		E5659082211875950039865C /* sha256.h in Headers */ = {isa = PBXBuildFile; fileRef = E565906E211875940039865C /* sha256.h */; };
 		E5659083211875950039865C /* SHA512.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E565906F211875940039865C /* SHA512.cpp */; };
 		E5659084211875950039865C /* sha512.h in Headers */ = {isa = PBXBuildFile; fileRef = E5659070211875940039865C /* sha512.h */; };
-		E5707B3521383CCA0054CF16 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E5707B3421383CCA0054CF16 /* main.cpp */; };
 		E570A7782168986B00658AAF /* PINManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E570A7762168986B00658AAF /* PINManager.cpp */; };
 		E570A7792168986B00658AAF /* PINManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E570A7772168986B00658AAF /* PINManager.h */; };
 		E570A77A2168AB9300658AAF /* libcie-pkcs11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BE7D8820FE84D200004389 /* libcie-pkcs11.dylib */; };
@@ -271,9 +271,15 @@
 		0883C2E2251C94290054055E /* CarouselCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarouselCard.m; sourceTree = "<group>"; };
 		0883C2E3251C94290054055E /* CarouselCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselCard.h; sourceTree = "<group>"; };
 		228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cie-pkcs11.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.release.xcconfig"; sourceTree = "<group>"; };
 		438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.release.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.release.xcconfig"; sourceTree = "<group>"; };
+		52FE2BD42A164C3100A210C0 /* UUCByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCByteArray.h; sourceTree = "<group>"; };
+		52FE2BD52A164C3100A210C0 /* TestCIE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCIE.cpp; sourceTree = "<group>"; };
+		52FE2BD62A164C3100A210C0 /* UUCByteArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUCByteArray.cpp; sourceTree = "<group>"; };
+		52FE2BD72A164C3100A210C0 /* PKCS11ErrorMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCS11ErrorMap.h; sourceTree = "<group>"; };
 		6089967C276BCACE00E5CB32 /* AppLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppLogger.h; sourceTree = "<group>"; };
 		6089967D276BCACE00E5CB32 /* AppLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppLogger.m; sourceTree = "<group>"; };
+		6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.debug.xcconfig"; sourceTree = "<group>"; };
 		7649F44025DE65E500A33DAC /* FirmaConCIE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FirmaConCIE.cpp; sourceTree = "<group>"; };
 		7649F44125DE65E500A33DAC /* FirmaConCIE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirmaConCIE.h; sourceTree = "<group>"; };
 		7649F45425DE6B9700A33DAC /* VerificaConCIE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VerificaConCIE.cpp; sourceTree = "<group>"; };
@@ -337,8 +343,6 @@
 		77BAE7A8261EFB5600592607 /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = cie_sign_sdk/Dependencies/libxml2/libxml2.a; sourceTree = "<group>"; };
 		77BAE7AA261EFB6000592607 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = cie_sign_sdk/Dependencies/zlib/libz.a; sourceTree = "<group>"; };
 		79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.debug.xcconfig"; sourceTree = "<group>"; };
-		AC7F8DEC9D70170164B0657A /* Pods-CIE ID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.release.xcconfig"; sourceTree = "<group>"; };
-		D1955A7B2EEDA4790A796ED1 /* Pods-CIE ID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.debug.xcconfig"; sourceTree = "<group>"; };
 		DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIE_ID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E504202B2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CIE-LOGO-REGISTRATO.png"; sourceTree = "<group>"; };
 		E504202F218067BC00A41BF2 /* help.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
@@ -671,8 +675,8 @@
 			children = (
 				79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */,
 				438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */,
-				D1955A7B2EEDA4790A796ED1 /* Pods-CIE ID.debug.xcconfig */,
-				AC7F8DEC9D70170164B0657A /* Pods-CIE ID.release.xcconfig */,
+				6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */,
+				2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -881,6 +885,10 @@
 		E5707B3321383CCA0054CF16 /* TestCIE */ = {
 			isa = PBXGroup;
 			children = (
+				52FE2BD72A164C3100A210C0 /* PKCS11ErrorMap.h */,
+				52FE2BD52A164C3100A210C0 /* TestCIE.cpp */,
+				52FE2BD62A164C3100A210C0 /* UUCByteArray.cpp */,
+				52FE2BD42A164C3100A210C0 /* UUCByteArray.h */,
 				E5707B3421383CCA0054CF16 /* main.cpp */,
 			);
 			path = TestCIE;
@@ -1510,8 +1518,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5707B3521383CCA0054CF16 /* main.cpp in Sources */,
-				E5087AC621661B74007063E6 /* UUCByteArray.cpp in Sources */,
+				52FE2BD82A164C3100A210C0 /* TestCIE.cpp in Sources */,
+				52FE2BD92A164C3100A210C0 /* UUCByteArray.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1662,7 +1670,7 @@
 				CODE_SIGN_ENTITLEMENTS = CIEIDBar/CIEIDBar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.4.3.3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				EXCLUDED_ARCHS = arm64;
 				INFOPLIST_FILE = CIEIDBar/Info.plist;
@@ -1675,7 +1683,7 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.4.3.3;
+				MARKETING_VERSION = 1.4.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID-Bar";
@@ -1690,7 +1698,7 @@
 				CODE_SIGN_ENTITLEMENTS = CIEIDBar/CIEIDBar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.4.3.3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				EXCLUDED_ARCHS = arm64;
 				INFOPLIST_FILE = CIEIDBar/Info.plist;
@@ -1703,7 +1711,7 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.4.3.3;
+				MARKETING_VERSION = 1.4.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID-Bar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1712,7 +1720,7 @@
 		};
 		E544F57421BFAFC90038B2CA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1955A7B2EEDA4790A796ED1 /* Pods-CIE ID.debug.xcconfig */;
+			baseConfigurationReference = 6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1720,7 +1728,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.4.3.3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1732,7 +1740,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.4.3.3;
+				MARKETING_VERSION = 1.4.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
@@ -1746,7 +1754,7 @@
 		};
 		E544F57521BFAFC90038B2CA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AC7F8DEC9D70170164B0657A /* Pods-CIE ID.release.xcconfig */;
+			baseConfigurationReference = 2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1754,7 +1762,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.4.3.3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1766,7 +1774,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.4.3.3;
+				MARKETING_VERSION = 1.4.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1815,9 +1823,11 @@
 		E5707B3621383CCA0054CF16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1825,9 +1835,11 @@
 		E5707B3721383CCA0054CF16 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1875,7 +1887,6 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.4.3.3;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1889,7 +1900,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 1.4.3.3;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID.CIEToken";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1904,7 +1915,6 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.4.3.3;
 				DEVELOPMENT_TEAM = 7GWNHU58JZ;
 				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = CIEToken/Info.plist;
@@ -1913,7 +1923,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 1.4.3.3;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.ipzs.CIE-ID.CIEToken";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
