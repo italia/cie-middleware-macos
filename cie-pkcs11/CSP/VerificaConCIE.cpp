@@ -8,38 +8,53 @@
 #include "../PKCS11/PKCS11Functions.h"
 
 extern "C" {
-    CK_RV CK_ENTRY verificaConCIE(const char* inFilePath, verifyInfos_t* vInfos, const char* proxyAddress, int proxyPort, const char* usrPass);
+    CK_RV CK_ENTRY verificaConCIE(const char* inFilePath, const char* proxyAddress, int proxyPort, const char* usrPass);
     CK_RV CK_ENTRY estraiP7m(const char* inFilePath, const char* outFilePath);
+    CK_RV CK_ENTRY getVerifyInfo(int index, struct verifyInfo_t* vInfos);
 }
 
+VERIFY_RESULT verifyResult;
 
-CK_RV CK_ENTRY verificaConCIE(const char* inFilePath, verifyInfos_t* vInfos, const char* proxyAddress, int proxyPort, const char* usrPass)
+CK_RV CK_ENTRY getNumberOfSign()
 {
-    VERIFY_RESULT verifyResult;
+    return (CK_RV)verifyResult.verifyInfo.pSignerInfos->nCount;
+}
+
+CK_RV CK_ENTRY getVerifyInfo(int index, struct verifyInfo_t* vInfos)
+{
+    if (index >= 0 && index < getNumberOfSign())
+    {
+        SIGNER_INFO tmpSignerInfo = (verifyResult.verifyInfo.pSignerInfos->pSignerInfo)[index];// +(index * sizeof(SIGNER_INFO)));
+        strcpy(vInfos->name, tmpSignerInfo.szGIVENNAME);
+        strcpy(vInfos->surname, tmpSignerInfo.szSURNAME);
+        strcpy(vInfos->cn, tmpSignerInfo.szCN);
+        strcpy(vInfos->cadn, tmpSignerInfo.szCADN);
+        strcpy(vInfos->signingTime, tmpSignerInfo.szSigningTime);
+        vInfos->CertRevocStatus = tmpSignerInfo.pRevocationInfo->nRevocationStatus;
+        vInfos->isCertValid = (tmpSignerInfo.bitmask & VERIFIED_CERT_GOOD) == VERIFIED_CERT_GOOD;
+        vInfos->isSignValid = (tmpSignerInfo.bitmask & VERIFIED_SIGNATURE) == VERIFIED_SIGNATURE;
+    }
+        return 0;
+}
+
+CK_RV CK_ENTRY verificaConCIE(const char* inFilePath, const char* proxyAddress, int proxyPort, const char* usrPass)
+{
     CIEVerify* verifier = new CIEVerify();
 
     verifier->verify(inFilePath, (VERIFY_RESULT*)&verifyResult, proxyAddress, proxyPort, usrPass);
 
     if (verifyResult.nErrorCode == 0)
     {
-        vInfos->n_infos = verifyResult.verifyInfo.pSignerInfos->nCount;
-
-        for(int i = 0; i < vInfos->n_infos; i++)
-        {
-            SIGNER_INFO tmpSignerInfo = (verifyResult.verifyInfo.pSignerInfos->pSignerInfo)[i];// +(index * sizeof(SIGNER_INFO)));
-            strcpy(vInfos->infos[i].name, tmpSignerInfo.szGIVENNAME);
-            strcpy(vInfos->infos[i].surname, tmpSignerInfo.szSURNAME);
-            strcpy(vInfos->infos[i].cn, tmpSignerInfo.szCN);
-            strcpy(vInfos->infos[i].cadn, tmpSignerInfo.szCADN);
-            strcpy(vInfos->infos[i].signingTime, tmpSignerInfo.szSigningTime);
-            vInfos->infos[i].CertRevocStatus = tmpSignerInfo.pRevocationInfo->nRevocationStatus;
-            vInfos->infos[i].isCertValid = (tmpSignerInfo.bitmask & VERIFIED_CERT_GOOD) == VERIFIED_CERT_GOOD;
-            vInfos->infos[i].isSignValid = (tmpSignerInfo.bitmask & VERIFIED_SIGNATURE) == VERIFIED_SIGNATURE;
-        }
-
+        printf("verificaConCIE OK");
+        
+        if(verifyResult.verifyInfo.pSignerInfos != NULL)
+            return (CK_RV)verifyResult.verifyInfo.pSignerInfos->nCount;
+        
         return 0;
-    }else
+    }
+    else
     {
+        printf("Errore nella verifica: %lu\n", verifyResult.nErrorCode);
         LOG_ERROR("verificaConCIE - Errore nella verifica: %lu\n", verifyResult.nErrorCode);
         return verifyResult.nErrorCode;
     }
