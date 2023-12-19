@@ -2,7 +2,6 @@
 //  MainViewController.m
 //  CIE ID
 //
-//  Created by ugo chirico on 11/12/2018. http://www.ugochirico.com
 //  Copyright © 2018 IPZS. All rights reserved.
 //
 
@@ -10,7 +9,7 @@
 #import <IOKit/IOKitLib.h>
 #import <CommonCrypto/CommonDigest.h>
 #import "ProxyInfoManager.h"
-
+#import "CarouselView.h"
 #import "PINNoticeViewController.h"
 #import "CieList.h"
 #import "Cie.h"
@@ -56,56 +55,59 @@ struct logLevels {
 @property (weak) IBOutlet NSTextField *lblPadesSub;
 @property (weak) IBOutlet NSImageView *picturePades;
 @property (weak) IBOutlet NSTextField *filePathSignOp;
-@property (weak) IBOutlet NSButton *cbFirmaGrafica;
-@property (weak) IBOutlet NSView *viewFirmaSelectOp;
+@property (weak) IBOutlet NSButton *cbGraphicSignature;
+@property (weak) IBOutlet NSView *viewSignatureSelectOp;
 @property (weak) IBOutlet NSView *prevImageView;
-@property (weak) IBOutlet NSTextField* lblPathFirmaPrev;
-@property (weak) IBOutlet NSTextField *lblPathFirmaPin;
-@property (weak) IBOutlet NSTextField *lblInsertPin;
-@property (weak) IBOutlet NSProgressIndicator *progressFirma;
-@property (weak) IBOutlet NSTextField *lblProgressFirma;
-@property (weak) IBOutlet NSImageView *imgFirmaOk;
-@property (weak) IBOutlet NSView *cvInsertPin;
-@property (weak) IBOutlet NSButton *btnAnnullaFirma;
-@property (weak) IBOutlet NSButton *btnConcludiFirma;
-@property (weak) IBOutlet NSButton *btnFirma;
-@property (weak) IBOutlet NSButton *btnFirmaElettronica;
-@property (weak) IBOutlet NSButton *btnVerificaFirma;
+@property (weak) IBOutlet NSTextField *lblPathSignaturePreview;
+@property (weak) IBOutlet NSTextField *lblPathSignaturePIN;
+@property (weak) IBOutlet NSTextField *lblInsertPIN;
+@property (weak) IBOutlet NSProgressIndicator *progressSignature;
+@property (weak) IBOutlet NSTextField *lblProgressSignature;
+@property (weak) IBOutlet NSImageView *imgSignatureOK;
+@property (weak) IBOutlet NSView *cvInsertPIN;
+@property (weak) IBOutlet NSButton *btnAbortSignature;
+@property (weak) IBOutlet NSButton *btnSignatureCompleted;
+@property (weak) IBOutlet NSButton *btnSign;
+@property (weak) IBOutlet NSButton *btnMenuDigitalSignature;
+@property (weak) IBOutlet NSButton *btnMenuVerifySignature;
 @property (weak) IBOutlet NSTextField *lblPathOp;
-@property (weak) IBOutlet NSButton *btnProseguiFirmaOp;
+@property (weak) IBOutlet NSButton *btnProceedSignatureOp;
 @property (weak) IBOutlet NSImageView *signImageView;
-@property (weak) IBOutlet NSTextField *lblFirmaHome;
-@property (weak) IBOutlet NSTextField *lblSubFirmaHome;
+@property (weak) IBOutlet NSTextField *lblDigitalSignatureHeader;
+@property (weak) IBOutlet NSTextField *lblDigitalSignatureHeaderSubtitle;
 @property (weak) IBOutlet NSView *fileSelectionSignatureBlockView;
-@property (weak) IBOutlet NSTextFieldCell *lblFirmaPersonalizata;
-@property (weak) IBOutlet NSButton *btnPersonalizza;
-@property (weak) IBOutlet NSTextField *lblFirmaPersonalizzataSub;
-@property (weak) IBOutlet NSTextField *lblPersonalizzata;
-@property (weak) IBOutlet NSTableView *tbVerificaInfo;
-@property (weak) IBOutlet NSTextField *lblVerificaPath;
-@property (weak) IBOutlet NSTextField *lblSottoscrittori;
+@property (weak) IBOutlet NSTextFieldCell *lblCustomizeGraphicSignature;
+@property (weak) IBOutlet NSButton *btnCustomizeGraphicSignature;
+@property (weak) IBOutlet NSTextField *lblGraphicSignatureCustomizationDesc;
+@property (weak) IBOutlet NSTextField *lblCustomized;
+@property (weak) IBOutlet NSTableView *tbVerifyInfo;
+@property (weak) IBOutlet NSTextField *lblVerifyPath;
+@property (weak) IBOutlet NSTextField *lblSignersNumber;
 @property (weak) IBOutlet NSImageView *imgUpload;
-@property (weak) IBOutlet NSButton *btnCreaFirma;
+@property (weak) IBOutlet NSButton *btnGenerateGraphicSignature;
 @property (weak) IBOutlet NSTextField *txtProxyAddr;
 @property (weak) IBOutlet NSTextField *txtUsername;
 @property (weak) IBOutlet NSSecureTextField *txtPassword;
 @property (weak) IBOutlet NSTextField *plainPassword;
 
-@property (weak) IBOutlet NSTextField *txtPorta;
-@property (weak) IBOutlet NSButton *cbMostraPsw;
-@property (weak) IBOutlet NSButton *btnSalvaProxy;
-@property (weak) IBOutlet NSButton *btnModificaProxy;
-@property (weak) IBOutlet NSButton *btnEstrai;
+@property (weak) IBOutlet NSTextField *txtPort;
+@property (weak) IBOutlet NSButton *cbShowPsw;
+@property (weak) IBOutlet NSButton *btnSaveProxy;
+@property (weak) IBOutlet NSButton *btnEditProxy;
+@property (weak) IBOutlet NSButton *btnExtractFile;
 
-@property (weak) IBOutlet NSLayoutConstraint *abbinaButtonWhenAnnullaVisible;
+@property (weak) IBOutlet NSLayoutConstraint *pairButtonWhenAbortVisible;
 
-@property (weak) IBOutlet NSLayoutConstraint *abbinaButtonWhenAnnullaInvisible;
+@property (weak) IBOutlet NSLayoutConstraint *pairButtonWhenAbortInvisible;
 @property (weak) IBOutlet NSView *mainCustomView;
+
+@property (nonatomic, strong) NSString *tmpPANCIE;
+@property BOOL fullPINSignature;
 
 typedef NS_ENUM(NSUInteger, signOp) {
     NO_OP,
-    FIRMA_CADES,
-    FIRMA_PADES,
+    CADES_SIGNATURE,
+    PADES_SIGNATURE,
     VERIFY,
 };
 
@@ -116,34 +118,34 @@ typedef NS_ENUM(NSUInteger, signOp) {
 NSTextField* labelProgressPointer;
 NSProgressIndicator* progressIndicatorPointer;
 
-NSTextField* labelProgressPointerCambioPIN;
-NSProgressIndicator* progressIndicatorPointerCambioPIN;
+NSTextField* labelProgressPointerChangePIN;
+NSProgressIndicator* progressIndicatorPointerChangePIN;
 
-NSTextField* labelProgressPointerSbloccoPIN;
-NSProgressIndicator* progressIndicatorPointerSbloccoPIN;
+NSTextField* labelProgressPointerUnlockPIN;
+NSProgressIndicator* progressIndicatorPointerUnlockPIN;
 
-NSProgressIndicator* progressIndicatorPointerFirma;
+NSProgressIndicator* progressIndicatorSignaturePointer;
 NSTextField* lblInsertPinPointer;
-NSTextField* lblProgressFirmaPointer;
+NSTextField* lblProgressSignaturePointer;
 NSView* cvInsertPinPointer;
-NSButton* btnAnnullPointer;
-NSButton* btnAnnullaFirmaPointer;
-NSButton* btnFirmaPointer;
-NSButton* btnConcludiFirmaPointer;
-NSImageView* imgFirmaOkPointer;
-NSButton* cbFirmaGraficaPointer;
+NSButton* btnAbortPointer;
+NSButton* btnAbortSignaturePointer;
+NSButton* btnSignaturePointer;
+NSButton* btnSignatureCompletedPointer;
+NSImageView* imgSignatureOKPointer;
+NSButton* cbGraphicSignaturePointer;
 
 string sPAN;
 string sName;
 string sEfSeriale;
 
-NSString* filePath;
+NSString *filePath;
 NSString *path;
 NSArray *viewArray;
 NSMutableArray <VerifyItem *> *verifyItems;
 
 signOp operation;
-PdfPreview* pdfPreview;
+PdfPreview *pdfPreview;
 
 CieList *cieList;
 
@@ -151,6 +153,7 @@ void* hModule;
 
 @synthesize logLevelApp;
 @synthesize logLevelLib;
+
 AppLogger *logger;
 
 - (void)loadView {
@@ -159,20 +162,20 @@ AppLogger *logger;
                                  _homeSecondPageView,
                                  _homeThirdPageView,
                                  _homeFourthPageView,
-                                 _cambioPINPageView,
-                                 _cambioPINOKPageView,
-                                 _sbloccoPageView,
-                                 _sbloccoOKPageView,
+                                 _changePINPageView,
+                                 _changePINOKPageView,
+                                 _unlockPageView,
+                                 _unlockOKPageView,
                                  _helpPageView,
                                  _infoPageView,
                                  _selectFilePageView,
                                  _selectOperationView,
-                                 _firmaOperationView,
-                                 _firmaPrevView,
-                                 _firmaPinView,
-                                 _personalizzaFirmaView,
-                                 _verificaView,
-                                 _impostazioniView,
+                                 _signOperationView,
+                                 _signPreView,
+                                 _signPINView,
+                                 _customizeGraphicSignatureView,
+                                 _verifyView,
+                                 _settingsView,
                                  nil];
     ChangeView *cG = [ChangeView getInstance];
     cG.viewArray = viewArray;
@@ -189,25 +192,25 @@ AppLogger *logger;
     [logger info:[NSString stringWithFormat:@"[I] Livello di log applicazione: %ld", [self logLevelApp]]];
     [logger info:[NSString stringWithFormat:@"[I] Livello di log libreria: %ld", [self logLevelLib]]];
     [logger info:@"Inizializzo view principale"];
-    [_viewFirmaSelectOp updateLayer];
+    [_viewSignatureSelectOp updateLayer];
     [self addSubviewToMainCustomView:_homeFirstPageView];
     [self addSubviewToMainCustomView:_homeSecondPageView];
     [self addSubviewToMainCustomView:_homeThirdPageView];
     [self addSubviewToMainCustomView:_homeFourthPageView];
-    [self addSubviewToMainCustomView:_cambioPINPageView];
-    [self addSubviewToMainCustomView:_cambioPINOKPageView];
-    [self addSubviewToMainCustomView:_sbloccoPageView];
-    [self addSubviewToMainCustomView:_sbloccoOKPageView];
+    [self addSubviewToMainCustomView:_changePINPageView];
+    [self addSubviewToMainCustomView:_changePINOKPageView];
+    [self addSubviewToMainCustomView:_unlockPageView];
+    [self addSubviewToMainCustomView:_unlockOKPageView];
     [self addSubviewToMainCustomView:_helpPageView];
     [self addSubviewToMainCustomView:_infoPageView];
     [self addSubviewToMainCustomView:_selectFilePageView];
     [self addSubviewToMainCustomView:_selectOperationView];
-    [self addSubviewToMainCustomView:_firmaOperationView];
-    [self addSubviewToMainCustomView:_firmaPrevView];
-    [self addSubviewToMainCustomView:_firmaPinView];
-    [self addSubviewToMainCustomView:_personalizzaFirmaView];
-    [self addSubviewToMainCustomView:_verificaView];
-    [self addSubviewToMainCustomView:_impostazioniView];
+    [self addSubviewToMainCustomView:_signOperationView];
+    [self addSubviewToMainCustomView:_signPreView];
+    [self addSubviewToMainCustomView:_signPINView];
+    [self addSubviewToMainCustomView:_customizeGraphicSignatureView];
+    [self addSubviewToMainCustomView:_verifyView];
+    [self addSubviewToMainCustomView:_settingsView];
     [_imgUpload unregisterDraggedTypes];
     operation = NO_OP;
 
@@ -237,24 +240,24 @@ AppLogger *logger;
     _labelProgress.stringValue = @"";
     labelProgressPointer = _labelProgress;
     progressIndicatorPointer = _progressIndicator;
-    labelProgressPointerCambioPIN = _labelProgressCambioPIN;
-    progressIndicatorPointerCambioPIN = _progressIndicatorCambioPIN;
-    labelProgressPointerSbloccoPIN = _labelProgressSbloccoPIN;
-    progressIndicatorPointerSbloccoPIN = _progressIndicatorSbloccoPIN;
-    progressIndicatorPointerFirma = _progressFirma;
-    lblInsertPinPointer =  _lblInsertPin;
-    lblProgressFirmaPointer = _lblProgressFirma;
-    cvInsertPinPointer = _cvInsertPin;
-    btnAnnullPointer = _btnAnnulla;
-    btnAnnullaFirmaPointer = _btnAnnullaFirma;
-    btnFirmaPointer = _btnFirma;
-    btnConcludiFirmaPointer = _btnConcludiFirma;
-    imgFirmaOkPointer = _imgFirmaOk;
-    cbFirmaGraficaPointer = _cbFirmaGrafica;
+    labelProgressPointerChangePIN = _labelProgressChangePIN;
+    progressIndicatorPointerChangePIN = _progressIndicatorChangePIN;
+    labelProgressPointerUnlockPIN = _labelProgressUnlockPIN;
+    progressIndicatorPointerUnlockPIN = _progressIndicatorUnlockPIN;
+    progressIndicatorSignaturePointer = _progressSignature;
+    lblInsertPinPointer =  _lblInsertPIN;
+    lblProgressSignaturePointer = _lblProgressSignature;
+    cvInsertPinPointer = _cvInsertPIN;
+    btnAbortPointer = _btnAbort;
+    btnAbortSignaturePointer = _btnAbortSignature;
+    btnSignaturePointer = _btnSign;
+    btnSignatureCompletedPointer = _btnSignatureCompleted;
+    imgSignatureOKPointer = _imgSignatureOK;
+    cbGraphicSignaturePointer = _cbGraphicSignature;
     self.carouselView.delegate = self;
-    [self.tbVerificaInfo registerNib:[[NSNib alloc] initWithNibNamed:@"VerifyCell" bundle:nil]forIdentifier:@"verifyCellID"];
-    self.tbVerificaInfo.delegate = self;
-    self.tbVerificaInfo.dataSource = self;
+    [self.tbVerifyInfo registerNib:[[NSNib alloc] initWithNibNamed:@"VerifyCell" bundle:nil]forIdentifier:@"verifyCellID"];
+    self.tbVerifyInfo.delegate = self;
+    self.tbVerifyInfo.dataSource = self;
 }
 
 - (void)addSubviewToMainCustomView:(NSView *)view {
@@ -314,8 +317,8 @@ AppLogger *logger;
     NSTextField *textField = [notification object];
 
     if (textField.tag > 0) {
-        if (textField.tag < 13) {
-            if (textField.tag == 8 || textField.tag == 12) {
+        if (textField.tag < ((self.fullPINSignature) ? 17 : 13)) {
+            if (textField.tag == 8 || textField.tag == ((self.fullPINSignature) ? 16 : 12)) {
                 textField.stringValue = [textField.stringValue substringToIndex:1];
             } else {
                 NSTextField* textField1 = [self.view viewWithTag:textField.tag + 1];
@@ -337,10 +340,10 @@ CK_RV progressCallback(const int progress,
     return 0;
 }
 
-CK_RV progressFirmaCallback(const int progress,
+CK_RV progressSignatureCallback(const int progress,
                             const char* szMessage) {
     dispatch_async(dispatch_get_main_queue(), ^ {
-        progressIndicatorPointerFirma.doubleValue = progress;
+        progressIndicatorSignaturePointer.doubleValue = progress;
     });
     return 0;
 }
@@ -348,42 +351,42 @@ CK_RV progressFirmaCallback(const int progress,
 CK_RV progressCallbackCambioPIN(const int progress,
                                 const char* szMessage) {
     dispatch_async(dispatch_get_main_queue(), ^ {
-        labelProgressPointerCambioPIN.stringValue = [NSString stringWithUTF8String:szMessage];
-        progressIndicatorPointerCambioPIN.doubleValue = progress;
+        labelProgressPointerChangePIN.stringValue = [NSString stringWithUTF8String:szMessage];
+        progressIndicatorPointerChangePIN.doubleValue = progress;
     });
     return 0;
 }
 
-CK_RV progressCallbackSbloccoPIN(const int progress,
+CK_RV progressCallbackUnlockPIN(const int progress,
                                  const char* szMessage) {
     dispatch_async(dispatch_get_main_queue(), ^ {
-        labelProgressPointerSbloccoPIN.stringValue = [NSString stringWithUTF8String:szMessage];
-        progressIndicatorPointerSbloccoPIN.doubleValue = progress;
+        labelProgressPointerUnlockPIN.stringValue = [NSString stringWithUTF8String:szMessage];
+        progressIndicatorPointerUnlockPIN.doubleValue = progress;
     });
     return 0;
 }
 
-CK_RV completedFirmaCallback(int ret) {
-    [logger info:@"completedFirmaCallback: - Inizia funzione"];
+CK_RV completedSignatureCallback(int ret) {
+    [logger info:@"completedSignatureCallback: - Inizia funzione"];
     dispatch_async(dispatch_get_main_queue(), ^ {
 
         if (ret == 0) {
-            lblProgressFirmaPointer.stringValue = @"File firmato con successo";
-            [logger debug:lblProgressFirmaPointer.stringValue];
-            imgFirmaOkPointer.hidden = NO;
-            imgFirmaOkPointer.image = [NSImage imageNamed:@"check"];
+            lblProgressSignaturePointer.stringValue = @"File firmato con successo";
+            [logger debug:lblProgressSignaturePointer.stringValue];
+            imgSignatureOKPointer.hidden = NO;
+            imgSignatureOKPointer.image = [NSImage imageNamed:@"check"];
         } else {
-            lblProgressFirmaPointer.stringValue = @"Si è verificato un errore durante la firma";
-            [logger debug:lblProgressFirmaPointer.stringValue];
+            lblProgressSignaturePointer.stringValue = @"Si è verificato un errore durante la firma";
+            [logger debug:lblProgressSignaturePointer.stringValue];
             //TODO impostare immagine errore
-            imgFirmaOkPointer.hidden = NO;
-            imgFirmaOkPointer.image = [NSImage imageNamed:@"cross"];
+            imgSignatureOKPointer.hidden = NO;
+            imgSignatureOKPointer.image = [NSImage imageNamed:@"cross"];
         }
 
-        progressIndicatorPointerFirma.hidden = YES;
-        btnConcludiFirmaPointer.hidden = NO;
-        btnAnnullaFirmaPointer.hidden = YES;
-        btnFirmaPointer.hidden = YES;
+        progressIndicatorSignaturePointer.hidden = YES;
+        btnSignatureCompletedPointer.hidden = NO;
+        btnAbortSignaturePointer.hidden = YES;
+        btnSignaturePointer.hidden = YES;
 
     });
     return 0;
@@ -439,18 +442,7 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)onAggiungiCie:(id)sender {
     [logger info:@"onAggiungiCie: - Inizia funzione"];
-    /*
-    self.homeFirstPageView.hidden = NO;
-    self.homeSecondPageView.hidden = YES;
-    self.homeThirdPageView.hidden = YES;
-    self.homeFourthPageView.hidden = YES;
-    self.cambioPINPageView.hidden = YES;
-    self.cambioPINOKPageView.hidden = YES;
-    self.sbloccoPageView.hidden = YES;
-    self.sbloccoOKPageView.hidden = YES;
-    self.helpPageView.hidden = YES;
-    self.infoPageView.hidden = YES;
-    */
+    
     ChangeView *cG = [ChangeView getInstance];
     [cG showSubView:HOME_FIRST_PAGE];
 
@@ -465,8 +457,12 @@ CK_RV completedCallback(string& PAN,
 
 - (void)disabilita {
     [logger info:@"disabilita - Inizia funzione"];
-    NSString* pan = [removingCie getPan];
-    NSString* serialNumber = [removingCie getSerialNumber];
+    
+    if(self.tmpPANCIE == nil)
+        self.fullPINSignature = NO;
+    
+    NSString* pan = (self.fullPINSignature) ? self.tmpPANCIE : [removingCie getPan];
+    NSString* serialNumber = self.fullPINSignature ? [[[cieList getDictionary] valueForKey: self.tmpPANCIE] getSerialNumber] : [removingCie getSerialNumber];
     removingCie = nil;
     // check se abilitata ossia se cache presente
     VerificaCIEAbilitatafn pfnVerificaCIE = (VerificaCIEAbilitatafn)dlsym(hModule, "VerificaCIEAbilitata");
@@ -481,10 +477,6 @@ CK_RV completedCallback(string& PAN,
 
     switch (rv) {
         case CKR_OK:
-            /*
-            [self showMessage:@"CIE non abilitata" withTitle:@"Verifica CIE" exitAfter:false];
-            return;
-            */
             break;
 
         case CKR_CANCEL:
@@ -512,23 +504,30 @@ CK_RV completedCallback(string& PAN,
 
     switch (rv) {
         case CKR_OK: {
-            [self showMessage:@"CIE disabilitata con successo" withTitle:@"CIE disabilitata" exitAfter:NO];
+            if(!self.fullPINSignature) {
+                [self showMessage:@"CIE disabilitata con successo" withTitle:@"CIE disabilitata" exitAfter:NO];
+                [self showHomeFirstPage];
+            }
+
             [cieList removeCie:pan];
             [self.carouselView configureWithCards:[[cieList getDictionary] allValues]];
             NSFileManager *manager = [NSFileManager defaultManager];
             [manager removeItemAtPath:[self getSignImagePath:serialNumber] error:NULL];
             [NSUserDefaults.standardUserDefaults setObject:[cieList getData] forKey:@"cieDictionary"];
             [NSUserDefaults.standardUserDefaults synchronize];
-            [self showHomeFirstPage];
             break;
         }
 
         case CKR_TOKEN_NOT_PRESENT:
-            [self showMessage:@"CIE non presente sul lettore" withTitle:@"Abilitazione CIE" exitAfter:false];
+            if(!self.fullPINSignature) {
+                [self showMessage:@"CIE non presente sul lettore" withTitle:@"Disabilitazione CIE" exitAfter:false];
+            }
             break;
 
         default:
-            [self showMessage:@"Impossibile disabilitare la CIE" withTitle:@"CIE non disabilitata" exitAfter:NO];
+            if(!self.fullPINSignature) {
+                [self showMessage:@"Impossibile disabilitare la CIE" withTitle:@"CIE non disabilitata" exitAfter:NO];
+            }
             break;
     }
 }
@@ -543,8 +542,8 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)home:(id)sender {
     [logger info:@"home: - Inizia funzione"];
-    _lblFirmaHome.stringValue = @"CIE ID";
-    _lblSubFirmaHome.stringValue = @"Carta di Identità Elettronica abbinata correttamente";
+    _lblDigitalSignatureHeader.stringValue = @"CIE ID";
+    _lblDigitalSignatureHeaderSubtitle.stringValue = @"Carta di Identità Elettronica abbinata correttamente";
     [self showHomeFirstPage];
 }
 
@@ -561,13 +560,12 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)verificaFirma:(id)sender {
     [logger info:@"verificaFirma: - Inizia funzione"];
-    // [self showFirmaPinView];
     [self showVerificaFirma];
 }
 
 - (IBAction)cambioPIN:(id)sender {
     [logger info:@"cambioPIN: - Inizia funzione"];
-    [self showCambioPINPage];
+    [self showChangePINPage];
 }
 
 - (IBAction)sbloccaCarta:(id)sender {
@@ -670,7 +668,7 @@ CK_RV completedCallback(string& PAN,
                     break;
 
                 case CKR_PIN_INCORRECT:
-                    [self showMessage:[NSString stringWithFormat:@"Il PIN digitato è errato. rimangono %d tentativi", attempts] withTitle:@"PIN non corretto" exitAfter:false];
+                    [self showMessage:[NSString stringWithFormat:@"Il PIN digitato è errato. Rimangono %d tentativi", attempts] withTitle:@"PIN non corretto" exitAfter:false];
                     [self showHomeFirstPage];
                     break;
 
@@ -708,8 +706,8 @@ CK_RV completedCallback(string& PAN,
 - (IBAction)sblocca:(id)sender {
     [logger info:@"sblocca: - Inizia funzione"];
     NSString* puk = self.textFieldPUK.stringValue;
-    NSString* newpin = self.textFieldNewPINSblocco.stringValue;
-    NSString* confirmpin = self.textFieldConfirmPINSbloco.stringValue;
+    NSString* newpin = self.textFieldNewUnlockPIN.stringValue;
+    NSString* confirmpin = self.textFieldConfirmUnlockPIN.stringValue;
 
     if (puk.length != 8) {
         [self showMessage:@"Il PUK deve essere composto da 8 numeri" withTitle:@"PUK non corretto" exitAfter:false];
@@ -790,8 +788,8 @@ CK_RV completedCallback(string& PAN,
     }
 
     [((NSControl*)sender) setEnabled:NO];
-    self.progressIndicatorSbloccoPIN.hidden = NO;
-    self.labelProgressSbloccoPIN.hidden = NO;
+    self.progressIndicatorUnlockPIN.hidden = NO;
+    self.labelProgressUnlockPIN.hidden = NO;
     dispatch_async(dispatch_get_global_queue(0, 0), ^ {
 
         SbloccoPINfn pfnSbloccoPIN = (SbloccoPINfn)dlsym(hModule, "SbloccoPIN");
@@ -804,12 +802,12 @@ CK_RV completedCallback(string& PAN,
 
         int attempts = -1;
 
-        long ret = pfnSbloccoPIN([puk cStringUsingEncoding:NSUTF8StringEncoding], [newpin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallbackSbloccoPIN);
+        long ret = pfnSbloccoPIN([puk cStringUsingEncoding:NSUTF8StringEncoding], [newpin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallbackUnlockPIN);
 
         dispatch_async(dispatch_get_main_queue(), ^{
 
-            self.progressIndicatorSbloccoPIN.hidden = YES;
-            self.labelProgressSbloccoPIN.hidden = YES;
+            self.progressIndicatorUnlockPIN.hidden = YES;
+            self.labelProgressUnlockPIN.hidden = YES;
 
             [((NSControl*)sender) setEnabled:YES];
 
@@ -823,7 +821,7 @@ CK_RV completedCallback(string& PAN,
                     break;
 
                 case CKR_PIN_INCORRECT:
-                    [self showMessage:[NSString stringWithFormat:@"Il PUK digitato è errato. rimangono %d tentativi", attempts] withTitle:@"PIN non corretto" exitAfter:false];
+                    [self showMessage:[NSString stringWithFormat:@"Il PUK digitato è errato. Rimangono %d tentativi", attempts] withTitle:@"PIN non corretto" exitAfter:false];
                     break;
 
                 case CKR_PIN_LOCKED:
@@ -838,8 +836,8 @@ CK_RV completedCallback(string& PAN,
                     [self showSbloccoOKPage];
 //                    [self showMessage:@"Il PIN è stato sbloccato con successo" withTitle:@"Operazione completata" exitAfter:false];
                     self.textFieldPUK.stringValue = @"";
-                    self.textFieldNewPINSblocco.stringValue = @"";
-                    self.textFieldConfirmPINSbloco.stringValue = @"";
+                    self.textFieldNewUnlockPIN.stringValue = @"";
+                    self.textFieldConfirmUnlockPIN.stringValue = @"";
                     NSStoryboard* storyboard = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
                     NSViewController* viewController = [storyboard instantiateControllerWithIdentifier:@"PINNoticeViewController"];
                     [self presentViewControllerAsModalWindow:viewController];
@@ -938,8 +936,8 @@ CK_RV completedCallback(string& PAN,
     }
 
     [((NSControl*)sender) setEnabled:NO];
-    self.progressIndicatorCambioPIN.hidden = NO;
-    self.labelProgressCambioPIN.hidden = NO;
+    self.progressIndicatorChangePIN.hidden = NO;
+    self.labelProgressChangePIN.hidden = NO;
     dispatch_async(dispatch_get_global_queue(0, 0), ^ {
 
         C_GETFUNCTIONLIST pfnGetFunctionList = (C_GETFUNCTIONLIST)dlsym(hModule, "C_GetFunctionList");
@@ -964,8 +962,8 @@ CK_RV completedCallback(string& PAN,
 
         dispatch_async(dispatch_get_main_queue(), ^{
 
-            self.progressIndicatorCambioPIN.hidden = YES;
-            self.labelProgressCambioPIN.hidden = YES;
+            self.progressIndicatorChangePIN.hidden = YES;
+            self.labelProgressChangePIN.hidden = YES;
 
             [((NSControl*)sender) setEnabled:YES];
 
@@ -979,7 +977,7 @@ CK_RV completedCallback(string& PAN,
                     break;
 
                 case CKR_PIN_INCORRECT:
-                    [self showMessage:[NSString stringWithFormat:@"Il PIN digitato è errato. rimangono %d tentativi", attempts] withTitle:@"PIN non corretto" exitAfter:false];
+                    [self showMessage:[NSString stringWithFormat:@"Il PIN digitato è errato. Rimangono %d tentativi", attempts] withTitle:@"PIN non corretto" exitAfter:false];
                     break;
 
                 case CKR_PIN_LOCKED:
@@ -1023,18 +1021,6 @@ CK_RV completedCallback(string& PAN,
     [logger info:@"askRiabbinaDidEnd:returnCode:contextInfo: - Inizia funzione"];
 
     if (returnCode == NSAlertFirstButtonReturn) {
-        /*
-            self.homeFirstPageView.hidden = NO;
-            self.homeSecondPageView.hidden = YES;
-            self.homeThirdPageView.hidden = YES;
-            self.homeFourthPageView.hidden = YES;
-            self.cambioPINPageView.hidden = YES;
-            self.cambioPINOKPageView.hidden = YES;
-            self.sbloccoPageView.hidden = YES;
-            self.sbloccoOKPageView.hidden = YES;
-            self.helpPageView.hidden = YES;
-            self.infoPageView.hidden = YES;
-         */
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:HOME_FIRST_PAGE];
 
@@ -1054,14 +1040,14 @@ CK_RV completedCallback(string& PAN,
     [logger info:@"showImpostazioniPage - Inizia funzione"];
     dispatch_async(dispatch_get_main_queue(), ^ {
         self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.settingsButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
 
         [self disableSettingsFormEditing];
 
@@ -1086,7 +1072,7 @@ CK_RV completedCallback(string& PAN,
             }
 
             _txtProxyAddr.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"proxyUrl"];
-            _txtPorta.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"proxyPort"];
+            _txtPort.stringValue = [NSUserDefaults.standardUserDefaults objectForKey:@"proxyPort"];
         }
 
         [_rbLoggingAppError setState:NSOffState];
@@ -1143,40 +1129,36 @@ CK_RV completedCallback(string& PAN,
 - (void)showFirmaElettronica {
     [logger info:@"showFirmaElettronica - Inizia funzione"];
     dispatch_async(dispatch_get_main_queue(), ^ {
-        [self updateAbbinaAndAnnullaLayout]; \
+        [self updateAbbinaAndAnnullaLayout];
         self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        /*
-        self.homeFirstPageView.hidden = YES;
-        self.selectFilePageView.hidden = NO;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.sbloccoPageView.hidden = YES;
-        self.sbloccoOKPageView.hidden = YES;
-         */
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
         _lblCades.textColor = NSColor.grayColor;
         _lblCadesSub.textColor = NSColor.grayColor;
         _lblPades.textColor = NSColor.grayColor;
         _lblPadesSub.textColor = NSColor.grayColor;
-        _cbFirmaGrafica.state = NSOffState;
-        _btnProseguiFirmaOp.enabled = NO;
+        _cbGraphicSignature.state = NSOffState;
+        _btnProceedSignatureOp.enabled = NO;
         operation = NO_OP;
-        _lblFirmaHome.stringValue = @"Firma Elettronica";
-        _lblSubFirmaHome.stringValue = @"Seleziona la CIE da utilizzare";
-        [self.carouselView changeButtonViews];
         ChangeView *cG = [ChangeView getInstance];
-        [_fileSelectionSignatureBlockView setHidden:NO];
-        [cG showSubView:HOME_FOURTH_PAGE];
+        
+        if([cieList getDictionary].count > 0) {
+            _lblDigitalSignatureHeader.stringValue = @"Firma Elettronica";
+            _lblDigitalSignatureHeaderSubtitle.stringValue = @"Seleziona la CIE da utilizzare";
+            [self.carouselView changeButtonViews];
+            [_fileSelectionSignatureBlockView setHidden:NO];
+            [cG showSubView:HOME_FOURTH_PAGE];
+        } else {
+            [_fileSelectionSignatureBlockView setHidden:YES];
+            [cG showSubView:SELECT_FILE_PAGE];
+        }
     });
 }
 
@@ -1185,56 +1167,44 @@ CK_RV completedCallback(string& PAN,
     dispatch_async(dispatch_get_main_queue(), ^ {
         [self updateAbbinaAndAnnullaLayout];
         self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        /*
-        self.homeFirstPageView.hidden = YES;
-        self.selectFilePageView.hidden = NO;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.sbloccoPageView.hidden = YES;
-        self.sbloccoOKPageView.hidden = YES;
-         */
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+
         _lblCades.textColor = NSColor.grayColor;
         _lblCadesSub.textColor = NSColor.grayColor;
         _lblPades.textColor = NSColor.grayColor;
         _lblPadesSub.textColor = NSColor.grayColor;
-        _cbFirmaGrafica.state = NSOffState;
-        _btnProseguiFirmaOp.enabled = NO;
+        _cbGraphicSignature.state = NSOffState;
+        _btnProceedSignatureOp.enabled = NO;
         operation = VERIFY;
-        _lblFirmaHome.stringValue = @"Firma Elettronica";
-        _lblSubFirmaHome.stringValue = @"Seleziona la CIE da utilizzare";
+        _lblDigitalSignatureHeader.stringValue = @"Firma Elettronica";
+        _lblDigitalSignatureHeaderSubtitle.stringValue = @"Seleziona la CIE da utilizzare";
         [_fileSelectionSignatureBlockView setHidden:YES];
-        // [self.carouselView changeButtonViews];
         [[ChangeView getInstance] showSubView:SELECT_FILE_PAGE];
     });
 }
 
 - (void)showHomeFirstPage {
     [logger info:@"showHomeFirstPage - Inizia funzione"];
-    //[NSUserDefaults.standardUserDefaults removeObjectForKey:@"cieDictionary"];
     dispatch_async(dispatch_get_main_queue(), ^ {
 
         [self updateAbbinaAndAnnullaLayout];
 
         self.homeButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
 
         if ((![NSUserDefaults.standardUserDefaults objectForKey:@"cieDictionary"])) {
             cieList = [CieList new];
@@ -1263,31 +1233,12 @@ CK_RV completedCallback(string& PAN,
         if ([[cieList getDictionary] count] > 0) {
             [self showHomeFourthPage];
         }
-        /*
-        else if((![NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"]) and [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"])
-        {
-            [self askRiabbina:@"E' necessario effettuare un nuovo abbinamento. Procedere?" withTitle:@"Abbinare nuovamente la CIE"];
 
-        }
-        else if([NSUserDefaults.standardUserDefaults objectForKey:@"efSeriale"] and [NSUserDefaults.standardUserDefaults objectForKey:@"cardholder"])
-        {
-            [self showHomeFourthPage];
-        }
-         */
         else {
-            /*
-            self.homeFirstPageView.hidden = NO;
-            self.homeSecondPageView.hidden = YES;
-            self.homeThirdPageView.hidden = YES;
-            self.homeFourthPageView.hidden = YES;
-            self.cambioPINPageView.hidden = YES;
-            self.cambioPINOKPageView.hidden = YES;
-            self.sbloccoPageView.hidden = YES;
-            self.sbloccoOKPageView.hidden = YES;
-            */
+    
             ChangeView *cG = [ChangeView getInstance];
             [cG showSubView:HOME_FIRST_PAGE];
-            [_btnFirmaElettronica setEnabled:NO];
+            //[_btnFirmaElettronica setEnabled:NO];
 
             for (int i = 1; i < 9; i++) {
                 NSTextField* txtField = [self.view viewWithTag:i];
@@ -1305,31 +1256,17 @@ CK_RV completedCallback(string& PAN,
     dispatch_async(dispatch_get_main_queue(), ^ {
 
         self.homeButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-
-        /*
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.selectFilePageView.hidden = YES;
-        self.homeThirdPageView.hidden = NO;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-         */
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
 
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:HOME_THIRD_PAGE];
-
-        //[self showSubView:HOME_THIRD_PAGE];
     });
 }
 
@@ -1338,102 +1275,71 @@ CK_RV completedCallback(string& PAN,
     dispatch_async(dispatch_get_main_queue(), ^ {
 
         self.homeButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
 
         self.homeFirstPageView.hidden = YES;
         self.selectFilePageView.hidden = YES;
         self.homeSecondPageView.hidden = NO;
         self.homeThirdPageView.hidden = YES;
         self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
+        self.changePINPageView.hidden = YES;
+        self.changePINOKPageView.hidden = YES;
         self.helpPageView.hidden = YES;
         self.infoPageView.hidden = YES;
 
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:HOME_SECOND_PAGE];
-
     });
 }
 
 - (void)showHomeFourthPage {
     [logger info:@"showHomeFourthPage - Inizia funzione"];
     [self.carouselView configureWithCards:[[cieList getDictionary] allValues]];
-    [_btnFirmaElettronica setEnabled:YES];
+    [_btnMenuDigitalSignature setEnabled:YES];
     dispatch_async(dispatch_get_main_queue(), ^ {
-
         self.homeButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        
         [self updateAbbinaAndAnnullaLayout];
-
-        /*
-        self.homeFirstPageView.hidden = YES;
-        self.selectFilePageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = NO;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-        self.sbloccoPageView.hidden = YES;
-        self.sbloccoOKPageView.hidden = YES;
-        */
-
+        
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:HOME_FOURTH_PAGE];
-
     });
 }
 
-- (void)showCambioPINPage {
-    [logger info:@"showCambioPINPage - Inizia funzione"];
+- (void)showChangePINPage {
+    [logger info:@"showChangePINPage - Inizia funzione"];
     dispatch_async(dispatch_get_main_queue(), ^ {
 
         self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
 
-        self.progressIndicatorCambioPIN.hidden = YES;
-        self.labelProgressCambioPIN.hidden = YES;
+        self.progressIndicatorChangePIN.hidden = YES;
+        self.labelProgressChangePIN.hidden = YES;
 
-        /*
-        self.homeFirstPageView.hidden = YES;
-        self.selectFilePageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = NO;
-        self.cambioPINOKPageView.hidden = YES;
-        self.sbloccoPageView.hidden = YES;
-        self.sbloccoOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-         */
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:CAMBIO_PIN_PAGE];
-
     });
 }
 
@@ -1442,26 +1348,15 @@ CK_RV completedCallback(string& PAN,
     dispatch_async(dispatch_get_main_queue(), ^ {
 
         self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
 
-        /*
-        self.homeFirstPageView.hidden = YES;
-        self.selectFilePageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = NO;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-         */
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:CAMBIO_PIN_OK_PAGE];
     });
@@ -1472,35 +1367,20 @@ CK_RV completedCallback(string& PAN,
     dispatch_async(dispatch_get_main_queue(), ^ {
 
         self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
 
-        self.progressIndicatorSbloccoPIN.hidden = YES;
-        self.labelProgressSbloccoPIN.hidden = YES;
-
-        /*
-        self.homeFirstPageView.hidden = YES;
-        self.selectFilePageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.sbloccoPageView.hidden = NO;
-        self.sbloccoOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-         */
+        self.progressIndicatorUnlockPIN.hidden = YES;
+        self.labelProgressUnlockPIN.hidden = YES;
 
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:SBLOCCO_PAGE];
-
     });
 }
 
@@ -1509,28 +1389,14 @@ CK_RV completedCallback(string& PAN,
     dispatch_async(dispatch_get_main_queue(), ^ {
 
         self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-
-        /*
-        self.homeFirstPageView.hidden = YES;
-        self.selectFilePageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.sbloccoPageView.hidden = YES;
-        self.sbloccoOKPageView.hidden = NO;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = YES;
-         */
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
 
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:SBLOCCO_OK_PAGE];
@@ -1543,30 +1409,19 @@ CK_RV completedCallback(string& PAN,
     dispatch_async(dispatch_get_main_queue(), ^ {
 
         self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
 
         self.labelHelp.stringValue = @"Aiuto";
-        self.assistenzaImageView.hidden = NO;
-        self.sbloccoImageView.hidden = NO;
+        self.helpImageView.hidden = NO;
+        self.unlockImageView.hidden = NO;
 
-        /*
-        self.homeFirstPageView.hidden = YES;
-        self.selectFilePageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.helpPageView.hidden = NO;
-        self.infoPageView.hidden = YES;
-         */
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:HELP_PAGE];
 
@@ -1579,29 +1434,18 @@ CK_RV completedCallback(string& PAN,
     dispatch_async(dispatch_get_main_queue(), ^ {
 
         self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
 
         self.labelHelp.stringValue = @"Tutorial";
-        self.assistenzaImageView.hidden = YES;
-        self.sbloccoImageView.hidden = YES;
-
-        /*
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.helpPageView.hidden = NO;
-        self.infoPageView.hidden = YES;
-         */
+        self.helpImageView.hidden = YES;
+        self.unlockImageView.hidden = YES;
 
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:HELP_PAGE];
@@ -1615,25 +1459,15 @@ CK_RV completedCallback(string& PAN,
     dispatch_async(dispatch_get_main_queue(), ^ {
 
         self.homeButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.firmaElettronicaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.verificaFirmaButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.cambioPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        self.sbloccoPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.digitalSignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.verifySignatureButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.changePINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.unlockPINButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.tutorialButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
-        self.impostazioniButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
+        self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
 
-        /*
-        self.homeFirstPageView.hidden = YES;
-        self.homeSecondPageView.hidden = YES;
-        self.homeThirdPageView.hidden = YES;
-        self.homeFourthPageView.hidden = YES;
-        self.cambioPINPageView.hidden = YES;
-        self.cambioPINOKPageView.hidden = YES;
-        self.helpPageView.hidden = YES;
-        self.infoPageView.hidden = NO;
-         */
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:INFO_PAGE];
 
@@ -1718,13 +1552,13 @@ CK_RV completedCallback(string& PAN,
     [logger info:@"updateAbbinaAndAnnullaLayout - Inizia funzione"];
 
     if ( [[cieList getDictionary] count] >= 1) {
-        self.btnAnnulla.hidden = NO;
-        self.abbinaButtonWhenAnnullaVisible.priority = NSLayoutPriorityDefaultHigh;
-        self.abbinaButtonWhenAnnullaInvisible.priority = NSLayoutPriorityDefaultLow;
+        self.btnAbort.hidden = NO;
+        self.pairButtonWhenAbortVisible.priority = NSLayoutPriorityDefaultHigh;
+        self.pairButtonWhenAbortInvisible.priority = NSLayoutPriorityDefaultLow;
     } else {
-        self.btnAnnulla.hidden = YES;
-        self.abbinaButtonWhenAnnullaVisible.priority = NSLayoutPriorityDefaultLow;
-        self.abbinaButtonWhenAnnullaInvisible.priority = NSLayoutPriorityDefaultHigh;
+        self.btnAbort.hidden = YES;
+        self.pairButtonWhenAbortVisible.priority = NSLayoutPriorityDefaultLow;
+        self.pairButtonWhenAbortInvisible.priority = NSLayoutPriorityDefaultHigh;
     }
 
     [self updateViewConstraints];
@@ -1753,9 +1587,7 @@ CK_RV completedCallback(string& PAN,
     if (operation == VERIFY) {
         // go to verify
         [self btnVerificaOp:nil];
-        // [cG showSubView:SELECT_OP_PAGE];
     } else {
-        // [cG showSubView:SELECT_OP_PAGE];
         [self btnFirmaOp:nil];
     }
 }
@@ -1764,28 +1596,28 @@ CK_RV completedCallback(string& PAN,
     [logger info:@"btnFirmaOp: - Inizia funzione"];
     filePath = _lblPathOp.stringValue;
     _filePathSignOp.stringValue = filePath;
-    _btnProseguiFirmaOp.enabled = NO;
+    _btnProceedSignatureOp.enabled = NO;
     _lblCades.textColor = NSColor.grayColor;
     _lblCadesSub.textColor = NSColor.grayColor;
     _lblPades.textColor = NSColor.grayColor;
     _lblPadesSub.textColor = NSColor.grayColor;
     _pictureCades.image = [NSImage imageNamed:@"p7m_gray"];
     _picturePades.image = [NSImage imageNamed:@"pdf_gray"];
-    _cbFirmaGrafica.enabled = NO;
-    _cbFirmaGrafica.state = NSOffState;
+    _cbGraphicSignature.enabled = NO;
+    _cbGraphicSignature.state = NSOffState;
     NSColor *color = [NSColor grayColor];
-    NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithAttributedString:[_cbFirmaGrafica attributedTitle]];
+    NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithAttributedString:[_cbGraphicSignature attributedTitle]];
     NSRange titleRange = NSMakeRange(0, [colorTitle length]);
     [colorTitle addAttribute:NSForegroundColorAttributeName value:color range:titleRange];
-    [_cbFirmaGrafica setAttributedTitle:colorTitle];
+    [_cbGraphicSignature setAttributedTitle:colorTitle];
     operation = NO_OP;
     NSString *filePathNoSpaces = [filePath stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString* fileType = [[NSURL URLWithString:filePathNoSpaces] pathExtension];
 
     if ([fileType isEqualTo:@"pdf"]) {
-        [_cbFirmaGrafica setEnabled:YES];
+        [_cbGraphicSignature setEnabled:YES];
     } else {
-        [_cbFirmaGrafica setEnabled:NO];
+        [_cbGraphicSignature setEnabled:NO];
     }
 
     ChangeView *cG = [ChangeView getInstance];
@@ -1797,13 +1629,13 @@ CK_RV completedCallback(string& PAN,
     [logger info:@"btnVerificaOp: - Inizia funzione"];
     [logger debug:@"Selected Verifica Operation"];
     filePath = _lblPathOp.stringValue;
-    _lblVerificaPath.stringValue = filePath;
+    _lblVerifyPath.stringValue = filePath;
     [self verificaConCie:sender inputFilePath:filePath];
 }
 
-- (IBAction)btnAnnullaOp:(id)sender {
-    [logger info:@"btnAnnullaOp: - Inizia funzione"];
-    _btnProseguiFirmaOp.enabled = NO;
+- (IBAction)btnAbortOp:(id)sender {
+    [logger info:@"btnAbortOp: - Inizia funzione"];
+    _btnProceedSignatureOp.enabled = NO;
     _lblCades.textColor = NSColor.grayColor;
     _lblCadesSub.textColor = NSColor.grayColor;
     _lblPades.textColor = NSColor.grayColor;
@@ -1819,16 +1651,16 @@ CK_RV completedCallback(string& PAN,
     _lblCadesSub.textColor = NSColor.blackColor;
     _lblPades.textColor = NSColor.grayColor;
     _lblPadesSub.textColor = NSColor.grayColor;
-    _btnProseguiFirmaOp.enabled = YES;
+    _btnProceedSignatureOp.enabled = YES;
     NSColor *color = [NSColor grayColor];
-    NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithAttributedString:[_cbFirmaGrafica attributedTitle]];
+    NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithAttributedString:[_cbGraphicSignature attributedTitle]];
     NSRange titleRange = NSMakeRange(0, [colorTitle length]);
     [colorTitle addAttribute:NSForegroundColorAttributeName value:color range:titleRange];
-    [_cbFirmaGrafica setAttributedTitle:colorTitle];
+    [_cbGraphicSignature setAttributedTitle:colorTitle];
     _pictureCades.image = [NSImage imageNamed:@"p7m"];
     _picturePades.image = [NSImage imageNamed:@"pdf_gray"];
-    operation = FIRMA_CADES;
-    _cbFirmaGrafica.state = NSOffState;
+    operation = CADES_SIGNATURE;
+    _cbGraphicSignature.state = NSOffState;
     //TODO mettere immagine colorata
 }
 
@@ -1843,14 +1675,14 @@ CK_RV completedCallback(string& PAN,
         _lblPades.textColor = NSColor.redColor;
         _lblPadesSub.textColor = NSColor.blackColor;
         NSColor *color = [NSColor blackColor];
-        NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithAttributedString:[_cbFirmaGrafica attributedTitle]];
+        NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithAttributedString:[_cbGraphicSignature attributedTitle]];
         NSRange titleRange = NSMakeRange(0, [colorTitle length]);
         [colorTitle addAttribute:NSForegroundColorAttributeName value:color range:titleRange];
-        [_cbFirmaGrafica setAttributedTitle:colorTitle];
-        _btnProseguiFirmaOp.enabled = YES;
+        [_cbGraphicSignature setAttributedTitle:colorTitle];
+        _btnProceedSignatureOp.enabled = YES;
         _pictureCades.image = [NSImage imageNamed:@"p7m_gray"];
         _picturePades.image = [NSImage imageNamed:@"pdf"];
-        operation = FIRMA_PADES;
+        operation = PADES_SIGNATURE;
     }
 }
 - (IBAction)cbFirmaGraficaClick:(id)sender {
@@ -1891,16 +1723,18 @@ CK_RV completedCallback(string& PAN,
     [logger debug:[NSString stringWithFormat:@"Write returned error: %@", [error localizedDescription]]];
 }
 
-- (IBAction)btnProseguiFirmaOp:(id)sender {
-    [logger info:@"btnProseguiFirmaOp: - Inizia funzione"];
+- (IBAction)btnProceedSignatureOp:(id)sender {
+    [logger info:@"btnProceedSignatureOp: - Inizia funzione"];
 
     for (NSView * aSubview in [[self prevImageView] subviews]) {
         [aSubview removeFromSuperview];
     }
+    
+    [self showFirmaPinView];
 
     ChangeView *cG = [ChangeView getInstance];
 
-    if (operation == FIRMA_PADES && (_cbFirmaGrafica.state == NSOnState)) {
+    if (operation == PADES_SIGNATURE && (_cbGraphicSignature.state == NSOnState)) {
         [logger debug:@"Firma pades con firma grafica"];
         Cie* selectedCie = [self.carouselView getSelectedCard];
         NSString* signImgPath = [self getSignImagePath:[selectedCie getSerialNumber]];
@@ -1911,11 +1745,11 @@ CK_RV completedCallback(string& PAN,
         }
 
         pdfPreview = [[PdfPreview alloc] initWithPrImageView:[self prevImageView] pdfPath:filePath signImagePath:signImgPath];
-        _lblPathFirmaPrev.stringValue = filePath ;
+        _lblPathSignaturePreview.stringValue = filePath ;
         [cG showSubView:FIRMA_PDF_PREVIEW];
     } else {
         [logger debug:@"Firma senza grafica"];
-        _lblPathFirmaPin.stringValue = filePath;
+        _lblPathSignaturePIN.stringValue = filePath;
         [cG showSubView:FIRMA_PIN_PAGE];
     }
 }
@@ -1926,8 +1760,8 @@ CK_RV completedCallback(string& PAN,
     _lblCadesSub.textColor = NSColor.grayColor;
     _lblPades.textColor = NSColor.grayColor;
     _lblPadesSub.textColor = NSColor.grayColor;
-    _btnProseguiFirmaOp.enabled = NO;
-    _cbFirmaGrafica.state = NSOffState;
+    _btnProceedSignatureOp.enabled = NO;
+    _cbGraphicSignature.state = NSOffState;
     operation = NO_OP;
     ChangeView *cG = [ChangeView getInstance];
     [logger debug:@"AnnullaFirmaOp"];
@@ -1947,27 +1781,28 @@ CK_RV completedCallback(string& PAN,
 - (IBAction)ProseguiFirma:(id)sender {
     [logger info:@"ProseguiFirma: - Inizia funzione"];
     //TODO prendere posizione firma grafica
-    _lblPathFirmaPin.stringValue = filePath;
+    _lblPathSignaturePIN.stringValue = filePath;
+    [self showFirmaPinView];
     ChangeView *cG = [ChangeView getInstance];
     [cG showSubView:FIRMA_PIN_PAGE];
 }
 - (IBAction)annullaFirmaClick:(id)sender {
     [logger info:@"annullaFirmaClick: - Inizia funzione"];
-    _lblInsertPin.hidden = NO;
-    _cvInsertPin.hidden = NO;
-    _btnAnnulla.hidden = NO;
-    _btnConcludiFirma.hidden = YES;
-    _progressFirma.hidden = YES;
-    _lblProgressFirma.hidden = YES;
+    _lblInsertPIN.hidden = NO;
+    _cvInsertPIN.hidden = NO;
+    _btnAbort.hidden = NO;
+    _btnSignatureCompleted.hidden = YES;
+    _progressSignature.hidden = YES;
+    _lblProgressSignature.hidden = YES;
 
-    for (int i = 9; i < 13; i++) {
+    for (int i = 9; i < 17; i++) {
         NSTextField* txtField = [self.view viewWithTag:i];
         txtField.stringValue = @"";
     }
 
     ChangeView *cG = [ChangeView getInstance];
 
-    if (_cbFirmaGrafica.state == NSOnState) {
+    if (_cbGraphicSignature.state == NSOnState) {
         [cG showSubView:FIRMA_PDF_PREVIEW];
     } else {
         [cG showSubView:SELECT_FIRMA_OP];
@@ -1976,16 +1811,17 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)firmaClick:(id)sender {
     [logger info:@"firmaClick: - Inizia funzione"];
-    //_btnFirmaElettronica.enabled = NO;
     NSString* pin = @"";
+    int pinLength = (self.fullPINSignature) ? 8 : 4;
+    NSString* message = ((pinLength == 8) ? @"Inserire le 8 cifre del PIN" : @"Inserire le ultime 4 cifre del PIN");
 
-    for (int i = 9; i < 13; i++) {
+    for (int i = 9; i < 9 + pinLength; i++) {
         NSTextField* txtField = [self.view viewWithTag:i];
         pin = [pin stringByAppendingString:txtField.stringValue];
     }
 
-    if (pin.length != 4) {
-        [self showMessage:@"Inserire le ultime 4 cifre del PIN" withTitle:@"PIN non corretto" exitAfter:false];
+    if (pin.length != pinLength) {
+        [self showMessage:message withTitle:@"PIN non corretto" exitAfter:false];
         [self showFirmaPinView];
         return;
     }
@@ -1998,7 +1834,7 @@ CK_RV completedCallback(string& PAN,
     }
 
     if (i < pin.length || !(c >= '0' && c <= '9')) {
-        [self showMessage:@"Il PIN deve essere composto da 4 numeri" withTitle:@"PIN non corretto" exitAfter:false];
+        [self showMessage:[NSString stringWithFormat:@"%@/%@/%@", @"Il PIN deve essere composto da ", ((self.fullPINSignature) ? @"8" : @"4"), @" numeri"] withTitle:@"PIN non corretto" exitAfter:false];
         [self showFirmaPinView];
         return;
     }
@@ -2011,22 +1847,22 @@ CK_RV completedCallback(string& PAN,
     [panel setTitle:@"Salva file firmato"];
     [panel setAllowsOtherFileTypes:NO];
 
-    if (operation == FIRMA_PADES) {
+    if (operation == PADES_SIGNATURE) {
         [panel setAllowedFileTypes:[[NSArray alloc] initWithObjects:@"pdf", nil]];
         NSString *saveFileName = [NSString stringWithFormat:@"%@%@", [fileName stringByDeletingPathExtension], @"-signed"];
         [panel setNameFieldStringValue:saveFileName];
         [panel beginWithCompletionHandler: ^ (NSInteger result) {
                   if (result == NSModalResponseOK) {
-                      _lblInsertPin.hidden = YES;
-                      _cvInsertPin.hidden = YES;
-                      _btnConcludiFirma.hidden = YES;
-                      _btnFirma.enabled = NO;
-                      _btnAnnullaFirma.enabled = NO;
-                      _progressFirma.hidden = NO;
-                      _lblProgressFirma.hidden = NO;
+                      _lblInsertPIN.hidden = YES;
+                      _cvInsertPIN.hidden = YES;
+                      _btnSignatureCompleted.hidden = YES;
+                      _btnSign.enabled = NO;
+                      _btnAbortSignature.enabled = NO;
+                      _progressSignature.hidden = NO;
+                      _lblProgressSignature.hidden = NO;
                 NSString *outPath = [[panel URL] path];
 
-                if (_cbFirmaGrafica.state == NSOnState) {
+                if (_cbGraphicSignature.state == NSOnState) {
                     Cie* selectedCie = [self.carouselView getSelectedCard];
                     NSString* signImgPath = [self getSignImagePath:[selectedCie getSerialNumber]];
                     NSArray *array = [pdfPreview getSignImageInfos];
@@ -2043,13 +1879,13 @@ CK_RV completedCallback(string& PAN,
         //[panel setAllowedFileTypes:[[NSArray alloc] initWithObjects:@"p7m", nil]];
         [panel beginWithCompletionHandler: ^ (NSInteger result) {
                   if (result == NSModalResponseOK) {
-                      _lblInsertPin.hidden = YES;
-                      _cvInsertPin.hidden = YES;
-                      _btnConcludiFirma.hidden = YES;
-                      _btnFirma.enabled = NO;
-                      _btnAnnullaFirma.enabled = NO;
-                      _progressFirma.hidden = NO;
-                      _lblProgressFirma.hidden = NO;
+                      _lblInsertPIN.hidden = YES;
+                      _cvInsertPIN.hidden = YES;
+                      _btnSignatureCompleted.hidden = YES;
+                      _btnSign.enabled = NO;
+                      _btnAbortSignature.enabled = NO;
+                      _progressSignature.hidden = NO;
+                      _lblProgressSignature.hidden = NO;
                 NSString *outPath = [[panel URL] path];
                 [self firmaConCie:sender inputFilePath:filePath outFilePath:outPath signImagePath:NULL pin:pin x:0.0 y:0.0 w:0.0 h:0.0 fileType:@"p7m"];
             }
@@ -2057,30 +1893,35 @@ CK_RV completedCallback(string& PAN,
     }
 }
 
-- (void)firmaConCie:(NSControl*)sender inputFilePath:(NSString*)inPath outFilePath:(NSString*)outPath  signImagePath:(NSString*)signImagePath pin:(NSString*)pin x:(float)x y:(float)y w:(float)w h:(float)h fileType:(NSString*)fileType {
-    [logger info:@"firmaConCie:inputFilePath:outFilePath:signImagePath:pin:x:y:w:h:fileType: - Inizia funzione"];
+- (void) signMWCall:(NSControl*)sender inputFilePath:(NSString*)inPath outFilePath:(NSString*)outPath signImagePath:(NSString*)signImagePath pin:(NSString*)pin x:(float)x y:(float)y w:(float)w h:(float)h fileType:(NSString*)fileType {
+    
+    firmaConCIEfn pfnFirmaConCie = (firmaConCIEfn)dlsym(hModule, "firmaConCIE");
+
+    if (!pfnFirmaConCie) {
+        dlclose(hModule);
+        [self showMessage:@"Funzione firmaConCie non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:NO];
+        return;
+    }
+    
     int pageNumber = [pdfPreview getSelectedPage];
-    //NSString* fileType = @"pdf";
-    [sender setEnabled:NO];
+    
     dispatch_async(dispatch_get_global_queue(0, 0), ^ {
+        NSString *pan = (self.fullPINSignature ? self.tmpPANCIE : [[self.carouselView getSelectedCard] getPan]);
 
-        firmaConCIEfn pfnFirmaConCie = (firmaConCIEfn)dlsym(hModule, "firmaConCIE");
-
-        if (!pfnFirmaConCie) {
-            dlclose(hModule);
-            [self showMessage:@"Funzione firmaConCie non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:NO];
-            return;
-        }
-
-        NSString *pan = [[self.carouselView getSelectedCard] getPan];
-
-        long ret = pfnFirmaConCie([inPath UTF8String], [fileType UTF8String], [pin UTF8String], [pan UTF8String], pageNumber, x, y, w, h, [signImagePath UTF8String], [outPath UTF8String], &progressFirmaCallback, &completedFirmaCallback);
-
+        long ret = pfnFirmaConCie([inPath UTF8String], [fileType UTF8String], [pin UTF8String], [pan UTF8String], pageNumber, x, y, w, h, [signImagePath UTF8String], [outPath UTF8String], &progressSignatureCallback, &completedSignatureCallback);
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-
+            
             [((NSControl*)sender) setEnabled:YES];
+            
+            if(self.fullPINSignature) {
+                [self disabilita];
+                self.fullPINSignature = NO;
+                self.tmpPANCIE = nil;
+            }
 
             switch (ret) {
+                    
                 case CKR_TOKEN_NOT_RECOGNIZED:
                     [self showMessage:@"CIE non presente sul lettore" withTitle:@"Firma con CIE" exitAfter:false];
                     [self showFirmaPinView];
@@ -2110,47 +1951,117 @@ CK_RV completedCallback(string& PAN,
                     [self showFirmaPinView];
                     break;
             }
-
         });
     });
 }
 
-- (void)showFirmaPinView {
-    [logger info:@"showFirmaPinView - Inizia funzione"];
+- (void)firmaConCie:(NSControl*)sender inputFilePath:(NSString*)inPath outFilePath:(NSString*)outPath signImagePath:(NSString*)signImagePath pin:(NSString*)pin x:(float)x y:(float)y w:(float)w h:(float)h fileType:(NSString*)fileType {
+    [logger info:@"firmaConCie:inputFilePath:outFilePath:signImagePath:pin:x:y:w:h:fileType: - Inizia funzione"];
 
-    for (int i = 9; i < 13; i++) {
-        NSTextField* txtField = [self.view viewWithTag:i];
-        txtField.stringValue = @"";
+    [sender setEnabled:NO];
+        
+    if(self.fullPINSignature) {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^ {
+            AbilitaCIEfn pfnAbilitaCIE = (AbilitaCIEfn)dlsym(hModule, "AbilitaCIE");
+            
+            if (!pfnAbilitaCIE) {
+                dlclose(hModule);
+                [self showMessage:@"Funzione AbilitaCIE non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:NO];
+                return;
+            }
+            
+            char* szPAN = NULL;
+            
+            int attempts = -1;
+            
+            long ret = pfnAbilitaCIE(szPAN, [pin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallback, &completedCallback);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [((NSControl*)sender) setEnabled:YES];
+                
+                switch (ret) {
+                    case CARD_ALREADY_ENABLED: {
+                        [self showMessage:@"La CIE risulta essere già stata associata precedentemente, per cui l'operazione di firma è stata annullata. Ripetere il procedimento, selezionando la CIE dal selettore presente in 'Firma Elettronica'." withTitle:@"CIE già abilitata" exitAfter:NO];
+                        [self showHomeFirstPage];
+                        break;
+                    }
+                        
+                    case CKR_OK: {
+                        self.tmpPANCIE = [[NSString alloc] initWithCString:sPAN.c_str() encoding:NSUTF8StringEncoding];
+                        NSString *serialNumber = [[NSString alloc] initWithCString:sEfSeriale.c_str() encoding:NSUTF8StringEncoding];
+                        NSString *name = [[NSString alloc] initWithCString:sName.c_str() encoding:NSUTF8StringEncoding];
+                        Cie *cie = [[Cie alloc] init:name serial:serialNumber pan:self.tmpPANCIE];
+                        [cieList addCie:self.tmpPANCIE owner:cie];
+                        [NSUserDefaults.standardUserDefaults setObject:[cieList getData] forKey:@"cieDictionary"];
+                        [NSUserDefaults.standardUserDefaults synchronize];
+                        [self signMWCall:sender inputFilePath:inPath outFilePath:outPath signImagePath:signImagePath pin:[pin substringFromIndex:4] x:x y:y w:w h:h fileType:fileType];
+                        break;
+                    }
+                    
+                    default:
+                        NSLog(@"Ret value: %ld", ret);
+                        [self showMessage:@"Si è verificato un errore durante la lettura dei dati della CIE." withTitle:@"Errore durante la firma" exitAfter:NO];
+                        [self showHomeFirstPage];
+                }
+            });
+        });
     }
 
-    _lblInsertPin.hidden = NO;
-    _cvInsertPin.hidden = NO;
-    _btnAnnulla.hidden = NO;
-    _btnFirma.enabled = YES;
-    _btnAnnullaFirma.enabled = YES;
-    _progressFirma.hidden = YES;
-    _lblProgressFirma.stringValue = @"Firma in corso...";
-    _lblProgressFirma.hidden = YES;
-    _btnConcludiFirma.hidden = YES;
-    imgFirmaOkPointer.hidden = YES;
+    else {
+        [self signMWCall:sender inputFilePath:inPath outFilePath:outPath signImagePath:signImagePath pin:pin x:x y:y w:w h:h fileType:fileType];
+    }
+}
+
+- (void)showFirmaPinView {
+    [logger info:@"showFirmaPinView - Inizia funzione"];
+    
+    self.fullPINSignature = [[cieList getDictionary] count] == 0 || [self.carouselView shouldUseFullPINForSignature];
+    
+    int pinLength = ((self.fullPINSignature) ? 8 : 4);
+    int tagIndexStart = 9;
+    
+    NSLog(@"PIN Length: %d", pinLength);
+
+    for (int i = tagIndexStart; i < 17; i++) {
+        NSTextField* txtField = [self.view viewWithTag:i];
+        txtField.stringValue = @"";
+        
+        if(i >= tagIndexStart + pinLength)
+            txtField.hidden = YES;
+        else
+            txtField.hidden = NO;
+    }
+    
+    _lblInsertPIN.stringValue = ((pinLength == 8) ? @"Inserisci le 8 cifre del PIN" : @"Inserisci le ultime 4 cifre del PIN");
+    _lblInsertPIN.hidden = NO;
+    _cvInsertPIN.hidden = NO;
+    _btnAbort.hidden = NO;
+    _btnSign.enabled = YES;
+    _btnAbortSignature.enabled = YES;
+    _progressSignature.hidden = YES;
+    _lblProgressSignature.stringValue = @"Firma in corso...";
+    _lblProgressSignature.hidden = YES;
+    _btnSignatureCompleted.hidden = YES;
+    imgSignatureOKPointer.hidden = YES;
 }
 
 - (IBAction)concludiClick:(id)sender {
     [logger info:@"concludiClick: - Inizia funzione"];
-    _lblInsertPin.hidden = NO;
-    _cvInsertPin.hidden = NO;
-    _btnAnnullaFirma.hidden = NO;
-    _btnFirma.hidden = NO;
-    _btnFirma.enabled = YES;
-    _btnAnnullaFirma.enabled = YES;
-    _progressFirma.hidden = YES;
-    _lblProgressFirma.stringValue = @"Firma in corso...";
-    _lblProgressFirma.hidden = YES;
-    progressIndicatorPointerFirma.doubleValue = 0;
-    _btnConcludiFirma.hidden = YES;
-    imgFirmaOkPointer.hidden = YES;
+    _lblInsertPIN.hidden = NO;
+    _cvInsertPIN.hidden = NO;
+    _btnAbortSignature.hidden = NO;
+    _btnSign.hidden = NO;
+    _btnSign.enabled = YES;
+    _btnAbortSignature.enabled = YES;
+    _progressSignature.hidden = YES;
+    _lblProgressSignature.stringValue = @"Firma in corso...";
+    _lblProgressSignature.hidden = YES;
+    progressIndicatorSignaturePointer.doubleValue = 0;
+    _btnSignatureCompleted.hidden = YES;
+    imgSignatureOKPointer.hidden = YES;
 
-    for (int i = 9; i < 13; i++) {
+    for (int i = 9; i < 17; i++) {
         NSTextField* txtField = [self.view viewWithTag:i];
         txtField.stringValue = @"";
     }
@@ -2165,11 +2076,11 @@ CK_RV completedCallback(string& PAN,
     NSString* signImgPath = [self getSignImagePath:[selectedCie getSerialNumber]];
 
     if ([selectedCie getCustomSign]) {
-        _lblFirmaPersonalizata.stringValue = @"Una tua firma grafica personalizzata è già stata caricata. Vuoi aggiornarla?";
-        _btnCreaFirma.enabled = YES;
+        _lblCustomizeGraphicSignature.stringValue = @"Una tua firma grafica personalizzata è già stata caricata. Vuoi aggiornarla?";
+        _btnGenerateGraphicSignature.enabled = YES;
     } else {
-        _lblFirmaPersonalizata.stringValue = @"Abbiamo creato per te una firma grafica, ma se preferisci puoi personalizzarla. Questo passaggio non è indispensabile, ma ti consentirà di dare un tocco personale ai documenti firmati.";
-        _btnCreaFirma.enabled = NO;
+        _lblCustomizeGraphicSignature.stringValue = @"Abbiamo creato per te una firma grafica, ma se preferisci puoi personalizzarla. Questo passaggio non è indispensabile, ma ti consentirà di dare un tocco personale ai documenti firmati.";
+        _btnGenerateGraphicSignature.enabled = NO;
     }
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -2202,17 +2113,17 @@ CK_RV completedCallback(string& PAN,
     }
 
     [self drawText:[selectedCie getName].capitalizedString pathToFile:signImgPath];
-    _lblFirmaPersonalizata.stringValue = @"Abbiamo creato per te una firma grafica, ma se preferisci puoi personalizzarla. Questo passaggio non è indispensabile, ma ti consentirà di dare un tocco personale ai documenti firmati.";
-    [_btnPersonalizza setTitle:@"Personalizza"];
-    [_lblPersonalizzata setHidden:YES];
-    [_lblFirmaPersonalizzataSub setHidden:NO];
+    _lblCustomizeGraphicSignature.stringValue = @"Abbiamo creato per te una firma grafica, ma se preferisci puoi personalizzarla. Questo passaggio non è indispensabile, ma ti consentirà di dare un tocco personale ai documenti firmati.";
+    [_btnCustomizeGraphicSignature setTitle:@"Personalizza"];
+    [_lblCustomized setHidden:YES];
+    [_lblGraphicSignatureCustomizationDesc setHidden:NO];
     _signImageView.image = [[NSImage alloc] initWithContentsOfFile:signImgPath];
     [selectedCie customSignSet:false];
     Cie* cie = [[cieList getDictionary] valueForKey:[selectedCie getPan]];
     [cie customSignSet:false];
     [NSUserDefaults.standardUserDefaults setObject:[cieList getData] forKey:@"cieDictionary"];
     [NSUserDefaults.standardUserDefaults synchronize];
-    _btnCreaFirma.enabled = NO;
+    _btnGenerateGraphicSignature.enabled = NO;
 }
 
 - (IBAction)selectFirmaSignClick:(id)sender {
@@ -2242,11 +2153,11 @@ CK_RV completedCallback(string& PAN,
                 [cie customSignSet:true];
                 [NSUserDefaults.standardUserDefaults setObject:[cieList getData] forKey:@"cieDictionary"];
                 [NSUserDefaults.standardUserDefaults synchronize];
-                _lblFirmaPersonalizata.stringValue = @"Una tua firma grafica personalizzata è già stata caricata. Vuoi aggiornarla?";
-                [_btnPersonalizza setTitle:@"Aggiorna"];
-                [_lblPersonalizzata setHidden:NO];
-                [_lblFirmaPersonalizzataSub setHidden:YES];
-                _btnCreaFirma.enabled = YES;
+                _lblCustomizeGraphicSignature.stringValue = @"Una tua firma grafica personalizzata è già stata caricata. Vuoi aggiornarla?";
+                [_btnCustomizeGraphicSignature setTitle:@"Aggiorna"];
+                [_lblCustomized setHidden:NO];
+                [_lblGraphicSignatureCustomizationDesc setHidden:YES];
+                _btnGenerateGraphicSignature.enabled = YES;
             }
         }
     }];
@@ -2378,14 +2289,14 @@ CK_RV completedCallback(string& PAN,
 
                 dispatch_async(dispatch_get_main_queue(), ^ {
                     [sender setEnabled:YES];
-                    [self.tbVerificaInfo reloadData];
-                    self->_lblSottoscrittori.stringValue = [NSString stringWithFormat:@"Numero di sottoscrittori: %d", ret];
+                    [self.tbVerifyInfo reloadData];
+                    self->_lblSignersNumber.stringValue = [NSString stringWithFormat:@"Numero di sottoscrittori: %d", ret];
                     ChangeView *cG = [ChangeView getInstance];
 
                     if ([[filePath pathExtension] isEqualToString:@"p7m"]) {
-                        _btnEstrai.enabled = YES;
+                        _btnExtractFile.enabled = YES;
                     } else {
-                        _btnEstrai.enabled = NO;
+                        _btnExtractFile.enabled = NO;
                     }
                     [cG showSubView:VERIFICA_PAGE];
                 });
@@ -2442,21 +2353,21 @@ CK_RV completedCallback(string& PAN,
         syncUserDefaults = YES;
     }
 
-    if (([_txtPorta.stringValue isEqual:@""] && ![_txtProxyAddr.stringValue isEqual:@""]) || (![_txtPorta.stringValue isEqual:@""] && [_txtProxyAddr.stringValue isEqual:@""])) {
+    if (([_txtPort.stringValue isEqual:@""] && ![_txtProxyAddr.stringValue isEqual:@""]) || (![_txtPort.stringValue isEqual:@""] && [_txtProxyAddr.stringValue isEqual:@""])) {
         [logger debug:@"Indirizzo o porta del proxy mancante"];
         [self showMessage:@"Indirizzo o porta del proxy mancante" withTitle:@"Informazioni proxy mancanti" exitAfter:false];
         closeEditing = NO;
-    } else if ([_txtPorta.stringValue rangeOfCharacterFromSet:nonDigits].location != NSNotFound) {
+    } else if ([_txtPort.stringValue rangeOfCharacterFromSet:nonDigits].location != NSNotFound) {
         [logger debug:@"Il campo porta deve contenere solo numeri"];
         [self showMessage:@"Il campo porta deve contenere solo numeri" withTitle:@"Porta del proxy errata" exitAfter:false];
         closeEditing = NO;
     } else {
         [NSUserDefaults.standardUserDefaults setObject:_txtProxyAddr.stringValue forKey:@"proxyUrl"];
 
-        if ([_txtPorta.stringValue isEqual:@""]) {
+        if ([_txtPort.stringValue isEqual:@""]) {
             [NSUserDefaults.standardUserDefaults setObject:@"" forKey:@"proxyPort"];
         } else {
-            [NSUserDefaults.standardUserDefaults setObject:_txtPorta.stringValue forKey:@"proxyPort"];
+            [NSUserDefaults.standardUserDefaults setObject:_txtPort.stringValue forKey:@"proxyPort"];
         }
 
         syncUserDefaults = YES;
@@ -2496,14 +2407,14 @@ CK_RV completedCallback(string& PAN,
 
 - (void)setSettingsFormEditingState:(BOOL)value {
     [logger info:@"setSettingsFormEditingState: - Inizia funzione"];
-    [_txtPorta setEnabled:value];
+    [_txtPort setEnabled:value];
     [_txtProxyAddr setEnabled:value];
     [_txtPassword setEnabled:value];
     [_txtUsername setEnabled:value];
-    [_cbMostraPsw setEnabled:value];
-    _cbMostraPsw.state = NSOffState;
-    [_btnSalvaProxy setEnabled:value];
-    [_btnModificaProxy setEnabled:!value];
+    [_cbShowPsw setEnabled:value];
+    _cbShowPsw.state = NSOffState;
+    [_btnSaveProxy setEnabled:value];
+    [_btnEditProxy setEnabled:!value];
     [_rbLoggingAppNone setEnabled:value];
     [_rbLoggingAppError setEnabled:value];
     [_rbLoggingAppInfo setEnabled:value];
@@ -2532,7 +2443,7 @@ CK_RV completedCallback(string& PAN,
 - (IBAction)mostraPassword:(id)sender {
     [logger info:@"mostraPassword: - Inizia funzione"];
 
-    if (_cbMostraPsw.state == NSControlStateValueOn && ![_txtPassword.stringValue isEqual:@""]) {
+    if (_cbShowPsw.state == NSControlStateValueOn && ![_txtPassword.stringValue isEqual:@""]) {
         _plainPassword.stringValue = _txtPassword.stringValue;
         [_txtPassword setHidden:TRUE];
         [_plainPassword setHidden:FALSE];
@@ -2625,7 +2536,7 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)concludiVerificaClick:(id)sender {
     [logger info:@"concludiVerificaClick: - Inizia funzione"];
-    self->_lblSottoscrittori.stringValue =  @"Numero di sottoscrittori";
+    self->_lblSignersNumber.stringValue =  @"Numero di sottoscrittori";
     ChangeView *cG = [ChangeView getInstance];
     [cG showSubView:SELECT_FILE_PAGE];
 }
@@ -2634,18 +2545,7 @@ CK_RV completedCallback(string& PAN,
 
 - (void)shouldAddCard {
     [logger info:@"shouldAddCard - Inizia funzione"];
-    /*
-    self.homeFirstPageView.hidden = NO;
-    self.homeSecondPageView.hidden = YES;
-    self.homeThirdPageView.hidden = YES;
-    self.homeFourthPageView.hidden = YES;
-    self.cambioPINPageView.hidden = YES;
-    self.cambioPINOKPageView.hidden = YES;
-    self.sbloccoPageView.hidden = YES;
-    self.sbloccoOKPageView.hidden = YES;
-    self.helpPageView.hidden = YES;
-    self.infoPageView.hidden = YES;
-     */
+
     ChangeView *cG = [ChangeView getInstance];
     [cG showSubView:HOME_FIRST_PAGE];
 
