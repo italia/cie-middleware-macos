@@ -82,6 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak) IBOutlet NSButton *rbLoggingLibError;
 @property (weak) IBOutlet NSButton *rbLoggingLibInfo;
 @property (weak) IBOutlet NSButton *rbLoggingLibDebug;
+@property (weak) IBOutlet NSButton *cbShouldRunInBackground;
 
 @property AppLogLevel logLevelApp;
 @property AppLogLevel logLevelLib;

@@ -9,7 +9,7 @@
 #ifndef keys_h
 #define keys_h
 
-#define ENCRYPTION_KEY "this is a fake key"
+#define ENCRYPTION_KEY "key.cie.middlewre.macos.2019"
 
 
 #endif /* keys_h */

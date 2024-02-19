@@ -73,7 +73,7 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 
     if(!hModule)
     {
-        const char* szCryptoki = "/usr/local/lib/libcie-pkcs11.dylib";
+        const char* szCryptoki = GetPKCS11Path().c_str();
         hModule = dlopen(szCryptoki, RTLD_LOCAL | RTLD_LAZY);
         if(!hModule)
         {
@@ -410,6 +410,31 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     [items addObject:keyItem];
 
     return YES;
+}
+
+unsigned long find_nth(string text, size_t pos, string el, size_t nth)
+{
+    unsigned long found_pos = text.find(el, pos);
+    
+    if(nth == 0 || string::npos == found_pos)
+        return found_pos;
+    
+    return find_nth(text, found_pos + 1, el, nth-1);
+}
+
+string GetPKCS11Path()
+{
+    char* home = getenv("HOME");
+    string path(home);
+    
+    unsigned long pos = find_nth(path, 0, "/", 3);
+    
+    string sharedFolderPath(path, 0, pos);
+    sharedFolderPath.append("/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/libcie-pkcs11.dylib");
+    
+    printf("PKCS11 Dir: %s\n", sharedFolderPath.c_str());
+    
+    return sharedFolderPath.c_str();
 }
 
 bool initPKCS11()

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21225"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="21225"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="20037"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
@@ -34,9 +34,29 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
+                    <connections>
+                        <outlet property="statusMenu" destination="KEK-tP-GYb" id="7ex-F5-05L"/>
+                    </connections>
+                </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <menu id="KEK-tP-GYb">
+                    <items>
+                        <menuItem title="Apri CIE ID" id="WvU-3Q-40H">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="openCIEID:" target="Voe-Tx-rLC" id="dAO-vR-Quc"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Termina CIE ID" id="4CK-NN-UYP">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="killCIEID:" target="Voe-Tx-rLC" id="5PT-EG-lZg"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                </menu>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
@@ -50,7 +70,7 @@
                         <rect key="contentRect" x="196" y="240" width="482" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
                         <connections>
-                            <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="sC4-jD-qHE"/>
                         </connections>
                     </window>
                     <connections>
@@ -310,6 +330,7 @@
                         <outlet property="btnSignatureCompleted" destination="NFV-Ru-gca" id="SJJ-6y-ecZ"/>
                         <outlet property="carouselView" destination="bbe-RZ-J3q" id="OCw-5F-n95"/>
                         <outlet property="cbGraphicSignature" destination="WNU-mg-OhD" id="nPc-WP-nel"/>
+                        <outlet property="cbShouldRunInBackground" destination="dPw-zO-b0o" id="wIm-Du-hhQ"/>
                         <outlet property="cbShowPsw" destination="jDo-KO-WPc" id="OTm-PI-lBY"/>
                         <outlet property="changePINButtonView" destination="lrL-iW-R0U" id="xaW-Ke-Qi1"/>
                         <outlet property="changePINOKPageView" destination="gbY-3C-V3N" id="xZV-6g-SgL"/>
@@ -552,7 +573,7 @@ DQ
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="fWL-ZO-fzL"/>
                                             </constraints>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Inserici il PUK" id="xGn-PK-mIm">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Inserisci il PUK" id="xGn-PK-mIm">
                                                 <font key="font" metaFont="system" size="16"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -3848,17 +3869,17 @@ DQ
                                             <box ambiguous="YES" title="Box" titlePosition="noTitle" transparent="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t90-0W-cRQ">
                                                 <rect key="frame" x="61" y="10" width="518" height="252"/>
                                                 <view key="contentView" ambiguous="YES" id="DH5-vK-TRJ">
-                                                    <rect key="frame" x="4" y="5" width="510" height="244"/>
+                                                    <rect key="frame" x="3" y="3" width="512" height="246"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <box ambiguous="YES" title="Applicazione desktop" translatesAutoresizingMaskIntoConstraints="NO" id="orn-zh-vTW">
-                                                            <rect key="frame" x="42" y="-2" width="192" height="246"/>
+                                                            <rect key="frame" x="42" y="0.0" width="192" height="246"/>
                                                             <view key="contentView" id="BL2-lU-bRt">
-                                                                <rect key="frame" x="4" y="5" width="184" height="226"/>
+                                                                <rect key="frame" x="3" y="3" width="186" height="228"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
                                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="23" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jpm-7z-PpC">
-                                                                        <rect key="frame" x="55" y="45" width="75" height="133"/>
+                                                                        <rect key="frame" x="55" y="47" width="75" height="133"/>
                                                                         <subviews>
                                                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="po0-gz-gtv">
                                                                                 <rect key="frame" x="-2" y="116" width="77" height="18"/>
@@ -3922,9 +3943,9 @@ DQ
                                                             </constraints>
                                                         </box>
                                                         <box ambiguous="YES" title="Libreria" translatesAutoresizingMaskIntoConstraints="NO" id="OoK-ws-hpv">
-                                                            <rect key="frame" x="267" y="-2" width="192" height="246"/>
+                                                            <rect key="frame" x="267" y="0.0" width="192" height="246"/>
                                                             <view key="contentView" id="YZR-9e-Dhd">
-                                                                <rect key="frame" x="4" y="5" width="184" height="226"/>
+                                                                <rect key="frame" x="3" y="3" width="186" height="228"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
                                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="23" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" id="CB8-ae-VlN">
@@ -4005,6 +4026,67 @@ DQ
                                             <constraint firstItem="t90-0W-cRQ" firstAttribute="leading" secondItem="yvX-nj-KxS" secondAttribute="leading" constant="64" id="cTh-Wf-NNe"/>
                                             <constraint firstItem="t90-0W-cRQ" firstAttribute="centerX" secondItem="EYE-sm-uR4" secondAttribute="centerX" id="dZc-OY-cys"/>
                                             <constraint firstItem="t90-0W-cRQ" firstAttribute="centerX" secondItem="yvX-nj-KxS" secondAttribute="centerX" id="kbv-E8-edl"/>
+                                        </constraints>
+                                    </view>
+                                </tabViewItem>
+                                <tabViewItem label="Preferenze" identifier="" id="Fav-qm-cHt" userLabel="Preferenze">
+                                    <view key="view" id="cy4-fw-0dl">
+                                        <rect key="frame" x="10" y="33" width="640" height="404"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6ch-RX-5cD">
+                                                <rect key="frame" x="109" y="323" width="423" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="YlI-8L-GSO"/>
+                                                </constraints>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Configurazione preferenze" id="ibM-Ur-hX3">
+                                                    <font key="font" metaFont="system" size="37"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GEm-xv-rbv">
+                                                <rect key="frame" x="61" y="292" width="518" height="23"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="23" id="DgI-uK-21E"/>
+                                                    <constraint firstAttribute="width" constant="514" id="Jpm-TJ-6Hv"/>
+                                                </constraints>
+                                                <textFieldCell key="cell" alignment="center" id="9cf-aq-FBX">
+                                                    <font key="font" metaFont="system" size="18"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <box title="Box" titlePosition="noTitle" transparent="YES" translatesAutoresizingMaskIntoConstraints="NO" id="okp-rx-8Gj">
+                                                <rect key="frame" x="61" y="10" width="518" height="252"/>
+                                                <view key="contentView" id="fOQ-UL-vkZ">
+                                                    <rect key="frame" x="3" y="3" width="512" height="246"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dPw-zO-b0o">
+                                                            <rect key="frame" x="18" y="211" width="338" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <buttonCell key="cell" type="check" title="Mantieni CIE ID aperto nella barra in alto del menu" bezelStyle="regularSquare" imagePosition="left" alignment="center" state="on" inset="2" id="OEj-vs-rMW">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="runInBackgroundSetting:" target="XfG-lQ-9wD" id="Bpf-Rb-P6Q"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </view>
+                                            </box>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="okp-rx-8Gj" secondAttribute="bottom" constant="14" id="2AA-JK-BU0"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="centerX" secondItem="cy4-fw-0dl" secondAttribute="centerX" id="4e9-8X-U0g"/>
+                                            <constraint firstItem="GEm-xv-rbv" firstAttribute="top" secondItem="6ch-RX-5cD" secondAttribute="bottom" constant="8" id="6Cj-d0-1Nz"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="top" secondItem="cy4-fw-0dl" secondAttribute="top" constant="144" id="aVi-Qc-qeA"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="top" secondItem="GEm-xv-rbv" secondAttribute="bottom" constant="32" id="b6M-Au-vXW"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="centerX" secondItem="GEm-xv-rbv" secondAttribute="centerX" id="dor-uk-Qeb"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="leading" secondItem="cy4-fw-0dl" secondAttribute="leading" constant="64" id="msS-hl-DOT"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="centerX" secondItem="6ch-RX-5cD" secondAttribute="centerX" id="sev-7o-Ph9"/>
                                         </constraints>
                                     </view>
                                 </tabViewItem>
@@ -4455,7 +4537,7 @@ trattalo con cautela.</string>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Whz-S9-ARy">
                             <rect key="frame" x="208" y="300" width="87" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Inserici il PUK" id="lTD-a2-R4R">
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Inserisci il PUK" id="lTD-a2-R4R">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -4963,33 +5045,33 @@ DQ
         </scene>
     </scenes>
     <resources>
-        <image name="Coppia file certificato" width="122" height="164"/>
-        <image name="Coppia file firma" width="123" height="163"/>
-        <image name="Logo_Cie_ID_Windowed" width="156" height="154"/>
+        <image name="Coppia file certificato" width="121" height="163.5"/>
+        <image name="Coppia file firma" width="122.5" height="163"/>
+        <image name="Logo_Cie_ID_Windowed" width="155.5" height="154"/>
         <image name="Risorsa 14" width="30" height="30"/>
         <image name="Risorsa 15" width="30" height="30"/>
         <image name="Risorsa 16" width="30" height="30"/>
         <image name="Risorsa 17" width="30" height="30"/>
         <image name="Risorsa 18" width="30" height="30"/>
         <image name="Risorsa 19" width="30" height="30"/>
-        <image name="checkmark" catalog="system" width="15" height="13"/>
+        <image name="checkmark" catalog="system" width="14" height="13"/>
         <image name="down" width="18" height="10"/>
-        <image name="firma" width="352" height="178"/>
+        <image name="firma" width="176" height="89"/>
         <image name="firma_gray " width="30" height="15"/>
-        <image name="flusso_intro_01" width="613" height="388"/>
+        <image name="flusso_intro_01" width="612.5" height="388"/>
         <image name="flusso_intro_02" width="651" height="373"/>
-        <image name="generica" width="118" height="159"/>
-        <image name="icona_assistenza" width="141" height="39"/>
-        <image name="icona_lettore_card_white" width="192" height="192"/>
-        <image name="icona_sblocco_carta" width="116" height="39"/>
-        <image name="logo-cie" width="84" height="40"/>
+        <image name="generica" width="117.5" height="158.5"/>
+        <image name="icona_assistenza" width="140.5" height="38.5"/>
+        <image name="icona_lettore_card_white" width="191.5" height="191.5"/>
+        <image name="icona_sblocco_carta" width="116" height="38.5"/>
+        <image name="logo-cie" width="42" height="20"/>
         <image name="logoIPZS" width="99" height="40"/>
         <image name="logo_MinisteroInterno" width="130" height="40"/>
-        <image name="p7m_gray" width="235" height="316"/>
-        <image name="pdf_gray" width="236" height="316"/>
+        <image name="p7m_gray" width="117.5" height="158"/>
+        <image name="pdf_gray" width="118" height="158"/>
         <image name="settings_icon" width="30" height="30"/>
         <image name="up" width="18" height="10"/>
-        <image name="upload" width="118" height="159"/>
+        <image name="upload" width="117.5" height="158"/>
         <namedColor name="customDarkBackgroundColor">
             <color white="0.8059999942779541" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
