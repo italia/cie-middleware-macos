@@ -15,6 +15,8 @@
 #import "Cie.h"
 #import "ChangeView.h"
 #import "CIE_ID-Swift.h"
+#import "PreferencesManager.h"
+#import "AppDelegate.h"
 #include "../cie-pkcs11/Cryptopp/aes.h"
 
 // directive for PKCS#11
@@ -103,6 +105,8 @@ struct logLevels {
 
 @property (nonatomic, strong) NSString *tmpPANCIE;
 @property BOOL fullPINSignature;
+@property PreferencesManager *prefManager;
+@property NSWindow *window;
 
 typedef NS_ENUM(NSUInteger, signOp) {
     NO_OP,
@@ -184,6 +188,7 @@ AppLogger *logger;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _prefManager = PreferencesManager.sharedInstance;
     logger = [AppLogger sharedInstanceWithDefaultLogLevel];
     [self LoadLogConfigFromFile];
     [logger info:@"App CIE - logger inizializzato"];
@@ -192,6 +197,7 @@ AppLogger *logger;
     [logger info:[NSString stringWithFormat:@"[I] Livello di log applicazione: %ld", [self logLevelApp]]];
     [logger info:[NSString stringWithFormat:@"[I] Livello di log libreria: %ld", [self logLevelLib]]];
     [logger info:@"Inizializzo view principale"];
+    
     [_viewSignatureSelectOp updateLayer];
     [self addSubviewToMainCustomView:_homeFirstPageView];
     [self addSubviewToMainCustomView:_homeSecondPageView];
@@ -254,10 +260,17 @@ AppLogger *logger;
     btnSignatureCompletedPointer = _btnSignatureCompleted;
     imgSignatureOKPointer = _imgSignatureOK;
     cbGraphicSignaturePointer = _cbGraphicSignature;
+    
     self.carouselView.delegate = self;
     [self.tbVerifyInfo registerNib:[[NSNib alloc] initWithNibNamed:@"VerifyCell" bundle:nil]forIdentifier:@"verifyCellID"];
     self.tbVerifyInfo.delegate = self;
     self.tbVerifyInfo.dataSource = self;
+    
+    NSString *value = [_prefManager getConfigKeyValue:@"RUN_IN_BACKGROUND"];
+    if([value isEqualToString:@"YES"])
+        [_cbShouldRunInBackground setState: NSOnState];
+    else
+        [_cbShouldRunInBackground setState: NSOffState];
 }
 
 - (void)addSubviewToMainCustomView:(NSView *)view {
@@ -283,6 +296,12 @@ AppLogger *logger;
 }
 
 - (BOOL)windowShouldClose:(NSObject*)sender {
+    if ([[_prefManager getConfigKeyValue:@"RUN_IN_BACKGROUND"] isEqual: @"YES"]) {
+        [NSApplication.sharedApplication hide:self];
+        [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+        return NO;
+    }
+    
     [NSApplication.sharedApplication terminate:self];
     return YES;
 }
@@ -530,6 +549,10 @@ CK_RV completedCallback(string& PAN,
             }
             break;
     }
+}
+
+- (IBAction)runInBackgroundSetting:(NSButton *)sender {
+    [logger info:@"runInBackgroundSetting: - Inizia funzione"];
 }
 
 - (IBAction)rbLoggingAppAction:(NSButton *)sender {
@@ -1613,8 +1636,10 @@ CK_RV completedCallback(string& PAN,
     operation = NO_OP;
     NSString *filePathNoSpaces = [filePath stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString* fileType = [[NSURL URLWithString:filePathNoSpaces] pathExtension];
+    
+    self.fullPINSignature = [self.carouselView shouldUseFullPINForSignature];
 
-    if ([fileType isEqualTo:@"pdf"]) {
+    if ([fileType isEqualTo:@"pdf"] && !self.fullPINSignature) {
         [_cbGraphicSignature setEnabled:YES];
     } else {
         [_cbGraphicSignature setEnabled:NO];
@@ -2347,7 +2372,7 @@ CK_RV completedCallback(string& PAN,
             ProxyInfoManager *proxyInfoManager = [[ProxyInfoManager alloc] init];
             NSString* encryptedCredentials = [proxyInfoManager getEncryptedCredentials:credentials];
             [NSUserDefaults.standardUserDefaults setObject:encryptedCredentials forKey:@"credentials"];
-            [logger debug:@"Credenziali salvate!!!"];
+            [logger debug:@"Credenziali salvate!"];
         }
 
         syncUserDefaults = YES;
@@ -2395,6 +2420,9 @@ CK_RV completedCallback(string& PAN,
 
     [self setLogConfigToLevels:levels];
     [self saveCurrentLogConfigToFile];
+    
+    NSString *value = ([(NSButton *)_cbShouldRunInBackground state] == NSOnState) ? @"YES" : @"NO";
+    [_prefManager setConfigKeyValue:@"RUN_IN_BACKGROUND" : value];
 
     if (syncUserDefaults == YES) {
         [NSUserDefaults.standardUserDefaults synchronize];
@@ -2423,6 +2451,7 @@ CK_RV completedCallback(string& PAN,
     [_rbLoggingLibError setEnabled:value];
     [_rbLoggingLibInfo setEnabled:value];
     [_rbLoggingLibDebug setEnabled:value];
+    [_cbShouldRunInBackground setEnabled:value];
 }
 
 - (void)disableSettingsFormEditing {
@@ -2579,57 +2608,43 @@ CK_RV completedCallback(string& PAN,
     struct logLevels levels;
     levels.logLevelApp = [logger defaultLevel];
     levels.logLevelLib = [logger defaultLevel];
-    NSCharacterSet *nonDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
-    NSString *configFilePath = [NSString stringWithFormat:@"%@/Library/Containers/it.ipzs.CIE-ID.CIEToken/Data/.CIEPKI/config",
-                                         NSHomeDirectory()];
-    [logger debug:[NSString stringWithFormat:@"LoadLogConfigFromFile configconfigFilePath:%@", configFilePath]];
-    // https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Strings/Articles/readingFiles.html
-    // stringWithContentsOfFile:encoding:error
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    if ([fileManager fileExistsAtPath:configFilePath] == YES) {
-        [logger debug:@"Leggo file configurazione log"];
-        NSData *fileData = [fileManager contentsAtPath:configFilePath];
-        NSString *fileContent = [[NSString alloc] initWithData:fileData encoding:NSUTF8StringEncoding];
-        NSArray *configFileLines = [fileContent componentsSeparatedByString:@"\n"];
-
-        for (NSString * line in configFileLines) {
-            if ([line containsString:LogConfigPrefixApp] == YES) {
-                logConfigLineAppPresent = YES;
-                [logger debug:[NSString stringWithFormat:@"Configurazione log applicazione: %@", line]];
-                NSString *value = [line componentsSeparatedByString:@"="][1];
-                NSInteger integerValue = [value integerValue];
-
-                if ((integerValue >= AppLogLevel_NONE && integerValue <= AppLogLevel_ERROR)
-                        && ([value rangeOfCharacterFromSet:nonDigits].location == NSNotFound)) {
-                    levels.logLevelApp = (AppLogLevel)integerValue;
-                } else {
-                    [logger debug:[NSString stringWithFormat:@"valore '%d' del livello di log applicazione fuori intervallo - uso default", integerValue]];
-                    writeLogConfigFile = YES;
-                }
-            } else if ([line containsString:LogConfigPrefixLib] == YES) {
-                logConfigLineLibPresent = YES;
-                [logger debug:[NSString stringWithFormat:@"Configurazione log libreria: %@", line]];
-                NSString *value = [line componentsSeparatedByString:@"="][1];
-                NSInteger integerValue = [value integerValue];
-
-                if ((integerValue >= AppLogLevel_NONE && integerValue <= AppLogLevel_ERROR)
-                        && ([value rangeOfCharacterFromSet:nonDigits].location == NSNotFound)) {
-                    levels.logLevelLib = (AppLogLevel)integerValue;
-                } else {
-                    [logger debug:[NSString stringWithFormat:@"valore '%d' del livello di log applicazione fuori intervallo - uso default", integerValue]];
-                    writeLogConfigFile = YES;
-                }
-            } else if ([line containsString:@"="] == YES) {
-                [logger debug:[NSString stringWithFormat:@"Riga di configurazione log ignorata: length:%@, %@", [line length], line]];
-            }
-        }
-
-        if (logConfigLineAppPresent == NO || logConfigLineLibPresent == NO) {
+    
+    [logger debug:[NSString stringWithFormat:@"LoadLogConfigFromFile configconfigFilePath: /.CIEPKI/config"]];
+    
+    [logger debug:@"Leggo file configurazione log"];
+    
+    NSString *value = [_prefManager getConfigKeyValue:LogConfigPrefixApp];
+    
+    if(![value isEqualToString:@""]) {
+        logConfigLineAppPresent = YES;
+        [logger debug:[NSString stringWithFormat:@"Configurazione log applicazione: %@=%@", LogConfigPrefixApp, value]];
+        NSInteger integerValueAppLogLevel = [value integerValue];
+        
+        if ((integerValueAppLogLevel >= AppLogLevel_NONE && integerValueAppLogLevel <= AppLogLevel_ERROR)) {
+            levels.logLevelApp = (AppLogLevel)integerValueAppLogLevel;
+        } else {
+            [logger debug:[NSString stringWithFormat:@"valore '%d' del livello di log applicazione fuori intervallo - uso default", integerValueAppLogLevel]];
             writeLogConfigFile = YES;
         }
-    } else {
-        [logger debug:@"File configurazione log non trovato, lo creo con valori di default"];
+    }
+    
+    value = [_prefManager getConfigKeyValue:LogConfigPrefixLib];
+    
+    if(![value isEqualToString:@""]) {
+        logConfigLineLibPresent = YES;
+        [logger debug:[NSString stringWithFormat:@"Configurazione log libreria: %@=%@", LogConfigPrefixLib, value]];
+        NSInteger integerValue = [value integerValue];
+
+        if ((integerValue >= AppLogLevel_NONE && integerValue <= AppLogLevel_ERROR)) {
+            levels.logLevelLib = (AppLogLevel)integerValue;
+        } else {
+            [logger debug:[NSString stringWithFormat:@"valore '%d' del livello di log libreria fuori intervallo - uso default", integerValue]];
+            writeLogConfigFile = YES;
+        }
+    }
+
+    if (logConfigLineAppPresent == NO || logConfigLineLibPresent == NO) {
+        writeLogConfigFile = YES;
     }
 
     [self setLogConfigToLevels:levels];
@@ -2660,20 +2675,8 @@ CK_RV completedCallback(string& PAN,
     [logger info:@"saveLogConfigToFileWithLevels: - Inizia funzione"];
     [logger debug:[NSString stringWithFormat:@"saveLogConfigToFileWithLevels: - levels.logLevelApp: %ld", levels.logLevelApp]];
     [logger debug:[NSString stringWithFormat:@"saveLogConfigToFileWithLevels: - levels.logLevelLib: %ld", levels.logLevelLib]];
-    NSFileManager *fileManager;
-    NSString *configFilePath;
-    NSString *configLines;
-    fileManager = [NSFileManager defaultManager];
-    configLines = [NSString stringWithFormat:@"LIB_LOG_LEVEL=%ld\nAPP_LOG_LEVEL=%ld\n", levels.logLevelLib, levels.logLevelApp];
-    configFilePath = [NSString stringWithFormat:@"%@/Library/Containers/it.ipzs.CIE-ID.CIEToken/Data/.CIEPKI/config", NSHomeDirectory()];
-
-    if ([configLines writeToFile:configFilePath atomically:NO encoding:NSUTF8StringEncoding error:nil] == NO) {
-        NSString *message = @"Errore nel salvare il file di configurazione dei log";
-        [logger error:message];
-        NSLog(message);
-    } else {
-        [logger debug:@"File di configurazione dei log correttamente salvato"];
-    }
+    [_prefManager setConfigKeyValue:LogConfigPrefixLib : [NSString stringWithFormat:@"%ld", levels.logLevelLib]];
+    [_prefManager setConfigKeyValue:LogConfigPrefixApp : [NSString stringWithFormat:@"%ld", levels.logLevelApp]];
 }
 
 @end

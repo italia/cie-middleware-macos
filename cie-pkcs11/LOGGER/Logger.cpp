@@ -57,12 +57,12 @@ Logger::Logger()
     char* home = getenv("HOME");
     std::string path(home);
     
-    if(path.find("/Library") == string::npos){
-        path.append("/Library/Containers/it.ipzs.CIE-ID.CIEToken/Data");
-    }
+    /*if(path.find("/Library") == string::npos){
+        //path.append("/Library/Containers/it.ipzs.SoftwareCIE.CIEToken/Data");
+    }*/
     
     path.append("/.CIEPKI/");
-    
+        
     //check if folder exist
     struct stat st = {0};
     
@@ -73,9 +73,9 @@ Logger::Logger()
     gettimeofday(&curTime, NULL);
     strftime(cTime, sizeof(cTime), "%Y-%m-%d", localtime(&curTime.tv_sec));
     
-    sprintf(pbLog, "%s_%s.log","CIEPKI", cTime);
+    sprintf(pbLog, "%s_%s.log", "CIEPKI", cTime);
     path.append(pbLog);
-    
+        
     memcpy(pbLog, path.data(), path.length());
     pbLog[path.length()] = 0;
 
@@ -115,7 +115,6 @@ Logger::~Logger()
 
 Logger* Logger::getInstance() throw ()
 {
-
 	if (m_Instance == 0)
 	{
 		m_Instance = new Logger();
@@ -136,7 +135,6 @@ Logger* Logger::getInstance() throw ()
 	return m_Instance;
 }
 
-
 void Logger::writeConfigFile(string& filePath, string& sConfig) throw() {
 	m_ConfigFile.open(filePath, ios::out);
 	m_ConfigFile << sConfig;
@@ -152,13 +150,12 @@ int Logger::getLogConfig() throw() {
     char* home = getenv("HOME");
     std::string path(home);
     
-    if(path.find("/Library") == string::npos){
-        path.append("/Library/Containers/it.ipzs.CIE-ID.CIEToken/Data");
-    }
+    /*if(path.find("/Library") == string::npos){
+        path.append("/Library/Containers/it.ipzs.SoftwareCIE.CIEToken/Data");
+    }*/
     
     path.append("/.CIEPKI/");
-    //std::string path("/Users/pdg/Library/Containers/it.ipzs.CIE-ID.CIEToken/Data/.CIEPKI/");
-    
+        
     //check if folder exist
     struct stat st = {0};
     
@@ -166,7 +163,7 @@ int Logger::getLogConfig() throw() {
         mkdir(path.c_str(), 0700);
     }
     
-    sprintf(pbConfig, "%s/config",path.data());
+    sprintf(pbConfig, "%s/config", path.data());
     
 	if (!config_exists(pbConfig)) {
 		sConfig = "LIB_LOG_LEVEL=2";

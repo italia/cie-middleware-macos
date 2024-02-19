@@ -113,10 +113,7 @@ void CacheGetPIN(const char *PAN, std::vector<uint8_t>&PIN) {
 	}
 	else
 		throw logged_error("CIE non abilitata");
-		
 }
-
-
 
 void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, uint8_t *FirstPIN, int FirstPINSize) {
 	if (PAN == nullptr)
@@ -215,28 +212,33 @@ bool file_exists (const char* name) {
     return (stat (name, &buffer) == 0);
 }
 
+unsigned long find_nth(std::string text, size_t pos, std::string el, size_t nth)
+{
+    unsigned long found_pos = text.find(el, pos);
+    
+    if(nth == 0 || std::string::npos == found_pos)
+        return found_pos;
+    
+    return find_nth(text, found_pos + 1, el, nth-1);
+}
+
 std::string GetCardDir()
 {
     char* home = getenv("HOME");
-    
     std::string path(home);
     
-    std::smatch match;
-    std::regex_search(path, match, std::regex("^/Users/"));
-    std::string suffix = match.suffix();
-    if(suffix.find("/") != std::string::npos && suffix.find("Library/Containers/it.ipzs.CIE-ID.CIEToken/Data") == std::string::npos)
-        throw 1;
+    unsigned long pos = find_nth(path, 0, "/", 3);
     
-    path.append("/.CIEPKI/");
-
-    printf("Card Dir: %s\n", path.c_str());
+    std::string sharedFolderPath(path, 0, pos);
+    sharedFolderPath.append("/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/CIEPKI/");
     
-    return path.c_str();
+    printf("Card Dir: %s\n", sharedFolderPath.c_str());
+    
+    return sharedFolderPath.c_str();
 }
 
 void GetCardPath(const char *PAN, std::string& sPath) {
     auto Path=GetCardDir();
-    
     Path += std::string(PAN);
     Path += ".cache";
     sPath = Path;
@@ -251,22 +253,7 @@ bool CacheExists(const char *PAN) {
 bool CacheRemove(const char *PAN) {
     std::string sPath;
     GetCardPath(PAN, sPath);
-    remove(sPath.c_str());
-    
-    // remove the cache for CIEToken
-    char* home = getenv("HOME");
-    std::string path(home);
-        std::smatch match;
-        std::regex_search(path, match, std::regex("^/Users/"));
-        std::string suffix = match.suffix();
-        if(suffix.find("/") != std::string::npos)
-            throw 1;
-    
-    path.append("/Library/Containers/it.ipzs.CIE-ID.CIEToken/Data/.CIEPKI/");
-    path.append(PAN);
-    path.append(".cache");
-    
-    return !remove(path.c_str());
+    return !remove(sPath.c_str());
 }
 
 void CacheGetCertificate(const char *PAN, std::vector<uint8_t>&certificate)
@@ -330,10 +317,7 @@ void CacheGetPIN(const char *PAN, std::vector<uint8_t>&PIN) {
     }
     else
         throw logged_error("CIE non abilitata");
-    
 }
-
-
 
 void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, uint8_t *FirstPIN, int FirstPINSize) {
     if (PAN == nullptr)
@@ -389,10 +373,10 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     std::smatch match;
     std::regex_search(path, match, std::regex("^/Users/"));
     std::string suffix = match.suffix();
-    if(suffix.find("/") != std::string::npos)
-        throw 1;
-    
-    path.append("/Library/Containers/it.ipzs.CIE-ID.CIEToken/Data/.CIEPKI/");
+    //if(suffix.find("/") != std::string::npos)
+      //  throw 1;
+    path = "/Users/reikashi/Library/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/CIEPKI/";
+    //path.append("/.CIEPKI/");
     
     printf("CIETokenDriver Dir: %s\n", path.c_str());
     
@@ -408,9 +392,9 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     file.write(ciphertext.c_str(), ciphertext.length());
     file.close();
     
-    std::ofstream fileForCIEToken(path.c_str(), std::ofstream::out | std::ofstream::binary);
+    /*std::ofstream fileForCIEToken(path.c_str(), std::ofstream::out | std::ofstream::binary);
     fileForCIEToken.write(ciphertext.c_str(), ciphertext.length());
-    fileForCIEToken.close();
+    fileForCIEToken.close();*/
     
     
 //    

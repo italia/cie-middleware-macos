@@ -8,7 +8,3 @@ echo "Registering CIECryptoTokenKit " > ~/packagelog.txt
 sudo -u _securityagent pluginkit -a /Applications/CIE\ ID.app/Contents/PlugIns/CIEToken.appex
 
 echo -n "Registering CIECryptoTokenKit OK" > ~/packagelog.txt
-
-launchctl load /Library/LaunchAgents/it.ipzs.CIE-ID-Bar.plist
-
-echo "Loading Bar OK " > ~/packagelog.txt

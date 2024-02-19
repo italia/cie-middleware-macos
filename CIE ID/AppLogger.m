@@ -82,19 +82,18 @@ static AppLogLevel AppLoggerDefaultLogLevel = AppLogLevel_INFO;
     NSString *timestamp;
     NSString *timestampedMessage;
 
-//    fileManager = [NSFileManager defaultManager];
     date = [NSDate date];
     dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:@"YYYY-MM-dd"];
     currentDate = [dateFormatter stringFromDate:date];
     [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     timestamp = [dateFormatter stringFromDate:date];
-
-    logFilePath = [NSString stringWithFormat:@"%@/Library/Containers/it.ipzs.CIE-ID.CIEToken/Data/.CIEPKI/CIEID_%@.log",
+    logFilePath = [NSString stringWithFormat:@"%@/.CIEPKI/CIEID_%@.log",
                                                         NSHomeDirectory(),
                                                         currentDate];
+
     timestampedMessage = [NSString stringWithFormat:@"%@    %@", timestamp, message];
-//    NSLog(@"writeToLogFile:    logFilePath:%@    message:%@", logFilePath, timestampedMessage);
+    NSLog(@"writeToLogFile:    logFilePath:%@    message:%@", logFilePath, timestampedMessage);
     @try {
         // [timestampedMessage writeToFile:logFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
         FILE *fp = fopen([logFilePath UTF8String], "a+");
