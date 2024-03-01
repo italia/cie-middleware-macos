@@ -1,9 +1,11 @@
 # cie-middleware-macos
 Middleware della CIE per MacOS (Carta di identità elettronica) 
 
-# VERSIONE BETA
+# VERSIONE CORRENTE
 
-Il middleware in questo repository è in fase di sviluppo ed è da considerarsi in versione beta e pertanto non è consigliabile per l'uso in produzione.
+Il Software CIE è rilasciato ufficialmente su APP STORE
+https://apps.apple.com/it/app/software-cie/id6476510798?mt=12
+
 
 # CASO D’USO
 
