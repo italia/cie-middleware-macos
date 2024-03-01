@@ -4,6 +4,7 @@ Middleware della CIE per MacOS (Carta di identità elettronica)
 # VERSIONE CORRENTE
 
 Il Software CIE è rilasciato ufficialmente su [APP STORE](https://apps.apple.com/it/app/software-cie/id6476510798?mt=12).
+Il manuale d'uso è disponibile su [DOCS ITALIA](https://docs.italia.it/italia/cie/cie-middleware-windows-docs/it/master/index.html).
 
 
 # CASO D’USO
