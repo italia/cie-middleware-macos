@@ -4,13 +4,17 @@
 <dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
-	<key>com.apple.security.files.user-selected.write</key>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.it.ipzs.SoftwareCIE</string>
+	</array>
+	<key>com.apple.security.files.user-selected.executable</key>
 	<true/>
-    <key>com.apple.security.files.user-selected.executable</key>
-    <true/>    
+	<key>com.apple.security.network.client</key>
+	<true/>
+	<key>com.apple.security.network.server</key>
+	<true/>
 	<key>com.apple.security.smartcard</key>
 	<true/>
-    <key>com.apple.security.network.client</key>
-    <true/>
 </dict>
 </plist>

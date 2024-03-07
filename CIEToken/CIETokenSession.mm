@@ -24,8 +24,6 @@ void closeSession(CK_SESSION_HANDLE hSession);
         self.APDUTemplate = nil;
         self.PIN = nil;
         self.PINByteOffset = 0;
-        
-        
     }
     
     return self;
@@ -115,7 +113,7 @@ void closeSession(CK_SESSION_HANDLE hSession);
         }
         
         // non va chiamata la close session perchè dopo il return con error TKErrorCodeAuthenticationNeeded
-        // verà chiamata la C_Login
+        // verrà chiamata la C_Login
         
         return nil;
     }

@@ -241,7 +241,7 @@ CK_RV completedCallback(string& PAN,
                     break;
                     
                 case CKR_PIN_INCORRECT:
-                    [self showMessage:[NSString stringWithFormat:@"Il PIN digitato è errato. rimangono %d tentativi", attempts] withTitle:@"PIN non corretto" exitAfter:false];
+                    [self showMessage:[NSString stringWithFormat:@"Il PIN digitato è errato. Rimangono %d tentativi", attempts] withTitle:@"PIN non corretto" exitAfter:false];
                     
                     break;
                     

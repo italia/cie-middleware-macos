@@ -7,8 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MessageViewController.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, CIEPopoverProtocol>
+@property(nonatomic) BOOL closeAppFromStatusBar;
+@property NSWindow* window;
 
 @end
 

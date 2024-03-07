@@ -1,8 +1,10 @@
 .vscode/
 .DS_Store
 cie_sign_sdk/build
+cie-pkcs11/keys.h
+cie_sign_sdk/include/keys.h
+cie_sign_sdk/CMakeFiles
 cie_sign_sdk/**/*.a
-cie-pkcs11/dependencies/
 libcie_sign_sdk.a
 *dylib
 Installer

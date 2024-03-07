@@ -10,6 +10,4 @@
 #import "ChangeView.h"
 #import "MainViewController.h"
 
-
-
 #endif /* CIEID_Bridging_Header_h */

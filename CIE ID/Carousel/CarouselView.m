@@ -3,11 +3,10 @@
 //  CIE ID
 //
 
-
+#import <IOKit/IOKitLib.h>
 #import "CarouselView.h"
 #import "CarouselCard.h"
 #import "ChangeView.h"
-#import "MainViewController.h"
 
 #define RADIO_BUTTON_LEADING 5
 #define RADIO_BUTTON_WIDTH 22
@@ -33,6 +32,7 @@
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;
 
 @property (weak) IBOutlet NSView *radioButtonsContainer;
+@property (nonatomic, assign) BOOL fullPINSign;
 
 @end
 
@@ -145,7 +145,6 @@
     if ([cardList count] > 0) {
         [self updateCards];
     }
-    
 }
 
 - (void) changeButtonViews
@@ -167,7 +166,6 @@
             [self.delegate shouldRemoveCard:[_mainCard getCard]];
         }
     }
-    
 }
 
 - (IBAction)addCardPressed:(id)sender {
@@ -189,32 +187,54 @@
 }
 
 - (IBAction)selectCie:(id)sender {
-    
     Cie* selectedCard = [self getSelectedCard];
     ChangeView *cG = [ChangeView getInstance];
     
     NSTextField* lblCustomSign = (NSTextField*)[[cG getView:SELECT_FILE_PAGE] viewWithTag:40];
     NSTextField* lblDefaultSign = (NSTextField*)[[cG getView:SELECT_FILE_PAGE] viewWithTag:20];
     NSButton* btnPersonalizza = (NSButton*)[[cG getView:SELECT_FILE_PAGE] viewWithTag:30];
+    NSImageView* imgSignature = (NSImageView*)[[cG getView:SELECT_FILE_PAGE] viewWithTag:50];
+
+    [btnPersonalizza setHidden:NO];
+    [imgSignature setHidden:NO];
+
     if([selectedCard getCustomSign])
     {
-        
         [lblCustomSign setHidden:NO];
         [lblDefaultSign setHidden:YES];
-        
-    }else{
+    } else {
         [btnPersonalizza setTitle:@"Personalizza"];
         [lblCustomSign setHidden:YES];
         [lblDefaultSign setHidden:NO];
     }
+
+    self.fullPINSign = NO;
     
     [cG showSubView:SELECT_FILE_PAGE];
+}
+
+- (IBAction)signWithoutPairingCIE:(id)sender {
+    ChangeView *cG = [ChangeView getInstance];
+    NSTextField* lblCustomSign = (NSTextField*)[[cG getView:SELECT_FILE_PAGE] viewWithTag:40];
+    NSTextField* lblDefaultSign = (NSTextField*)[[cG getView:SELECT_FILE_PAGE] viewWithTag:20];
+    NSButton* btnPersonalizza = (NSButton*)[[cG getView:SELECT_FILE_PAGE] viewWithTag:30];
+    NSImageView* imgSignature = (NSImageView*)[[cG getView:SELECT_FILE_PAGE] viewWithTag:50];
     
+    [btnPersonalizza setHidden:YES];
+    [lblCustomSign setHidden:YES];
+    [lblDefaultSign setHidden:YES];
+    [imgSignature setHidden:YES];
+    
+    self.fullPINSign = YES;
+
+    [cG showSubView:SELECT_FILE_PAGE];
+}
+
+- (BOOL) shouldUseFullPINForSignature {
+    return self.fullPINSign;
 }
 
 - (IBAction)backPressed:(id)sender {
-
-    
     index--;
     
     if (index < 0) {
