@@ -366,36 +366,11 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     
     stfEncryptor.MessageEnd();
     
-    
-    
-    char* home = getenv("HOME");
-    std::string path(home);
-    std::smatch match;
-    std::regex_search(path, match, std::regex("^/Users/"));
-    std::string suffix = match.suffix();
-    //if(suffix.find("/") != std::string::npos)
-      //  throw 1;
-    path = "/Users/reikashi/Library/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/CIEPKI/";
-    //path.append("/.CIEPKI/");
-    
-    printf("CIETokenDriver Dir: %s\n", path.c_str());
-    
-    if (stat(path.c_str(), &st) == -1) {
-        int r = mkdir(path.c_str(), 0777);
-        printf("mkdir: %d, %x\n", r, errno);
-    }
-    
-    path.append(PAN);
-    path.append(".cache");
+    printf("CIETokenDriver Dir: %s\n", sPath.c_str());
             
     std::ofstream file(sPath.c_str(), std::ofstream::out | std::ofstream::binary);
     file.write(ciphertext.c_str(), ciphertext.length());
     file.close();
-    
-    /*std::ofstream fileForCIEToken(path.c_str(), std::ofstream::out | std::ofstream::binary);
-    fileForCIEToken.write(ciphertext.c_str(), ciphertext.length());
-    fileForCIEToken.close();*/
-    
     
 //    
 //    

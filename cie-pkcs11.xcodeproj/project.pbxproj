@@ -1599,7 +1599,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X3YLHJ3273;
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = X3YLHJ3273;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1638,7 +1637,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = X3YLHJ3273;
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = X3YLHJ3273;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
