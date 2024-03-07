@@ -149,7 +149,7 @@ CK_RV progressCallback(const int progress,
 
     [((NSControl*)sender) setEnabled:NO];
 
-    const char* szCryptoki = "/usr/local/lib/libcie-pkcs11.dylib";
+    const char* szCryptoki = "/Applications/CIE ID.app/Contents/Frameworks/libcie-pkcs11.dylib";
 
     dispatch_async(dispatch_get_global_queue(0,0), ^{
 

@@ -10,6 +10,7 @@
 #import "ProxyInfoManager.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "AES.h"
+
 @interface ProxyInfoManager()
 
 @property (strong, nonatomic) NSData* iv;

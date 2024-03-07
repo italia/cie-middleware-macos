@@ -1,8 +1,5 @@
 //
 //  keys.h
-//  cie-pkcs11
-//
-//  Created by ugo chirico on 07/01/2019.
 //  Copyright © 2019 IPZS. All rights reserved.
 //
 
