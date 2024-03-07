@@ -38,34 +38,6 @@
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
-									<string>build/CIE ID Bar.app</string>
-									<key>PATH_TYPE</key>
-									<integer>1</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>3</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>BUNDLE_CAN_DOWNGRADE</key>
-									<false/>
-									<key>BUNDLE_POSTINSTALL_PATH</key>
-									<dict>
-										<key>PATH_TYPE</key>
-										<integer>0</integer>
-									</dict>
-									<key>BUNDLE_PREINSTALL_PATH</key>
-									<dict>
-										<key>PATH_TYPE</key>
-										<integer>0</integer>
-									</dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>80</integer>
-									<key>PATH</key>
 									<string>build/CIE ID.app</string>
 									<key>PATH_TYPE</key>
 									<integer>1</integer>
@@ -256,24 +228,7 @@
 								</dict>
 								<dict>
 									<key>CHILDREN</key>
-									<array>
-										<dict>
-											<key>CHILDREN</key>
-											<array/>
-											<key>GID</key>
-											<integer>0</integer>
-											<key>PATH</key>
-											<string>build/it.ipzs.CIE-ID-Bar.plist</string>
-											<key>PATH_TYPE</key>
-											<integer>1</integer>
-											<key>PERMISSIONS</key>
-											<integer>493</integer>
-											<key>TYPE</key>
-											<integer>3</integer>
-											<key>UID</key>
-											<integer>0</integer>
-										</dict>
-									</array>
+									<array/>
 									<key>GID</key>
 									<integer>0</integer>
 									<key>PATH</key>
@@ -662,7 +617,7 @@
 				<key>USE_HFS+_COMPRESSION</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.3.4</string>
+				<string>1.4.3.7</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -682,13 +637,44 @@
 		<dict>
 			<key>BACKGROUND</key>
 			<dict>
+				<key>ALIGNMENT</key>
+				<integer>6</integer>
 				<key>APPAREANCES</key>
 				<dict>
 					<key>DARK_AQUA</key>
 					<dict/>
 					<key>LIGHT_AQUA</key>
-					<dict/>
+					<dict>
+						<key>ALIGNMENT</key>
+						<integer>6</integer>
+						<key>BACKGROUND_PATH</key>
+						<dict>
+							<key>PATH</key>
+							<string>small.png</string>
+							<key>PATH_TYPE</key>
+							<integer>3</integer>
+						</dict>
+						<key>CUSTOM</key>
+						<true/>
+						<key>LAYOUT_DIRECTION</key>
+						<integer>0</integer>
+						<key>SCALING</key>
+						<integer>2</integer>
+					</dict>
 				</dict>
+				<key>BACKGROUND_PATH</key>
+				<dict>
+					<key>PATH</key>
+					<string>small.png</string>
+					<key>PATH_TYPE</key>
+					<integer>3</integer>
+				</dict>
+				<key>CUSTOM</key>
+				<true/>
+				<key>LAYOUT_DIRECTION</key>
+				<integer>0</integer>
+				<key>SCALING</key>
+				<integer>2</integer>
 				<key>SHARED_SETTINGS_FOR_ALL_APPAREANCES</key>
 				<true/>
 			</dict>
