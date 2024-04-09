@@ -1641,8 +1641,10 @@ CK_RV completedCallback(string& PAN,
 
     if ([fileType isEqualTo:@"pdf"] && !self.fullPINSignature) {
         [_cbGraphicSignature setEnabled:YES];
+        [_cbGraphicSignature setHidden:NO];
     } else {
         [_cbGraphicSignature setEnabled:NO];
+        [_cbGraphicSignature setHidden:YES];
     }
 
     ChangeView *cG = [ChangeView getInstance];
