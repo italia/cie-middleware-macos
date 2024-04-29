@@ -2038,12 +2038,12 @@ DQ
                                     </textFieldCell>
                                 </textField>
                                 <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" tag="40" translatesAutoresizingMaskIntoConstraints="NO" id="hic-GD-ycV">
-                                    <rect key="frame" x="129" y="30" width="275" height="20"/>
+                                    <rect key="frame" x="129" y="4" width="275" height="50"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="271" id="EaN-Je-40a"/>
-                                        <constraint firstAttribute="height" constant="20" id="gyF-Nd-Xre"/>
+                                        <constraint firstAttribute="height" constant="50" id="gyF-Nd-Xre"/>
                                     </constraints>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Firma personalizzata correttamente" id="E3Z-Uc-nIC">
+                                    <textFieldCell key="cell" title="Firma personalizzata correttamente" id="E3Z-Uc-nIC">
                                         <font key="font" metaFont="system" size="15"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2063,7 +2063,7 @@ DQ
                                 <constraint firstAttribute="height" constant="76" id="BTY-LX-lDP"/>
                                 <constraint firstAttribute="width" constant="580" id="Dyz-5m-Dwg"/>
                                 <constraint firstItem="f5J-jt-oEu" firstAttribute="centerY" secondItem="uLO-QA-fHp" secondAttribute="centerY" id="EMf-y0-XHf"/>
-                                <constraint firstAttribute="bottom" secondItem="hic-GD-ycV" secondAttribute="bottom" constant="30" id="GOX-3U-con"/>
+                                <constraint firstAttribute="bottom" secondItem="hic-GD-ycV" secondAttribute="bottom" constant="4" id="GOX-3U-con"/>
                                 <constraint firstItem="GRi-Ip-T19" firstAttribute="leading" secondItem="uLO-QA-fHp" secondAttribute="leading" constant="102" id="Obb-RJ-E8o"/>
                                 <constraint firstAttribute="trailing" secondItem="f5J-jt-oEu" secondAttribute="trailing" constant="20" symbolic="YES" id="PBA-we-hGz"/>
                                 <constraint firstItem="GRi-Ip-T19" firstAttribute="centerY" secondItem="f5J-jt-oEu" secondAttribute="centerY" id="RtF-1G-cfd"/>
