@@ -73,13 +73,13 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
 
     if(!hModule)
     {
-        const char* szCryptoki = "/usr/local/lib/libcie-pkcs11.dylib";
+        const char* szCryptoki = GetPKCS11Path();
         hModule = dlopen(szCryptoki, RTLD_LOCAL | RTLD_LAZY);
         if(!hModule)
         {
-            LOG_ERROR("[CTK] initWithSmartCard - Middleware library not found");
+            LOG_ERROR("[CTK] initWithSmartCard - Middleware library not found at path: %s", GetPKCS11Path());
             NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
-            [errorDetail setValue:@"Middleware not found" forKey:NSLocalizedDescriptionKey];
+            [errorDetail setValue:[NSString stringWithFormat:@"Middleware not found at path: %s", szCryptoki] forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:@"CIEToken" code:100 userInfo:errorDetail];
             return nil;
         }
@@ -410,6 +410,37 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     [items addObject:keyItem];
 
     return YES;
+}
+
+unsigned long find_nth(string text, size_t pos, string el, size_t nth)
+{
+    unsigned long found_pos = text.find(el, pos);
+    
+    if(nth == 0 || string::npos == found_pos)
+        return found_pos;
+    
+    return find_nth(text, found_pos + 1, el, nth-1);
+}
+
+const char* GetPKCS11Path()
+{
+    char* home = getenv("HOME");
+    string path(home);
+    
+    unsigned long pos = find_nth(path, 0, "/", 3);
+    
+    string sharedFolderPath(path, 0, pos);
+    sharedFolderPath.append("/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/libcie-pkcs11.dylib");
+    
+    LOG_INFO("[CTK] Middleware GetPKCS11Path() - PKCS11 Dir: %s\n", sharedFolderPath.c_str());
+    printf("PKCS11 Dir: %s\n", sharedFolderPath.c_str());
+    
+    char *c_path;
+    c_path = (char *)calloc(sharedFolderPath.length(), sizeof(char));
+    strncpy(c_path, sharedFolderPath.c_str(), sharedFolderPath.length());
+    c_path[sharedFolderPath.length() + 1] = '\0';
+    
+    return c_path;
 }
 
 bool initPKCS11()

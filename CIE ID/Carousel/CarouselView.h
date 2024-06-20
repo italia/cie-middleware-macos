@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (Cie *) getSelectedCard;
 
+- (BOOL) shouldUseFullPINForSignature;
+
 @end
 
 NS_ASSUME_NONNULL_END

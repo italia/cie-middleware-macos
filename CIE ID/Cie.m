@@ -17,9 +17,9 @@
 
 @implementation Cie
 
--(id)init: (NSString*) name serial:(NSString*) serialNumner pan:(NSString *) pan
+-(id)init: (NSString*) name serial:(NSString*) serialNumber pan:(NSString *) pan
 {
-    self.serialNumber = serialNumner;
+    self.serialNumber = serialNumber;
     self.name = name;
     self.pan = pan;
     self.customSign = false;
