@@ -125,14 +125,14 @@ int socket_desc;
 
 - (int) startServer
 {
-    int client_sock , c;
+    int client_sock, c;
     long read_size;
-    struct sockaddr_in server , client;
+    struct sockaddr_in server, client;
     char szEncryptedClientMessage[1000];
     memset(szEncryptedClientMessage, 0, 1000);
     
     //Create socket
-    socket_desc = socket(AF_INET , SOCK_STREAM , 0);
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
     if (socket_desc == -1)
     {
         printf("Could not create socket");

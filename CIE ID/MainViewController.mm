@@ -577,8 +577,9 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)firmaElettronica:(id)sender {
     [logger info:@"firmaElettronica: - Inizia funzione"];
-    [self showFirmaPinView];
+    //[self showFirmaPinView];
     [self showFirmaElettronica];
+    [self showFirmaPinView];
 }
 
 - (IBAction)verificaFirma:(id)sender {
@@ -1503,7 +1504,7 @@ CK_RV completedCallback(string& PAN,
     __block bool exit = exitAfter;
     dispatch_async(dispatch_get_main_queue(), ^ {
         NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"Ok"];
+        [alert addButtonWithTitle:@"OK"];
         [alert setMessageText:title];
         [alert setInformativeText:message];
         [alert setAlertStyle:NSWarningAlertStyle];
@@ -1641,8 +1642,10 @@ CK_RV completedCallback(string& PAN,
 
     if ([fileType isEqualTo:@"pdf"] && !self.fullPINSignature) {
         [_cbGraphicSignature setEnabled:YES];
+        [_cbGraphicSignature setHidden:NO];
     } else {
         [_cbGraphicSignature setEnabled:NO];
+        [_cbGraphicSignature setHidden:YES];
     }
 
     ChangeView *cG = [ChangeView getInstance];
@@ -1770,7 +1773,7 @@ CK_RV completedCallback(string& PAN,
         }
 
         pdfPreview = [[PdfPreview alloc] initWithPrImageView:[self prevImageView] pdfPath:filePath signImagePath:signImgPath];
-        _lblPathSignaturePreview.stringValue = filePath ;
+        _lblPathSignaturePreview.stringValue = filePath;
         [cG showSubView:FIRMA_PDF_PREVIEW];
     } else {
         [logger debug:@"Firma senza grafica"];
@@ -1811,6 +1814,7 @@ CK_RV completedCallback(string& PAN,
     ChangeView *cG = [ChangeView getInstance];
     [cG showSubView:FIRMA_PIN_PAGE];
 }
+
 - (IBAction)annullaFirmaClick:(id)sender {
     [logger info:@"annullaFirmaClick: - Inizia funzione"];
     _lblInsertPIN.hidden = NO;
@@ -2069,6 +2073,12 @@ CK_RV completedCallback(string& PAN,
     _lblProgressSignature.hidden = YES;
     _btnSignatureCompleted.hidden = YES;
     imgSignatureOKPointer.hidden = YES;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSTextField* txtField = [self.view viewWithTag:tagIndexStart];
+        if(txtField != nil)
+            [txtField selectText:nil];
+    });
 }
 
 - (IBAction)concludiClick:(id)sender {
@@ -2516,6 +2526,12 @@ CK_RV completedCallback(string& PAN,
             }
         }
     }];
+}
+
+- (IBAction)showInformation:(id)sender {
+    NSString *appDescription = @"Il software rilasciato dall’Istituto Poligrafico e Zecca dello Stato S.p.A. per conto del Ministero dell’Interno, per consentire l’autenticazione ai servizi digitali, l’apposizione della firma elettronica avanzata mediante la CIE, nonché la gestione dei codici PIN e PUK della carta.\n\nVersione: ";
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleShortVersionString"];
+    [self showMessage:[appDescription stringByAppendingString:version] withTitle:@"Informazioni su CIE ID" exitAfter:NO];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
