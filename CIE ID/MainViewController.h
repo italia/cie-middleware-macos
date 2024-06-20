@@ -20,58 +20,57 @@ NS_ASSUME_NONNULL_BEGIN
 @property IBOutlet NSView* homeSecondPageView;
 @property IBOutlet NSView* homeThirdPageView;
 @property IBOutlet NSView* homeFourthPageView;
-@property IBOutlet NSView* cambioPINPageView;
-@property IBOutlet NSView* cambioPINOKPageView;
-@property IBOutlet NSView* sbloccoPageView;
-@property IBOutlet NSView* sbloccoOKPageView;
+@property IBOutlet NSView* changePINPageView;
+@property IBOutlet NSView* changePINOKPageView;
+@property IBOutlet NSView* unlockPageView;
+@property IBOutlet NSView* unlockOKPageView;
 @property IBOutlet NSView* helpPageView;
 @property IBOutlet NSView* infoPageView;
 @property IBOutlet NSView* selectFilePageView;
 @property IBOutlet NSView* selectOperationView;
-@property IBOutlet NSView* firmaOperationView;
-@property IBOutlet NSView* firmaPrevView;
-@property IBOutlet NSView* firmaPinView;
-@property IBOutlet NSView* personalizzaFirmaView;
-@property IBOutlet NSView* verificaView;
-@property IBOutlet NSView *impostazioniView;
+@property IBOutlet NSView* signOperationView;
+@property IBOutlet NSView* signPreView;
+@property IBOutlet NSView* signPINView;
+@property IBOutlet NSView* customizeGraphicSignatureView;
+@property IBOutlet NSView* verifyView;
+@property IBOutlet NSView* settingsView;
 
 @property IBOutlet NSTextField* labelHelp;
 @property IBOutlet WKWebView* helpWebView;
 @property IBOutlet WKWebView* infoWebView;
 
-@property (weak) IBOutlet NSButton *btnAbbina;
-@property (weak) IBOutlet NSButton *btnAnnulla;
+@property (weak) IBOutlet NSButton* btnPair;
+@property (weak) IBOutlet NSButton* btnAbort;
 
-@property IBOutlet NSImageView* assistenzaImageView;
-@property IBOutlet NSImageView* sbloccoImageView;
+@property IBOutlet NSImageView* helpImageView;
+@property IBOutlet NSImageView* unlockImageView;
 
 @property IBOutlet NSTextField* labelProgress;
 @property IBOutlet NSProgressIndicator* progressIndicator;
 
-@property IBOutlet NSTextField* labelProgressCambioPIN;
-@property IBOutlet NSProgressIndicator* progressIndicatorCambioPIN;
+@property IBOutlet NSTextField* labelProgressChangePIN;
+@property IBOutlet NSProgressIndicator* progressIndicatorChangePIN;
 
-@property IBOutlet NSTextField* labelProgressSbloccoPIN;
-@property IBOutlet NSProgressIndicator* progressIndicatorSbloccoPIN;
+@property IBOutlet NSTextField* labelProgressUnlockPIN;
+@property IBOutlet NSProgressIndicator* progressIndicatorUnlockPIN;
 
 @property IBOutlet NSTextField* textFieldPIN;
 @property IBOutlet NSTextField* textFieldNewPIN;
 @property IBOutlet NSTextField* textFieldConfirmPIN;
 
 @property IBOutlet NSTextField* textFieldPUK;
-@property IBOutlet NSTextField* textFieldNewPINSblocco;
-@property IBOutlet NSTextField* textFieldConfirmPINSbloco;
+@property IBOutlet NSTextField* textFieldNewUnlockPIN;
+@property IBOutlet NSTextField* textFieldConfirmUnlockPIN;
 
 @property IBOutlet NSView* homeButtonView;
-@property IBOutlet NSView* cambioPINButtonView;
-@property IBOutlet NSView* sbloccoPINButtonView;
+@property IBOutlet NSView* changePINButtonView;
+@property IBOutlet NSView* unlockPINButtonView;
 @property IBOutlet NSView* tutorialButtonView;
 @property IBOutlet NSView* helpButtonView;
 @property IBOutlet NSView* infoButtonView;
-@property IBOutlet NSView* firmaElettronicaButtonView;
-@property IBOutlet NSView* verificaFirmaButtonView;
-@property IBOutlet NSView* impostazioniButtonView;
-
+@property IBOutlet NSView* digitalSignatureButtonView;
+@property IBOutlet NSView* verifySignatureButtonView;
+@property IBOutlet NSView* settingsButtonView;
 
 @property (weak) IBOutlet CarouselView *carouselView;
 
@@ -83,6 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak) IBOutlet NSButton *rbLoggingLibError;
 @property (weak) IBOutlet NSButton *rbLoggingLibInfo;
 @property (weak) IBOutlet NSButton *rbLoggingLibDebug;
+@property (weak) IBOutlet NSButton *cbShouldRunInBackground;
 
 @property AppLogLevel logLevelApp;
 @property AppLogLevel logLevelLib;
@@ -92,6 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)saveCurrentLogConfigToFile;
 - (void)saveLogConfigToFileWithLevels:(struct logLevels)levels;
 - (void)chooseSignOrVerifyFileOperation:(NSString*)_filePath;
+- (void)signMWCall:(NSControl*)sender inputFilePath:(NSString*)inPath outFilePath:(NSString*)outPath signImagePath:(NSString*)signImagePath pin:(NSString*)pin x:(float)x y:(float)y w:(float)w h:(float)h fileType:(NSString*)fileType;
 
 @end
 

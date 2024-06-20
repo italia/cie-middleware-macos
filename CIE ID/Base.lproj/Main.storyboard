@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="19455"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="20037"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
@@ -34,9 +34,29 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
+                    <connections>
+                        <outlet property="statusMenu" destination="KEK-tP-GYb" id="7ex-F5-05L"/>
+                    </connections>
+                </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <menu id="KEK-tP-GYb">
+                    <items>
+                        <menuItem title="Apri CIE ID" id="WvU-3Q-40H">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="openCIEID:" target="Voe-Tx-rLC" id="dAO-vR-Quc"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Termina CIE ID" id="4CK-NN-UYP">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="killCIEID:" target="Voe-Tx-rLC" id="5PT-EG-lZg"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                </menu>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
@@ -50,7 +70,7 @@
                         <rect key="contentRect" x="196" y="240" width="482" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
                         <connections>
-                            <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="sC4-jD-qHE"/>
                         </connections>
                     </window>
                     <connections>
@@ -295,36 +315,33 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
-                        <outlet property="abbinaButtonWhenAnnullaInvisible" destination="RZW-4y-JoM" id="DLo-PD-YfS"/>
-                        <outlet property="abbinaButtonWhenAnnullaVisible" destination="TD4-2m-HLu" id="FjX-6b-xL6"/>
-                        <outlet property="assistenzaImageView" destination="Jq5-Jt-6Ss" id="ehu-2y-l90"/>
-                        <outlet property="btnAbbina" destination="0QW-wr-CHb" id="jto-bc-3RS"/>
-                        <outlet property="btnAnnulla" destination="vZc-9I-XsZ" id="duk-zl-dYV"/>
-                        <outlet property="btnAnnullaFirma" destination="8zE-mB-X0O" id="Hq9-CS-nwS"/>
-                        <outlet property="btnConcludiFirma" destination="NFV-Ru-gca" id="SJJ-6y-ecZ"/>
-                        <outlet property="btnCreaFirma" destination="6wS-h4-Bb9" id="2Y0-F4-Qj3"/>
-                        <outlet property="btnEstrai" destination="cAH-tq-Xsb" id="pWW-w0-KE7"/>
-                        <outlet property="btnFirma" destination="c0D-Hk-2y4" id="d5X-Fk-PqB"/>
-                        <outlet property="btnFirmaElettronica" destination="Si6-kt-v6v" id="rHk-iQ-9Ro"/>
-                        <outlet property="btnModificaProxy" destination="6OX-M8-VjL" id="Jsc-uT-qHV"/>
-                        <outlet property="btnPersonalizza" destination="f5J-jt-oEu" id="rer-cH-CMw"/>
-                        <outlet property="btnProseguiFirmaOp" destination="c12-y9-3mW" id="PoT-9G-aQ8"/>
-                        <outlet property="btnSalvaProxy" destination="yGt-bn-tAH" id="7VD-nf-2w8"/>
-                        <outlet property="btnVerificaFirma" destination="Nw7-c0-Nwv" id="YUx-0I-GhF"/>
-                        <outlet property="cambioPINButtonView" destination="lrL-iW-R0U" id="xaW-Ke-Qi1"/>
-                        <outlet property="cambioPINOKPageView" destination="gbY-3C-V3N" id="xZV-6g-SgL"/>
-                        <outlet property="cambioPINPageView" destination="Qux-KY-phF" id="XzU-be-vxC"/>
+                        <outlet property="btnAbort" destination="vZc-9I-XsZ" id="duk-zl-dYV"/>
+                        <outlet property="btnAbortSignature" destination="8zE-mB-X0O" id="Hq9-CS-nwS"/>
+                        <outlet property="btnCustomizeGraphicSignature" destination="f5J-jt-oEu" id="rer-cH-CMw"/>
+                        <outlet property="btnEditProxy" destination="6OX-M8-VjL" id="Jsc-uT-qHV"/>
+                        <outlet property="btnExtractFile" destination="cAH-tq-Xsb" id="pWW-w0-KE7"/>
+                        <outlet property="btnGenerateGraphicSignature" destination="6wS-h4-Bb9" id="2Y0-F4-Qj3"/>
+                        <outlet property="btnMenuDigitalSignature" destination="Si6-kt-v6v" id="rHk-iQ-9Ro"/>
+                        <outlet property="btnMenuVerifySignature" destination="Nw7-c0-Nwv" id="YUx-0I-GhF"/>
+                        <outlet property="btnPair" destination="0QW-wr-CHb" id="jto-bc-3RS"/>
+                        <outlet property="btnProceedSignatureOp" destination="c12-y9-3mW" id="PoT-9G-aQ8"/>
+                        <outlet property="btnSaveProxy" destination="yGt-bn-tAH" id="7VD-nf-2w8"/>
+                        <outlet property="btnSign" destination="c0D-Hk-2y4" id="d5X-Fk-PqB"/>
+                        <outlet property="btnSignatureCompleted" destination="NFV-Ru-gca" id="SJJ-6y-ecZ"/>
                         <outlet property="carouselView" destination="bbe-RZ-J3q" id="OCw-5F-n95"/>
-                        <outlet property="cbFirmaGrafica" destination="WNU-mg-OhD" id="nPc-WP-nel"/>
-                        <outlet property="cbMostraPsw" destination="jDo-KO-WPc" id="OTm-PI-lBY"/>
-                        <outlet property="cvInsertPin" destination="WtP-No-p2l" id="kVb-fD-nWv"/>
+                        <outlet property="cbGraphicSignature" destination="WNU-mg-OhD" id="nPc-WP-nel"/>
+                        <outlet property="cbShouldRunInBackground" destination="dPw-zO-b0o" id="wIm-Du-hhQ"/>
+                        <outlet property="cbShowPsw" destination="jDo-KO-WPc" id="OTm-PI-lBY"/>
+                        <outlet property="changePINButtonView" destination="lrL-iW-R0U" id="xaW-Ke-Qi1"/>
+                        <outlet property="changePINOKPageView" destination="gbY-3C-V3N" id="xZV-6g-SgL"/>
+                        <outlet property="changePINPageView" destination="Qux-KY-phF" id="XzU-be-vxC"/>
+                        <outlet property="customizeGraphicSignatureView" destination="UPo-st-jEA" id="g5r-eY-dd5"/>
+                        <outlet property="cvInsertPIN" destination="rL4-HO-mjS" id="7WU-Mb-BgK"/>
+                        <outlet property="digitalSignatureButtonView" destination="nSP-6F-JnT" id="Aem-7E-Rrv"/>
                         <outlet property="filePathSignOp" destination="tkc-yT-lxO" id="UM5-1F-WLy"/>
                         <outlet property="fileSelectionSignatureBlockView" destination="uLO-QA-fHp" id="JQS-69-q3B"/>
-                        <outlet property="firmaElettronicaButtonView" destination="nSP-6F-JnT" id="Aem-7E-Rrv"/>
-                        <outlet property="firmaOperationView" destination="byt-ls-7Vz" id="35Z-97-N1g"/>
-                        <outlet property="firmaPinView" destination="1Ms-t5-6Dr" id="HPK-3L-kdO"/>
-                        <outlet property="firmaPrevView" destination="Qc5-jw-ToT" id="bK4-Rc-9Eh"/>
                         <outlet property="helpButtonView" destination="N1v-fW-RP4" id="NqV-rC-OdN"/>
+                        <outlet property="helpImageView" destination="Jq5-Jt-6Ss" id="ehu-2y-l90"/>
                         <outlet property="helpPageView" destination="h2G-yn-wAx" id="M73-vK-6gv"/>
                         <outlet property="helpWebView" destination="QZz-x1-A6n" id="JRV-pY-Kfa"/>
                         <outlet property="homeButtonView" destination="fvc-Lr-Yuk" id="eo2-M5-te8"/>
@@ -332,44 +349,42 @@
                         <outlet property="homeFourthPageView" destination="5Hi-tR-7XT" id="Ang-tn-IRX"/>
                         <outlet property="homeSecondPageView" destination="Hnq-5I-07c" id="HIf-h9-rbs"/>
                         <outlet property="homeThirdPageView" destination="Mdd-Wr-o9p" id="AjK-Bq-dKD"/>
-                        <outlet property="imgFirmaOk" destination="QAe-DH-Bg9" id="i7E-ZF-seg"/>
+                        <outlet property="imgSignatureOK" destination="QAe-DH-Bg9" id="i7E-ZF-seg"/>
                         <outlet property="imgUpload" destination="Fa6-dW-8u7" id="WQA-nE-Dgf"/>
-                        <outlet property="impostazioniButtonView" destination="65O-Z4-IXq" id="h6M-Mh-ThU"/>
-                        <outlet property="impostazioniView" destination="Vzu-D2-jU4" id="ERv-gl-XN4"/>
                         <outlet property="infoButtonView" destination="V6m-k1-rj5" id="Gm8-XE-0zr"/>
                         <outlet property="infoPageView" destination="aPP-S9-VQ9" id="lUB-CV-9GR"/>
                         <outlet property="infoWebView" destination="nrU-jR-5Zs" id="snQ-Tc-78e"/>
                         <outlet property="labelHelp" destination="86I-3k-8I2" id="K4N-c2-40A"/>
                         <outlet property="labelProgress" destination="81v-HY-YGK" id="6UT-oc-cXu"/>
-                        <outlet property="labelProgressCambioPIN" destination="QOb-Qn-LfD" id="mlM-wM-SU2"/>
-                        <outlet property="labelProgressSbloccoPIN" destination="HLv-rF-pbb" id="Xac-Ec-3Q4"/>
+                        <outlet property="labelProgressChangePIN" destination="QOb-Qn-LfD" id="mlM-wM-SU2"/>
+                        <outlet property="labelProgressUnlockPIN" destination="HLv-rF-pbb" id="Xac-Ec-3Q4"/>
                         <outlet property="lblCades" destination="600-T9-aY7" id="GZN-vk-7nk"/>
                         <outlet property="lblCadesSub" destination="ryd-NJ-deJ" id="FVr-vv-O0P"/>
-                        <outlet property="lblFirmaHome" destination="f5o-tI-wX5" id="f4P-EM-ya2"/>
-                        <outlet property="lblFirmaPersonalizata" destination="f0a-vU-iOf" id="4If-C7-CVe"/>
-                        <outlet property="lblFirmaPersonalizzata" destination="hic-GD-ycV" id="2zr-df-LHN"/>
-                        <outlet property="lblFirmaPersonalizzataSub" destination="GRi-Ip-T19" id="EZs-Hp-2kF"/>
-                        <outlet property="lblInsertPin" destination="5O1-nj-9cM" id="bdm-5j-nmG"/>
+                        <outlet property="lblCustomizeGraphicSignature" destination="hic-GD-ycV" id="2zr-df-LHN"/>
+                        <outlet property="lblCustomized" destination="hic-GD-ycV" id="hHq-cl-DcK"/>
+                        <outlet property="lblDigitalSignatureHeader" destination="f5o-tI-wX5" id="f4P-EM-ya2"/>
+                        <outlet property="lblDigitalSignatureHeaderSubtitle" destination="dLB-vK-mHF" id="42v-rM-JQG"/>
+                        <outlet property="lblGraphicSignatureCustomizationDesc" destination="GRi-Ip-T19" id="EZs-Hp-2kF"/>
+                        <outlet property="lblInsertPIN" destination="5O1-nj-9cM" id="bdm-5j-nmG"/>
                         <outlet property="lblPades" destination="LFg-1h-dDT" id="V8o-dm-e9m"/>
                         <outlet property="lblPadesSub" destination="AXC-zr-0Tr" id="979-jk-3PQ"/>
-                        <outlet property="lblPathFirmaPin" destination="3d0-ji-YLW" id="gr7-wj-PMQ"/>
-                        <outlet property="lblPathFirmaPrev" destination="63G-5S-ulq" id="gIG-br-Mnw"/>
                         <outlet property="lblPathOp" destination="Ajm-0b-mWb" id="38Y-l3-QF4"/>
-                        <outlet property="lblPersonalizzata" destination="hic-GD-ycV" id="hHq-cl-DcK"/>
-                        <outlet property="lblProgressFirma" destination="rMK-nt-24c" id="AaV-G4-1Go"/>
-                        <outlet property="lblSottoscrittori" destination="Kll-r0-4vA" id="eO3-Nc-7oT"/>
-                        <outlet property="lblSubFirmaHome" destination="dLB-vK-mHF" id="42v-rM-JQG"/>
-                        <outlet property="lblVerificaPath" destination="8H7-2E-XAt" id="haT-X8-cqm"/>
+                        <outlet property="lblPathSignaturePIN" destination="3d0-ji-YLW" id="gr7-wj-PMQ"/>
+                        <outlet property="lblPathSignaturePreview" destination="63G-5S-ulq" id="gIG-br-Mnw"/>
+                        <outlet property="lblProgressSignature" destination="rMK-nt-24c" id="AaV-G4-1Go"/>
+                        <outlet property="lblSignersNumber" destination="Kll-r0-4vA" id="eO3-Nc-7oT"/>
+                        <outlet property="lblVerifyPath" destination="8H7-2E-XAt" id="haT-X8-cqm"/>
                         <outlet property="mainCustomView" destination="6OI-bz-nRs" id="A3T-ZL-CI0"/>
-                        <outlet property="personalizzaFirmaView" destination="UPo-st-jEA" id="g5r-eY-dd5"/>
+                        <outlet property="pairButtonWhenAbortInvisible" destination="RZW-4y-JoM" id="DLo-PD-YfS"/>
+                        <outlet property="pairButtonWhenAbortVisible" destination="TD4-2m-HLu" id="FjX-6b-xL6"/>
                         <outlet property="pictureCades" destination="f2G-iS-RTD" id="4LN-hr-Ji4"/>
                         <outlet property="picturePades" destination="i2O-ZK-HSZ" id="Cnp-Nf-nDd"/>
                         <outlet property="plainPassword" destination="smq-5C-rHv" id="ds2-Rn-bBx"/>
                         <outlet property="prevImageView" destination="edY-Ll-zge" id="tWx-76-0WM"/>
-                        <outlet property="progressFirma" destination="Tlr-TF-D7E" id="TGR-xD-lHV"/>
                         <outlet property="progressIndicator" destination="QaF-ot-ZLo" id="FaV-L5-cRP"/>
-                        <outlet property="progressIndicatorCambioPIN" destination="0Xi-ba-4N3" id="DBt-j0-f73"/>
-                        <outlet property="progressIndicatorSbloccoPIN" destination="8K8-eY-cK8" id="sNT-3Q-TVu"/>
+                        <outlet property="progressIndicatorChangePIN" destination="0Xi-ba-4N3" id="DBt-j0-f73"/>
+                        <outlet property="progressIndicatorUnlockPIN" destination="8K8-eY-cK8" id="sNT-3Q-TVu"/>
+                        <outlet property="progressSignature" destination="Tlr-TF-D7E" id="TGR-xD-lHV"/>
                         <outlet property="rbLoggingAppDebug" destination="Imu-xZ-ptz" id="bkz-nj-i76"/>
                         <outlet property="rbLoggingAppError" destination="aCR-Of-u1s" id="qSH-i9-Kzy"/>
                         <outlet property="rbLoggingAppInfo" destination="eI4-ee-FM7" id="2xX-xO-tli"/>
@@ -378,28 +393,33 @@
                         <outlet property="rbLoggingLibError" destination="vyA-aV-ebN" id="vEd-75-raA"/>
                         <outlet property="rbLoggingLibInfo" destination="cBn-eX-QDS" id="fq3-os-Bwy"/>
                         <outlet property="rbLoggingLibNone" destination="mbX-jk-Cls" id="bAt-8P-Wlr"/>
-                        <outlet property="sbloccoImageView" destination="eng-ai-RIc" id="1rf-zU-zWY"/>
-                        <outlet property="sbloccoOKPageView" destination="fcD-gd-OQM" id="KAb-Fx-Nu5"/>
-                        <outlet property="sbloccoPINButtonView" destination="CJp-ds-vmS" id="dz9-Ah-MDe"/>
-                        <outlet property="sbloccoPageView" destination="ynb-ts-Yci" id="ZGj-tG-AqL"/>
                         <outlet property="selectFilePageView" destination="RwO-Hp-bQm" id="fXI-B1-uX7"/>
                         <outlet property="selectOperationView" destination="3gd-ru-MNC" id="YMV-eV-4VK"/>
+                        <outlet property="settingsButtonView" destination="65O-Z4-IXq" id="h6M-Mh-ThU"/>
+                        <outlet property="settingsView" destination="Vzu-D2-jU4" id="ERv-gl-XN4"/>
                         <outlet property="signImageView" destination="Euy-zF-pmy" id="P7n-Bd-rry"/>
-                        <outlet property="tbVerificaInfo" destination="ktj-yo-xzf" id="lxB-4j-5Ed"/>
+                        <outlet property="signOperationView" destination="byt-ls-7Vz" id="35Z-97-N1g"/>
+                        <outlet property="signPINView" destination="1Ms-t5-6Dr" id="HPK-3L-kdO"/>
+                        <outlet property="signPreView" destination="Qc5-jw-ToT" id="bK4-Rc-9Eh"/>
+                        <outlet property="tbVerifyInfo" destination="ktj-yo-xzf" id="lxB-4j-5Ed"/>
                         <outlet property="textFieldConfirmPIN" destination="mM9-yS-eBC" id="aXr-82-U77"/>
-                        <outlet property="textFieldConfirmPINSbloco" destination="YRY-Uh-ZL7" id="GtM-w3-R7i"/>
+                        <outlet property="textFieldConfirmUnlockPIN" destination="YRY-Uh-ZL7" id="GtM-w3-R7i"/>
                         <outlet property="textFieldNewPIN" destination="utn-Se-gYZ" id="ND2-zO-x1D"/>
-                        <outlet property="textFieldNewPINSblocco" destination="uuv-mU-tKX" id="5i2-zf-mKe"/>
+                        <outlet property="textFieldNewUnlockPIN" destination="uuv-mU-tKX" id="5i2-zf-mKe"/>
                         <outlet property="textFieldPIN" destination="itc-nx-2Ki" id="DsB-ek-Jc5"/>
                         <outlet property="textFieldPUK" destination="OxO-IO-sF8" id="yjY-De-fYL"/>
                         <outlet property="tutorialButtonView" destination="aoW-Zr-NId" id="lC5-8q-MnC"/>
                         <outlet property="txtPassword" destination="BiQ-Qq-Gvy" id="2rI-ez-KGC"/>
-                        <outlet property="txtPorta" destination="cR3-kg-FJ7" id="wLH-mm-sDa"/>
+                        <outlet property="txtPort" destination="cR3-kg-FJ7" id="wLH-mm-sDa"/>
                         <outlet property="txtProxyAddr" destination="erT-fv-xyh" id="oaX-gd-WoH"/>
                         <outlet property="txtUsername" destination="4UF-Ln-42c" id="kVB-FZ-KbX"/>
-                        <outlet property="verificaFirmaButtonView" destination="Ndh-GR-KHK" id="Far-Fi-Eyr"/>
-                        <outlet property="verificaView" destination="n3W-BK-gm8" id="pWN-fg-CsX"/>
-                        <outlet property="viewFirmaSelectOp" destination="lax-5E-YUO" id="XXi-wE-zMc"/>
+                        <outlet property="unlockImageView" destination="eng-ai-RIc" id="1rf-zU-zWY"/>
+                        <outlet property="unlockOKPageView" destination="fcD-gd-OQM" id="KAb-Fx-Nu5"/>
+                        <outlet property="unlockPINButtonView" destination="CJp-ds-vmS" id="dz9-Ah-MDe"/>
+                        <outlet property="unlockPageView" destination="ynb-ts-Yci" id="ZGj-tG-AqL"/>
+                        <outlet property="verifySignatureButtonView" destination="Ndh-GR-KHK" id="Far-Fi-Eyr"/>
+                        <outlet property="verifyView" destination="n3W-BK-gm8" id="pWN-fg-CsX"/>
+                        <outlet property="viewSignatureSelectOp" destination="lax-5E-YUO" id="XXi-wE-zMc"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -408,7 +428,7 @@
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QKI-VP-sEs">
-                            <rect key="frame" x="214" y="456" width="232" height="44"/>
+                            <rect key="frame" x="214" y="456" width="233" height="44"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Sblocco Carta" id="bzQ-L8-har">
                                 <font key="font" metaFont="system" size="37"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -519,7 +539,7 @@ DQ
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bzc-oC-fwS">
-                            <rect key="frame" x="214" y="456" width="232" height="44"/>
+                            <rect key="frame" x="214" y="456" width="233" height="44"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Sblocco Carta" id="atW-Tu-ap0">
                                 <font key="font" metaFont="system" size="37"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -553,7 +573,7 @@ DQ
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="fWL-ZO-fzL"/>
                                             </constraints>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Inserici il PUK" id="xGn-PK-mIm">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Inserisci il PUK" id="xGn-PK-mIm">
                                                 <font key="font" metaFont="system" size="16"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -2023,7 +2043,7 @@ DQ
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Ya-gN-Uc9">
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" tag="50" translatesAutoresizingMaskIntoConstraints="NO" id="7Ya-gN-Uc9">
                                     <rect key="frame" x="20" y="20" width="66" height="48"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="66" id="Wrx-2S-DiV"/>
@@ -2190,7 +2210,7 @@ DQ
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="btnAnnullaOp:" target="XfG-lQ-9wD" id="TbQ-cf-GSV"/>
+                                <action selector="btnAbortOp:" target="XfG-lQ-9wD" id="TbQ-cf-GSV"/>
                             </connections>
                         </button>
                     </subviews>
@@ -2490,7 +2510,7 @@ DQ
 DQ
 </string>
                                         <connections>
-                                            <action selector="btnProseguiFirmaOp:" target="XfG-lQ-9wD" id="Cyb-UE-0NH"/>
+                                            <action selector="btnProceedSignatureOp:" target="XfG-lQ-9wD" id="Cyb-UE-0NH"/>
                                         </connections>
                                     </buttonCell>
                                     <userDefinedRuntimeAttributes>
@@ -2921,105 +2941,6 @@ DQ
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="WtP-No-p2l">
-                                    <rect key="frame" x="322" y="67" width="157" height="62"/>
-                                    <subviews>
-                                        <secureTextField verticalHuggingPriority="750" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="O7H-cc-kkg">
-                                            <rect key="frame" x="20" y="20" width="27" height="22"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="27" id="Ee6-i7-6so"/>
-                                                <constraint firstAttribute="width" constant="27" id="rST-3C-G7g"/>
-                                                <constraint firstAttribute="height" constant="22" id="xCX-kd-aQt"/>
-                                            </constraints>
-                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="4os-L5-1EB">
-                                                <font key="font" metaFont="system" size="20"/>
-                                                <color key="textColor" name="leftTextColor"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                <allowedInputSourceLocales>
-                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
-                                                </allowedInputSourceLocales>
-                                            </secureTextFieldCell>
-                                            <connections>
-                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="bea-pb-SmP"/>
-                                            </connections>
-                                        </secureTextField>
-                                        <secureTextField verticalHuggingPriority="750" tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="bPv-xD-4HL">
-                                            <rect key="frame" x="50" y="20" width="27" height="22"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="27" id="GRu-Ap-ApT"/>
-                                                <constraint firstAttribute="width" constant="27" id="WjE-0z-ZZA"/>
-                                                <constraint firstAttribute="height" constant="22" id="ge8-HG-dSA"/>
-                                            </constraints>
-                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="7MB-Cx-8ym">
-                                                <font key="font" metaFont="system" size="20"/>
-                                                <color key="textColor" name="leftTextColor"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                <allowedInputSourceLocales>
-                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
-                                                </allowedInputSourceLocales>
-                                            </secureTextFieldCell>
-                                            <connections>
-                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="ZQT-ru-oaa"/>
-                                            </connections>
-                                        </secureTextField>
-                                        <secureTextField verticalHuggingPriority="750" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="McU-nQ-pHA">
-                                            <rect key="frame" x="80" y="20" width="27" height="22"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="27" id="Y9A-dc-OXX"/>
-                                                <constraint firstAttribute="width" constant="27" id="aa7-Ir-Yal"/>
-                                                <constraint firstAttribute="height" constant="22" id="r7u-L9-zpI"/>
-                                            </constraints>
-                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="OQj-CA-Ail">
-                                                <font key="font" metaFont="system" size="20"/>
-                                                <color key="textColor" name="leftTextColor"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                <allowedInputSourceLocales>
-                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
-                                                </allowedInputSourceLocales>
-                                            </secureTextFieldCell>
-                                            <connections>
-                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="ieL-Et-8Em"/>
-                                            </connections>
-                                        </secureTextField>
-                                        <secureTextField verticalHuggingPriority="750" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="nC4-QK-aT9">
-                                            <rect key="frame" x="110" y="20" width="27" height="22"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="22" id="2Rr-1L-UM4"/>
-                                                <constraint firstAttribute="width" constant="27" id="6ht-PC-yAg"/>
-                                                <constraint firstAttribute="width" constant="27" id="eSA-Mo-tAf"/>
-                                            </constraints>
-                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="asU-JQ-ghd">
-                                                <font key="font" metaFont="system" size="20"/>
-                                                <color key="textColor" name="leftTextColor"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                <allowedInputSourceLocales>
-                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
-                                                </allowedInputSourceLocales>
-                                            </secureTextFieldCell>
-                                            <connections>
-                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="6Ku-P4-UoG"/>
-                                            </connections>
-                                        </secureTextField>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="nC4-QK-aT9" secondAttribute="bottom" constant="20" id="87z-wL-tVp"/>
-                                        <constraint firstItem="McU-nQ-pHA" firstAttribute="leading" secondItem="bPv-xD-4HL" secondAttribute="trailing" constant="3" id="DON-tA-euj"/>
-                                        <constraint firstAttribute="bottom" secondItem="bPv-xD-4HL" secondAttribute="bottom" constant="20" id="J1a-4c-XYs"/>
-                                        <constraint firstItem="nC4-QK-aT9" firstAttribute="leading" secondItem="McU-nQ-pHA" secondAttribute="trailing" constant="3" id="JhV-Rg-KfZ"/>
-                                        <constraint firstItem="O7H-cc-kkg" firstAttribute="leading" secondItem="WtP-No-p2l" secondAttribute="leading" constant="20" id="ScB-40-V58"/>
-                                        <constraint firstItem="McU-nQ-pHA" firstAttribute="leading" secondItem="bPv-xD-4HL" secondAttribute="trailing" constant="3" id="TpB-rg-C87"/>
-                                        <constraint firstItem="bPv-xD-4HL" firstAttribute="leading" secondItem="O7H-cc-kkg" secondAttribute="trailing" constant="3" id="Ugg-Dh-hIj"/>
-                                        <constraint firstItem="nC4-QK-aT9" firstAttribute="leading" secondItem="McU-nQ-pHA" secondAttribute="trailing" constant="3" id="bI8-aU-hb2"/>
-                                        <constraint firstItem="bPv-xD-4HL" firstAttribute="leading" secondItem="O7H-cc-kkg" secondAttribute="trailing" constant="3" id="iQa-gc-z2c"/>
-                                        <constraint firstAttribute="width" constant="157" id="nea-Ue-i2e"/>
-                                        <constraint firstAttribute="height" constant="62" id="nim-Cq-jNX"/>
-                                        <constraint firstAttribute="bottom" secondItem="O7H-cc-kkg" secondAttribute="bottom" constant="20" id="qWw-JF-w7a"/>
-                                        <constraint firstItem="nC4-QK-aT9" firstAttribute="leading" secondItem="McU-nQ-pHA" secondAttribute="trailing" constant="3" id="v0u-om-2yj"/>
-                                        <constraint firstItem="McU-nQ-pHA" firstAttribute="leading" secondItem="bPv-xD-4HL" secondAttribute="trailing" constant="3" id="vLA-IH-6I1"/>
-                                        <constraint firstItem="bPv-xD-4HL" firstAttribute="leading" secondItem="O7H-cc-kkg" secondAttribute="trailing" constant="3" id="xNQ-vM-Sk7"/>
-                                        <constraint firstAttribute="bottom" secondItem="McU-nQ-pHA" secondAttribute="bottom" constant="20" id="yBI-QI-JdF"/>
-                                    </constraints>
-                                </customView>
                                 <progressIndicator hidden="YES" wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="Tlr-TF-D7E">
                                     <rect key="frame" x="266" y="64" width="230" height="24"/>
                                     <constraints>
@@ -3027,9 +2948,178 @@ DQ
                                         <constraint firstAttribute="width" constant="230" id="uui-fX-8UY"/>
                                     </constraints>
                                 </progressIndicator>
+                                <customView identifier="cvInsertPIN" translatesAutoresizingMaskIntoConstraints="NO" id="rL4-HO-mjS">
+                                    <rect key="frame" x="291" y="99" width="237" height="22"/>
+                                    <subviews>
+                                        <secureTextField verticalHuggingPriority="750" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="yXG-lu-UWo">
+                                            <rect key="frame" x="0.0" y="0.0" width="27" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="27" id="eCi-fr-eOj"/>
+                                            </constraints>
+                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="x8E-ER-08L">
+                                                <font key="font" metaFont="system" size="20"/>
+                                                <color key="textColor" name="leftTextColor"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <allowedInputSourceLocales>
+                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                </allowedInputSourceLocales>
+                                            </secureTextFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="TYV-Rk-rLY"/>
+                                            </connections>
+                                        </secureTextField>
+                                        <secureTextField verticalHuggingPriority="750" tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="OYc-ND-ucF">
+                                            <rect key="frame" x="30" y="0.0" width="27" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="27" id="WOj-5S-a00"/>
+                                            </constraints>
+                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="zQs-8k-Mrh">
+                                                <font key="font" metaFont="system" size="20"/>
+                                                <color key="textColor" name="leftTextColor"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <allowedInputSourceLocales>
+                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                </allowedInputSourceLocales>
+                                            </secureTextFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="TfO-H5-dOq"/>
+                                            </connections>
+                                        </secureTextField>
+                                        <secureTextField verticalHuggingPriority="750" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="pGz-Uq-my6">
+                                            <rect key="frame" x="60" y="0.0" width="27" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="27" id="Czg-8I-Hqi"/>
+                                            </constraints>
+                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="tGM-sT-I5e">
+                                                <font key="font" metaFont="system" size="20"/>
+                                                <color key="textColor" name="leftTextColor"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <allowedInputSourceLocales>
+                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                </allowedInputSourceLocales>
+                                            </secureTextFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="viF-E1-W5R"/>
+                                            </connections>
+                                        </secureTextField>
+                                        <secureTextField verticalHuggingPriority="750" tag="12" translatesAutoresizingMaskIntoConstraints="NO" id="YvU-yz-Amr">
+                                            <rect key="frame" x="90" y="0.0" width="27" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="27" id="DgU-n1-7DL"/>
+                                            </constraints>
+                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="mVu-LT-uGN">
+                                                <font key="font" metaFont="system" size="20"/>
+                                                <color key="textColor" name="leftTextColor"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <allowedInputSourceLocales>
+                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                </allowedInputSourceLocales>
+                                            </secureTextFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="Kiu-t1-J7g"/>
+                                            </connections>
+                                        </secureTextField>
+                                        <secureTextField verticalHuggingPriority="750" tag="13" translatesAutoresizingMaskIntoConstraints="NO" id="yq9-ZQ-TJF">
+                                            <rect key="frame" x="120" y="0.0" width="27" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="27" id="XcC-f2-hoJ"/>
+                                            </constraints>
+                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="nwh-e5-1cQ">
+                                                <font key="font" metaFont="system" size="20"/>
+                                                <color key="textColor" name="leftTextColor"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <allowedInputSourceLocales>
+                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                </allowedInputSourceLocales>
+                                            </secureTextFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="BdF-Kf-ao2"/>
+                                            </connections>
+                                        </secureTextField>
+                                        <secureTextField verticalHuggingPriority="750" tag="14" translatesAutoresizingMaskIntoConstraints="NO" id="2Ks-Ts-C4H">
+                                            <rect key="frame" x="150" y="0.0" width="27" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="27" id="NJv-4O-gng"/>
+                                            </constraints>
+                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="Cdv-Gu-tbb">
+                                                <font key="font" metaFont="system" size="20"/>
+                                                <color key="textColor" name="leftTextColor"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <allowedInputSourceLocales>
+                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                </allowedInputSourceLocales>
+                                            </secureTextFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="Oel-VR-jv0"/>
+                                            </connections>
+                                        </secureTextField>
+                                        <secureTextField verticalHuggingPriority="750" tag="15" translatesAutoresizingMaskIntoConstraints="NO" id="G9Y-qj-c3Q">
+                                            <rect key="frame" x="180" y="0.0" width="27" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="27" id="TtJ-nK-YSh"/>
+                                            </constraints>
+                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="Ubc-TI-Jjc">
+                                                <font key="font" metaFont="system" size="20"/>
+                                                <color key="textColor" name="leftTextColor"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <allowedInputSourceLocales>
+                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                </allowedInputSourceLocales>
+                                            </secureTextFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="TAb-AA-4Pw"/>
+                                            </connections>
+                                        </secureTextField>
+                                        <secureTextField verticalHuggingPriority="750" tag="16" translatesAutoresizingMaskIntoConstraints="NO" id="ApY-pG-3gS">
+                                            <rect key="frame" x="210" y="0.0" width="27" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="27" id="LoR-kC-mua"/>
+                                            </constraints>
+                                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" drawsBackground="YES" usesSingleLineMode="YES" id="a4t-Jw-AyK">
+                                                <font key="font" metaFont="system" size="20"/>
+                                                <color key="textColor" name="leftTextColor"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <allowedInputSourceLocales>
+                                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                                </allowedInputSourceLocales>
+                                            </secureTextFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="uph-1k-Rzy"/>
+                                            </connections>
+                                        </secureTextField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="yXG-lu-UWo" secondAttribute="bottom" id="1ir-OR-xiN"/>
+                                        <constraint firstItem="YvU-yz-Amr" firstAttribute="leading" secondItem="pGz-Uq-my6" secondAttribute="trailing" constant="3" id="350-b7-yeL"/>
+                                        <constraint firstItem="yq9-ZQ-TJF" firstAttribute="leading" secondItem="YvU-yz-Amr" secondAttribute="trailing" constant="3" id="4Mw-f3-CKe"/>
+                                        <constraint firstItem="pGz-Uq-my6" firstAttribute="top" secondItem="rL4-HO-mjS" secondAttribute="top" id="DY6-eJ-VMa"/>
+                                        <constraint firstItem="2Ks-Ts-C4H" firstAttribute="top" secondItem="rL4-HO-mjS" secondAttribute="top" id="Egm-Hx-toY"/>
+                                        <constraint firstAttribute="bottom" secondItem="OYc-ND-ucF" secondAttribute="bottom" id="FSE-9f-AnQ"/>
+                                        <constraint firstItem="pGz-Uq-my6" firstAttribute="leading" secondItem="OYc-ND-ucF" secondAttribute="trailing" constant="3" id="Mqc-82-hNy"/>
+                                        <constraint firstItem="YvU-yz-Amr" firstAttribute="top" secondItem="rL4-HO-mjS" secondAttribute="top" id="Nea-pJ-TSs"/>
+                                        <constraint firstAttribute="bottom" secondItem="yq9-ZQ-TJF" secondAttribute="bottom" id="OKD-AU-Pm7"/>
+                                        <constraint firstAttribute="bottom" secondItem="ApY-pG-3gS" secondAttribute="bottom" id="OVI-kP-MMB"/>
+                                        <constraint firstAttribute="width" constant="237" id="PKh-u1-WEo"/>
+                                        <constraint firstItem="ApY-pG-3gS" firstAttribute="top" secondItem="rL4-HO-mjS" secondAttribute="top" id="QCZ-3G-knY"/>
+                                        <constraint firstItem="OYc-ND-ucF" firstAttribute="leading" secondItem="yXG-lu-UWo" secondAttribute="trailing" constant="3" id="S1e-ko-NIo"/>
+                                        <constraint firstAttribute="bottom" secondItem="YvU-yz-Amr" secondAttribute="bottom" id="YvC-IB-Wul"/>
+                                        <constraint firstItem="G9Y-qj-c3Q" firstAttribute="leading" secondItem="2Ks-Ts-C4H" secondAttribute="trailing" constant="3" id="cb2-xP-bgW"/>
+                                        <constraint firstItem="yq9-ZQ-TJF" firstAttribute="top" secondItem="rL4-HO-mjS" secondAttribute="top" id="dea-5Y-Wwp"/>
+                                        <constraint firstItem="yXG-lu-UWo" firstAttribute="top" secondItem="rL4-HO-mjS" secondAttribute="top" id="gN3-Zn-F6H"/>
+                                        <constraint firstItem="G9Y-qj-c3Q" firstAttribute="top" secondItem="rL4-HO-mjS" secondAttribute="top" id="ijo-wb-wRy"/>
+                                        <constraint firstItem="2Ks-Ts-C4H" firstAttribute="leading" secondItem="yq9-ZQ-TJF" secondAttribute="trailing" constant="3" id="pye-L3-WJS"/>
+                                        <constraint firstAttribute="bottom" secondItem="G9Y-qj-c3Q" secondAttribute="bottom" id="rru-jE-guK"/>
+                                        <constraint firstAttribute="bottom" secondItem="2Ks-Ts-C4H" secondAttribute="bottom" id="sBE-48-lLo"/>
+                                        <constraint firstAttribute="height" constant="22" id="spT-i5-vSD"/>
+                                        <constraint firstItem="OYc-ND-ucF" firstAttribute="top" secondItem="rL4-HO-mjS" secondAttribute="top" id="vTS-w5-dit"/>
+                                        <constraint firstAttribute="bottom" secondItem="pGz-Uq-my6" secondAttribute="bottom" id="vf0-pF-Kw8"/>
+                                        <constraint firstItem="ApY-pG-3gS" firstAttribute="leading" secondItem="G9Y-qj-c3Q" secondAttribute="trailing" constant="3" id="wF2-F8-uZS"/>
+                                        <constraint firstItem="yXG-lu-UWo" firstAttribute="leading" secondItem="rL4-HO-mjS" secondAttribute="leading" id="x8d-e6-m4k"/>
+                                    </constraints>
+                                </customView>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="WtP-No-p2l" firstAttribute="leading" secondItem="QAe-DH-Bg9" secondAttribute="trailing" constant="69" id="D88-1i-HXq"/>
+                                <constraint firstItem="rL4-HO-mjS" firstAttribute="centerX" secondItem="rMK-nt-24c" secondAttribute="centerX" id="4I5-vd-sjl"/>
                                 <constraint firstAttribute="width" constant="572" id="H21-g7-3B3"/>
                                 <constraint firstItem="rMK-nt-24c" firstAttribute="leading" secondItem="QAe-DH-Bg9" secondAttribute="trailing" constant="18" id="IMU-lg-OGt"/>
                                 <constraint firstItem="QAe-DH-Bg9" firstAttribute="centerY" secondItem="UTr-C2-ifJ" secondAttribute="centerY" id="QBH-hV-LGh"/>
@@ -3044,7 +3134,7 @@ DQ
                                 <constraint firstAttribute="bottom" secondItem="os7-gV-yfW" secondAttribute="bottom" constant="18" id="wfq-ot-EWk"/>
                                 <constraint firstAttribute="height" constant="195" id="wju-yz-seL"/>
                                 <constraint firstAttribute="bottom" secondItem="QAe-DH-Bg9" secondAttribute="bottom" constant="74" id="zL7-fr-o0q"/>
-                                <constraint firstAttribute="bottom" secondItem="WtP-No-p2l" secondAttribute="bottom" constant="67" id="zlO-K1-8Rm"/>
+                                <constraint firstItem="rL4-HO-mjS" firstAttribute="top" secondItem="5O1-nj-9cM" secondAttribute="bottom" constant="16" id="zQE-xX-kmG"/>
                             </constraints>
                         </customView>
                     </subviews>
@@ -3939,6 +4029,67 @@ DQ
                                         </constraints>
                                     </view>
                                 </tabViewItem>
+                                <tabViewItem label="Preferenze" identifier="" id="Fav-qm-cHt" userLabel="Preferenze">
+                                    <view key="view" id="cy4-fw-0dl">
+                                        <rect key="frame" x="10" y="33" width="640" height="404"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6ch-RX-5cD">
+                                                <rect key="frame" x="109" y="323" width="423" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="YlI-8L-GSO"/>
+                                                </constraints>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Configurazione preferenze" id="ibM-Ur-hX3">
+                                                    <font key="font" metaFont="system" size="37"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GEm-xv-rbv">
+                                                <rect key="frame" x="61" y="292" width="518" height="23"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="23" id="DgI-uK-21E"/>
+                                                    <constraint firstAttribute="width" constant="514" id="Jpm-TJ-6Hv"/>
+                                                </constraints>
+                                                <textFieldCell key="cell" alignment="center" id="9cf-aq-FBX">
+                                                    <font key="font" metaFont="system" size="18"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <box title="Box" titlePosition="noTitle" transparent="YES" translatesAutoresizingMaskIntoConstraints="NO" id="okp-rx-8Gj">
+                                                <rect key="frame" x="61" y="10" width="518" height="252"/>
+                                                <view key="contentView" id="fOQ-UL-vkZ">
+                                                    <rect key="frame" x="3" y="3" width="512" height="246"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dPw-zO-b0o">
+                                                            <rect key="frame" x="18" y="211" width="338" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <buttonCell key="cell" type="check" title="Mantieni CIE ID aperto nella barra in alto del menu" bezelStyle="regularSquare" imagePosition="left" alignment="center" state="on" inset="2" id="OEj-vs-rMW">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="runInBackgroundSetting:" target="XfG-lQ-9wD" id="Bpf-Rb-P6Q"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </view>
+                                            </box>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="okp-rx-8Gj" secondAttribute="bottom" constant="14" id="2AA-JK-BU0"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="centerX" secondItem="cy4-fw-0dl" secondAttribute="centerX" id="4e9-8X-U0g"/>
+                                            <constraint firstItem="GEm-xv-rbv" firstAttribute="top" secondItem="6ch-RX-5cD" secondAttribute="bottom" constant="8" id="6Cj-d0-1Nz"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="top" secondItem="cy4-fw-0dl" secondAttribute="top" constant="144" id="aVi-Qc-qeA"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="top" secondItem="GEm-xv-rbv" secondAttribute="bottom" constant="32" id="b6M-Au-vXW"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="centerX" secondItem="GEm-xv-rbv" secondAttribute="centerX" id="dor-uk-Qeb"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="leading" secondItem="cy4-fw-0dl" secondAttribute="leading" constant="64" id="msS-hl-DOT"/>
+                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="centerX" secondItem="6ch-RX-5cD" secondAttribute="centerX" id="sev-7o-Ph9"/>
+                                        </constraints>
+                                    </view>
+                                </tabViewItem>
                             </tabViewItems>
                         </tabView>
                     </subviews>
@@ -4386,7 +4537,7 @@ trattalo con cautela.</string>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Whz-S9-ARy">
                             <rect key="frame" x="208" y="300" width="87" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Inserici il PUK" id="lTD-a2-R4R">
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Inserisci il PUK" id="lTD-a2-R4R">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -4894,33 +5045,33 @@ DQ
         </scene>
     </scenes>
     <resources>
-        <image name="Coppia file certificato" width="122" height="164"/>
-        <image name="Coppia file firma" width="123" height="163"/>
-        <image name="Logo_Cie_ID_Windowed" width="156" height="154"/>
+        <image name="Coppia file certificato" width="121" height="163.5"/>
+        <image name="Coppia file firma" width="122.5" height="163"/>
+        <image name="Logo_Cie_ID_Windowed" width="155.5" height="154"/>
         <image name="Risorsa 14" width="30" height="30"/>
         <image name="Risorsa 15" width="30" height="30"/>
         <image name="Risorsa 16" width="30" height="30"/>
         <image name="Risorsa 17" width="30" height="30"/>
         <image name="Risorsa 18" width="30" height="30"/>
         <image name="Risorsa 19" width="30" height="30"/>
-        <image name="checkmark" catalog="system" width="15" height="13"/>
+        <image name="checkmark" catalog="system" width="14" height="13"/>
         <image name="down" width="18" height="10"/>
-        <image name="firma" width="352" height="178"/>
+        <image name="firma" width="176" height="89"/>
         <image name="firma_gray " width="30" height="15"/>
-        <image name="flusso_intro_01" width="613" height="388"/>
+        <image name="flusso_intro_01" width="612.5" height="388"/>
         <image name="flusso_intro_02" width="651" height="373"/>
-        <image name="generica" width="118" height="159"/>
-        <image name="icona_assistenza" width="141" height="39"/>
-        <image name="icona_lettore_card_white" width="192" height="192"/>
-        <image name="icona_sblocco_carta" width="116" height="39"/>
-        <image name="logo-cie" width="84" height="40"/>
+        <image name="generica" width="117.5" height="158.5"/>
+        <image name="icona_assistenza" width="140.5" height="38.5"/>
+        <image name="icona_lettore_card_white" width="191.5" height="191.5"/>
+        <image name="icona_sblocco_carta" width="116" height="38.5"/>
+        <image name="logo-cie" width="42" height="20"/>
         <image name="logoIPZS" width="99" height="40"/>
         <image name="logo_MinisteroInterno" width="130" height="40"/>
-        <image name="p7m_gray" width="235" height="316"/>
-        <image name="pdf_gray" width="236" height="316"/>
+        <image name="p7m_gray" width="117.5" height="158"/>
+        <image name="pdf_gray" width="118" height="158"/>
         <image name="settings_icon" width="30" height="30"/>
         <image name="up" width="18" height="10"/>
-        <image name="upload" width="118" height="159"/>
+        <image name="upload" width="117.5" height="158"/>
         <namedColor name="customDarkBackgroundColor">
             <color white="0.8059999942779541" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
