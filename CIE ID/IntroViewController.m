@@ -7,9 +7,11 @@
 //
 
 #import "IntroViewController.h"
+#import "PreferencesManager.h"
+
 
 @interface IntroViewController ()
-
+@property PreferencesManager *prefManager;
 @end
 
 @implementation IntroViewController
@@ -19,7 +21,7 @@
     // Do view setup here.
     
     //NSUserDefaults.standardUserDefaults
-    
+    _prefManager = PreferencesManager.sharedInstance;
     self.preferredContentSize = self.view.frame.size;
     
     self.view.window.delegate = self;
@@ -42,8 +44,7 @@
 {
     if(_checkDontShowAnymore.state == NSOnState)
     {
-        [NSUserDefaults.standardUserDefaults setObject:@"OK" forKey:@"dontShowIntro"];
-        [NSUserDefaults.standardUserDefaults synchronize];
+        [_prefManager setConfigKeyValue:@"SHOW_TUTORIAL": @"NO"];
     }
     
     [self dismissViewController:self];

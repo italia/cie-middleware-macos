@@ -76,8 +76,8 @@ static AppLogLevel AppLoggerDefaultLogLevel = AppLogLevel_INFO;
 - (void)writeToLogFile:(NSString *)message {
     NSDate *date;
     NSDateFormatter *dateFormatter;
-    NSFileManager *fileManager;
     NSString *currentDate;
+    NSString *logFolder;
     NSString *logFilePath;
     NSString *timestamp;
     NSString *timestampedMessage;
@@ -88,8 +88,9 @@ static AppLogLevel AppLoggerDefaultLogLevel = AppLogLevel_INFO;
     currentDate = [dateFormatter stringFromDate:date];
     [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     timestamp = [dateFormatter stringFromDate:date];
-    logFilePath = [NSString stringWithFormat:@"%@/.CIEPKI/CIEID_%@.log",
-                                                        NSHomeDirectory(),
+    logFolder = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.it.ipzs.SoftwareCIE"] path] stringByAppendingString:@"/Library/Caches/CIEPKI/"];
+    logFilePath = [NSString stringWithFormat:@"%@CIEID_%@.log",
+                                                        logFolder,
                                                         currentDate];
 
     timestampedMessage = [NSString stringWithFormat:@"%@    %@", timestamp, message];
