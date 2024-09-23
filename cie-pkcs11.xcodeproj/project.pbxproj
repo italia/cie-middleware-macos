@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		461398B8C02047C25F03D065 /* Pods_CIE_ID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */; };
 		52FE2BD82A164C3100A210C0 /* TestCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52FE2BD52A164C3100A210C0 /* TestCIE.cpp */; };
 		52FE2BD92A164C3100A210C0 /* UUCByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52FE2BD62A164C3100A210C0 /* UUCByteArray.cpp */; };
+		608460792C9DEB3600477D30 /* SSZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 608460782C9DEB3600477D30 /* SSZipArchive.framework */; };
 		6089967E276BCACE00E5CB32 /* AppLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6089967D276BCACE00E5CB32 /* AppLogger.m */; };
 		60E2DCAA2B74E5D70030D523 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E2DCA72B74E5D70030D523 /* MessageViewController.xib */; };
 		60E2DCAB2B74E5D70030D523 /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E2DCA72B74E5D70030D523 /* MessageViewController.xib */; };
@@ -289,8 +290,10 @@
 		52FE2BD52A164C3100A210C0 /* TestCIE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCIE.cpp; sourceTree = "<group>"; };
 		52FE2BD62A164C3100A210C0 /* UUCByteArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUCByteArray.cpp; sourceTree = "<group>"; };
 		52FE2BD72A164C3100A210C0 /* PKCS11ErrorMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKCS11ErrorMap.h; sourceTree = "<group>"; };
+		608460782C9DEB3600477D30 /* SSZipArchive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SSZipArchive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6089967C276BCACE00E5CB32 /* AppLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppLogger.h; sourceTree = "<group>"; };
 		6089967D276BCACE00E5CB32 /* AppLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppLogger.m; sourceTree = "<group>"; };
+		60AB96B42C9DD88000652266 /* libSSZipArchive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSSZipArchive.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		60E2DCA72B74E5D70030D523 /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
 		60E2DCA82B74E5D70030D523 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		60E2DCA92B74E5D70030D523 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
@@ -531,6 +534,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				608460792C9DEB3600477D30 /* SSZipArchive.framework in Frameworks */,
 				60E2DCB62B7D4F1C0030D523 /* libcryptopp.a in Frameworks */,
 				60F947E52B7FB2F800DBA80F /* libcie-pkcs11.dylib in Frameworks */,
 				E58222F021CAABF600A6B6F0 /* WebKit.framework in Frameworks */,
@@ -988,6 +992,8 @@
 		E5BE7DC620FE8A9A00004389 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				608460782C9DEB3600477D30 /* SSZipArchive.framework */,
+				60AB96B42C9DD88000652266 /* libSSZipArchive.a */,
 				77AFDA93263807D8002E418E /* libssl.a */,
 				77AFDA6626380557002E418E /* libcrypto2.a */,
 				77BAE7AA261EFB6000592607 /* libz.a */,
@@ -1110,6 +1116,7 @@
 				E526E9F621E0BAFF0098AE8A /* Embed App Extensions */,
 				76F67E0F25DD2A3C002AB48D /* CopyFiles */,
 				60F947EA2B7FC45400DBA80F /* Embed Libraries */,
+				9CD46B10C706BA6257C5A3A9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1394,6 +1401,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		9CD46B10C706BA6257C5A3A9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CIE ID/Pods-CIE ID-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CIE ID/Pods-CIE ID-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CIE ID/Pods-CIE ID-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1597,7 +1621,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = X3YLHJ3273;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -1612,7 +1636,7 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.43.9;
+				MARKETING_VERSION = 1.43.10;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE;
@@ -1635,7 +1659,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = X3YLHJ3273;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -1650,7 +1674,7 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.43.9;
+				MARKETING_VERSION = 1.43.10;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
