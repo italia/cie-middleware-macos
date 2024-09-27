@@ -1532,11 +1532,26 @@ CK_RV completedCallback(string& PAN,
     }
 }
 
+- (void)askRemoveLogs:(NSString*)message withTitle:(NSString*)title {
+    [logger info:@"askRemoveLogs:withTitle: - Inizia funzione"];
+    dispatch_async(dispatch_get_main_queue(), ^ {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert addButtonWithTitle:@"Annulla"];
+        [alert setMessageText:title];
+        [alert setInformativeText:message];
+        
+        [alert setAlertStyle:NSAlertStyleInformational];
+        
+        [alert beginSheetModalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(askRemoveLogsDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    });
+}
+
 - (void)askRemove:(NSString*)message withTitle:(NSString*)title {
     [logger info:@"askRemove:withTitle: - Inizia funzione"];
     dispatch_async(dispatch_get_main_queue(), ^ {
         NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"Ok"];
+        [alert addButtonWithTitle:@"OK"];
         [alert addButtonWithTitle:@"Annulla"];
         [alert setMessageText:title];
         [alert setInformativeText:message];
@@ -1551,7 +1566,7 @@ CK_RV completedCallback(string& PAN,
     [logger info:@"askRemoveAll:withTitle: - Inizia funzione"];
     dispatch_async(dispatch_get_main_queue(), ^ {
         NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"SI"];
+        [alert addButtonWithTitle:@"Sì"];
         [alert addButtonWithTitle:@"No"];
         [alert setMessageText:title];
         [alert setInformativeText:message];
@@ -1580,6 +1595,21 @@ CK_RV completedCallback(string& PAN,
     
     if (returnCode == NSAlertFirstButtonReturn) {
         [self disabilita];
+    }
+}
+
+- (void)askRemoveLogsDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(bool*)contextInfo {
+    [logger info:@"askRemoveLogsDidEnd:returnCode:contextInfo: - Inizia funzione"];
+    
+    if (returnCode == NSAlertFirstButtonReturn) {
+        BOOL success = [self deleteLogFiles];
+        if (!success) {
+            [self showMessage:@"Si è verificato un errore durante la cancellazione dei log. È possibile che alcuni file siano aperti ed in uso da terze parti, per cui non è stato possibile procedere con l'eliminazione." withTitle:@"Attenzione" exitAfter:false];
+            [logger error:@"Errore durante l'eliminazione dei log."];
+        } else {
+            [self showMessage:@"L'eliminazione dei log è avvenuta con successo. Se hai riscontrato un'anomalia nel software che intendi segnalare, puoi impostare il livello di logging su 'Debug', replicare l'operazione, raccogliere i log con l'apposito pulsante e condividerli con lo sviluppatore." withTitle:@"Eliminazione completata" exitAfter:false];
+            [logger info:@"Log eliminati con successo."];
+        }
     }
 }
 
@@ -2512,14 +2542,7 @@ CK_RV completedCallback(string& PAN,
 }
 
 - (IBAction)deleteLogClick:(id)sender {
-    BOOL success = [self deleteLogFiles];
-    if (!success) {
-        [self showMessage:@"Si è verificato un errore durante la cancellazione dei log. È possibile che alcuni file siano aperti ed in uso da terze parti, per cui non è stato possibile procedere con l'eliminazione." withTitle:@"Attenzione" exitAfter:false];
-        [logger error:@"Errore durante l'eliminazione dei log."];
-    } else {
-        [self showMessage:@"L'eliminazione dei log è avvenuta con successo. Se hai riscontrato un'anomalia nel software che intendi segnalare, puoi impostare il livello di logging su 'Debug', replicare l'operazione, raccogliere i log con l'apposito pulsante e condividerli con lo sviluppatore." withTitle:@"Eliminazione completata" exitAfter:false];
-        [logger info:@"Log eliminati con successo."];
-    }
+    [self askRemoveLogs:@"Avanzando con l'operazione, verranno eliminati tutti i file di log generati da Software CIE. Confermi di voler procedere?" withTitle:@"Eliminazione log"];
 }
 
 - (BOOL) deleteLogFiles {
