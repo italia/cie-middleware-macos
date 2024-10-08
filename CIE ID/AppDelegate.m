@@ -26,6 +26,7 @@ USING_NAMESPACE(CryptoPP);
 @property NSPopover* popover;
 @property NSTextField* messageLabel;
 @property PreferencesManager* prefManager;
+@property (strong, nonatomic) MainViewController *mainViewController;
 @end
 
 @implementation AppDelegate
@@ -49,8 +50,8 @@ int socket_desc;
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
 {
     if ([[_prefManager getConfigKeyValue:@"RUN_IN_BACKGROUND"] isEqual: @"YES"]) {
-        if (!([NSApp activationPolicy] == NSApplicationActivationPolicyAccessory))
-            [self switchToBackgroundMode];
+        if (([NSApp activationPolicy] == NSApplicationActivationPolicyRegular))
+            [NSApp unhide: NSApplication.sharedApplication];
         return NO;
     } else {
         return YES;
@@ -99,7 +100,7 @@ int socket_desc;
 
 - (IBAction)openCIEID:(id)sender {
     [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
-    [NSApp unhide: NSApplication.sharedApplication];
+    [[NSApplication sharedApplication] unhide:nil];
 }
 
 - (IBAction)killCIEID:(id)sender {

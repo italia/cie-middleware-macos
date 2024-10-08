@@ -300,9 +300,15 @@ AppLogger *logger;
 }
 
 - (BOOL)windowShouldClose:(NSObject*)sender {
-    
-    [NSApplication.sharedApplication terminate:self];
-    return YES;
+    if ([[_prefManager getConfigKeyValue:@"RUN_IN_BACKGROUND"] isEqualToString: @"YES"]) {
+        [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+        [[NSApplication sharedApplication] hide:nil];
+        return NO;
+    }
+    else {
+        [NSApplication.sharedApplication terminate:self];
+        return YES;
+    }
 }
 
 // delete key detection
