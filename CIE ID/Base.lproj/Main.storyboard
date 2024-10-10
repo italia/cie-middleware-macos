@@ -1700,17 +1700,19 @@ DQ
                                             <rect key="frame" x="280" y="20" width="100" height="21"/>
                                             <subviews>
                                                 <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0QW-wr-CHb">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="21"/>
-                                                    <buttonCell key="cell" type="squareTextured" title="Abbina" bezelStyle="texturedSquare" alignment="center" inset="2" id="2vc-WY-mDF">
+                                                    <rect key="frame" x="-7" y="-7" width="114" height="33"/>
+                                                    <buttonCell key="cell" type="push" title="Abbina" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2vc-WY-mDF">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
+                                                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
                                                                 <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </buttonCell>
-                                                    <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                             <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
