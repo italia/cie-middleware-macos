@@ -19,6 +19,19 @@
 #include "../cie-pkcs11/Util/UUCProperties.h"
 
 USING_NAMESPACE(CryptoPP);
+#import "PreferencesManager.h"
+#import "MainViewController.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>    //strlen
+#include <sys/socket.h>
+#include <arpa/inet.h>    //inet_addr
+#include <unistd.h>    //write
+#include "../cie-pkcs11/Crypto/CryptoUtil.h"
+#include "../cie-pkcs11/Util/UUCProperties.h"
+
+USING_NAMESPACE(CryptoPP);
 
 @interface AppDelegate ()
 @property (weak) IBOutlet NSMenu *statusMenu;
@@ -26,6 +39,7 @@ USING_NAMESPACE(CryptoPP);
 @property NSPopover* popover;
 @property NSTextField* messageLabel;
 @property PreferencesManager* prefManager;
+@property (strong, nonatomic) MainViewController *mainViewController;
 @end
 
 @implementation AppDelegate
@@ -49,8 +63,8 @@ int socket_desc;
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
 {
     if ([[_prefManager getConfigKeyValue:@"RUN_IN_BACKGROUND"] isEqual: @"YES"]) {
-        if (!([NSApp activationPolicy] == NSApplicationActivationPolicyAccessory))
-            [self switchToBackgroundMode];
+        if (([NSApp activationPolicy] == NSApplicationActivationPolicyRegular))
+            [NSApp unhide: NSApplication.sharedApplication];
         return NO;
     } else {
         return YES;
@@ -68,8 +82,12 @@ int socket_desc;
     _prefManager = [[PreferencesManager alloc] init];
     _closeAppFromStatusBar = NO;
     
+    _prefManager = [[PreferencesManager alloc] init];
+    _closeAppFromStatusBar = NO;
+    
     if ([NSRunningApplication runningApplicationsWithBundleIdentifier: NSBundle.mainBundle.bundleIdentifier].count > 1)
     {
+        _closeAppFromStatusBar = YES;
         _closeAppFromStatusBar = YES;
         [NSApplication.sharedApplication terminate:self];
     }
@@ -99,7 +117,7 @@ int socket_desc;
 
 - (IBAction)openCIEID:(id)sender {
     [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
-    [NSApp unhide: NSApplication.sharedApplication];
+    [[NSApplication sharedApplication] unhide:nil];
 }
 
 - (IBAction)killCIEID:(id)sender {

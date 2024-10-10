@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="22505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="22690"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
@@ -338,11 +338,14 @@
                         <outlet property="cbGraphicSignature" destination="WNU-mg-OhD" id="nPc-WP-nel"/>
                         <outlet property="cbShouldRunInBackground" destination="dPw-zO-b0o" id="wIm-Du-hhQ"/>
                         <outlet property="cbShowPsw" destination="jDo-KO-WPc" id="OTm-PI-lBY"/>
+                        <outlet property="cbShowTutorial" destination="7Gt-z3-7X7" id="7rJ-yL-Hvo"/>
                         <outlet property="changePINButtonView" destination="lrL-iW-R0U" id="xaW-Ke-Qi1"/>
                         <outlet property="changePINOKPageView" destination="gbY-3C-V3N" id="xZV-6g-SgL"/>
                         <outlet property="changePINPageView" destination="Qux-KY-phF" id="XzU-be-vxC"/>
+                        <outlet property="collectLogButton" destination="BRy-bl-Oal" id="4A1-tp-iRt"/>
                         <outlet property="customizeGraphicSignatureView" destination="UPo-st-jEA" id="g5r-eY-dd5"/>
                         <outlet property="cvInsertPIN" destination="rL4-HO-mjS" id="7WU-Mb-BgK"/>
+                        <outlet property="deleteLogButton" destination="2h3-S3-9wj" id="HG4-T4-QMm"/>
                         <outlet property="digitalSignatureButtonView" destination="nSP-6F-JnT" id="Aem-7E-Rrv"/>
                         <outlet property="filePathSignOp" destination="tkc-yT-lxO" id="UM5-1F-WLy"/>
                         <outlet property="fileSelectionSignatureBlockView" destination="uLO-QA-fHp" id="JQS-69-q3B"/>
@@ -1697,17 +1700,19 @@ DQ
                                             <rect key="frame" x="280" y="20" width="100" height="21"/>
                                             <subviews>
                                                 <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0QW-wr-CHb">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="21"/>
-                                                    <buttonCell key="cell" type="squareTextured" title="Abbina" bezelStyle="texturedSquare" alignment="center" inset="2" id="2vc-WY-mDF">
+                                                    <rect key="frame" x="-7" y="-7" width="114" height="33"/>
+                                                    <buttonCell key="cell" type="push" title="Abbina" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2vc-WY-mDF">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
+                                                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
                                                                 <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </buttonCell>
-                                                    <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                             <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -3873,8 +3878,8 @@ DQ
                                                 </textFieldCell>
                                             </textField>
                                             <box ambiguous="YES" title="Box" titlePosition="noTitle" transparent="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t90-0W-cRQ">
-                                                <rect key="frame" x="61" y="10" width="518" height="252"/>
-                                                <view key="contentView" ambiguous="YES" id="DH5-vK-TRJ">
+                                                <rect key="frame" x="61" y="35" width="518" height="252"/>
+                                                <view key="contentView" id="DH5-vK-TRJ">
                                                     <rect key="frame" x="4" y="5" width="510" height="244"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
@@ -4021,17 +4026,79 @@ DQ
                                                         </box>
                                                     </subviews>
                                                 </view>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="512" id="6zU-NL-8VL"/>
+                                                    <constraint firstAttribute="height" constant="246" id="t8U-fx-aWE"/>
+                                                </constraints>
                                             </box>
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BRy-bl-Oal" customClass="FlatButton" customModule="FlatButton">
+                                                <rect key="frame" x="98" y="3" width="206" height="32"/>
+                                                <buttonCell key="cell" type="push" title="Raccogli log per diagnostica" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hoQ-8Y-qJE">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                                </buttonCell>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="192" id="c8c-63-DTN"/>
+                                                    <constraint firstAttribute="height" constant="72" id="xpj-ZK-vol"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                        <color key="value" name="customViewColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                        <color key="value" name="customViewColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="collectLogClick:" target="XfG-lQ-9wD" id="xt9-7t-108"/>
+                                                </connections>
+                                            </button>
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2h3-S3-9wj" customClass="FlatButton" customModule="FlatButton">
+                                                <rect key="frame" x="324" y="3" width="206" height="32"/>
+                                                <buttonCell key="cell" type="push" title="Elimina cache dei log" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6mv-I7-GQo">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                                </buttonCell>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="72" id="rsn-4I-dTr"/>
+                                                    <constraint firstAttribute="width" constant="192" id="tGA-ti-zHw"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeButtonColor">
+                                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                        <color key="value" name="customViewColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
+                                                        <color key="value" name="customViewColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="deleteLogClick:" target="XfG-lQ-9wD" id="l79-ea-C94"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="t90-0W-cRQ" firstAttribute="centerX" secondItem="c6f-vq-Vke" secondAttribute="centerX" id="0qC-ms-ZEj"/>
-                                            <constraint firstItem="t90-0W-cRQ" firstAttribute="top" secondItem="yvX-nj-KxS" secondAttribute="top" constant="144" id="4zK-2v-Xpp"/>
+                                            <constraint firstItem="EYE-sm-uR4" firstAttribute="top" secondItem="yvX-nj-KxS" secondAttribute="top" constant="37" id="Bkv-Oy-0jN"/>
                                             <constraint firstItem="c6f-vq-Vke" firstAttribute="top" secondItem="EYE-sm-uR4" secondAttribute="bottom" constant="8" id="Lns-n6-eBF"/>
-                                            <constraint firstItem="t90-0W-cRQ" firstAttribute="top" secondItem="c6f-vq-Vke" secondAttribute="bottom" constant="32" id="UWK-oF-ado"/>
-                                            <constraint firstAttribute="bottom" secondItem="t90-0W-cRQ" secondAttribute="bottom" constant="14" id="aVz-Rl-SzI"/>
                                             <constraint firstItem="t90-0W-cRQ" firstAttribute="leading" secondItem="yvX-nj-KxS" secondAttribute="leading" constant="64" id="cTh-Wf-NNe"/>
-                                            <constraint firstItem="t90-0W-cRQ" firstAttribute="centerX" secondItem="EYE-sm-uR4" secondAttribute="centerX" id="dZc-OY-cys"/>
-                                            <constraint firstItem="t90-0W-cRQ" firstAttribute="centerX" secondItem="yvX-nj-KxS" secondAttribute="centerX" id="kbv-E8-edl"/>
+                                            <constraint firstItem="t90-0W-cRQ" firstAttribute="top" secondItem="c6f-vq-Vke" secondAttribute="bottom" constant="32" id="t0I-PP-ZiU"/>
                                         </constraints>
                                     </view>
                                 </tabViewItem>
@@ -4051,28 +4118,29 @@ DQ
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GEm-xv-rbv">
-                                                <rect key="frame" x="61" y="292" width="518" height="23"/>
+                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GEm-xv-rbv">
+                                                <rect key="frame" x="61" y="235" width="518" height="80"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="23" id="DgI-uK-21E"/>
+                                                    <constraint firstAttribute="height" constant="80" id="DgI-uK-21E"/>
                                                     <constraint firstAttribute="width" constant="514" id="Jpm-TJ-6Hv"/>
                                                 </constraints>
                                                 <textFieldCell key="cell" alignment="center" id="9cf-aq-FBX">
                                                     <font key="font" metaFont="system" size="18"/>
+                                                    <string key="title">Le operazioni di seguito riportate consentono all'utente di personalizzare il comportamento di CIE ID secondo le proprie preferenze:</string>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <box title="Box" titlePosition="noTitle" transparent="YES" translatesAutoresizingMaskIntoConstraints="NO" id="okp-rx-8Gj">
-                                                <rect key="frame" x="61" y="10" width="518" height="252"/>
+                                            <box ambiguous="YES" misplaced="YES" title="CIEBackgroundBox" titlePosition="noTitle" transparent="YES" translatesAutoresizingMaskIntoConstraints="NO" id="okp-rx-8Gj">
+                                                <rect key="frame" x="62" y="0.0" width="518" height="252"/>
                                                 <view key="contentView" id="fOQ-UL-vkZ">
                                                     <rect key="frame" x="4" y="5" width="510" height="244"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dPw-zO-b0o">
-                                                            <rect key="frame" x="18" y="209" width="338" height="16"/>
+                                                            <rect key="frame" x="18" y="207" width="338" height="18"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <buttonCell key="cell" type="check" title="Mantieni CIE ID aperto nella barra in alto del menu" bezelStyle="regularSquare" imagePosition="left" alignment="center" state="on" inset="2" id="OEj-vs-rMW">
+                                                            <buttonCell key="cell" type="check" title="Mantieni CIE ID aperto nella barra in alto del menu" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="OEj-vs-rMW">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
@@ -4080,17 +4148,26 @@ DQ
                                                                 <action selector="runInBackgroundSetting:" target="XfG-lQ-9wD" id="Bpf-Rb-P6Q"/>
                                                             </connections>
                                                         </button>
+                                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Gt-z3-7X7">
+                                                            <rect key="frame" x="18" y="179" width="472" height="18"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                            <buttonCell key="cell" type="check" title="Mostra schermate introduttive all'avvio di CIE ID" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="AxQ-hf-VVw">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                        </button>
                                                     </subviews>
                                                 </view>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="512" id="5dQ-aX-SoQ"/>
+                                                    <constraint firstAttribute="height" constant="246" id="IpS-xG-gAZ"/>
+                                                </constraints>
                                             </box>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="okp-rx-8Gj" secondAttribute="bottom" constant="14" id="2AA-JK-BU0"/>
                                             <constraint firstItem="okp-rx-8Gj" firstAttribute="centerX" secondItem="cy4-fw-0dl" secondAttribute="centerX" id="4e9-8X-U0g"/>
                                             <constraint firstItem="GEm-xv-rbv" firstAttribute="top" secondItem="6ch-RX-5cD" secondAttribute="bottom" constant="8" id="6Cj-d0-1Nz"/>
-                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="top" secondItem="cy4-fw-0dl" secondAttribute="top" constant="144" id="aVi-Qc-qeA"/>
-                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="top" secondItem="GEm-xv-rbv" secondAttribute="bottom" constant="32" id="b6M-Au-vXW"/>
-                                            <constraint firstItem="okp-rx-8Gj" firstAttribute="centerX" secondItem="GEm-xv-rbv" secondAttribute="centerX" id="dor-uk-Qeb"/>
+                                            <constraint firstItem="6ch-RX-5cD" firstAttribute="top" secondItem="cy4-fw-0dl" secondAttribute="top" constant="37" id="dnU-MU-6l2"/>
                                             <constraint firstItem="okp-rx-8Gj" firstAttribute="leading" secondItem="cy4-fw-0dl" secondAttribute="leading" constant="64" id="msS-hl-DOT"/>
                                             <constraint firstItem="okp-rx-8Gj" firstAttribute="centerX" secondItem="6ch-RX-5cD" secondAttribute="centerX" id="sev-7o-Ph9"/>
                                         </constraints>

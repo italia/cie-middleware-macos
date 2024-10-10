@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,9 +38,9 @@
                                     <rect key="frame" x="150" y="0.0" width="150" height="60"/>
                                     <subviews>
                                         <button wantsLayer="YES" verticalHuggingPriority="750" id="lBv-mt-BPx">
-                                            <rect key="frame" x="18" y="19" width="116" height="21"/>
+                                            <rect key="frame" x="18" y="19" width="116" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="bevel" title="Aggiungi carta" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="iKY-9Q-2Ni">
+                                            <buttonCell key="cell" type="push" title="Aggiungi carta" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iKY-9Q-2Ni">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -52,7 +52,6 @@ DQ
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </buttonCell>
-                                            <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                     <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -83,9 +82,9 @@ DQ
                                     <rect key="frame" x="0.0" y="0.0" width="150" height="60"/>
                                     <subviews>
                                         <button wantsLayer="YES" verticalHuggingPriority="750" id="sup-6g-GcF">
-                                            <rect key="frame" x="20" y="19" width="111" height="21"/>
+                                            <rect key="frame" x="20" y="19" width="111" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="bevel" title="Rimuovi carta" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="zvG-tI-aaI">
+                                            <buttonCell key="cell" type="push" title="Rimuovi carta" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zvG-tI-aaI">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -97,7 +96,6 @@ DQ
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </buttonCell>
-                                            <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                     <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -152,9 +150,9 @@ DQ
                             <rect key="frame" x="32" y="0.0" width="320" height="72"/>
                             <subviews>
                                 <button wantsLayer="YES" verticalHuggingPriority="750" id="fwO-EI-2Mm">
-                                    <rect key="frame" x="86" y="25" width="183" height="21"/>
+                                    <rect key="frame" x="86" y="25" width="183" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                    <buttonCell key="cell" type="bevel" title="Firma con la CIE selezionata" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="ni7-Qp-pTW">
+                                    <buttonCell key="cell" type="push" title="Firma con la CIE selezionata" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ni7-Qp-pTW">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                         <string key="keyEquivalent" base64-UTF8="YES">
@@ -166,7 +164,6 @@ DQ
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </buttonCell>
-                                    <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                             <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -194,9 +191,9 @@ DQ
                             <rect key="frame" x="352" y="0.0" width="320" height="72"/>
                             <subviews>
                                 <button wantsLayer="YES" verticalHuggingPriority="750" id="WQu-AS-yrS">
-                                    <rect key="frame" x="86" y="25" width="183" height="21"/>
+                                    <rect key="frame" x="86" y="25" width="183" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                    <buttonCell key="cell" type="bevel" title="Firma con CIE non associata" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="ctg-cg-zcO">
+                                    <buttonCell key="cell" type="push" title="Firma con CIE non associata" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ctg-cg-zcO">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                         <string key="keyEquivalent" base64-UTF8="YES">
@@ -208,7 +205,6 @@ DQ
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </buttonCell>
-                                    <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                             <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -254,9 +250,9 @@ DQ
                                     <rect key="frame" x="0.0" y="0.0" width="235" height="60"/>
                                     <subviews>
                                         <button wantsLayer="YES" verticalHuggingPriority="750" id="DFU-mO-K3S">
-                                            <rect key="frame" x="63" y="19" width="109" height="21"/>
+                                            <rect key="frame" x="63" y="19" width="109" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="bevel" title="Rimuovi tutte" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="BHR-gp-iDq">
+                                            <buttonCell key="cell" type="push" title="Rimuovi tutte" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BHR-gp-iDq">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -268,7 +264,6 @@ DQ
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </buttonCell>
-                                            <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                     <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -293,9 +288,9 @@ DQ
                                     <rect key="frame" x="501" y="0.0" width="235" height="60"/>
                                     <subviews>
                                         <button wantsLayer="YES" verticalHuggingPriority="750" id="5iI-1X-Foj">
-                                            <rect key="frame" x="62" y="19" width="116" height="21"/>
+                                            <rect key="frame" x="62" y="19" width="116" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="bevel" title="Aggiungi carta" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="t6z-AN-K3S">
+                                            <buttonCell key="cell" type="push" title="Aggiungi carta" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="t6z-AN-K3S">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -307,7 +302,6 @@ DQ
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </buttonCell>
-                                            <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                     <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -332,9 +326,9 @@ DQ
                                     <rect key="frame" x="235" y="0.0" width="266" height="60"/>
                                     <subviews>
                                         <button wantsLayer="YES" verticalHuggingPriority="750" id="GQI-HK-VP8">
-                                            <rect key="frame" x="47" y="19" width="183" height="21"/>
+                                            <rect key="frame" x="47" y="19" width="183" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="bevel" title="Rimuovi carta selezionata" bezelStyle="regularSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="TI8-Mm-hBe">
+                                            <buttonCell key="cell" type="push" title="Rimuovi carta selezionata" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TI8-Mm-hBe">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -346,7 +340,6 @@ DQ
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </buttonCell>
-                                            <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="deviceWhite"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="color" keyPath="buttonColor">
                                                     <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
@@ -409,14 +402,14 @@ DQ
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="RdP-TU-VYs">
                             <rect key="frame" x="0.0" y="260" width="15" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="40" id="mnY-jN-9xg"/>
-                                <constraint firstAttribute="width" constant="15" id="n65-TV-jkB"/>
-                            </constraints>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="back" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="RCs-Ea-HFY">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="mnY-jN-9xg"/>
+                                <constraint firstAttribute="width" constant="15" id="n65-TV-jkB"/>
+                            </constraints>
                             <connections>
                                 <action selector="backPressed:" target="-2" id="PPb-1b-QzK"/>
                             </connections>
@@ -433,14 +426,14 @@ DQ
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="28e-J6-ZOM">
                             <rect key="frame" x="0.0" y="260" width="15" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="40" id="DTm-PF-mGG"/>
-                                <constraint firstAttribute="width" constant="15" id="oSS-Yh-pLG"/>
-                            </constraints>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="forward_custom" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="beY-Gr-MVz">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="DTm-PF-mGG"/>
+                                <constraint firstAttribute="width" constant="15" id="oSS-Yh-pLG"/>
+                            </constraints>
                             <connections>
                                 <action selector="nextPressed:" target="-2" id="Mld-mX-3Xj"/>
                             </connections>
