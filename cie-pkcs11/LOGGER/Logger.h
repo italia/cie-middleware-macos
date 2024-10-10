@@ -92,6 +92,7 @@ namespace CieIDLogger
 		int getLogConfig()throw();
 
 	private:
+        unsigned long find_nth(std::string text, size_t pos, std::string el, size_t nth);
 		void logIntoFile(std::string& data);
 		void logOnConsole(std::string& data);
 		void log_log(std::ostream& out, LogLevel level, const char* text)throw();

@@ -57,27 +57,26 @@ Logger::Logger()
     char* home = getenv("HOME");
     std::string path(home);
     
-    /*if(path.find("/Library") == string::npos){
-        //path.append("/Library/Containers/it.ipzs.SoftwareCIE.CIEToken/Data");
-    }*/
+    unsigned long pos = find_nth(path, 0, "/", 3);
     
-    path.append("/.CIEPKI/");
+    std::string sharedFolderPath(path, 0, pos);
+    sharedFolderPath.append("/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/CIEPKI/");
         
     //check if folder exist
     struct stat st = {0};
     
-    if (stat(path.c_str(), &st) == -1) {
-        mkdir(path.c_str(), 0700);
+    if (stat(sharedFolderPath.c_str(), &st) == -1) {
+        mkdir(sharedFolderPath.c_str(), 0700);
     }
     
     gettimeofday(&curTime, NULL);
     strftime(cTime, sizeof(cTime), "%Y-%m-%d", localtime(&curTime.tv_sec));
     
     sprintf(pbLog, "%s_%s.log", "CIEPKI", cTime);
-    path.append(pbLog);
+    sharedFolderPath.append(pbLog);
         
-    memcpy(pbLog, path.data(), path.length());
-    pbLog[path.length()] = 0;
+    memcpy(pbLog, sharedFolderPath.data(), sharedFolderPath.length());
+    pbLog[sharedFolderPath.length()] = 0;
 
 	int log_level = getLogConfig();
 	
@@ -122,6 +121,7 @@ Logger* Logger::getInstance() throw ()
 
 	int log_level = m_Instance->getLogConfig();
     //printf("Lib log level: %d\n", log_level);
+    //printf("Lib log level: %d\n", log_level);
 
 	if (log_level == LOG_STATUS_DISABLED) {
 		m_Instance->disableLog();
@@ -133,6 +133,16 @@ Logger* Logger::getInstance() throw ()
 	}
 
 	return m_Instance;
+}
+
+unsigned long Logger::find_nth(std::string text, size_t pos, std::string el, size_t nth)
+{
+    unsigned long found_pos = text.find(el, pos);
+    
+    if(nth == 0 || std::string::npos == found_pos)
+        return found_pos;
+    
+    return find_nth(text, found_pos + 1, el, nth-1);
 }
 
 void Logger::writeConfigFile(string& filePath, string& sConfig) throw() {
@@ -150,6 +160,9 @@ int Logger::getLogConfig() throw() {
     char* home = getenv("HOME");
     std::string path(home);
     
+    /*if(path.find("/Library") == string::npos){
+        path.append("/Library/Containers/it.ipzs.SoftwareCIE.CIEToken/Data");
+    }*/
     /*if(path.find("/Library") == string::npos){
         path.append("/Library/Containers/it.ipzs.SoftwareCIE.CIEToken/Data");
     }*/
