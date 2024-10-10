@@ -93,7 +93,9 @@ static AppLogLevel AppLoggerDefaultLogLevel = AppLogLevel_INFO;
                                                         logFolder,
                                                         currentDate];
 
+
     timestampedMessage = [NSString stringWithFormat:@"%@    %@", timestamp, message];
+    NSLog(@"writeToLogFile:    logFilePath:%@    message:%@", logFilePath, timestampedMessage);
     NSLog(@"writeToLogFile:    logFilePath:%@    message:%@", logFilePath, timestampedMessage);
     @try {
         // [timestampedMessage writeToFile:logFilePath atomically:YES encoding:NSUTF8StringEncoding error:nil];

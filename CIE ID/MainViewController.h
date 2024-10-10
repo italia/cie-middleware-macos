@@ -24,10 +24,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property IBOutlet NSView* changePINOKPageView;
 @property IBOutlet NSView* unlockPageView;
 @property IBOutlet NSView* unlockOKPageView;
+@property IBOutlet NSView* changePINPageView;
+@property IBOutlet NSView* changePINOKPageView;
+@property IBOutlet NSView* unlockPageView;
+@property IBOutlet NSView* unlockOKPageView;
 @property IBOutlet NSView* helpPageView;
 @property IBOutlet NSView* infoPageView;
 @property IBOutlet NSView* selectFilePageView;
 @property IBOutlet NSView* selectOperationView;
+@property IBOutlet NSView* signOperationView;
+@property IBOutlet NSView* signPreView;
+@property IBOutlet NSView* signPINView;
+@property IBOutlet NSView* customizeGraphicSignatureView;
+@property IBOutlet NSView* verifyView;
+@property IBOutlet NSView* settingsView;
 @property IBOutlet NSView* signOperationView;
 @property IBOutlet NSView* signPreView;
 @property IBOutlet NSView* signPINView;
@@ -41,7 +51,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak) IBOutlet NSButton* btnPair;
 @property (weak) IBOutlet NSButton* btnAbort;
+@property (weak) IBOutlet NSButton* btnPair;
+@property (weak) IBOutlet NSButton* btnAbort;
 
+@property IBOutlet NSImageView* helpImageView;
+@property IBOutlet NSImageView* unlockImageView;
 @property IBOutlet NSImageView* helpImageView;
 @property IBOutlet NSImageView* unlockImageView;
 
@@ -50,7 +64,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property IBOutlet NSTextField* labelProgressChangePIN;
 @property IBOutlet NSProgressIndicator* progressIndicatorChangePIN;
+@property IBOutlet NSTextField* labelProgressChangePIN;
+@property IBOutlet NSProgressIndicator* progressIndicatorChangePIN;
 
+@property IBOutlet NSTextField* labelProgressUnlockPIN;
+@property IBOutlet NSProgressIndicator* progressIndicatorUnlockPIN;
 @property IBOutlet NSTextField* labelProgressUnlockPIN;
 @property IBOutlet NSProgressIndicator* progressIndicatorUnlockPIN;
 
@@ -61,13 +79,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property IBOutlet NSTextField* textFieldPUK;
 @property IBOutlet NSTextField* textFieldNewUnlockPIN;
 @property IBOutlet NSTextField* textFieldConfirmUnlockPIN;
+@property IBOutlet NSTextField* textFieldNewUnlockPIN;
+@property IBOutlet NSTextField* textFieldConfirmUnlockPIN;
 
 @property IBOutlet NSView* homeButtonView;
+@property IBOutlet NSView* changePINButtonView;
+@property IBOutlet NSView* unlockPINButtonView;
 @property IBOutlet NSView* changePINButtonView;
 @property IBOutlet NSView* unlockPINButtonView;
 @property IBOutlet NSView* tutorialButtonView;
 @property IBOutlet NSView* helpButtonView;
 @property IBOutlet NSView* infoButtonView;
+@property IBOutlet NSView* digitalSignatureButtonView;
+@property IBOutlet NSView* verifySignatureButtonView;
+@property IBOutlet NSView* settingsButtonView;
 @property IBOutlet NSView* digitalSignatureButtonView;
 @property IBOutlet NSView* verifySignatureButtonView;
 @property IBOutlet NSView* settingsButtonView;
