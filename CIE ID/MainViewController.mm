@@ -1691,7 +1691,7 @@ CK_RV completedCallback(string& PAN,
     NSString *filePathNoSpaces = [filePath stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString* fileType = [[NSURL URLWithString:filePathNoSpaces] pathExtension];
     
-    self.fullPINSignature = [self.carouselView shouldUseFullPINForSignature];
+    self.fullPINSignature = [[cieList getDictionary] count] == 0 || [self.carouselView shouldUseFullPINForSignature];
 
     if ([fileType isEqualTo:@"pdf"] && !self.fullPINSignature) {
         [_cbGraphicSignature setEnabled:YES];
