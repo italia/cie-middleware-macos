@@ -19,6 +19,19 @@
 #include "../cie-pkcs11/Util/UUCProperties.h"
 
 USING_NAMESPACE(CryptoPP);
+#import "PreferencesManager.h"
+#import "MainViewController.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>    //strlen
+#include <sys/socket.h>
+#include <arpa/inet.h>    //inet_addr
+#include <unistd.h>    //write
+#include "../cie-pkcs11/Crypto/CryptoUtil.h"
+#include "../cie-pkcs11/Util/UUCProperties.h"
+
+USING_NAMESPACE(CryptoPP);
 
 @interface AppDelegate ()
 @property (weak) IBOutlet NSMenu *statusMenu;
@@ -69,8 +82,12 @@ int socket_desc;
     _prefManager = [[PreferencesManager alloc] init];
     _closeAppFromStatusBar = NO;
     
+    _prefManager = [[PreferencesManager alloc] init];
+    _closeAppFromStatusBar = NO;
+    
     if ([NSRunningApplication runningApplicationsWithBundleIdentifier: NSBundle.mainBundle.bundleIdentifier].count > 1)
     {
+        _closeAppFromStatusBar = YES;
         _closeAppFromStatusBar = YES;
         [NSApplication.sharedApplication terminate:self];
     }
@@ -261,6 +278,64 @@ int socket_desc;
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+}
+
+- (bool) cieidIsRunning
+{
+    return [NSRunningApplication runningApplicationsWithBundleIdentifier: @"it.ipzs.SoftwareCIE"].count > 0;
+}
+
+- (void) pinLocked
+{
+    MessageViewController* vc = MessageViewController.freshController;
+    vc.popover = _popover;
+    _popover.contentViewController = vc;
+    [self showPopover:self];
+    
+    BOOL processIsRunning = self.cieidIsRunning;
+    
+    if(processIsRunning)
+    {
+        vc.messageLabel.stringValue = @"La carta è bloccata. Sbloccarla usando il PUK";
+        vc.cieidButton.hidden = YES;
+        vc.closeButton.frame = CGRectMake((vc.view.frame.size.width - vc.closeButton.frame.size.width) / 2, vc.closeButton.frame.origin.y, vc.closeButton.frame.size.width, vc.closeButton.frame.size.height);
+    }
+    else
+    {
+        vc.messageLabel.stringValue = @"La carta è bloccata. Aprire CIE ID e sbloccarla usando il PUK";
+    }
+}
+
+- (void) pinWrong: (int) remainingTrials
+{
+    MessageViewController* vc = MessageViewController.freshController;
+    vc.popover = _popover;
+    _popover.contentViewController = vc;
+    [self showPopover:self];
+    
+    vc.messageLabel.stringValue = @"Il PIN digitato è errato";
+    
+    vc.cieidButton.hidden = YES;
+    vc.closeButton.frame = CGRectMake((vc.view.frame.size.width - vc.closeButton.frame.size.width) / 2, vc.closeButton.frame.origin.y, vc.closeButton.frame.size.width, vc.closeButton.frame.size.height);
+}
+
+- (void) cardNotRegistered: (NSString*) pan
+{
+    MessageViewController* vc = MessageViewController.freshController;
+    vc.popover = _popover;
+    _popover.contentViewController = vc;
+    [self showPopover:self];
+    
+    BOOL processIsRunning = self.cieidIsRunning;
+    
+    if(processIsRunning)
+    {
+        vc.messageLabel.stringValue = @"La carta non è stata abbinata. Abbinare la carta";
+        vc.cieidButton.hidden = YES;
+        vc.closeButton.frame = CGRectMake((vc.view.frame.size.width - vc.closeButton.frame.size.width) / 2, vc.closeButton.frame.origin.y, vc.closeButton.frame.size.width, vc.closeButton.frame.size.height);
+    }
+    else
+        vc.messageLabel.stringValue = @"La carta non è stata abbinata. Aprire CIE ID per abbinare la carta";
 }
 
 - (bool) cieidIsRunning

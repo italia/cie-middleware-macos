@@ -164,24 +164,24 @@ AppLogger *logger;
 - (void)loadView {
     [super loadView];
     viewArray = [[NSArray alloc] initWithObjects:_homeFirstPageView,
-                 _homeSecondPageView,
-                 _homeThirdPageView,
-                 _homeFourthPageView,
-                 _changePINPageView,
-                 _changePINOKPageView,
-                 _unlockPageView,
-                 _unlockOKPageView,
-                 _helpPageView,
-                 _infoPageView,
-                 _selectFilePageView,
-                 _selectOperationView,
-                 _signOperationView,
-                 _signPreView,
-                 _signPINView,
-                 _customizeGraphicSignatureView,
-                 _verifyView,
-                 _settingsView,
-                 nil];
+                                 _homeSecondPageView,
+                                 _homeThirdPageView,
+                                 _homeFourthPageView,
+                                 _changePINPageView,
+                                 _changePINOKPageView,
+                                 _unlockPageView,
+                                 _unlockOKPageView,
+                                 _helpPageView,
+                                 _infoPageView,
+                                 _selectFilePageView,
+                                 _selectOperationView,
+                                 _signOperationView,
+                                 _signPreView,
+                                 _signPINView,
+                                 _customizeGraphicSignatureView,
+                                 _verifyView,
+                                 _settingsView,
+                                 nil];
     ChangeView *cG = [ChangeView getInstance];
     cG.viewArray = viewArray;
     [self showHomeFirstPage];
@@ -266,6 +266,12 @@ AppLogger *logger;
     [self.tbVerifyInfo registerNib:[[NSNib alloc] initWithNibNamed:@"VerifyCell" bundle:nil]forIdentifier:@"verifyCellID"];
     self.tbVerifyInfo.delegate = self;
     self.tbVerifyInfo.dataSource = self;
+    
+    NSString *value = [_prefManager getConfigKeyValue:@"RUN_IN_BACKGROUND"];
+    if([value isEqualToString:@"YES"])
+        [_cbShouldRunInBackground setState: NSOnState];
+    else
+        [_cbShouldRunInBackground setState: NSOffState];
 }
 
 - (void)addSubviewToMainCustomView:(NSView *)view {
@@ -365,7 +371,7 @@ CK_RV progressCallback(const int progress,
 }
 
 CK_RV progressSignatureCallback(const int progress,
-                                const char* szMessage) {
+                            const char* szMessage) {
     dispatch_async(dispatch_get_main_queue(), ^ {
         progressIndicatorSignaturePointer.doubleValue = progress;
     });
@@ -382,7 +388,7 @@ CK_RV progressCallbackCambioPIN(const int progress,
 }
 
 CK_RV progressCallbackUnlockPIN(const int progress,
-                                const char* szMessage) {
+                                 const char* szMessage) {
     dispatch_async(dispatch_get_main_queue(), ^ {
         labelProgressPointerUnlockPIN.stringValue = [NSString stringWithUTF8String:szMessage];
         progressIndicatorPointerUnlockPIN.doubleValue = progress;
@@ -406,12 +412,12 @@ CK_RV completedSignatureCallback(int ret) {
             imgSignatureOKPointer.hidden = NO;
             imgSignatureOKPointer.image = [NSImage imageNamed:@"cross"];
         }
-        
+
         progressIndicatorSignaturePointer.hidden = YES;
         btnSignatureCompletedPointer.hidden = NO;
         btnAbortSignaturePointer.hidden = YES;
         btnSignaturePointer.hidden = YES;
-        
+
     });
     return 0;
 }
@@ -532,7 +538,7 @@ CK_RV completedCallback(string& PAN,
                 [self showMessage:@"CIE disabilitata con successo" withTitle:@"CIE disabilitata" exitAfter:NO];
                 [self showHomeFirstPage];
             }
-            
+
             [cieList removeCie:pan];
             [self.carouselView configureWithCards:[[cieList getDictionary] allValues]];
             NSFileManager *manager = [NSFileManager defaultManager];
@@ -737,7 +743,7 @@ CK_RV completedCallback(string& PAN,
     NSString* puk = self.textFieldPUK.stringValue;
     NSString* newpin = self.textFieldNewUnlockPIN.stringValue;
     NSString* confirmpin = self.textFieldConfirmUnlockPIN.stringValue;
-    
+
     if (puk.length != 8) {
         [self showMessage:@"Il PUK deve essere composto da 8 numeri" withTitle:@"PUK non corretto" exitAfter:false];
         return;
@@ -830,14 +836,14 @@ CK_RV completedCallback(string& PAN,
         }
         
         int attempts = -1;
-        
+
         long ret = pfnSbloccoPIN([puk cStringUsingEncoding:NSUTF8StringEncoding], [newpin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallbackUnlockPIN);
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            
+
             self.progressIndicatorUnlockPIN.hidden = YES;
             self.labelProgressUnlockPIN.hidden = YES;
-            
+
             [((NSControl*)sender) setEnabled:YES];
             
             switch (ret) {
@@ -990,10 +996,10 @@ CK_RV completedCallback(string& PAN,
         long ret = pfnCambioPIN([pin cStringUsingEncoding:NSUTF8StringEncoding], [newpin cStringUsingEncoding:NSUTF8StringEncoding], &attempts, &progressCallbackCambioPIN);
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
+
             self.progressIndicatorChangePIN.hidden = YES;
             self.labelProgressChangePIN.hidden = YES;
-            
+
             [((NSControl*)sender) setEnabled:YES];
             
             switch (ret) {
@@ -1077,7 +1083,7 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
-        
+
         [self disableSettingsFormEditing];
         
         if ([NSUserDefaults.standardUserDefaults objectForKey:@"proxyUrl"] && ![[NSUserDefaults.standardUserDefaults objectForKey:@"proxyUrl"] isEqual:@""]) {
@@ -1216,7 +1222,7 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        
+
         _lblCades.textColor = NSColor.grayColor;
         _lblCadesSub.textColor = NSColor.grayColor;
         _lblPades.textColor = NSColor.grayColor;
@@ -1246,7 +1252,7 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        
+
         if ((![NSUserDefaults.standardUserDefaults objectForKey:@"cieDictionary"])) {
             cieList = [CieList new];
         } else {
@@ -1274,13 +1280,13 @@ CK_RV completedCallback(string& PAN,
         if ([[cieList getDictionary] count] > 0) {
             [self showHomeFourthPage];
         }
-        
+
         else {
-            
+    
             ChangeView *cG = [ChangeView getInstance];
             [cG showSubView:HOME_FIRST_PAGE];
             //[_btnFirmaElettronica setEnabled:NO];
-            
+
             for (int i = 1; i < 9; i++) {
                 NSTextField* txtField = [self.view viewWithTag:i];
                 txtField.stringValue = @"";
@@ -1305,7 +1311,7 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        
+
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:HOME_THIRD_PAGE];
     });
@@ -1324,7 +1330,7 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        
+
         self.homeFirstPageView.hidden = YES;
         self.selectFilePageView.hidden = YES;
         self.homeSecondPageView.hidden = NO;
@@ -1375,10 +1381,10 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        
+
         self.progressIndicatorChangePIN.hidden = YES;
         self.labelProgressChangePIN.hidden = YES;
-        
+
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:CAMBIO_PIN_PAGE];
     });
@@ -1397,7 +1403,7 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        
+
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:CAMBIO_PIN_OK_PAGE];
     });
@@ -1416,10 +1422,10 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        
+
         self.progressIndicatorUnlockPIN.hidden = YES;
         self.labelProgressUnlockPIN.hidden = YES;
-        
+
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:SBLOCCO_PAGE];
     });
@@ -1438,7 +1444,7 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        
+
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:SBLOCCO_OK_PAGE];
         
@@ -1458,11 +1464,11 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        
+
         self.labelHelp.stringValue = @"Aiuto";
         self.helpImageView.hidden = NO;
         self.unlockImageView.hidden = NO;
-        
+
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:HELP_PAGE];
         
@@ -1483,11 +1489,11 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        
+
         self.labelHelp.stringValue = @"Tutorial";
         self.helpImageView.hidden = YES;
         self.unlockImageView.hidden = YES;
-        
+
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:HELP_PAGE];
         
@@ -1508,7 +1514,7 @@ CK_RV completedCallback(string& PAN,
         self.helpButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
         self.infoButtonView.layer.backgroundColor = NSColor.grayColor.CGColor;
         self.settingsButtonView.layer.backgroundColor = NSColor.clearColor.CGColor;
-        
+
         ChangeView *cG = [ChangeView getInstance];
         [cG showSubView:INFO_PAGE];
         
@@ -1686,7 +1692,7 @@ CK_RV completedCallback(string& PAN,
     NSString* fileType = [[NSURL URLWithString:filePathNoSpaces] pathExtension];
     
     self.fullPINSignature = [self.carouselView shouldUseFullPINForSignature];
-    
+
     if ([fileType isEqualTo:@"pdf"] && !self.fullPINSignature) {
         [_cbGraphicSignature setEnabled:YES];
         [_cbGraphicSignature setHidden:NO];
@@ -1800,15 +1806,15 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)btnProceedSignatureOp:(id)sender {
     [logger info:@"btnProceedSignatureOp: - Inizia funzione"];
-    
+
     for (NSView * aSubview in [[self prevImageView] subviews]) {
         [aSubview removeFromSuperview];
     }
     
     [self showFirmaPinView];
-    
+
     ChangeView *cG = [ChangeView getInstance];
-    
+
     if (operation == PADES_SIGNATURE && (_cbGraphicSignature.state == NSOnState)) {
         [logger debug:@"Firma pades con firma grafica"];
         Cie* selectedCie = [self.carouselView getSelectedCard];
@@ -1870,14 +1876,14 @@ CK_RV completedCallback(string& PAN,
     _btnSignatureCompleted.hidden = YES;
     _progressSignature.hidden = YES;
     _lblProgressSignature.hidden = YES;
-    
+
     for (int i = 9; i < 17; i++) {
         NSTextField* txtField = [self.view viewWithTag:i];
         txtField.stringValue = @"";
     }
     
     ChangeView *cG = [ChangeView getInstance];
-    
+
     if (_cbGraphicSignature.state == NSOnState) {
         [cG showSubView:FIRMA_PDF_PREVIEW];
     } else {
@@ -1890,12 +1896,12 @@ CK_RV completedCallback(string& PAN,
     NSString* pin = @"";
     int pinLength = (self.fullPINSignature) ? 8 : 4;
     NSString* message = ((pinLength == 8) ? @"Inserire le 8 cifre del PIN" : @"Inserire le ultime 4 cifre del PIN");
-    
+
     for (int i = 9; i < 9 + pinLength; i++) {
         NSTextField* txtField = [self.view viewWithTag:i];
         pin = [pin stringByAppendingString:txtField.stringValue];
     }
-    
+
     if (pin.length != pinLength) {
         [self showMessage:message withTitle:@"PIN non corretto" exitAfter:false];
         [self showFirmaPinView];
@@ -1922,22 +1928,22 @@ CK_RV completedCallback(string& PAN,
     [panel setCanCreateDirectories:YES];
     [panel setTitle:@"Salva file firmato"];
     [panel setAllowsOtherFileTypes:NO];
-    
+
     if (operation == PADES_SIGNATURE) {
         [panel setAllowedFileTypes:[[NSArray alloc] initWithObjects:@"pdf", nil]];
         NSString *saveFileName = [NSString stringWithFormat:@"%@%@", [fileName stringByDeletingPathExtension], @"-signed"];
         [panel setNameFieldStringValue:saveFileName];
         [panel beginWithCompletionHandler: ^ (NSInteger result) {
-            if (result == NSModalResponseOK) {
-                _lblInsertPIN.hidden = YES;
-                _cvInsertPIN.hidden = YES;
-                _btnSignatureCompleted.hidden = YES;
-                _btnSign.enabled = NO;
-                _btnAbortSignature.enabled = NO;
-                _progressSignature.hidden = NO;
-                _lblProgressSignature.hidden = NO;
+                  if (result == NSModalResponseOK) {
+                      _lblInsertPIN.hidden = YES;
+                      _cvInsertPIN.hidden = YES;
+                      _btnSignatureCompleted.hidden = YES;
+                      _btnSign.enabled = NO;
+                      _btnAbortSignature.enabled = NO;
+                      _progressSignature.hidden = NO;
+                      _lblProgressSignature.hidden = NO;
                 NSString *outPath = [[panel URL] path];
-                
+
                 if (_cbGraphicSignature.state == NSOnState) {
                     Cie* selectedCie = [self.carouselView getSelectedCard];
                     NSString* signImgPath = [self getSignImagePath:[selectedCie getSerialNumber]];
@@ -1954,14 +1960,14 @@ CK_RV completedCallback(string& PAN,
         [panel setNameFieldStringValue:saveFileName];
         //[panel setAllowedFileTypes:[[NSArray alloc] initWithObjects:@"p7m", nil]];
         [panel beginWithCompletionHandler: ^ (NSInteger result) {
-            if (result == NSModalResponseOK) {
-                _lblInsertPIN.hidden = YES;
-                _cvInsertPIN.hidden = YES;
-                _btnSignatureCompleted.hidden = YES;
-                _btnSign.enabled = NO;
-                _btnAbortSignature.enabled = NO;
-                _progressSignature.hidden = NO;
-                _lblProgressSignature.hidden = NO;
+                  if (result == NSModalResponseOK) {
+                      _lblInsertPIN.hidden = YES;
+                      _cvInsertPIN.hidden = YES;
+                      _btnSignatureCompleted.hidden = YES;
+                      _btnSign.enabled = NO;
+                      _btnAbortSignature.enabled = NO;
+                      _progressSignature.hidden = NO;
+                      _lblProgressSignature.hidden = NO;
                 NSString *outPath = [[panel URL] path];
                 [self firmaConCie:sender inputFilePath:filePath outFilePath:outPath signImagePath:NULL pin:pin x:0.0 y:0.0 w:0.0 h:0.0 fileType:@"p7m"];
             }
@@ -1972,7 +1978,7 @@ CK_RV completedCallback(string& PAN,
 - (void) signMWCall:(NSControl*)sender inputFilePath:(NSString*)inPath outFilePath:(NSString*)outPath signImagePath:(NSString*)signImagePath pin:(NSString*)pin x:(float)x y:(float)y w:(float)w h:(float)h fileType:(NSString*)fileType {
     
     firmaConCIEfn pfnFirmaConCie = (firmaConCIEfn)dlsym(hModule, "firmaConCIE");
-    
+
     if (!pfnFirmaConCie) {
         dlclose(hModule);
         [self showMessage:@"Funzione firmaConCie non trovata nel middleware" withTitle:@"Errore inaspettato" exitAfter:NO];
@@ -1983,7 +1989,7 @@ CK_RV completedCallback(string& PAN,
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^ {
         NSString *pan = (self.fullPINSignature ? self.tmpPANCIE : [[self.carouselView getSelectedCard] getPan]);
-        
+
         long ret = pfnFirmaConCie([inPath UTF8String], [fileType UTF8String], [pin UTF8String], [pan UTF8String], pageNumber, x, y, w, h, [signImagePath UTF8String], [outPath UTF8String], &progressSignatureCallback, &completedSignatureCallback);
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -1995,7 +2001,7 @@ CK_RV completedCallback(string& PAN,
                 self.fullPINSignature = NO;
                 self.tmpPANCIE = nil;
             }
-            
+
             switch (ret) {
                     
                 case CKR_TOKEN_NOT_RECOGNIZED:
@@ -2033,9 +2039,9 @@ CK_RV completedCallback(string& PAN,
 
 - (void)firmaConCie:(NSControl*)sender inputFilePath:(NSString*)inPath outFilePath:(NSString*)outPath signImagePath:(NSString*)signImagePath pin:(NSString*)pin x:(float)x y:(float)y w:(float)w h:(float)h fileType:(NSString*)fileType {
     [logger info:@"firmaConCie:inputFilePath:outFilePath:signImagePath:pin:x:y:w:h:fileType: - Inizia funzione"];
-    
+
     [sender setEnabled:NO];
-    
+        
     if(self.fullPINSignature) {
         dispatch_async(dispatch_get_global_queue(0, 0), ^ {
             AbilitaCIEfn pfnAbilitaCIE = (AbilitaCIEfn)dlsym(hModule, "AbilitaCIE");
@@ -2074,7 +2080,7 @@ CK_RV completedCallback(string& PAN,
                         [self signMWCall:sender inputFilePath:inPath outFilePath:outPath signImagePath:signImagePath pin:[pin substringFromIndex:4] x:x y:y w:w h:h fileType:fileType];
                         break;
                     }
-                        
+                    
                     default:
                         NSLog(@"Ret value: %ld", ret);
                         [self showMessage:@"Si è verificato un errore durante la lettura dei dati della CIE." withTitle:@"Errore durante la firma" exitAfter:NO];
@@ -2083,7 +2089,7 @@ CK_RV completedCallback(string& PAN,
             });
         });
     }
-    
+
     else {
         [self signMWCall:sender inputFilePath:inPath outFilePath:outPath signImagePath:signImagePath pin:pin x:x y:y w:w h:h fileType:fileType];
     }
@@ -2098,7 +2104,7 @@ CK_RV completedCallback(string& PAN,
     int tagIndexStart = 9;
     
     NSLog(@"PIN Length: %d", pinLength);
-    
+
     for (int i = tagIndexStart; i < 17; i++) {
         NSTextField* txtField = [self.view viewWithTag:i];
         txtField.stringValue = @"";
@@ -2142,7 +2148,7 @@ CK_RV completedCallback(string& PAN,
     progressIndicatorSignaturePointer.doubleValue = 0;
     _btnSignatureCompleted.hidden = YES;
     imgSignatureOKPointer.hidden = YES;
-    
+
     for (int i = 9; i < 17; i++) {
         NSTextField* txtField = [self.view viewWithTag:i];
         txtField.stringValue = @"";
@@ -2434,7 +2440,7 @@ CK_RV completedCallback(string& PAN,
         
         syncUserDefaults = YES;
     }
-    
+
     if (([_txtPort.stringValue isEqual:@""] && ![_txtProxyAddr.stringValue isEqual:@""]) || (![_txtPort.stringValue isEqual:@""] && [_txtProxyAddr.stringValue isEqual:@""])) {
         [logger debug:@"Indirizzo o porta del proxy mancante"];
         [self showMessage:@"Indirizzo o porta del proxy mancante" withTitle:@"Informazioni proxy mancanti" exitAfter:false];
@@ -2445,7 +2451,7 @@ CK_RV completedCallback(string& PAN,
         closeEditing = NO;
     } else {
         [NSUserDefaults.standardUserDefaults setObject:_txtProxyAddr.stringValue forKey:@"proxyUrl"];
-        
+
         if ([_txtPort.stringValue isEqual:@""]) {
             [NSUserDefaults.standardUserDefaults setObject:@"" forKey:@"proxyPort"];
         } else {
@@ -2532,7 +2538,7 @@ CK_RV completedCallback(string& PAN,
 
 - (IBAction)mostraPassword:(id)sender {
     [logger info:@"mostraPassword: - Inizia funzione"];
-    
+
     if (_cbShowPsw.state == NSControlStateValueOn && ![_txtPassword.stringValue isEqual:@""]) {
         _plainPassword.stringValue = _txtPassword.stringValue;
         [_txtPassword setHidden:TRUE];

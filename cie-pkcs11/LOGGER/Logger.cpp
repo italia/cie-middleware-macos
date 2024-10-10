@@ -121,6 +121,7 @@ Logger* Logger::getInstance() throw ()
 
 	int log_level = m_Instance->getLogConfig();
     //printf("Lib log level: %d\n", log_level);
+    //printf("Lib log level: %d\n", log_level);
 
 	if (log_level == LOG_STATUS_DISABLED) {
 		m_Instance->disableLog();
@@ -159,6 +160,9 @@ int Logger::getLogConfig() throw() {
     char* home = getenv("HOME");
     std::string path(home);
     
+    /*if(path.find("/Library") == string::npos){
+        path.append("/Library/Containers/it.ipzs.SoftwareCIE.CIEToken/Data");
+    }*/
     /*if(path.find("/Library") == string::npos){
         path.append("/Library/Containers/it.ipzs.SoftwareCIE.CIEToken/Data");
     }*/
