@@ -1621,7 +1621,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = X3YLHJ3273;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -1638,7 +1638,7 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.43.10;
+				MARKETING_VERSION = 1.43.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE;
@@ -1661,7 +1661,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = X3YLHJ3273;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -1676,7 +1676,7 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.43.10;
+				MARKETING_VERSION = 1.43.11;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
