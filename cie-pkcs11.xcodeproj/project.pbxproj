@@ -11,7 +11,8 @@
 		0883C2E5251C94290054055E /* CarouselCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0883C2DF251C94290054055E /* CarouselCard.xib */; };
 		0883C2E6251C94290054055E /* CarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0883C2E1251C94290054055E /* CarouselView.xib */; };
 		0883C2E7251C94290054055E /* CarouselCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0883C2E2251C94290054055E /* CarouselCard.m */; };
-		461398B8C02047C25F03D065 /* Pods_CIE_ID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */; };
+		0E04E43801E7BF464FCC32FE /* libPods-cie-pkcs11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F95A1AB72A850F29C7875913 /* libPods-cie-pkcs11.a */; };
+		26EFD349162B52F0258F700B /* Pods_CIE_ID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DDB3CFCE7348B208847C862 /* Pods_CIE_ID.framework */; };
 		52FE2BD82A164C3100A210C0 /* TestCIE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52FE2BD52A164C3100A210C0 /* TestCIE.cpp */; };
 		52FE2BD92A164C3100A210C0 /* UUCByteArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52FE2BD62A164C3100A210C0 /* UUCByteArray.cpp */; };
 		608460792C9DEB3600477D30 /* SSZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 608460782C9DEB3600477D30 /* SSZipArchive.framework */; };
@@ -48,7 +49,6 @@
 		768BE8D725D5356900D62B77 /* BorderedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768BE8D625D5356900D62B77 /* BorderedView.swift */; };
 		768BE8F325D5671000D62B77 /* PdfPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768BE8F225D5671000D62B77 /* PdfPreview.swift */; };
 		768BE8FD25D5684B00D62B77 /* MovableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768BE8FC25D5684B00D62B77 /* MovableImageView.swift */; };
-		76A52D9225C4427F004A0086 /* libPods-cie-pkcs11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */; };
 		76F67E1025DD2A70002AB48D /* Allura-Regular.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76F67E0E25DD29B8002AB48D /* Allura-Regular.ttf */; };
 		771B2231276A39E7001F1690 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7757E5B82767851200644F3B /* Logger.cpp */; };
 		7757E5BB2767851200644F3B /* Logger.h in Headers */ = {isa = PBXBuildFile; fileRef = 7757E5B92767851200644F3B /* Logger.h */; };
@@ -283,9 +283,8 @@
 		0883C2E1251C94290054055E /* CarouselView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarouselView.xib; sourceTree = "<group>"; };
 		0883C2E2251C94290054055E /* CarouselCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarouselCard.m; sourceTree = "<group>"; };
 		0883C2E3251C94290054055E /* CarouselCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarouselCard.h; sourceTree = "<group>"; };
-		228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cie-pkcs11.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.release.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.release.xcconfig"; sourceTree = "<group>"; };
-		438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.release.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.release.xcconfig"; sourceTree = "<group>"; };
+		1808DF3725994A3DD834F016 /* Pods-CIE ID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.debug.xcconfig"; path = "Target Support Files/Pods-CIE ID/Pods-CIE ID.debug.xcconfig"; sourceTree = "<group>"; };
+		277F21A81A7A4D447E83BDE4 /* Pods-cie-pkcs11.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.debug.xcconfig"; path = "Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.debug.xcconfig"; sourceTree = "<group>"; };
 		52FE2BD42A164C3100A210C0 /* UUCByteArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUCByteArray.h; sourceTree = "<group>"; };
 		52FE2BD52A164C3100A210C0 /* TestCIE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCIE.cpp; sourceTree = "<group>"; };
 		52FE2BD62A164C3100A210C0 /* UUCByteArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UUCByteArray.cpp; sourceTree = "<group>"; };
@@ -300,7 +299,7 @@
 		60E2DCB22B79F83D0030D523 /* PreferencesManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesManager.m; sourceTree = "<group>"; };
 		60E2DCB52B79F9ED0030D523 /* PreferencesManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesManager.h; sourceTree = "<group>"; };
 		60F17AE92B7F60E00019E356 /* libcie-pkcs11dylib.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = "libcie-pkcs11dylib.entitlements"; path = "CIE ID/libcie-pkcs11dylib.entitlements"; sourceTree = SOURCE_ROOT; };
-		6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CIE ID/Pods-CIE ID.debug.xcconfig"; sourceTree = "<group>"; };
+		6DDB3CFCE7348B208847C862 /* Pods_CIE_ID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIE_ID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7649F44025DE65E500A33DAC /* FirmaConCIE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FirmaConCIE.cpp; sourceTree = "<group>"; };
 		7649F44125DE65E500A33DAC /* FirmaConCIE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirmaConCIE.h; sourceTree = "<group>"; };
 		7649F45425DE6B9700A33DAC /* VerificaConCIE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VerificaConCIE.cpp; sourceTree = "<group>"; };
@@ -363,8 +362,7 @@
 		77BAE7A6261EFB4B00592607 /* libpodofo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpodofo.a; path = cie_sign_sdk/Dependencies/podofo/libpodofo.a; sourceTree = "<group>"; };
 		77BAE7A8261EFB5600592607 /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = cie_sign_sdk/Dependencies/libxml2/libxml2.a; sourceTree = "<group>"; };
 		77BAE7AA261EFB6000592607 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = cie_sign_sdk/Dependencies/zlib/libz.a; sourceTree = "<group>"; };
-		79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.debug.xcconfig"; sourceTree = "<group>"; };
-		DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CIE_ID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7AD40C52BC87A8696ACAFD7C /* Pods-cie-pkcs11.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cie-pkcs11.release.xcconfig"; path = "Target Support Files/Pods-cie-pkcs11/Pods-cie-pkcs11.release.xcconfig"; sourceTree = "<group>"; };
 		E504202B2180665D00A41BF2 /* CIE-LOGO-REGISTRATO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CIE-LOGO-REGISTRATO.png"; sourceTree = "<group>"; };
 		E504202F218067BC00A41BF2 /* help.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
 		E5042031218068BA00A41BF2 /* help.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
@@ -527,6 +525,8 @@
 		E5BE7DC220FE86DC00004389 /* win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32.h; sourceTree = "<group>"; };
 		E5BE7DC420FE883300004389 /* wintypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wintypes.h; sourceTree = "<group>"; };
 		E5BE7DC720FE8A9A00004389 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
+		EDBAF906542B66EB1D679833 /* Pods-CIE ID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CIE ID.release.xcconfig"; path = "Target Support Files/Pods-CIE ID/Pods-CIE ID.release.xcconfig"; sourceTree = "<group>"; };
+		F95A1AB72A850F29C7875913 /* libPods-cie-pkcs11.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cie-pkcs11.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -538,7 +538,7 @@
 				60E2DCB62B7D4F1C0030D523 /* libcryptopp.a in Frameworks */,
 				60F947E52B7FB2F800DBA80F /* libcie-pkcs11.dylib in Frameworks */,
 				E58222F021CAABF600A6B6F0 /* WebKit.framework in Frameworks */,
-				461398B8C02047C25F03D065 /* Pods_CIE_ID.framework in Frameworks */,
+				26EFD349162B52F0258F700B /* Pods_CIE_ID.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,13 +594,13 @@
 				77BAE7AB261EFB6100592607 /* libz.a in Frameworks */,
 				77BAE7A1261EFB2400592607 /* libfreetype.a in Frameworks */,
 				77BAE7A7261EFB4E00592607 /* libpodofo.a in Frameworks */,
-				76A52D9225C4427F004A0086 /* libPods-cie-pkcs11.a in Frameworks */,
 				77BAE799261EFAC800592607 /* libbz2.a in Frameworks */,
 				E50A8A0D213BE121006A000D /* Cocoa.framework in Frameworks */,
 				77BAE7A5261EFB3D00592607 /* libpng16.a in Frameworks */,
 				E50A8A0E213BE121006A000D /* AppKit.framework in Frameworks */,
 				E5BE7DC820FE8A9A00004389 /* PCSC.framework in Frameworks */,
 				77BAE7A3261EFB3100592607 /* libiconv.a in Frameworks */,
+				0E04E43801E7BF464FCC32FE /* libPods-cie-pkcs11.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,6 +618,17 @@
 				0883C2E1251C94290054055E /* CarouselView.xib */,
 			);
 			path = Carousel;
+			sourceTree = "<group>";
+		};
+		65036701037A1AA44BF7E29F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1808DF3725994A3DD834F016 /* Pods-CIE ID.debug.xcconfig */,
+				EDBAF906542B66EB1D679833 /* Pods-CIE ID.release.xcconfig */,
+				277F21A81A7A4D447E83BDE4 /* Pods-cie-pkcs11.debug.xcconfig */,
+				7AD40C52BC87A8696ACAFD7C /* Pods-cie-pkcs11.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		7649F46825DEA64400A33DAC /* TableViewCell */ = {
@@ -660,17 +671,6 @@
 				7757E5B92767851200644F3B /* Logger.h */,
 			);
 			path = LOGGER;
-			sourceTree = "<group>";
-		};
-		B7FB7DAC107919BD2BEDD28E /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */,
-				438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */,
-				6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */,
-				2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		E50A89E2213BD72A006A000D /* UI */ = {
@@ -922,7 +922,7 @@
 				E544F56421BFAFC60038B2CA /* CIE ID */,
 				E5BE7D8920FE84D200004389 /* Products */,
 				E5BE7DC620FE8A9A00004389 /* Frameworks */,
-				B7FB7DAC107919BD2BEDD28E /* Pods */,
+				65036701037A1AA44BF7E29F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1025,8 +1025,8 @@
 				E50A8A0C213BE121006A000D /* AppKit.framework */,
 				E50A8A0B213BE121006A000D /* Cocoa.framework */,
 				E5BE7DC720FE8A9A00004389 /* PCSC.framework */,
-				228A3612AA9E73AB30473645 /* libPods-cie-pkcs11.a */,
-				DC86202F63F36F82504EC0B3 /* Pods_CIE_ID.framework */,
+				6DDB3CFCE7348B208847C862 /* Pods_CIE_ID.framework */,
+				F95A1AB72A850F29C7875913 /* libPods-cie-pkcs11.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1109,14 +1109,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E544F57621BFAFC90038B2CA /* Build configuration list for PBXNativeTarget "CIE ID" */;
 			buildPhases = (
-				35A28E0C9D0794F2711E7E4B /* [CP] Check Pods Manifest.lock */,
+				A2EA22045EDC212F7AC6A149 /* [CP] Check Pods Manifest.lock */,
 				E544F55F21BFAFC60038B2CA /* Sources */,
 				E544F56021BFAFC60038B2CA /* Frameworks */,
 				E544F56121BFAFC60038B2CA /* Resources */,
 				E526E9F621E0BAFF0098AE8A /* Embed App Extensions */,
 				76F67E0F25DD2A3C002AB48D /* CopyFiles */,
 				60F947EA2B7FC45400DBA80F /* Embed Libraries */,
-				9CD46B10C706BA6257C5A3A9 /* [CP] Embed Pods Frameworks */,
+				C292680ED501B7BB4D24A6EF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1219,7 +1219,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5BE7D9320FE84D200004389 /* Build configuration list for PBXNativeTarget "cie-pkcs11" */;
 			buildPhases = (
-				51235AD0B0EC5D7CC97C0CAE /* [CP] Check Pods Manifest.lock */,
+				88145ECBB789499F0A5C55DC /* [CP] Check Pods Manifest.lock */,
 				E5BE7D8420FE84D200004389 /* Sources */,
 				E5BE7D8520FE84D200004389 /* Frameworks */,
 				E5BE7D8620FE84D200004389 /* Headers */,
@@ -1365,34 +1365,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		35A28E0C9D0794F2711E7E4B /* [CP] Check Pods Manifest.lock */ = {
+		88145ECBB789499F0A5C55DC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CIE ID-checkManifestLockResult.txt",
+			outputFileListPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		51235AD0B0EC5D7CC97C0CAE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-cie-pkcs11-checkManifestLockResult.txt",
 			);
@@ -1401,7 +1387,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9CD46B10C706BA6257C5A3A9 /* [CP] Embed Pods Frameworks */ = {
+		A2EA22045EDC212F7AC6A149 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CIE ID-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C292680ED501B7BB4D24A6EF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1612,17 +1620,18 @@
 /* Begin XCBuildConfiguration section */
 		E544F57421BFAFC90038B2CA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E9C0B9FE6F0B903268DC6D0 /* Pods-CIE ID.debug.xcconfig */;
+			baseConfigurationReference = 1808DF3725994A3DD834F016 /* Pods-CIE ID.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "CIE ID/CIE_ID.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 23;
-				DEVELOPMENT_TEAM = X3YLHJ3273;
+				CURRENT_PROJECT_VERSION = 30;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = X3YLHJ3273;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1638,12 +1647,13 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.43.10;
+				MARKETING_VERSION = 1.43.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Software CIE macOS";
 				SWIFT_OBJC_BRIDGING_HEADER = "CIE ID/CIE ID-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1652,17 +1662,18 @@
 		};
 		E544F57521BFAFC90038B2CA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2F05ABF04FC862DB88E240A2 /* Pods-CIE ID.release.xcconfig */;
+			baseConfigurationReference = EDBAF906542B66EB1D679833 /* Pods-CIE ID.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "CIE ID/CIE_ID.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 23;
-				DEVELOPMENT_TEAM = X3YLHJ3273;
+				CURRENT_PROJECT_VERSION = 30;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = X3YLHJ3273;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1676,11 +1687,12 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.43.10;
+				MARKETING_VERSION = 1.43.11;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Software CIE macOS";
 				SWIFT_OBJC_BRIDGING_HEADER = "CIE ID/CIE ID-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1700,6 +1712,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CambioPIN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1720,6 +1733,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.CambioPIN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1733,7 +1747,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -1746,7 +1760,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -1766,6 +1780,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SbloccoPIN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1786,6 +1801,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SbloccoPIN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1797,10 +1813,11 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CIEToken/CIEToken.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = X3YLHJ3273;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = X3YLHJ3273;
 				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1813,10 +1830,12 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE.CIEToken;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Software CIE Token macOS";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1826,10 +1845,11 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CIEToken/CIEToken.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = X3YLHJ3273;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = X3YLHJ3273;
 				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = CIEToken/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1837,10 +1857,12 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE.CIEToken;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Software CIE Token macOS";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1859,6 +1881,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.AbilitaCIE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1879,6 +1902,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.AbilitaCIE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2004,7 +2028,7 @@
 		};
 		E5BE7D9420FE84D200004389 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79847492CAD3310437BDE674 /* Pods-cie-pkcs11.debug.xcconfig */;
+			baseConfigurationReference = 277F21A81A7A4D447E83BDE4 /* Pods-cie-pkcs11.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "CIE ID/libcie-pkcs11dylib.entitlements";
 				CODE_SIGN_IDENTITY = "-";
@@ -2039,6 +2063,7 @@
 					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies",
 					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/openssl",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				NEW_SETTING = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
@@ -2054,7 +2079,7 @@
 		};
 		E5BE7D9520FE84D200004389 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 438D493AABE95B9738D331F7 /* Pods-cie-pkcs11.release.xcconfig */;
+			baseConfigurationReference = 7AD40C52BC87A8696ACAFD7C /* Pods-cie-pkcs11.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "CIE ID/libcie-pkcs11dylib.entitlements";
 				CODE_SIGN_IDENTITY = "-";
@@ -2089,6 +2114,7 @@
 					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies",
 					"$(PROJECT_DIR)/cie_sign_sdk/Dependencies/openssl",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				NEW_SETTING = "";
 				OTHER_CODE_SIGN_FLAGS = "";
