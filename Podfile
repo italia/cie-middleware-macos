@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :osx, '10.13'
+platform :osx, '11.5'
 
 target 'cie-pkcs11' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
