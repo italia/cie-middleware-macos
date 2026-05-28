@@ -22,4 +22,17 @@ target 'CIE ID' do
     
 end
 
+# Fix for CocoaPods <= 1.11.x: readlink returns a relative path during Archive,
+# causing rsync to fail. Replace with realpath to get the absolute path.
+post_install do |installer|
+  Dir.glob(File.join(installer.sandbox.root, "Target Support Files", "**", "*-frameworks.sh")).each do |script|
+    content = File.read(script)
+    patched = content.gsub(
+      'source="$(readlink "${source}")"',
+      'source="$(realpath "${source}")"'
+    )
+    File.write(script, patched) if patched != content
+  end
+end
+
 

@@ -55,12 +55,8 @@ Logger::Logger()
     }
     
     char* home = getenv("HOME");
-    std::string path(home);
-    
-    unsigned long pos = find_nth(path, 0, "/", 3);
-    
-    std::string sharedFolderPath(path, 0, pos);
-    sharedFolderPath.append("/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/CIEPKI/");
+    std::string sharedFolderPath(home);
+    sharedFolderPath.append("/Library/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/CIEPKI/");
         
     //check if folder exist
     struct stat st = {0};

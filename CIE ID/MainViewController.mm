@@ -33,6 +33,8 @@
 
 #define CARD_ALREADY_ENABLED        0x000000F0
 #define CARD_PAN_MISMATCH           0x000000F1
+#define CARD_CSCA_VERIFY_NOT_DONE   0x000000F2
+#define CARD_CSCA_VERIFY_FAILED     0x000000F3
 
 using namespace std;
 
@@ -721,6 +723,24 @@ CK_RV completedCallback(string& PAN,
                     [self showMessage:@"CIE già abilitata" withTitle:@"CIE già abilitata" exitAfter:NO];
                     [self showHomeFirstPage];
                     break;
+                    
+                case CARD_CSCA_VERIFY_FAILED:
+                    [self showMessage:@"La verifica di attendibilità della CIE ha riportato esito negativo. Non è presente un certificato CSCA che ne legittimi il DS (Document Signer)." withTitle:@"Carta non attendibile" exitAfter:NO];
+                    [self showHomeFirstPage];
+                    break;
+                    
+                case CARD_CSCA_VERIFY_NOT_DONE: {
+                    [self showMessage:@"L'abilitazione della CIE è avvenuta con successo, ma non è stato possibile verificare l'attendibilità della stessa. La verifica di validità verrà rimandata al successivo utilizzo." withTitle:@"Carta non verificata" exitAfter:NO];
+                    NSString *PAN = [[NSString alloc] initWithCString:sPAN.c_str() encoding:NSUTF8StringEncoding];
+                    NSString *serialNumber = [[NSString alloc] initWithCString:sEfSeriale.c_str() encoding:NSUTF8StringEncoding];
+                    NSString *name = [[NSString alloc] initWithCString:sName.c_str() encoding:NSUTF8StringEncoding];
+                    Cie *cie = [[Cie alloc] init:name serial:serialNumber pan:PAN];
+                    [cieList addCie:PAN owner:cie];
+                    [NSUserDefaults.standardUserDefaults setObject:[cieList getData] forKey:@"cieDictionary"];
+                    [NSUserDefaults.standardUserDefaults synchronize];
+                    [self showHomeThirdPage];
+                    break;
+                }
                     
                 case CKR_OK:
                     [self showMessage:@"L'abilitazione della CIE è avvenuta con successo. Allontanare la card dal lettore" withTitle:@"CIE Abilitata" exitAfter:NO];
@@ -2005,31 +2025,32 @@ CK_RV completedCallback(string& PAN,
             switch (ret) {
                     
                 case CKR_TOKEN_NOT_RECOGNIZED:
-                    [self showMessage:@"CIE non presente sul lettore" withTitle:@"Firma con CIE" exitAfter:false];
+                    [self showMessage:@"CIE non riconosciuta o non compatibile." withTitle:@"Firma con CIE" exitAfter:false];
                     [self showFirmaPinView];
                     break;
                     
                 case CKR_TOKEN_NOT_PRESENT:
-                    [self showMessage:@"CIE non presente sul lettore" withTitle:@"Firma con CIE"  exitAfter:false];
+                    [self showMessage:@"CIE non presente sul lettore." withTitle:@"Firma con CIE"  exitAfter:false];
                     [self showFirmaPinView];
                     break;
                     
                 case CKR_PIN_INCORRECT:
-                    [self showMessage:[NSString stringWithFormat:@"Il PIN digitato è errato"] withTitle:@"PIN non corretto" exitAfter:false];
+                    [self showMessage:[NSString stringWithFormat:@"Il PIN digitato è errato."] withTitle:@"PIN non corretto" exitAfter:false];
                     [self showFirmaPinView];
                     break;
                     
                 case CKR_PIN_LOCKED:
-                    [self showMessage:@"Munisciti del codice PUK e utilizza la funzione di sblocco carta per abilitarla" withTitle:@"Carta bloccata" exitAfter:false];
+                    [self showMessage:@"Munisciti del codice PUK e utilizza la funzione di sblocco carta per abilitarla." withTitle:@"Carta bloccata" exitAfter:false];
                     [self showFirmaPinView];
                     break;
                     
                 case CKR_GENERAL_ERROR:
-                    [self showMessage:@"Errore inaspettato durante la comunicazione con la smart card" withTitle:@"Errore inaspettato" exitAfter:false];
+                    [self showMessage:@"Errore inaspettato durante la comunicazione con la smart card." withTitle:@"Errore inaspettato" exitAfter:false];
                     [self showFirmaPinView];
+                    break;
                     
                 case CARD_PAN_MISMATCH:
-                    [self showMessage:@"CIE selezionata diversa da quella presente sul lettore" withTitle:@"CIE non corrispondente" exitAfter:false];
+                    [self showMessage:@"CIE selezionata diversa da quella presente sul lettore." withTitle:@"CIE non corrispondente" exitAfter:false];
                     [self showFirmaPinView];
                     break;
             }
@@ -2066,6 +2087,24 @@ CK_RV completedCallback(string& PAN,
                     case CARD_ALREADY_ENABLED: {
                         [self showMessage:@"La CIE risulta essere già stata associata precedentemente, per cui l'operazione di firma è stata annullata. Ripetere il procedimento, selezionando la CIE dal selettore presente in 'Firma Elettronica'." withTitle:@"CIE già abilitata" exitAfter:NO];
                         [self showHomeFirstPage];
+                        break;
+                    }
+                        
+                    case CARD_CSCA_VERIFY_FAILED:
+                        [self showMessage:@"La verifica di attendibilità della CIE ha riportato esito negativo. Non è presente un certificato CSCA che ne legittimi il DS (Document Signer)." withTitle:@"Carta non attendibile" exitAfter:NO];
+                        [self showHomeFirstPage];
+                        break;
+                        
+                    case CARD_CSCA_VERIFY_NOT_DONE: {
+                        [self showMessage:@"Verifica di attendibilità della carta non riuscita. La firma verrà ugualmente eseguita." withTitle:@"Carta non verificata" exitAfter:NO];
+                        self.tmpPANCIE = [[NSString alloc] initWithCString:sPAN.c_str() encoding:NSUTF8StringEncoding];
+                        NSString *serialNumber = [[NSString alloc] initWithCString:sEfSeriale.c_str() encoding:NSUTF8StringEncoding];
+                        NSString *name = [[NSString alloc] initWithCString:sName.c_str() encoding:NSUTF8StringEncoding];
+                        Cie *cie = [[Cie alloc] init:name serial:serialNumber pan:self.tmpPANCIE];
+                        [cieList addCie:self.tmpPANCIE owner:cie];
+                        [NSUserDefaults.standardUserDefaults setObject:[cieList getData] forKey:@"cieDictionary"];
+                        [NSUserDefaults.standardUserDefaults synchronize];
+                        [self signMWCall:sender inputFilePath:inPath outFilePath:outPath signImagePath:signImagePath pin:[pin substringFromIndex:4] x:x y:y w:w h:h fileType:fileType];
                         break;
                     }
                         

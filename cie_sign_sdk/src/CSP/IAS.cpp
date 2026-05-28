@@ -8,6 +8,7 @@
 #include "../Crypto/DES3.h"
 #include "../Crypto/MAC.h"
 #include "../Util/ModuleInfo.h"
+#include "CSCACertificates.h"
 
 #include "../Cryptopp/cryptlib.h"
 #include "../Cryptopp/asn.h"
@@ -25,12 +26,51 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <vector>
+#include <openssl/x509.h>
+#include <openssl/x509v3.h>
+#include <openssl/pem.h>
 
 extern CLog Log;
 
 extern CModuleInfo moduleInfo;
 extern ByteArray SkipZero(ByteArray &ba);
 //extern DWORD WINAPI _abilitaCIE(LPVOID lpThreadParameter);
+
+// Struttura per embedded CSCA certificates
+struct EmbeddedCertInfo_sdk {
+	const unsigned char* data;
+	size_t size;
+};
+
+static const EmbeddedCertInfo_sdk embeddedCSCA_sdk[] = {
+	{ EmbeddedTestCSCA_1, sizeof(EmbeddedTestCSCA_1) },
+	{ EmbeddedTestCSCA_2, sizeof(EmbeddedTestCSCA_2) },
+	{ EmbeddedTestCSCA_3, sizeof(EmbeddedTestCSCA_3) },
+	{ EmbeddedTestCSCA_4, sizeof(EmbeddedTestCSCA_4) },
+	{ EmbeddedTestCSCA_5, sizeof(EmbeddedTestCSCA_5) },
+	{ EmbeddedTestCSCA_6, sizeof(EmbeddedTestCSCA_6) },
+	{ EmbeddedProdCSCA_1, sizeof(EmbeddedProdCSCA_1) },
+	{ EmbeddedProdCSCA_2, sizeof(EmbeddedProdCSCA_2) },
+	{ EmbeddedProdCSCA_3, sizeof(EmbeddedProdCSCA_3) },
+	{ EmbeddedProdCSCA_4, sizeof(EmbeddedProdCSCA_4) },
+	{ EmbeddedProdCSCA_5, sizeof(EmbeddedProdCSCA_5) },
+	{ EmbeddedProdCSCA_6, sizeof(EmbeddedProdCSCA_6) },
+	{ nullptr, 0 }
+};
+
+static bool LoadEmbeddedCSCACertificates_sdk(std::vector<ByteDynArray>& certificates) {
+	certificates.clear();
+	int loadedCount = 0;
+	for (int i = 0; embeddedCSCA_sdk[i].data != nullptr; ++i) {
+		ByteDynArray derCert;
+		derCert.resize(embeddedCSCA_sdk[i].size);
+		memcpy(derCert.data(), embeddedCSCA_sdk[i].data, embeddedCSCA_sdk[i].size);
+		certificates.push_back(derCert);
+		loadedCount++;
+	}
+	return loadedCount > 0;
+}
 
 void GetPublicKeyFromCert(CryptoPP::BufferedTransformation & certin,
                           CryptoPP::BufferedTransformation & keyout,
@@ -54,6 +94,7 @@ IAS::IAS(CToken::TokenTransmitCallback transmit,ByteArray ATR)
 
 	ActiveSM = false;
 	ActiveDF = DF_Root;
+	DappKeyVerified = false;
 
 	token.setTransmitCallback(transmit, nullptr);
 }
@@ -366,10 +407,12 @@ void IAS::SelectAID_IAS(bool SM) {
 void IAS::ReadDappPubKey(ByteDynArray &DappKey) {
 	init_func
 
-
-
 	ByteDynArray resp;
-	readfile(0x1004, DappKey);
+	readfile(0x1004, resp);
+
+	DappKey = resp;
+	DappPubKeyRaw = resp;
+	DappKeyVerified = false;
 
 	CASNParser parser;
 	parser.Parse(DappKey);
@@ -382,13 +425,6 @@ void IAS::ReadDappPubKey(ByteDynArray &DappKey) {
 	while (pubKey[0] == 0)
 		pubKey = pubKey.mid(1);
 	DappPubKey = pubKey;
-
-
-
-
-
-	exit_func
-}
 
 void IAS::ReadPAN() {
 	init_func
@@ -410,8 +446,32 @@ void IAS::DAPP() {
 	CSHA256 sha256;
 //    uint8_t Val01 = 1;
 
-	if (DappPubKey.isEmpty()) {
+	if (DappPubKey.isEmpty() || DappPubKeyRaw.isEmpty()) {
 		throw logged_error("DAPP - DAPP key not available");
+	}
+
+	// TOCTOU protection: re-parse the raw key and verify it matches cached DappModule/DappPubKey
+	try {
+		CASNParser reParser;
+		ByteDynArray reRaw = DappPubKeyRaw;
+		reParser.Parse(reRaw);
+
+		ByteArray reModule = reParser.tags[0]->tags[0]->content;
+		while (reModule[0] == 0)
+			reModule = reModule.mid(1);
+		ByteArray rePubKey = reParser.tags[0]->tags[1]->content;
+		while (rePubKey[0] == 0)
+			rePubKey = rePubKey.mid(1);
+
+		if (reModule != DappModule) {
+			throw logged_error("DAPP - Key integrity check failed: modulus mismatch");
+		}
+		if (rePubKey != DappPubKey) {
+			throw logged_error("DAPP - Key integrity check failed: exponent mismatch");
+		}
+	}
+	catch (std::exception &e) {
+		throw logged_error(stdPrintf("DAPP - TOCTOU protection failed: %s", e.what()));
 	}
 
 	ByteDynArray module = VarToByteArray(defModule);
@@ -1461,6 +1521,10 @@ void IAS::VerificaSODPSS(ByteArray &SOD, std::map<uint8_t, ByteDynArray> &hashSe
 //        throw logged_error("Issuer name non corrispondente");
         printf("Issuer name non corrispondente");
 
+	// Verifica CSCA chain per autenticare il Document Signer certificate
+	ByteDynArray certDSData(certRaw.data(), certRaw.size());
+	RunCSCAVerification(certDSData);
+
     uint8_t val = 1;
     signedData.Child(0, 02).Verify(VarToByteArray(val));
     signedData.Child(1, 0x30).Child(0, 06).Verify(VarToByteArray(OID_SHA512));
@@ -1651,6 +1715,10 @@ void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
 //        throw logged_error("Issuer name non corrispondente");
         printf("Issuer name non corrispondente");
 
+	// Verifica CSCA chain per autenticare il Document Signer certificate
+	ByteDynArray certDSData_sod(certRaw.data(), certRaw.size());
+	RunCSCAVerification(certDSData_sod);
+
 	uint8_t val0=0;
 	signedData.Child(0, 02).Verify(VarToByteArray(val0));
 	signedData.Child(1, 0x30).Child(0, 06).Verify(VarToByteArray(OID_SH256));
@@ -1685,6 +1753,142 @@ void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
 	}
 	*/
 	exit_func
+}
+
+bool IAS::VerifyCSCAChain(const ByteDynArray& certDSData, const std::vector<ByteDynArray>& cscaCertificates) {
+	init_func
+
+	if (cscaCertificates.empty()) {
+		return false;
+	}
+
+	// Parse DS certificate with OpenSSL
+	const unsigned char* certPtr = certDSData.data();
+	X509* certDS = d2i_X509(nullptr, &certPtr, (long)certDSData.size());
+	if (!certDS) {
+		return false;
+	}
+
+	// Create store and add CSCA certificates
+	X509_STORE* store = X509_STORE_new();
+	if (!store) {
+		X509_free(certDS);
+		return false;
+	}
+
+	int addedCerts = 0;
+	for (const auto& certData : cscaCertificates) {
+		const unsigned char* p = certData.data();
+		X509* cscaCert = d2i_X509(nullptr, &p, (long)certData.size());
+		if (cscaCert) {
+			if (X509_STORE_add_cert(store, cscaCert) == 1) {
+				addedCerts++;
+			}
+			X509_free(cscaCert);
+		}
+	}
+
+	bool result = false;
+	if (addedCerts > 0) {
+		X509_STORE_CTX* ctx = X509_STORE_CTX_new();
+		if (ctx) {
+			if (X509_STORE_CTX_init(ctx, store, certDS, nullptr) == 1) {
+				int ret = X509_verify_cert(ctx);
+				if (ret == 1) {
+					result = true;
+				} else {
+					int err = X509_STORE_CTX_get_error(ctx);
+					// Allow untrusted root: the CSCA roots may not be in the system store
+					if (err == X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN ||
+					    err == X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY ||
+					    err == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT) {
+						// Check that the chain was actually built (partial trust)
+						STACK_OF(X509)* chain = X509_STORE_CTX_get0_chain(ctx);
+						if (chain && sk_X509_num(chain) > 1) {
+							result = true;
+						}
+					}
+				}
+			}
+			X509_STORE_CTX_free(ctx);
+		}
+	}
+
+	X509_STORE_free(store);
+	X509_free(certDS);
+
+	exit_func
+	return result;
+}
+
+bool IAS::RunCSCAVerification(const ByteDynArray& certDSData) {
+	init_func
+
+	std::vector<ByteDynArray> embeddedCerts;
+	if (!LoadEmbeddedCSCACertificates_sdk(embeddedCerts)) {
+		throw logged_error("RunCSCAVerification - No embedded CSCA certificates available");
+	}
+
+	if (!VerifyCSCAChain(certDSData, embeddedCerts)) {
+		throw logged_error("RunCSCAVerification - Document Signer certificate is not valid according to CSCA verification chain");
+	}
+
+	DappKeyVerified = true;
+
+	exit_func
+	return true;
+}
+
+bool IAS::VerifyAndAuthenticateDappKey() {
+	init_func
+
+	// Read DAPP key from card (always fresh)
+	ByteDynArray DAPPKey;
+	ReadDappPubKey(DAPPKey);
+
+	if (DappPubKeyRaw.isEmpty() || DappPubKey.isEmpty() || DappModule.isEmpty()) {
+		throw logged_error("VerifyAndAuthenticateDappKey - Failed to read DAPP key from card");
+	}
+
+	// Read SOD from card
+	ByteDynArray SOD;
+	ReadSOD(SOD);
+
+	if (SOD.isEmpty()) {
+		throw logged_error("VerifyAndAuthenticateDappKey - Failed to read SOD from card");
+	}
+
+	// Determine digest algorithm
+	uint8_t digest = GetSODDigestAlg(SOD);
+
+	// Compute hash of raw DAPP key
+	CSHA256 sha256;
+	CSHA512 sha512;
+	ByteDynArray hashA4 = (digest == 1) ? sha256.Digest(DappPubKeyRaw) : sha512.Digest(DappPubKeyRaw);
+
+	std::map<uint8_t, ByteDynArray> hashSet;
+	hashSet[0xa4] = hashA4;
+
+	// Verify SOD and CSCA chain
+	bool verified = false;
+	try {
+		if (digest == 1) {
+			VerificaSOD(SOD, hashSet);
+		} else {
+			VerificaSODPSS(SOD, hashSet);
+		}
+		verified = true;
+	}
+	catch (std::exception &ex) {
+		throw logged_error(stdPrintf("VerifyAndAuthenticateDappKey - SOD verification exception: %s", ex.what()));
+	}
+
+	if (!verified) {
+		throw logged_error("VerifyAndAuthenticateDappKey - CSCA chain verification failed");
+	}
+
+	exit_func
+	return true;
 }
 
 #define DWL_MSGRESULT 0

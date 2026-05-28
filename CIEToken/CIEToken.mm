@@ -7,10 +7,8 @@
 //
 
 #import "CIEToken.h"
-#import <string>
 #include "../cie-pkcs11/LOGGER/Logger.h"
 
-using namespace std;
 using namespace CieIDLogger;
 
 typedef CK_RV (*C_GETFUNCTIONLIST)(CK_FUNCTION_LIST_PTR_PTR ppFunctionList);
@@ -412,34 +410,25 @@ bool findObject(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pAttributes, CK_ULO
     return YES;
 }
 
-unsigned long find_nth(string text, size_t pos, string el, size_t nth)
-{
-    unsigned long found_pos = text.find(el, pos);
-    
-    if(nth == 0 || string::npos == found_pos)
-        return found_pos;
-    
-    return find_nth(text, found_pos + 1, el, nth-1);
-}
-
 const char* GetPKCS11Path()
 {
-    char* home = getenv("HOME");
-    string path(home);
-    
-    unsigned long pos = find_nth(path, 0, "/", 3);
-    
-    string sharedFolderPath(path, 0, pos);
-    sharedFolderPath.append("/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/libcie-pkcs11.dylib");
-    
-    LOG_INFO("[CTK] Middleware GetPKCS11Path() - PKCS11 Dir: %s\n", sharedFolderPath.c_str());
-    printf("PKCS11 Dir: %s\n", sharedFolderPath.c_str());
-    
-    char *c_path;
-    c_path = (char *)calloc(sharedFolderPath.length(), sizeof(char));
-    strncpy(c_path, sharedFolderPath.c_str(), sharedFolderPath.length());
-    c_path[sharedFolderPath.length() + 1] = '\0';
-    
+    NSURL *containerURL = [[NSFileManager defaultManager]
+                           containerURLForSecurityApplicationGroupIdentifier:@"group.it.ipzs.SoftwareCIE"];
+    if (!containerURL) {
+        LOG_ERROR("[CTK] GetPKCS11Path - containerURL nil for group.it.ipzs.SoftwareCIE");
+        return "";
+    }
+
+    NSString *path = [[containerURL path] stringByAppendingString:@"/Library/Caches/libcie-pkcs11.dylib"];
+
+    LOG_INFO("[CTK] Middleware GetPKCS11Path() - PKCS11 Dir: %s\n", [path UTF8String]);
+    printf("PKCS11 Dir: %s\n", [path UTF8String]);
+
+    const char *c_str = [path UTF8String];
+    size_t len = strlen(c_str);
+    char *c_path = (char *)calloc(len + 1, sizeof(char));
+    strncpy(c_path, c_str, len);
+
     return c_path;
 }
 

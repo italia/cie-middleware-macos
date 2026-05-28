@@ -32,6 +32,8 @@
 #define ROLE_USER                   1
 #define ROLE_ADMIN                  2
 #define CARD_ALREADY_ENABLED        0x000000F0
+#define CARD_CSCA_VERIFY_NOT_DONE   0x000000F2
+#define CARD_CSCA_VERIFY_FAILED     0x000000F3
 
 using namespace CieIDLogger;
 
@@ -117,8 +119,9 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
 
     LOG_INFO("***** Starting AbbinaCIE *****");
     LOG_DEBUG("szPAN:%s, pin len : %d", szPAN, strlen(szPIN));
-    
-	try
+    bool verifiedSOD = false;
+
+    try
     {
 		std::map<uint8_t, ByteDynArray> hashSet;
 		
@@ -275,7 +278,6 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
                 return CKR_GENERAL_ERROR;
             }
             
-            
             progressCallBack(45, "Lettura seriale");
             
             ByteDynArray Serial;
@@ -290,32 +292,39 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
             ByteDynArray CertCIE;
             ias.ReadCertCIE(CertCIE);
             ByteArray certCIEData = CertCIE.left(GetASN1DataLenght(CertCIE));
-            
+            progressCallBack(70, "Verifica del SOD");
             LOG_INFO("AbbinaCIE - Verifying SOD, digest algorithm: %s", (digest == 1) ? "RSA/SHA256" : "RSA-PSS/SHA512");
-            if (digest == 1)
+            try
             {
-                CSHA256 sha256;
-                hashSet[0xa1] = sha256.Digest(serviziData);
-                hashSet[0xa4] = sha256.Digest(intAuthData);
-                hashSet[0xa5] = sha256.Digest(intAuthServiziData);
-                hashSet[0x1b] = sha256.Digest(dhData);
-                hashSet[0xa2] = sha256.Digest(serialData);
-                hashSet[0xa3] = sha256.Digest(certCIEData);
-                ias.VerificaSOD(SOD, hashSet);
-
+                if (digest == 1)
+                {
+                    CSHA256 sha256;
+                    hashSet[0xa1] = sha256.Digest(serviziData);
+                    hashSet[0xa4] = sha256.Digest(intAuthData);
+                    hashSet[0xa5] = sha256.Digest(intAuthServiziData);
+                    hashSet[0x1b] = sha256.Digest(dhData);
+                    hashSet[0xa2] = sha256.Digest(serialData);
+                    hashSet[0xa3] = sha256.Digest(certCIEData);
+                    verifiedSOD = ias.VerificaSOD(SOD, hashSet);
+                }
+                else
+                {
+                    CSHA512 sha512;
+                    hashSet[0xa1] = sha512.Digest(serviziData);
+                    hashSet[0xa4] = sha512.Digest(intAuthData);
+                    hashSet[0xa5] = sha512.Digest(intAuthServiziData);
+                    hashSet[0x1b] = sha512.Digest(dhData);
+                    hashSet[0xa2] = sha512.Digest(serialData);
+                    hashSet[0xa3] = sha512.Digest(certCIEData);
+                    verifiedSOD = ias.VerificaSODPSS(SOD, hashSet);
+                }
+            } catch (std::exception &ex) {
+                LOG_ERROR("AbbinaCIE - SOD verification exception: %s", ex.what());
+                free(ATR);
+                free(readers);
+                return CARD_CSCA_VERIFY_FAILED;
             }
-            else
-            {
-                CSHA512 sha512;
-                hashSet[0xa1] = sha512.Digest(serviziData);
-                hashSet[0xa4] = sha512.Digest(intAuthData);
-                hashSet[0xa5] = sha512.Digest(intAuthServiziData);
-                hashSet[0x1b] = sha512.Digest(dhData);
-                hashSet[0xa2] = sha512.Digest(serialData);
-                hashSet[0xa3] = sha512.Digest(certCIEData);
-                ias.VerificaSODPSS(SOD, hashSet);
-            }
-            
+        
             ByteArray pinBa((uint8_t*)szPIN, 4);
             
             progressCallBack(85, "Memorizzazione in cache");
@@ -410,6 +419,11 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
     LOG_INFO("AbbinaCIE - CIE paired successfully");
     progressCallBack(100, "");
     LOG_INFO("***** AbbinaCIE Ended *****");
+    
+    if (!verifiedSOD) {
+        LOG_ERROR("AbbinaCIE - SOD verification failed");
+        return CARD_CSCA_VERIFY_NOT_DONE;
+    }
     
     return SCARD_S_SUCCESS;
 }

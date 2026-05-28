@@ -71,6 +71,7 @@ public:
 	ByteDynArray PAN;
 	ByteDynArray DappModule;
 	ByteDynArray DappPubKey;
+	ByteDynArray DappPubKeyRaw;
 
 	void ReadPAN();
 	void ReadSOD(ByteDynArray &data);
@@ -104,8 +105,14 @@ public:
 	void IconaSbloccoPIN();
 
     uint8_t GetSODDigestAlg(ByteArray &SOD);
-    void VerificaSODPSS(ByteArray &SOD, std::map<uint8_t, ByteDynArray> &hashSet);
-	void VerificaSOD(ByteArray &SOD, std::map<uint8_t, ByteDynArray> &hashSet);
+    bool VerificaSODPSS(ByteArray &SOD, std::map<uint8_t, ByteDynArray> &hashSet);
+	bool VerificaSOD(ByteArray &SOD, std::map<uint8_t, ByteDynArray> &hashSet);
+	
+	// CSCA verification functions
+	bool DownloadCSCACertificates(std::vector<ByteDynArray>& certificates);
+	bool VerifyCSCAChain(const ByteDynArray& certDSData, const std::vector<ByteDynArray>& cscaCertificates);
+	bool RunCSCAVerification(const ByteDynArray& certDS);
+	bool VerifyAndAuthenticateDappKey();
 
 	void(*Callback)(int progress, char *desc,void *data);
 	void* CallbackData;
