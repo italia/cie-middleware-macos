@@ -215,6 +215,7 @@ void CIEtemplateInitSession(void *pTemplateData){
         
         //LOG_DEBUG("CIEtemplateInitSession - certRaw: %s", dumpHexData(certRaw).c_str());
 
+        if (!certRaw.isEmpty()) {
 #ifdef WIN32
 		PCCERT_CONTEXT certDS = CertCreateCertificateContext(X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, certRaw.data(), (DWORD)certRaw.size());
 		if (certDS != nullptr) {
@@ -328,7 +329,8 @@ void CIEtemplateInitSession(void *pTemplateData){
         cie->slot.AddP11Object(cie->pubKey);
         cie->slot.AddP11Object(cie->privKey);
         cie->slot.AddP11Object(cie->cert);
-        
+        } // end if (!certRaw.empty())
+
 		cie->init = true;
 	}
 }
@@ -427,8 +429,15 @@ void CIEtemplateLogin(void *pTemplateData, CK_USER_TYPE userType, ByteArray &Pin
 			cie->ias.Callback(3, "Verify PIN", cie->ias.CallbackData);
 		if (userType == CKU_USER) {
 			ByteDynArray FullPIN;
-			cie->ias.GetFirstPIN(FullPIN);
-			FullPIN.append(Pin);
+			if (cie->ias.IsEnrolled()) {
+				// Enrolled: combine cached first-half PIN + user-provided second-half PIN
+				cie->ias.GetFirstPIN(FullPIN);
+				FullPIN.append(Pin);
+			} else {
+				// Not enrolled: use the full PIN provided by the caller directly
+				LOG_INFO("CIEtemplateLogin - Card not enrolled, using provided PIN directly");
+				FullPIN = ByteDynArray(Pin);
+			}
 			sw = cie->ias.VerifyPIN(FullPIN);
 		}
 		else if (userType == CKU_SO) {
@@ -504,8 +513,12 @@ void CIEtemplateSign(void *pCardTemplateData, CP11PrivateKey *pPrivKey, ByteArra
 			cie->ias.DAPP();
 
 			ByteDynArray FullPIN;
-			cie->ias.GetFirstPIN(FullPIN);
-			FullPIN.append(Pin);
+			if (cie->ias.IsEnrolled()) {
+				cie->ias.GetFirstPIN(FullPIN);
+				FullPIN.append(Pin);
+			} else {
+				FullPIN = ByteDynArray(Pin);
+			}
 			if (cie->ias.VerifyPIN(FullPIN) != 0x9000)
 				throw p11_error(CKR_PIN_INCORRECT);
 			cie->ias.Sign(baSignBuffer, baSignature);

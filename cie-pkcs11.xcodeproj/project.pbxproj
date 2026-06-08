@@ -1629,7 +1629,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = X3YLHJ3273;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
@@ -1647,7 +1647,7 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.5;
-				MARKETING_VERSION = 1.43.13;
+				MARKETING_VERSION = 1.43.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE;
@@ -1671,7 +1671,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = X3YLHJ3273;
 				INFOPLIST_FILE = "CIE ID/Info.plist";
@@ -1687,7 +1687,7 @@
 					"$(PROJECT_DIR)/cie-pkcs11",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.5;
-				MARKETING_VERSION = 1.43.13;
+				MARKETING_VERSION = 1.43.14;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1835,7 +1835,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE.CIEToken;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Software CIE Token macOS";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Software CIEToken macOS";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1862,7 +1862,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = it.ipzs.SoftwareCIE.CIEToken;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Software CIE Token macOS";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Software CIEToken macOS";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -2031,15 +2031,17 @@
 			baseConfigurationReference = 277F21A81A7A4D447E83BDE4 /* Pods-cie-pkcs11.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "CIE ID/libcie-pkcs11dylib.entitlements";
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = X3YLHJ3273;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@executable_path/../Resources";
 				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
@@ -2082,15 +2084,17 @@
 			baseConfigurationReference = 7AD40C52BC87A8696ACAFD7C /* Pods-cie-pkcs11.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "CIE ID/libcie-pkcs11dylib.entitlements";
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = X3YLHJ3273;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@executable_path/../Resources";
 				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;

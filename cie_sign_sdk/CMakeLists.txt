@@ -79,6 +79,7 @@ set(SRC_LIST
     ${SOURCE_DIR}/ASN1/TimeStampRequest.cpp
     ${SOURCE_DIR}/ASN1/TimeStampResponse.cpp
     ${SOURCE_DIR}/ASN1/TimeStampToken.cpp
+    ${SOURCE_DIR}/ASN1/TrustServiceList.cpp
     ${SOURCE_DIR}/ASN1/UUCBufferedReader.cpp
     ${SOURCE_DIR}/RSA/desc.c
     ${SOURCE_DIR}/RSA/nn.c
@@ -148,6 +149,16 @@ set(INCLUDE_LIST
  )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_LIST})
+
+# Link libcurl per CSCA e TrustServiceList
+find_library(CURL_LIB curl PATHS ${DEPENDENCIES_DIR}/libcurl/lib NO_DEFAULT_PATH)
+if(CURL_LIB)
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${CURL_LIB})
+else()
+    message(WARNING "libcurl not found in dependencies, will use system libcurl")
+    find_package(CURL REQUIRED)
+    target_link_libraries(${PROJECT_NAME} PRIVATE CURL::libcurl)
+endif()
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ${INSTALL_DIR})
 install(FILES ${INCLUDE_DIR}/disigonsdk.h ${INCLUDE_DIR}/CIEEngine.h DESTINATION ${INSTALL_DIR})

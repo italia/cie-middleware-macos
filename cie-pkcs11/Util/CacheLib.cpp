@@ -15,6 +15,7 @@
 
 #include <sys/stat.h>
 #include <unistd.h>
+#include <pwd.h>
 #include <string>
 #include <regex>
 
@@ -224,13 +225,9 @@ unsigned long find_nth(std::string text, size_t pos, std::string el, size_t nth)
 
 std::string GetCardDir()
 {
-    char* home = getenv("HOME");
-    std::string path(home);
-    
-    unsigned long pos = find_nth(path, 0, "/", 3);
-    
-    std::string sharedFolderPath(path, 0, pos);
-    sharedFolderPath.append("/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/CIEPKI/");
+    struct passwd *pw = getpwuid(getuid());
+    std::string sharedFolderPath(pw->pw_dir);
+    sharedFolderPath.append("/Library/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/CIEPKI/");
     
     printf("Card Dir: %s\n", sharedFolderPath.c_str());
     
