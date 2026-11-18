@@ -420,14 +420,23 @@ static int cie_engine_ctrl(ENGINE *engine, int cmd, long i, void *p, void (*f) (
                 X509 *cert;
             } *parms = p;
             
-            if(!cie_x509_certificate)
-            {
-                cie_x509_certificate = d2i_X509(NULL, &cie_certificate, cie_certlen);
+            if (parms == NULL)
+                return 0;
+
+            if (cie_x509_certificate == NULL) {
+                if (cie_certificate == NULL || cie_certlen == 0)
+                    return 0;
+                const unsigned char *cert_data = cie_certificate;
+                cie_x509_certificate = d2i_X509(NULL, &cert_data, cie_certlen);
+                if (cie_x509_certificate == NULL)
+                    return 0;
             }
-            
+
             parms->cert = X509_dup(cie_x509_certificate);
+            if (parms->cert == NULL)
+                return 0;
             parms->s_slot_cert_id = "cie";
-            
+
             return 1;
         }
         case ENGINE_CTRL_SET_USER_INTERFACE:
@@ -448,28 +457,21 @@ static EVP_PKEY *cie_load_privkey(ENGINE *eng, const char *key_id,
 {
     printf("call cie_load_privkey\n");
     
-    EVP_PKEY *pubkey = NULL;
+    if (cie_x509_certificate == NULL)
+        return NULL;
 
-    X509* cert = X509_dup(cie_x509_certificate);
-    
-    if ((pubkey = X509_get_pubkey(cert)) == NULL)
-    {
-        printf("get_pubKey failed\n");
-       return 0;
-    }
-        
-    X509_free(cert);
-    
-    return pubkey;
+    // X509_get_pubkey returns an owned reference; no certificate copy needed.
+    return X509_get_pubkey(cie_x509_certificate);
 }
 
 static EVP_PKEY *cie_load_pubkey(ENGINE *engine, const char *s_key_id,
         UI_METHOD *ui_method, void *callback_data)
 {
-    
-    printf("call cie_load_pubkey\n");
-    
-    return 1;
+    if (cie_x509_certificate == NULL)
+        return NULL;
+
+    // X509_get_pubkey returns an owned reference to a valid EVP_PKEY.
+    return X509_get_pubkey(cie_x509_certificate);
 }
 
 
