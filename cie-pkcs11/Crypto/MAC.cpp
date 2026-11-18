@@ -75,27 +75,20 @@ void CMAC::Init(const ByteArray &key, const ByteArray &iv)
 	ER_ASSERT(iv.size() == 8, "Errore nella lunghezza dell'Initial Vector")
 
 	ER_ASSERT(KeySize >= 8 && KeySize <= 24, "Errore nella lunghezza della chiave MAC (<8 o >24)")
-	des_cblock *keyVal1 = nullptr, *keyVal2 = nullptr, *keyVal3 = nullptr;
-    CryptoPP::memcpy_s(initVec, sizeof(des_cblock), iv.data(), 8);
+    CryptoPP::memcpy_s(initVec, sizeof(DES_cblock), iv.data(), 8);
 
-	switch (KeySize) {
-	case 8:
-		keyVal1 = keyVal2 = keyVal3 = (des_cblock *)key.data();
-		break;
-	case 16:
-		keyVal1 = keyVal3 = (des_cblock *)key.data();
-		keyVal2 = (des_cblock *)key.mid(8).data();
-		break;
-	case 24:
-		keyVal1 = (des_cblock *)key.data();
-		keyVal2 = (des_cblock *)key.mid(8).data();
-		keyVal3 = (des_cblock *)key.mid(16).data();
-		break;
-	}
+    // Copy the three key blocks before expanding the DES key schedules.
+    const uint8_t* key1 = key.data();
+    const uint8_t* key2 = (KeySize == 8) ? key.data() : key.data() + 8;
+    const uint8_t* key3 = (KeySize == 24) ? key.data() + 16 : key.data();
+    DES_cblock block1, block2, block3;
+    CryptoPP::memcpy_s(block1, sizeof(block1), key1, 8);
+    CryptoPP::memcpy_s(block2, sizeof(block2), key2, 8);
+    CryptoPP::memcpy_s(block3, sizeof(block3), key3, 8);
 
-	des_set_key(keyVal1, k1);
-	des_set_key(keyVal2, k2);
-	des_set_key(keyVal3, k3);
+    DES_set_key_unchecked(&block1, &k1);
+    DES_set_key_unchecked(&block2, &k2);
+    DES_set_key_unchecked(&block3, &k3);
 
 	exit_func
 }
@@ -110,13 +103,13 @@ ByteDynArray CMAC::Mac(const ByteArray &data)
 
     ByteDynArray resp(8);
     
-	des_cblock iv;
-    CryptoPP::memcpy_s(iv, sizeof(des_cblock), initVec, sizeof(initVec));
+	DES_cblock iv;
+    CryptoPP::memcpy_s(iv, sizeof(DES_cblock), initVec, sizeof(initVec));
 
 	size_t ANSILen = ANSIPadLen(data.size());
 	if (data.size()>8) {
 		ByteDynArray baOutTmp(ANSILen - 8);
-		des_ncbc_encrypt(data.data(), baOutTmp.data(), (long)ANSILen - 8, k1, &iv, DES_ENCRYPT);
+		DES_ncbc_encrypt(data.data(), baOutTmp.data(), (long)ANSILen - 8, &k1, &iv, DES_ENCRYPT);
 	}
 	uint8_t dest[8];
 	DES_ede3_cbc_encrypt(data.mid(ANSILen - 8).data(), dest, (long)(data.size() - ANSILen) + 8, &k1, &k2, &k3, &iv, DES_ENCRYPT);
