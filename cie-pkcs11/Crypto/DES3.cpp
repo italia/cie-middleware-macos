@@ -99,9 +99,9 @@ void CDES3::Init(const ByteArray &key, const ByteArray &iv)
     CryptoPP::memcpy_s(block2, sizeof(block2), key2, 8);
     CryptoPP::memcpy_s(block3, sizeof(block3), key3, 8);
 
-    DES_set_key(&block1, &k1);
-    DES_set_key(&block2, &k2);
-    DES_set_key(&block3, &k3);
+    DES_set_key_unchecked(&block1, &k1);
+    DES_set_key_unchecked(&block2, &k2);
+    DES_set_key_unchecked(&block3, &k3);
 
 	exit_func
 }
