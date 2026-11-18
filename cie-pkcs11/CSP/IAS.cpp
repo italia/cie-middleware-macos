@@ -1684,14 +1684,12 @@ void IAS::VerificaSOD(ByteArray &SOD, std::map<BYTE, ByteDynArray> &hashSet) {
 		CASNTag &dgHash = hashDG.Child(1, 04);
 		uint8_t num = ByteArrayToVar(dgNum.content, BYTE);
 
-		if (hashSet.find(num) == hashSet.end() || hashSet[num].size() == 0)
-//            throw logged_error(stdPrintf("Digest non trovato per il DG %02X", num));
-            printf("%s", stdPrintf("Digest non trovato per il DG %02X", num).c_str());
+        const auto digest = hashSet.find(num);
+        if (digest == hashSet.end() || digest->second.size() == 0)
+            throw logged_error(stdPrintf("VerificaSOD: digest missing for DG %02X", static_cast<unsigned int>(num)));
 
-
-		if (hashSet[num] != dgHash.content)
-//            throw logged_error(stdPrintf("Digest non corrispondente per il DG %02X", num));
-                printf("%s", stdPrintf("Digest non corrispondente per il DG %02X", num).c_str());
+        if (digest->second != dgHash.content)
+            throw logged_error(stdPrintf("VerificaSOD: digest mismatch for DG %02X", static_cast<unsigned int>(num)));
 	}
 
 	/*if (CSCA != null && CSCA.Count > 0)
