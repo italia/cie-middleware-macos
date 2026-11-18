@@ -112,7 +112,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
     char* ATR = NULL;
 
     LOG_INFO("***** Starting AbbinaCIE *****");
-    LOG_DEBUG("szPAN:%s, pin len : %d", szPAN, strlen(szPIN));
+    LOG_DEBUG("AbbinaCIE - Enrollment requested");
     
 	try
     {
