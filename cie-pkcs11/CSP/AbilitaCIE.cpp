@@ -90,23 +90,19 @@ CK_RV CK_ENTRY DisabilitaCIE(const char*  szPAN)
 {
     try
     {
-        if(IAS::IsEnrolled(szPAN))
-        {
-            IAS::Unenroll(szPAN);
-            LOG_INFO("DisabilitaCIE - CIE number %s removed", szPAN);
+        // An already missing cache entry is not an error. The UI may still
+        // need to remove a stale card from its own list.
+        if (IAS::Unenroll(szPAN)) {
+            LOG_INFO("DisabilitaCIE - cache entry removed or already absent");
             return CKR_OK;
         }
-        else
-        {
-            LOG_ERROR("DisabilitaCIE - Unable to remove CIE number %s, CIE is not enrolled", szPAN);
-            return CKR_FUNCTION_FAILED;
-        }
+        LOG_ERROR("DisabilitaCIE - unable to remove cache entry");
+        return CKR_FUNCTION_FAILED;
     }
     catch(...)
     {
         return CKR_GENERAL_ERROR;
     }
-    return CKR_TOKEN_NOT_PRESENT;
 }
 
 
@@ -116,7 +112,7 @@ CK_RV CK_ENTRY AbilitaCIE(const char*  szPAN, const char*  szPIN, int* attempts,
     char* ATR = NULL;
 
     LOG_INFO("***** Starting AbbinaCIE *****");
-    LOG_DEBUG("szPAN:%s, pin len : %d", szPAN, strlen(szPIN));
+    LOG_DEBUG("AbbinaCIE - Enrollment requested");
     
 	try
     {
