@@ -87,31 +87,21 @@ void CDES3::Init(const ByteArray &key, const ByteArray &iv)
 	ER_ASSERT(iv.size() == 8, "Errore nella lunghezza dell'Initial Vector")
 
 	ER_ASSERT(KeySize >= 8 && KeySize <= 24, "Errore nella lunghezza della chiave DES (<8 o >24)")
-	des_cblock *keyVal1 = nullptr, *keyVal2 = nullptr, *keyVal3 = nullptr;
-    CryptoPP::memcpy_s(initVec, sizeof(des_cblock), iv.data(), 8);
+    CryptoPP::memcpy_s(initVec, sizeof(DES_cblock), iv.data(), 8);
 
-	switch (KeySize) {
-	case 8:
-		keyVal1 = keyVal2 = keyVal3 = (des_cblock *)key.data();
-		break;
-	case 16:
-            keyVal1 = keyVal3 = (des_cblock *)key.left(8).data();//data();
-		keyVal2 = (des_cblock *)key.mid(8, 8).data();
-		break;
-	case 24:
-		keyVal1 = (des_cblock *)key.left(8).data();
-		keyVal2 = (des_cblock *)key.mid(8, 8).data();
-		keyVal3 = (des_cblock *)key.mid(16, 8).data();
-		break;
-	}
+    // Copy each DES component into a stable block before key expansion.
+    // ByteArray::left()/mid() return temporaries and cannot be used here.
+    const uint8_t* key1 = key.data();
+    const uint8_t* key2 = (KeySize == 8) ? key.data() : key.data() + 8;
+    const uint8_t* key3 = (KeySize == 24) ? key.data() + 16 : key.data();
+    DES_cblock block1, block2, block3;
+    CryptoPP::memcpy_s(block1, sizeof(block1), key1, 8);
+    CryptoPP::memcpy_s(block2, sizeof(block2), key2, 8);
+    CryptoPP::memcpy_s(block3, sizeof(block3), key3, 8);
 
-    DES_set_key(keyVal1, &k1);
-    DES_set_key(keyVal2, &k2);
-    DES_set_key(keyVal3, &k3);
-    
-//    DES_set_key(keyVal1, k1);
-//    DES_set_key(keyVal2, k2);
-//    DES_set_key(keyVal3, k3);
+    DES_set_key(&block1, &k1);
+    DES_set_key(&block2, &k2);
+    DES_set_key(&block3, &k3);
 
 	exit_func
 }
@@ -128,8 +118,8 @@ ByteDynArray CDES3::Des3(const ByteArray &data, int encOp)
 {
 	init_func
 
-	des_cblock iv;
-	CryptoPP::memcpy_s(iv, sizeof(des_cblock), initVec, sizeof(initVec));
+	DES_cblock iv;
+	CryptoPP::memcpy_s(iv, sizeof(DES_cblock), initVec, sizeof(initVec));
 	size_t AppSize = data.size() - 1;
 	ByteDynArray resp(AppSize - (AppSize % 8) + 8);
 	DES_ede3_cbc_encrypt(data.data(), resp.data(), (long)data.size(), &k1, &k2, &k3, &iv, encOp);
