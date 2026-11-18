@@ -466,10 +466,11 @@ static EVP_PKEY *cie_load_privkey(ENGINE *eng, const char *key_id,
 static EVP_PKEY *cie_load_pubkey(ENGINE *engine, const char *s_key_id,
         UI_METHOD *ui_method, void *callback_data)
 {
-    
-    printf("call cie_load_pubkey\n");
-    
-    return 1;
+    if (cie_x509_certificate == NULL)
+        return NULL;
+
+    // X509_get_pubkey returns an owned reference to a valid EVP_PKEY.
+    return X509_get_pubkey(cie_x509_certificate);
 }
 
 
