@@ -5,6 +5,14 @@
 #include <stdio.h>
 #include <vector>
 #include <fstream>
+#ifndef WIN32
+#include <cerrno>
+#include <cstdlib>
+#include <pwd.h>
+#if defined(__APPLE__)
+#include <os/log.h>
+#endif
+#endif
 //#include "sddl.h"
 //#include "Aclapi.h"
 //#include <VersionHelpers.h>
@@ -212,29 +220,16 @@ bool file_exists (const char* name) {
     return (stat (name, &buffer) == 0);
 }
 
-unsigned long find_nth(std::string text, size_t pos, std::string el, size_t nth)
-{
-    unsigned long found_pos = text.find(el, pos);
-    
-    if(nth == 0 || std::string::npos == found_pos)
-        return found_pos;
-    
-    return find_nth(text, found_pos + 1, el, nth-1);
-}
-
 std::string GetCardDir()
 {
-    char* home = getenv("HOME");
-    std::string path(home);
-    
-    unsigned long pos = find_nth(path, 0, "/", 3);
-    
-    std::string sharedFolderPath(path, 0, pos);
-    sharedFolderPath.append("/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/CIEPKI/");
-    
-    printf("Card Dir: %s\n", sharedFolderPath.c_str());
-    
-    return sharedFolderPath.c_str();
+    // The app and its extension can be launched with different HOME values.
+    // Use the real account home, not a guessed prefix of $HOME.
+    struct passwd* account = getpwuid(getuid());
+    if (account == nullptr || account->pw_dir == nullptr || account->pw_dir[0] == '\0')
+        throw logged_error("Impossibile individuare la home dell'utente");
+
+    return std::string(account->pw_dir) +
+        "/Library/Group Containers/group.it.ipzs.SoftwareCIE/Library/Caches/CIEPKI/";
 }
 
 void GetCardPath(const char *PAN, std::string& sPath) {
@@ -251,9 +246,16 @@ bool CacheExists(const char *PAN) {
 }
 
 bool CacheRemove(const char *PAN) {
+    if (PAN == nullptr)
+        throw logged_error("Il PAN e necessario");
+
     std::string sPath;
     GetCardPath(PAN, sPath);
-    return !remove(sPath.c_str());
+    if (remove(sPath.c_str()) == 0)
+        return true;
+    // Removing an enrollment is idempotent, but real permission/I/O errors
+    // must not be treated as success.
+    return errno == ENOENT;
 }
 
 void CacheGetCertificate(const char *PAN, std::vector<uint8_t>&certificate)
@@ -326,11 +328,16 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     auto szDir = GetCardDir();
     
     struct stat st = {0};
-        
-    if (stat(szDir.c_str(), &st) == -1) {
-        int r = mkdir(szDir.c_str(), 0700);
-        printf("mkdir: %d, %x\n", r, errno);
+    if (stat(szDir.c_str(), &st) != 0) {
+        const int statError = errno;
+        if (statError != ENOENT ||
+            (mkdir(szDir.c_str(), 0700) != 0 && errno != EEXIST) ||
+            stat(szDir.c_str(), &st) != 0) {
+            throw logged_error("Impossibile creare la directory cache CIE");
+        }
     }
+    if (!S_ISDIR(st.st_mode))
+        throw logged_error("Percorso cache CIE non valido");
     
     std::string sPath;
     GetCardPath(PAN, sPath);
@@ -366,11 +373,50 @@ void CacheSetData(const char *PAN, uint8_t *certificate, int certificateSize, ui
     
     stfEncryptor.MessageEnd();
     
-    printf("CIETokenDriver Dir: %s\n", sPath.c_str());
-            
-    std::ofstream file(sPath.c_str(), std::ofstream::out | std::ofstream::binary);
-    file.write(ciphertext.c_str(), ciphertext.length());
-    file.close();
+    // Write to a private temporary file, then atomically replace the cache.
+    // A failed write must never be reported as a successful enrollment or
+    // corrupt an existing enrolled card. Do not log the path: it contains PAN.
+    std::string tempTemplate = sPath + ".tmp.XXXXXX";
+    std::vector<char> tempPath(tempTemplate.begin(), tempTemplate.end());
+    tempPath.push_back('\0');
+
+    int fd = mkstemp(tempPath.data()); // Creates the file with mode 0600.
+    if (fd < 0) {
+        const int savedError = errno;
+#if defined(__APPLE__)
+        os_log_error(OS_LOG_DEFAULT, "CIE cache: create failed errno=%{public}d", savedError);
+#endif
+        throw logged_error("Impossibile creare il file cache CIE");
+    }
+
+    int savedError = 0;
+    const char* next = ciphertext.data();
+    size_t remaining = ciphertext.size();
+    while (remaining > 0) {
+        ssize_t count = write(fd, next, remaining);
+        if (count < 0 && errno == EINTR)
+            continue;
+        if (count <= 0) {
+            savedError = (count == 0) ? EIO : errno;
+            break;
+        }
+        next += count;
+        remaining -= static_cast<size_t>(count);
+    }
+    if (savedError == 0 && fsync(fd) != 0)
+        savedError = errno;
+    if (close(fd) != 0 && savedError == 0)
+        savedError = errno;
+    if (savedError == 0 && rename(tempPath.data(), sPath.c_str()) != 0)
+        savedError = errno;
+
+    if (savedError != 0) {
+        unlink(tempPath.data());
+#if defined(__APPLE__)
+        os_log_error(OS_LOG_DEFAULT, "CIE cache: save failed errno=%{public}d", savedError);
+#endif
+        throw logged_error("Impossibile completare la scrittura della cache CIE");
+    }
     
 //    
 //    
